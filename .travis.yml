@@ -1,0 +1,26 @@
+language: c
+dist: trusty
+
+sudo: required
+
+services:
+  - docker
+
+matrix:
+  include:
+    - env: TYPE=ubuntu-16.04
+    - env: TYPE=ubuntu-17.04
+    - env: TYPE=debian-buster
+    - env: TYPE=centos-7
+
+install:
+  - docker build
+      -t ocaml-gi/${TYPE}
+      -f travis/Dockerfile.${TYPE}
+      .
+
+script:
+  - docker run
+      --interactive
+      --tty
+      ocaml-gi/${TYPE}

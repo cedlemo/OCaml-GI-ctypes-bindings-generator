@@ -1,0 +1,21 @@
+opam-version: "1.2"
+name: "OCaml-GObject-Introspection"
+version: "~unknown"
+maintainer: "cedlemo <cedlemo@gmx.com>"
+authors: "cedlemo <cedlemo@gmx.com>"
+homepage: "https://github.com/cedlemo/OCaml-GObject-Introspection"
+bug-reports: "https://github.com/cedlemo/OCaml-GObject-Introspection/issues"
+license: "GPL3"
+dev-repo: "https://github.com/cedlemo/OCaml-GObject-Introspection"
+build: [["jbuilder" "build" "-p" name "-j" jobs]]
+build-test: [["jbuilder" "runtest" "-p" name "-j" jobs]]
+depends: [
+  "jbuilder" {build}
+  "ctypes"
+  "ctypes-foreign"
+  "ounit"
+  "base"
+  "stdio"
+  "configurator"
+  "bisect_ppx" {build & >= "1.3.0"}
+]
