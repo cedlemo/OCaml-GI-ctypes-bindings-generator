@@ -1,12 +1,12 @@
 opam-version: "1.2"
-name: "OCaml-GObject-Introspection"
+name: "gi-bindings-generator"
 version: "~unknown"
 maintainer: "cedlemo <cedlemo@gmx.com>"
 authors: "cedlemo <cedlemo@gmx.com>"
-homepage: "https://github.com/cedlemo/OCaml-GObject-Introspection"
-bug-reports: "https://github.com/cedlemo/OCaml-GObject-Introspection/issues"
+homepage: "https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator"
+bug-reports: "https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/issues"
 license: "GPL3"
-dev-repo: "https://github.com/cedlemo/OCaml-GObject-Introspection"
+dev-repo: "https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator"
 build: [["jbuilder" "build" "-p" name "-j" jobs]]
 build-test: [["jbuilder" "runtest" "-p" name "-j" jobs]]
 depends: [
