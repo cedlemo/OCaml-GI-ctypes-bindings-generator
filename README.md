@@ -10,23 +10,23 @@ be a dependency to GObject-Introspection. ( https://github.com/cedlemo/OCaml-GLi
 
 ## API:
 
-https://cedlemo.github.io/OCaml-GI-bindings-generator/
+https://cedlemo.github.io/OCaml-GI-ctypes-bindings-generator/
 
 ## Wiki :
 
-https://github.com/cedlemo/OCaml-GI-bindings-generator/wiki#introduction
+https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#introduction
 
 ###  table of content.
 
-- [GObjectIntrospection Loader](https://github.com/cedlemo/OCaml-GI-bindings-generator/wiki/GI-bindings-generator-Loader)
-  - [Loader Implementation](https://github.com/cedlemo/OCaml-GI-bindings-generator/wiki/GI-bindings-generator-Loader#loader-implementation)
-  - [Loader Progress](https://github.com/cedlemo/OCaml-GI-bindings-generator/wiki/GI-bindings-generator-Loader#loader-progress)
-    - [Builders Started](https://github.com/cedlemo/OCaml-GI-bindings-generator/wiki/GI-bindings-generator-Loader#builders-started)
-    - [Builders Next](https://github.com/cedlemo/OCaml-GI-bindings-generator/wiki/GI-bindings-generator-Loader#builders-next)
-  - [Builder Code rules](https://github.com/cedlemo/OCaml-GI-bindings-generator/wiki/GObjectIntrospection-Loader#builder-code-rules)
-    - [Module constants](https://github.com/cedlemo/OCaml-GI-bindings-generator/wiki/GI-bindings-generator-Loader#module-constants)
-    - [Structures and Unions](https://github.com/cedlemo/OCaml-GI-bindings-generator/wiki/GI-bindings-generator-Loader#structures-and-unions)
-    - [Enumerations](https://github.com/cedlemo/OCaml-GI-bindings-generator/wiki/GI-bindings-generator-Loader#enumerations)
-      - [Simple Enumerations](https://github.com/cedlemo/OCaml-GI-bindings-generator/wiki/GI-bindings-generator-Loader#simple-enumerations)
-      - [Flags : enumerations for bitwise operations](https://github.com/cedlemo/OCaml-GI-bindings-generator/wiki/GI-bindings-generator-Loader#flags--enumerations-for-bitwise-operations)
+- [GI_bindings_generator.Loader](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki)
+  - [Loader Implementation](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#loader-implementation)
+  - [Loader Progress](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#loader-progress)
+    - [Builders Started](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#builders-started)
+    - [Builders Next](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#builders-next)
+  - [Builder Code rules](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#builder-code-rules)
+    - [Module constants](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#module-constants)
+    - [Structures and Unions](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#structures-and-unions)
+    - [Enumerations](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#enumerations)
+      - [Simple Enumerations](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#simple-enumerations)
+      - [Flags : enumerations for bitwise operations](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#flags--enumerations-for-bitwise-operations)
 
