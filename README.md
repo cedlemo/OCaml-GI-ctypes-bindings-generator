@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/cedlemo/OCaml-GI-ctypes-bindings-generator.svg?branch=master)](https://travis-ci.org/cedlemo/OCaml-GI-ctypes-bindings-generator)
 # OCaml GObject-Introspection Ctypes bindings generator
 
 The idea is to use the gobject-introspection library in order to generate a
