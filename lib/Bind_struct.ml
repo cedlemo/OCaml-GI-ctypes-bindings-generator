@@ -16,6 +16,8 @@
  * along with OCaml-GObject-Introspection.  If not, see <http://www.gnu.org/licenses/>.
  *)
 
+open GObject_introspection
+
 let append_ctypes_struct_declaration name sources =
   let open Binding_utils in
   let mli = Sources.mli sources in

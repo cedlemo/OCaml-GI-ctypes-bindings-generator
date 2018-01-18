@@ -16,7 +16,7 @@
  * along with OCaml-GObject-Introspection.  If not, see <http://www.gnu.org/licenses/>.
  *)
 
-open GObject_introspection
+open GI_bindings_generator
 open OUnit2
 
 let assert_equal_string str1 str2 =

@@ -18,7 +18,7 @@
 
 open Test_utils
 open OUnit2
-open GObject_introspection
+open GI_bindings_generator
 
 let test_loader_with_bad_namespace test_ctxt =
   match Loader.load "bad_namespace" () with

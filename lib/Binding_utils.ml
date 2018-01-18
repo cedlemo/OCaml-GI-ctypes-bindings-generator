@@ -16,6 +16,7 @@
  * along with OCaml-GObject-Introspection.  If not, see <http://www.gnu.org/licenses/>.
  *)
 
+open GObject_introspection
 module Option = struct
   let value ~default value_or_none =
     match value_or_none with

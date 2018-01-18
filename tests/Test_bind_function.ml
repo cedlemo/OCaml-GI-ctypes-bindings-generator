@@ -18,6 +18,7 @@
 
 open Test_utils
 open OUnit2
+open GI_bindings_generator
 open GObject_introspection
 
 let repo = Repository.get_default ()

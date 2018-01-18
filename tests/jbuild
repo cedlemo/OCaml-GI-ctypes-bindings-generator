@@ -2,7 +2,7 @@
 
 (executables
  ((names (test))
-  (libraries   (gi-bindings-generator oUnit ctypes ctypes.foreign))
+  (libraries   (GI_bindings_generator gobject-introspection oUnit ctypes ctypes.foreign))
 ))
 
 (alias

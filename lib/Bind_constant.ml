@@ -18,6 +18,7 @@
 
 open Ctypes
 open Foreign
+open GObject_introspection
 
 let binding_constant_name name =
   "c_" ^ name

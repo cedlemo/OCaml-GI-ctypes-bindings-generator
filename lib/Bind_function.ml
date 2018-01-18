@@ -18,6 +18,7 @@
 
 open Ctypes
 open Foreign
+open GObject_introspection
 
 (* Check is the argument is of the same type of the of the current module in
  * which the bindings are generated.

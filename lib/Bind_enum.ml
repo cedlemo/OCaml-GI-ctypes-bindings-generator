@@ -16,6 +16,8 @@
  * along with OCaml-GObject-Introspection.  If not, see <http://www.gnu.org/licenses/>.
  *)
 
+open GObject_introspection
+
 let append_enum_type values_and_variants file =
   String.concat " | " (List.map (fun (_, v) -> v) values_and_variants)
   |> Binding_utils.File.bprintf file "type t = %s\n"

@@ -17,6 +17,7 @@
  *)
 
 open Ctypes
+open GObject_introspection
 
 type t = {
   repo : Repository.repository;
