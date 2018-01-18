@@ -21,7 +21,7 @@
 
 open Ctypes
 open Foreign
-
+open GObject_introspection
 
 (** When the element types of a function are checked (both from arguments or
     return value, there are three possibilities. *)

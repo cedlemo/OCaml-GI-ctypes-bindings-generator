@@ -20,6 +20,7 @@
     an instrospectable library and generate Ctypes bindings. *)
 open Ctypes
 open Foreign
+open GObject_introspection
 
 (** a Loader.t is a GObject-Instrospection namespace that has been loaded. *)
 type t

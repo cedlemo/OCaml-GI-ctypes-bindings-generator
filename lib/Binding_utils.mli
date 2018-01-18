@@ -18,6 +18,7 @@
 
 open Ctypes
 open Foreign
+module GI = GObject_introspection
 
 (** Binding_utils module : Regroups a set of functions and sub-modules needed
     and used in almost all the Bind_* modules that generate automatically the
@@ -69,7 +70,7 @@ val generate_n_meaningless_arg_names:
     structure need to use it (ie: structure, union, enum, flags, interface and
     gobject.)*)
 val get_binding_name:
-  Base_info.t structure ptr -> string option
+  GI.Base_info.t structure ptr -> string option
 
 (** Remove each occurence of a pattern in a string. *)
 val string_pattern_remove:
@@ -86,12 +87,12 @@ type bindings_types = Not_implemented of string | Types of type_strings
     if implemented. Returns Not_implemented with the tag name if not implemented.
     This is for simple scalar type (ie. with Bind_enum.get_storage_type) .*)
 val type_tag_to_bindings_types:
-  Types.tag -> bindings_types
+  GI.Types.tag -> bindings_types
 
 (** Obtain from a Type_info.t the type strings to use in bindings.
     Returns Not_implemented with the tag name if not implemented. *)
 val type_info_to_bindings_types:
-  Type_info.t structure ptr -> bool -> bindings_types
+  GI.Type_info.t structure ptr -> bool -> bindings_types
 
 (** Check if a string match on of the pattern in a list. *)
 val match_one_of:

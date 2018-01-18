@@ -21,6 +21,7 @@
 
 open Ctypes
 open Foreign
+open GObject_introspection
 
 (** Returns the OCaml constant name from the C constant name. It just prepend
     "c_" to the C constant name.*)
