@@ -8,6 +8,14 @@ For now, gi-bindings-generator is used to generate/bootstrap GLib2 OCaml binding
 Those bindings are used to test the `GI_bindigs_generator.Loader` module and will
 be a dependency to GObject-Introspection. ( https://github.com/cedlemo/OCaml-GLib2 )
 
+## Try:
+
+```
+git clone git@github.com:cedlemo/OCaml-GObject-Introspection
+opam pin add gobject-introspection OCaml-GObject-Introspection
+git clone git@github.com:cedlemo/OCaml-GI-ctypes-bindings-generator
+```
+
 ## API:
 
 https://cedlemo.github.io/OCaml-GI-ctypes-bindings-generator/
