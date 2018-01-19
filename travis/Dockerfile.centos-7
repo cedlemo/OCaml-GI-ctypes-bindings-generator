@@ -34,7 +34,8 @@ RUN \
     gtksourceview3 \
     dbus-x11 \
     wget \
-    patch
+    patch \
+    nano
 
 
 RUN \
