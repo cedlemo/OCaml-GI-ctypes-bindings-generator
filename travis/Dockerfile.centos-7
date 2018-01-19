@@ -46,8 +46,8 @@ RUN \
 
 USER ocaml-gi
 
-RUN git clone git@github.com:cedlemo/OCaml-GObject-Introspection \
-    && opam -y pin add gobject-introspection OCaml-GObject-Introspection
+RUN git clone git@github.com:cedlemo/OCaml-GObject-Introspection /home/$USER/OCaml-GObject-Introspection \
+    && opam -y pin add gobject-introspection /home/$USER/OCaml-GObject-Introspection
 
 COPY . /home/ocaml-gi/ocaml-gi
 
