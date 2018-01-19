@@ -46,7 +46,7 @@ RUN \
 
 USER ocaml-gi
 
-RUN git clone git@github.com:cedlemo/OCaml-GObject-Introspection /home/ocaml-gi/OCaml-GObject-Introspection \
+RUN git clone https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator.git /home/ocaml-gi/OCaml-GObject-Introspection \
     && opam -y pin add gobject-introspection /home/ocaml-gi/OCaml-GObject-Introspection
 
 COPY . /home/ocaml-gi/ocaml-gi
