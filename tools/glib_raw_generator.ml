@@ -1,13 +1,15 @@
 module GI = GObject_introspection
 module Base_info = GI.Base_info
-module Bind_constant = GI.Bind_constant
-module Bind_function = GI.Bind_function
-module Binding_utils = GI.Binding_utils
 module Constant_info = GI.Constant_info
 module Function_info = GI.Function_info
-module Loader = GI.Loader
 module Types = GI.Types
 module Type_info = GI.Type_info
+
+module BG = GI_bindings_generator
+module Bind_constant = BG.Bind_constant
+module Bind_function = BG.Bind_function
+module Binding_utils = BG.Binding_utils
+module Loader = BG.Loader
 
 (* This tool is used to  generate the raw bindings of GLib 2 in
  * the OCaml-glib package

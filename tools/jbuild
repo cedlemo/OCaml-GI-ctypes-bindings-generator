@@ -5,6 +5,6 @@
    (names (glib_raw_generator
            gio_raw_generator))
 
-    (libraries (gobject-introspection))
+    (libraries (gobject-introspection gi-bindings-generator))
   )
 )
