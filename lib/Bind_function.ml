@@ -1,5 +1,5 @@
 (*
- * Copyright 2017 Cedric LE MOIGNE, cedlemo@gmx.com
+ * Copyright 2017-2018 Cedric LE MOIGNE, cedlemo@gmx.com
  * This file is part of OCaml-GObject-Introspection.
  *
  * OCaml-GObject-Introspection is free software: you can redistribute it and/or modify
@@ -186,66 +186,6 @@ let get_args_information callable container skip_types =
     Args (_each_arg 0 empty_args)
   )
 
-let log_new_args_type fun_name = function
-  | No_args -> Printf.printf "fn - %s : no argument\n" fun_name
-  | Args args ->
-      let print_arg_list = function
-        | [] -> ""
-        | l -> let strs = List.map (fun a ->
-                              match a with
-                              | Not_implemented s -> "Not handled: " ^ s
-                              | Skipped s -> "Skipped: " ^ s
-                              | Arg {name; ocaml_type; ctypes_type; _ } ->
-                                  Printf.sprintf "(arg name) %s : %s | %s" name ocaml_type ctypes_type)
-           l in String.concat " -> " strs
-     in
-     let _ = Printf.printf "fn - %s : (In args ) %s\n" fun_name (print_arg_list args.in_list) in
-     let _ = Printf.printf "fn - %s : (Out args) %s\n" fun_name (print_arg_list args.out_list) in
-     let _ = Printf.printf "fn - %s : (Out args) %s\n" fun_name (print_arg_list args.in_out_list) in
-     print_endline "----------------------------------------------------------------------------------------------"
-
-let test_new_args_data fun_name callable container skip_types =
-  let args = get_args_information callable container skip_types in
-  log_new_args_type fun_name args
-
-let generate_callable_bindings callable name symbol args ret_types sources =
-  (* TODO: when dealing with Error.t, make sure to be able to find if the code
-          that is generated is for :
-            - GLib module (use "Error.t" string)
-            - other module (user "GLib.Error.t")
-  *)
-  let open Binding_utils in
-  let mli = Sources.mli sources in
-  let ml = Sources.ml sources in
-  let (ocaml_ret, ctypes_ret) = List.hd ret_types in
-  if Callable_info.can_throw_gerror callable then (
-    let args' = args @ [("Error.t structure ptr option ptr option", "ptr_opt (ptr_opt Error.t_typ)")] in
-    let ocaml_ret' = if ocaml_ret = "string" then "string option" else ocaml_ret in
-    let ctypes_ret' = if ctypes_ret = "string" then "string_opt" else ctypes_ret in
-    let _ = File.bprintf mli "val %s:\n  " name in
-    let _ = File.bprintf mli "%s -> (%s, Error.t structure ptr option) result\n" (String.concat " -> " (List.map (fun (a, b) -> a) args)) ocaml_ret' in
-    let meaning_less_args = generate_n_meaningless_arg_names (List.length args) in
-    let _ = File.bprintf ml "let %s %s =\n" name meaning_less_args in
-    let name_raw = name ^ "_raw" in
-    let _ = File.bprintf ml "  let %s =\n    foreign \"%s\" " name_raw symbol in
-    let _ = File.bprintf ml "(%s" (String.concat " @-> " (List.map (fun (a, b) -> b) args')) in
-    let _ = File.bprintf ml " @-> returning (%s))\n  in\n" ctypes_ret' in
-    let _ = File.buff_add_line ml "  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in" in
-    let _ = File.bprintf ml "  let value = %s %s (Some err_ptr_ptr) in\n" name_raw meaning_less_args in
-    let _ = File.buff_add_line ml "  match (!@ err_ptr_ptr) with" in
-    let _ = File.buff_add_line ml "   | None -> Ok value" in
-    let _ = File.buff_add_line ml "   | Some _ -> let err_ptr = !@ err_ptr_ptr in" in
-    let _ = File.buff_add_line ml "     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in" in
-    File.buff_add_line ml "     Error (err_ptr)"
-  ) else (
-    let _ = File.bprintf mli "val %s:\n  " name in
-    let _ = File.bprintf ml "let %s =\n  foreign \"%s\" " name symbol in
-    let _ = File.bprintf mli "%s" (String.concat " -> " (List.map (fun (a, b) -> a) args)) in
-    let _ = File.bprintf ml "(%s" (String.concat " @-> " (List.map (fun (a, b) -> b) args)) in
-    let _ = File.bprintf mli " -> %s\n" ocaml_ret in
-    File.bprintf ml " @-> returning (%s))\n" ctypes_ret
-  )
-
 let generate_callable_bindings_when_only_in_arg callable name symbol arguments ret_types sources =
   let open Binding_utils in
   let mli = Sources.mli sources in
@@ -327,7 +267,6 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
   in
   let _ = File.buff_add_line mli "*)" in
   File.buff_add_line ml "*)"
-
 
 let should_be_implemented args sources symbol =
   let open Binding_utils in
