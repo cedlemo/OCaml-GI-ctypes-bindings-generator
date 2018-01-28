@@ -22,9 +22,11 @@ val get_pattern:
 val get_string_number:
   t structure ptr -> string -> int32
 (* Not implemented g_regex_match - out argument not handled
+let _match self _string match_options =
 t structure ptr -> string -> Regex_match_flags.t_list -> (bool, Match_info.t structure ptr)
 *)
 (* Not implemented g_regex_match_all - out argument not handled
+let match_all self _string match_options =
 t structure ptr -> string -> Regex_match_flags.t_list -> (bool, Match_info.t structure ptr)
 *)
 (*Not implemented g_regex_match_all_full type C Array type for Types.Array tag not implemented*)
@@ -38,6 +40,7 @@ val ref:
 val unref:
   t structure ptr -> unit
 (* Not implemented g_regex_check_replacement - out argument not handled
+let check_replacement replacement =
 string -> (bool, bool)
 *)
 val error_quark:

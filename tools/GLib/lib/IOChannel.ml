@@ -72,7 +72,17 @@ let read =
   foreign "g_io_channel_read" (ptr t_typ @-> string @-> uint64_t @-> ptr uint64_t @-> returning (IOError.t_view))
 (*Not implemented g_io_channel_read_chars type C Array type for Types.Array tag not implemented*)
 (* Not implemented g_io_channel_read_line - out argument not handled
-(ptr t_typ @-> returning (IOStatus.t_view * string * uint64_t * uint64_t))
+
+(* t structure ptr -> (IOStatus.t, string, Unsigned.uint64, Unsigned.uint64)*)
+let read_line self =
+  let str_return_ptr = allocate (string) None in
+  let length_ptr = allocate (uint64_t) None in
+  let terminator_pos_ptr = allocate (uint64_t) None in
+  let read_line_raw g_io_channel_read_line =
+    foreign (ptr t_typ @ -> string @-> uint64_t @-> uint64_t @-> returning IOStatus.t_view)
+  in
+  let ret = read_line_raw self str_return_ptr length_ptr terminator_pos_ptr in
+  (ret, @!(str_return) @!(length) @!(terminator_pos))
 *)
 let read_line_string self buffer terminator_pos =
   let read_line_string_raw =

@@ -15,7 +15,16 @@ let _ = seal t_typ
 let init =
   foreign "g_hash_table_iter_init" (ptr t_typ @-> ptr Hash_table.t_typ @-> returning (void))
 (* Not implemented g_hash_table_iter_next - out argument not handled
-(ptr t_typ @-> returning (bool * ptr_opt void * ptr_opt void))
+
+(* t structure ptr -> (bool, unit ptr option, unit ptr option)*)
+let next self =
+  let key_ptr = allocate (ptr_opt void) None in
+  let value_ptr = allocate (ptr_opt void) None in
+  let next_raw g_hash_table_iter_next =
+    foreign (ptr t_typ @ -> ptr_opt void @-> ptr_opt void @-> returning bool)
+  in
+  let ret = next_raw self key_ptr value_ptr in
+  (ret, @!(key) @!(value))
 *)
 let remove =
   foreign "g_hash_table_iter_remove" (ptr t_typ @-> returning (void))

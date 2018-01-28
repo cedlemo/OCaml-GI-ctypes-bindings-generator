@@ -32,10 +32,26 @@ let get_pattern =
 let get_string_number =
   foreign "g_regex_get_string_number" (ptr t_typ @-> string @-> returning (int32_t))
 (* Not implemented g_regex_match - out argument not handled
-(ptr t_typ @-> string @-> Regex_match_flags.t_list_view @-> returning (bool * ptr Match_info.t_typ))
+
+(* t structure ptr -> string -> Regex_match_flags.t_list -> (bool, Match_info.t structure ptr)*)
+let _match self _string match_options =
+  let match_info_ptr = allocate (ptr Match_info.t_typ) None in
+  let _match_raw g_regex_match =
+    foreign (ptr t_typ @-> string @-> Regex_match_flags.t_list_view @ -> ptr Match_info.t_typ @-> returning bool)
+  in
+  let ret = _match_raw self _string match_options match_info_ptr in
+  (ret, @!(match_info))
 *)
 (* Not implemented g_regex_match_all - out argument not handled
-(ptr t_typ @-> string @-> Regex_match_flags.t_list_view @-> returning (bool * ptr Match_info.t_typ))
+
+(* t structure ptr -> string -> Regex_match_flags.t_list -> (bool, Match_info.t structure ptr)*)
+let match_all self _string match_options =
+  let match_info_ptr = allocate (ptr Match_info.t_typ) None in
+  let match_all_raw g_regex_match_all =
+    foreign (ptr t_typ @-> string @-> Regex_match_flags.t_list_view @ -> ptr Match_info.t_typ @-> returning bool)
+  in
+  let ret = match_all_raw self _string match_options match_info_ptr in
+  (ret, @!(match_info))
 *)
 (*Not implemented g_regex_match_all_full type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_regex_match_full type C Array type for Types.Array tag not implemented*)
@@ -48,7 +64,15 @@ let ref =
 let unref =
   foreign "g_regex_unref" (ptr t_typ @-> returning (void))
 (* Not implemented g_regex_check_replacement - out argument not handled
-(string @-> returning (bool * bool))
+
+(* string -> (bool, bool)*)
+let check_replacement replacement =
+  let has_references_ptr = allocate (bool) None in
+  let check_replacement_raw g_regex_check_replacement =
+    foreign (string @ -> bool @-> returning bool)
+  in
+  let ret = check_replacement_raw replacement has_references_ptr in
+  (ret, @!(has_references))
 *)
 let error_quark =
   foreign "g_regex_error_quark" (void @-> returning (uint32_t))

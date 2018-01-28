@@ -60,5 +60,13 @@ let checked_ =
 let string_is_valid =
   foreign "g_variant_type_string_is_valid" (string @-> returning (bool))
 (* Not implemented g_variant_type_string_scan - out argument not handled
-(string @-> string_opt @-> returning (bool * string))
+
+(* string -> string option -> (bool, string)*)
+let string_scan _string limit =
+  let endptr_ptr = allocate (string) None in
+  let string_scan_raw g_variant_type_string_scan =
+    foreign (string @-> string_opt @ -> string @-> returning bool)
+  in
+  let ret = string_scan_raw _string limit endptr_ptr in
+  (ret, @!(endptr))
 *)

@@ -75,7 +75,17 @@ let get_week_of_year =
 let get_year =
   foreign "g_date_time_get_year" (ptr t_typ @-> returning (int32_t))
 (* Not implemented g_date_time_get_ymd - out argument not handled
-(ptr t_typ @-> returning (void * int32_t * int32_t * int32_t))
+
+(* t structure ptr -> (unit, int32, int32, int32)*)
+let get_ymd self =
+  let year_ptr = allocate (int32_t) None in
+  let month_ptr = allocate (int32_t) None in
+  let day_ptr = allocate (int32_t) None in
+  let get_ymd_raw g_date_time_get_ymd =
+    foreign (ptr t_typ @ -> int32_t @-> int32_t @-> int32_t @-> returning void)
+  in
+  let ret = get_ymd_raw self year_ptr month_ptr day_ptr in
+  (ret, @!(year) @!(month) @!(day))
 *)
 let is_daylight_savings =
   foreign "g_date_time_is_daylight_savings" (ptr t_typ @-> returning (bool))

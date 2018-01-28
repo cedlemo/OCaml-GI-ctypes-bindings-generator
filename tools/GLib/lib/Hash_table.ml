@@ -15,7 +15,16 @@ let insert =
 let lookup =
   foreign "g_hash_table_lookup" (ptr t_typ @-> ptr_opt void @-> returning (ptr_opt void))
 (* Not implemented g_hash_table_lookup_extended - out argument not handled
-(ptr t_typ @-> ptr_opt void @-> returning (bool * ptr_opt void * ptr_opt void))
+
+(* t structure ptr -> unit ptr option -> (bool, unit ptr option, unit ptr option)*)
+let lookup_extended hash_table lookup_key =
+  let orig_key_ptr = allocate (ptr_opt void) None in
+  let value_ptr = allocate (ptr_opt void) None in
+  let lookup_extended_raw g_hash_table_lookup_extended =
+    foreign (ptr t_typ @-> ptr_opt void @ -> ptr_opt void @-> ptr_opt void @-> returning bool)
+  in
+  let ret = lookup_extended_raw hash_table lookup_key orig_key_ptr value_ptr in
+  (ret, @!(orig_key) @!(value))
 *)
 let remove =
   foreign "g_hash_table_remove" (ptr t_typ @-> ptr_opt void @-> returning (bool))

@@ -21,10 +21,28 @@ let fetch =
 let fetch_named =
   foreign "g_match_info_fetch_named" (ptr t_typ @-> string @-> returning (string_opt))
 (* Not implemented g_match_info_fetch_named_pos - out argument not handled
-(ptr t_typ @-> string @-> returning (bool * int32_t * int32_t))
+
+(* t structure ptr -> string -> (bool, int32, int32)*)
+let fetch_named_pos self name =
+  let start_pos_ptr = allocate (int32_t) None in
+  let end_pos_ptr = allocate (int32_t) None in
+  let fetch_named_pos_raw g_match_info_fetch_named_pos =
+    foreign (ptr t_typ @-> string @ -> int32_t @-> int32_t @-> returning bool)
+  in
+  let ret = fetch_named_pos_raw self name start_pos_ptr end_pos_ptr in
+  (ret, @!(start_pos) @!(end_pos))
 *)
 (* Not implemented g_match_info_fetch_pos - out argument not handled
-(ptr t_typ @-> int32_t @-> returning (bool * int32_t * int32_t))
+
+(* t structure ptr -> int32 -> (bool, int32, int32)*)
+let fetch_pos self match_num =
+  let start_pos_ptr = allocate (int32_t) None in
+  let end_pos_ptr = allocate (int32_t) None in
+  let fetch_pos_raw g_match_info_fetch_pos =
+    foreign (ptr t_typ @-> int32_t @ -> int32_t @-> int32_t @-> returning bool)
+  in
+  let ret = fetch_pos_raw self match_num start_pos_ptr end_pos_ptr in
+  (ret, @!(start_pos) @!(end_pos))
 *)
 let free =
   foreign "g_match_info_free" (ptr t_typ @-> returning (void))

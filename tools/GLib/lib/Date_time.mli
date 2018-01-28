@@ -74,6 +74,7 @@ val get_week_of_year:
 val get_year:
   t structure ptr -> int32
 (* Not implemented g_date_time_get_ymd - out argument not handled
+let get_ymd self =
 t structure ptr -> (unit, int32, int32, int32)
 *)
 val is_daylight_savings:
