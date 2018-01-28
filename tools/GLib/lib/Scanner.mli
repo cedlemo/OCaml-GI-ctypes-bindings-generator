@@ -7,7 +7,7 @@ val f_user_data: (unit ptr, t structure) field
 val f_max_parse_errors: (Unsigned.uint32, t structure) field
 val f_parse_errors: (Unsigned.uint32, t structure) field
 val f_input_name: (string, t structure) field
-val f_qdata: (Data.t structure ptr, t structure) field
+(*SKIPPED : field type Data.t structure ptr*)
 val f_config: (Scanner_config.t structure ptr, t structure) field
 val f_token: (Token_type.t, t structure) field
 (*Struct field Scanner : union tag not implemented*)

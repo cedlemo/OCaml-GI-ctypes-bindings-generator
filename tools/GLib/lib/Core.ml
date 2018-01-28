@@ -3,6 +3,7 @@ open Foreign
 
 let c_ANALYZER_ANALYZING = Int32.of_string "1"
 let c_ASCII_DTOSTR_BUF_SIZE = Int32.of_string "39"
+(*SKIPPED : AsciiType*)
 let c_BIG_ENDIAN = Int32.of_string "4321"
 (*SKIPPED : BookmarkFile*)
 (*SKIPPED : BookmarkFileError*)
@@ -17,6 +18,8 @@ let c_DATE_BAD_JULIAN = Int32.of_string "0"
 let c_DATE_BAD_YEAR = Int32.of_string "0"
 let c_DIR_SEPARATOR = Int32.of_string "92"
 let c_DIR_SEPARATOR_S = "\\"
+(*SKIPPED : Data*)
+(*SKIPPED : DataForeachFunc*)
 let c_E = 2.718282
 let c_GINT16_FORMAT = "hi"
 let c_GINT16_MODIFIER = "h"
@@ -143,6 +146,7 @@ let c_SYSDEF_MSG_PEEK = Int32.of_string "2"
 (*SKIPPED : Sequence*)
 (*SKIPPED : SequenceIter*)
 (*SKIPPED : SequenceIterCompareFunc*)
+(*SKIPPED : SliceConfig*)
 let c_TIME_SPAN_DAY = 86400000000L
 let c_TIME_SPAN_HOUR = 3600000000L
 let c_TIME_SPAN_MILLISECOND = 1000L
@@ -161,6 +165,10 @@ let c_TIME_SPAN_SECOND = 1000000L
 (*SKIPPED : TestSubprocessFlags*)
 (*SKIPPED : TestSuite*)
 (*DEPRECATED : TestTrapFlags*)
+(*SKIPPED : Thread*)
+(*SKIPPED : ThreadError*)
+(*SKIPPED : ThreadFunc*)
+(*SKIPPED : ThreadPool*)
 (*DEPRECATED : TrashStack*)
 let c_UNICHAR_MAX_DECOMPOSITION_LENGTH = Int32.of_string "18"
 let c_URI_RESERVED_CHARS_GENERIC_DELIMITERS = ":/?#[]@"
@@ -175,38 +183,15 @@ let access =
 (*SKIPPED : ascii_digit_value*)
 (*SKIPPED : ascii_dtostr*)
 (*SKIPPED : ascii_formatd*)
-
-let ascii_strcasecmp =
-  foreign "g_ascii_strcasecmp" (string @-> string @-> returning (int32_t))
-
-let ascii_strdown =
-  foreign "g_ascii_strdown" (string @-> int64_t @-> returning (string))
-
-(* Not implemented g_ascii_string_to_signed - out argument not handled
-(string @-> uint32_t @-> int64_t @-> int64_t @-> returning (bool * int64_t))
-*)
-
-(* Not implemented g_ascii_string_to_unsigned - out argument not handled
-(string @-> uint32_t @-> uint64_t @-> uint64_t @-> returning (bool * uint64_t))
-*)
-
-let ascii_strncasecmp =
-  foreign "g_ascii_strncasecmp" (string @-> string @-> uint64_t @-> returning (int32_t))
-
-(* Not implemented g_ascii_strtod - out argument not handled
-(string @-> returning (double * string))
-*)
-
-(* Not implemented g_ascii_strtoll - out argument not handled
-(string @-> uint32_t @-> returning (int64_t * string))
-*)
-
-(* Not implemented g_ascii_strtoull - out argument not handled
-(string @-> uint32_t @-> returning (uint64_t * string))
-*)
-
-let ascii_strup =
-  foreign "g_ascii_strup" (string @-> int64_t @-> returning (string))
+(*SKIPPED : ascii_strcasecmp*)
+(*SKIPPED : ascii_strdown*)
+(*SKIPPED : ascii_string_to_signed*)
+(*SKIPPED : ascii_string_to_unsigned*)
+(*SKIPPED : ascii_strncasecmp*)
+(*SKIPPED : ascii_strtod*)
+(*SKIPPED : ascii_strtoll*)
+(*SKIPPED : ascii_strtoull*)
+(*SKIPPED : ascii_strup*)
 (*SKIPPED : ascii_tolower*)
 (*SKIPPED : ascii_toupper*)
 (*SKIPPED : ascii_xdigit_value*)
@@ -361,45 +346,20 @@ let convert_with_iconv str len converter bytes_read bytes_written =
    | Some _ -> let err_ptr = !@ err_ptr_ptr in
      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
      Error (err_ptr)
-
-let datalist_clear =
-  foreign "g_datalist_clear" (ptr Data.t_typ @-> returning (void))
-
-let datalist_get_data =
-  foreign "g_datalist_get_data" (ptr Data.t_typ @-> string @-> returning (ptr_opt void))
-
-let datalist_get_flags =
-  foreign "g_datalist_get_flags" (ptr Data.t_typ @-> returning (uint32_t))
-
-let datalist_id_get_data =
-  foreign "g_datalist_id_get_data" (ptr Data.t_typ @-> uint32_t @-> returning (ptr_opt void))
-
-let datalist_id_remove_no_notify =
-  foreign "g_datalist_id_remove_no_notify" (ptr Data.t_typ @-> uint32_t @-> returning (ptr_opt void))
-
-(*Not implemented g_datalist_id_replace_data type callback not implemented*)
-
-(*Not implemented g_datalist_id_set_data_full type callback not implemented*)
-
-let datalist_init =
-  foreign "g_datalist_init" (ptr Data.t_typ @-> returning (void))
-
-let datalist_set_flags =
-  foreign "g_datalist_set_flags" (ptr Data.t_typ @-> uint32_t @-> returning (void))
-
-let datalist_unset_flags =
-  foreign "g_datalist_unset_flags" (ptr Data.t_typ @-> uint32_t @-> returning (void))
-
-let dataset_destroy =
-  foreign "g_dataset_destroy" (ptr void @-> returning (void))
-
-let dataset_id_get_data =
-  foreign "g_dataset_id_get_data" (ptr void @-> uint32_t @-> returning (ptr_opt void))
-
-let dataset_id_remove_no_notify =
-  foreign "g_dataset_id_remove_no_notify" (ptr void @-> uint32_t @-> returning (ptr_opt void))
-
-(*Not implemented g_dataset_id_set_data_full type callback not implemented*)
+(*SKIPPED : datalist_clear*)
+(*SKIPPED : datalist_get_data*)
+(*SKIPPED : datalist_get_flags*)
+(*SKIPPED : datalist_id_get_data*)
+(*SKIPPED : datalist_id_remove_no_notify*)
+(*SKIPPED : datalist_id_replace_data*)
+(*SKIPPED : datalist_id_set_data_full*)
+(*SKIPPED : datalist_init*)
+(*SKIPPED : datalist_set_flags*)
+(*SKIPPED : datalist_unset_flags*)
+(*SKIPPED : dataset_destroy*)
+(*SKIPPED : dataset_id_get_data*)
+(*SKIPPED : dataset_id_remove_no_notify*)
+(*SKIPPED : dataset_id_set_data_full*)
 
 let date_get_days_in_month =
   foreign "g_date_get_days_in_month" (Date_month.t_view @-> uint16_t @-> returning (uint8_t))
@@ -957,30 +917,14 @@ let shell_unquote quoted_string =
    | Some _ -> let err_ptr = !@ err_ptr_ptr in
      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
      Error (err_ptr)
-
-let slice_alloc =
-  foreign "g_slice_alloc" (uint64_t @-> returning (ptr_opt void))
-
-let slice_alloc0 =
-  foreign "g_slice_alloc0" (uint64_t @-> returning (ptr_opt void))
-
-let slice_copy =
-  foreign "g_slice_copy" (uint64_t @-> ptr_opt void @-> returning (ptr_opt void))
-
-let slice_free1 =
-  foreign "g_slice_free1" (uint64_t @-> ptr_opt void @-> returning (void))
-
-let slice_free_chain_with_offset =
-  foreign "g_slice_free_chain_with_offset" (uint64_t @-> ptr_opt void @-> uint64_t @-> returning (void))
-
-let slice_get_config =
-  foreign "g_slice_get_config" (Slice_config.t_view @-> returning (int64_t))
-
-let slice_get_config_state =
-  foreign "g_slice_get_config_state" (Slice_config.t_view @-> int64_t @-> ptr uint32_t @-> returning (ptr int64_t))
-
-let slice_set_config =
-  foreign "g_slice_set_config" (Slice_config.t_view @-> int64_t @-> returning (void))
+(*SKIPPED : slice_alloc*)
+(*SKIPPED : slice_alloc0*)
+(*SKIPPED : slice_copy*)
+(*SKIPPED : slice_free1*)
+(*SKIPPED : slice_free_chain_with_offset*)
+(*SKIPPED : slice_get_config*)
+(*SKIPPED : slice_get_config_state*)
+(*SKIPPED : slice_set_config*)
 
 let source_remove =
   foreign "g_source_remove" (uint32_t @-> returning (bool))
@@ -1205,8 +1149,7 @@ let thread_pool_set_max_unused_threads =
 let thread_pool_stop_unused_threads =
   foreign "g_thread_pool_stop_unused_threads" (void @-> returning (void))
 
-let thread_self =
-  foreign "g_thread_self" (void @-> returning (ptr Thread.t_typ))
+(*SKIPPED : g_thread_self return type Thread.t structure ptr*)
 
 let thread_yield =
   foreign "g_thread_yield" (void @-> returning (void))
@@ -1377,73 +1320,31 @@ let usleep =
 (* Not implemented g_utf16_to_utf8 - out argument not handled
 (ptr uint16_t @-> int64_t @-> returning (string * int64_t * int64_t))
 *)
-
-let utf8_casefold =
-  foreign "g_utf8_casefold" (string @-> int64_t @-> returning (string))
-
-let utf8_collate =
-  foreign "g_utf8_collate" (string @-> string @-> returning (int32_t))
-
-let utf8_collate_key =
-  foreign "g_utf8_collate_key" (string @-> int64_t @-> returning (string))
-
-let utf8_collate_key_for_filename =
-  foreign "g_utf8_collate_key_for_filename" (string @-> int64_t @-> returning (string))
-
-let utf8_find_next_char =
-  foreign "g_utf8_find_next_char" (string @-> string_opt @-> returning (string_opt))
-
-let utf8_find_prev_char =
-  foreign "g_utf8_find_prev_char" (string @-> string @-> returning (string))
-
-(*Not implemented g_utf8_get_char return type unichar not handled*)
-
-(*Not implemented g_utf8_get_char_validated return type unichar not handled*)
+(*SKIPPED : utf8_casefold*)
+(*SKIPPED : utf8_collate*)
+(*SKIPPED : utf8_collate_key*)
+(*SKIPPED : utf8_collate_key_for_filename*)
+(*SKIPPED : utf8_find_next_char*)
+(*SKIPPED : utf8_find_prev_char*)
+(*SKIPPED : utf8_get_char*)
+(*SKIPPED : utf8_get_char_validated*)
 (*SKIPPED : utf8_make_valid*)
-
-let utf8_normalize =
-  foreign "g_utf8_normalize" (string @-> int64_t @-> Normalize_mode.t_view @-> returning (string))
-
-let utf8_offset_to_pointer =
-  foreign "g_utf8_offset_to_pointer" (string @-> int64_t @-> returning (string))
-
-let utf8_pointer_to_offset =
-  foreign "g_utf8_pointer_to_offset" (string @-> string @-> returning (int64_t))
-
-let utf8_prev_char =
-  foreign "g_utf8_prev_char" (string @-> returning (string))
-
-(*Not implemented g_utf8_strchr type unichar not implemented*)
-
-let utf8_strdown =
-  foreign "g_utf8_strdown" (string @-> int64_t @-> returning (string))
-
-let utf8_strlen =
-  foreign "g_utf8_strlen" (string @-> int64_t @-> returning (int64_t))
-
-let utf8_strncpy =
-  foreign "g_utf8_strncpy" (string @-> string @-> uint64_t @-> returning (string))
-
-(*Not implemented g_utf8_strrchr type unichar not implemented*)
-
-let utf8_strreverse =
-  foreign "g_utf8_strreverse" (string @-> int64_t @-> returning (string))
-
-let utf8_strup =
-  foreign "g_utf8_strup" (string @-> int64_t @-> returning (string))
-
-let utf8_substring =
-  foreign "g_utf8_substring" (string @-> int64_t @-> int64_t @-> returning (string))
-
-(*Not implemented g_utf8_to_ucs4 return type unichar not handled*)
-
-(*Not implemented g_utf8_to_ucs4_fast return type unichar not handled*)
-
-(* Not implemented g_utf8_to_utf16 - out argument not handled
-(string @-> int64_t @-> returning (ptr uint16_t * int64_t * int64_t))
-*)
-
-(*Not implemented g_utf8_validate type C Array type for Types.Array tag not implemented*)
+(*SKIPPED : utf8_normalize*)
+(*SKIPPED : utf8_offset_to_pointer*)
+(*SKIPPED : utf8_pointer_to_offset*)
+(*SKIPPED : utf8_prev_char*)
+(*SKIPPED : utf8_strchr*)
+(*SKIPPED : utf8_strdown*)
+(*SKIPPED : utf8_strlen*)
+(*SKIPPED : utf8_strncpy*)
+(*SKIPPED : utf8_strrchr*)
+(*SKIPPED : utf8_strreverse*)
+(*SKIPPED : utf8_strup*)
+(*SKIPPED : utf8_substring*)
+(*SKIPPED : utf8_to_ucs4*)
+(*SKIPPED : utf8_to_ucs4_fast*)
+(*SKIPPED : utf8_to_utf16*)
+(*SKIPPED : utf8_validate*)
 (*SKIPPED : uuid_string_is_valid*)
 (*SKIPPED : uuid_string_random*)
 

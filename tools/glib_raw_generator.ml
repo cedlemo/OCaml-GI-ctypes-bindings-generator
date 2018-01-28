@@ -61,6 +61,15 @@ let skip = [ "Hook"; (* skip for recursion pb *)
              "try_realloc";
              "Rand"; (* C functions creator (ie.: g_rand_new) are not introspectable *)
              "BookmarkFile"; (* C functions creator (ie.: g_rand_new) are not introspectable *)
+             "slice";
+             "Slice";
+             "utf8_"; (* remove all utf8 related functions. *)
+             "ascii"; (* remove all ascii related functions. *)
+             "threads"; (* remove all threads realated functions. *)
+             "data"; (* remove all data related functions. *)
+             "Data"; (* remove all Data related types . *)
+             "Thread"; (* remove all Thread related types. *)
+             "Ascii";
 ]
 
 let const_parser info sources =

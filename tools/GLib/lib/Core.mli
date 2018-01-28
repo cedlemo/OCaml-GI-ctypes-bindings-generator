@@ -2,6 +2,7 @@ open Ctypes
 
 val c_ANALYZER_ANALYZING : int32
 val c_ASCII_DTOSTR_BUF_SIZE : int32
+(*SKIPPED : AsciiType*)
 val c_BIG_ENDIAN : int32
 (*SKIPPED : BookmarkFile*)
 (*SKIPPED : BookmarkFileError*)
@@ -16,6 +17,8 @@ val c_DATE_BAD_JULIAN : int32
 val c_DATE_BAD_YEAR : int32
 val c_DIR_SEPARATOR : int32
 val c_DIR_SEPARATOR_S : string
+(*SKIPPED : Data*)
+(*SKIPPED : DataForeachFunc*)
 val c_E : float
 val c_GINT16_FORMAT : string
 val c_GINT16_MODIFIER : string
@@ -139,6 +142,7 @@ val c_SYSDEF_MSG_PEEK : int32
 (*SKIPPED : Sequence*)
 (*SKIPPED : SequenceIter*)
 (*SKIPPED : SequenceIterCompareFunc*)
+(*SKIPPED : SliceConfig*)
 val c_TIME_SPAN_DAY : int64
 val c_TIME_SPAN_HOUR : int64
 val c_TIME_SPAN_MILLISECOND : int64
@@ -157,6 +161,10 @@ val c_TIME_SPAN_SECOND : int64
 (*SKIPPED : TestSubprocessFlags*)
 (*SKIPPED : TestSuite*)
 (*DEPRECATED : TestTrapFlags*)
+(*SKIPPED : Thread*)
+(*SKIPPED : ThreadError*)
+(*SKIPPED : ThreadFunc*)
+(*SKIPPED : ThreadPool*)
 (*DEPRECATED : TrashStack*)
 val c_UNICHAR_MAX_DECOMPOSITION_LENGTH : int32
 val c_URI_RESERVED_CHARS_GENERIC_DELIMITERS : string
@@ -171,38 +179,15 @@ val access:
 (*SKIPPED : ascii_digit_value*)
 (*SKIPPED : ascii_dtostr*)
 (*SKIPPED : ascii_formatd*)
-
-val ascii_strcasecmp:
-  string -> string -> int32
-
-val ascii_strdown:
-  string -> int64 -> string
-
-(* Not implemented g_ascii_string_to_signed - out argument not handled
-string -> Unsigned.uint32 -> int64 -> int64 -> (bool, int64)
-*)
-
-(* Not implemented g_ascii_string_to_unsigned - out argument not handled
-string -> Unsigned.uint32 -> Unsigned.uint64 -> Unsigned.uint64 -> (bool, Unsigned.uint64)
-*)
-
-val ascii_strncasecmp:
-  string -> string -> Unsigned.uint64 -> int32
-
-(* Not implemented g_ascii_strtod - out argument not handled
-string -> (float, string)
-*)
-
-(* Not implemented g_ascii_strtoll - out argument not handled
-string -> Unsigned.uint32 -> (int64, string)
-*)
-
-(* Not implemented g_ascii_strtoull - out argument not handled
-string -> Unsigned.uint32 -> (Unsigned.uint64, string)
-*)
-
-val ascii_strup:
-  string -> int64 -> string
+(*SKIPPED : ascii_strcasecmp*)
+(*SKIPPED : ascii_strdown*)
+(*SKIPPED : ascii_string_to_signed*)
+(*SKIPPED : ascii_string_to_unsigned*)
+(*SKIPPED : ascii_strncasecmp*)
+(*SKIPPED : ascii_strtod*)
+(*SKIPPED : ascii_strtoll*)
+(*SKIPPED : ascii_strtoull*)
+(*SKIPPED : ascii_strup*)
 (*SKIPPED : ascii_tolower*)
 (*SKIPPED : ascii_toupper*)
 (*SKIPPED : ascii_xdigit_value*)
@@ -321,45 +306,20 @@ val convert_with_fallback:
 
 val convert_with_iconv:
   string -> int64 -> IConv.t structure ptr -> Unsigned.uint64 ptr -> Unsigned.uint64 ptr -> (string option, Error.t structure ptr option) result
-
-val datalist_clear:
-  Data.t structure ptr -> unit
-
-val datalist_get_data:
-  Data.t structure ptr -> string -> unit ptr option
-
-val datalist_get_flags:
-  Data.t structure ptr -> Unsigned.uint32
-
-val datalist_id_get_data:
-  Data.t structure ptr -> Unsigned.uint32 -> unit ptr option
-
-val datalist_id_remove_no_notify:
-  Data.t structure ptr -> Unsigned.uint32 -> unit ptr option
-
-(*Not implemented g_datalist_id_replace_data type callback not implemented*)
-
-(*Not implemented g_datalist_id_set_data_full type callback not implemented*)
-
-val datalist_init:
-  Data.t structure ptr -> unit
-
-val datalist_set_flags:
-  Data.t structure ptr -> Unsigned.uint32 -> unit
-
-val datalist_unset_flags:
-  Data.t structure ptr -> Unsigned.uint32 -> unit
-
-val dataset_destroy:
-  unit ptr -> unit
-
-val dataset_id_get_data:
-  unit ptr -> Unsigned.uint32 -> unit ptr option
-
-val dataset_id_remove_no_notify:
-  unit ptr -> Unsigned.uint32 -> unit ptr option
-
-(*Not implemented g_dataset_id_set_data_full type callback not implemented*)
+(*SKIPPED : datalist_clear*)
+(*SKIPPED : datalist_get_data*)
+(*SKIPPED : datalist_get_flags*)
+(*SKIPPED : datalist_id_get_data*)
+(*SKIPPED : datalist_id_remove_no_notify*)
+(*SKIPPED : datalist_id_replace_data*)
+(*SKIPPED : datalist_id_set_data_full*)
+(*SKIPPED : datalist_init*)
+(*SKIPPED : datalist_set_flags*)
+(*SKIPPED : datalist_unset_flags*)
+(*SKIPPED : dataset_destroy*)
+(*SKIPPED : dataset_id_get_data*)
+(*SKIPPED : dataset_id_remove_no_notify*)
+(*SKIPPED : dataset_id_set_data_full*)
 
 val date_get_days_in_month:
   Date_month.t -> Unsigned.uint16 -> Unsigned.uint8
@@ -881,30 +841,14 @@ val shell_quote:
 
 val shell_unquote:
   string -> (string option, Error.t structure ptr option) result
-
-val slice_alloc:
-  Unsigned.uint64 -> unit ptr option
-
-val slice_alloc0:
-  Unsigned.uint64 -> unit ptr option
-
-val slice_copy:
-  Unsigned.uint64 -> unit ptr option -> unit ptr option
-
-val slice_free1:
-  Unsigned.uint64 -> unit ptr option -> unit
-
-val slice_free_chain_with_offset:
-  Unsigned.uint64 -> unit ptr option -> Unsigned.uint64 -> unit
-
-val slice_get_config:
-  Slice_config.t -> int64
-
-val slice_get_config_state:
-  Slice_config.t -> int64 -> Unsigned.uint32 ptr -> int64 ptr
-
-val slice_set_config:
-  Slice_config.t -> int64 -> unit
+(*SKIPPED : slice_alloc*)
+(*SKIPPED : slice_alloc0*)
+(*SKIPPED : slice_copy*)
+(*SKIPPED : slice_free1*)
+(*SKIPPED : slice_free_chain_with_offset*)
+(*SKIPPED : slice_get_config*)
+(*SKIPPED : slice_get_config_state*)
+(*SKIPPED : slice_set_config*)
 
 val source_remove:
   Unsigned.uint32 -> bool
@@ -1111,8 +1055,7 @@ val thread_pool_set_max_unused_threads:
 val thread_pool_stop_unused_threads:
   unit -> unit
 
-val thread_self:
-  unit -> Thread.t structure ptr
+(*SKIPPED : g_thread_self return type Thread.t structure ptr*)
 
 val thread_yield:
   unit -> unit
@@ -1265,73 +1208,31 @@ val usleep:
 (* Not implemented g_utf16_to_utf8 - out argument not handled
 Unsigned.uint16 ptr -> int64 -> (string, int64, int64)
 *)
-
-val utf8_casefold:
-  string -> int64 -> string
-
-val utf8_collate:
-  string -> string -> int32
-
-val utf8_collate_key:
-  string -> int64 -> string
-
-val utf8_collate_key_for_filename:
-  string -> int64 -> string
-
-val utf8_find_next_char:
-  string -> string option -> string option
-
-val utf8_find_prev_char:
-  string -> string -> string
-
-(*Not implemented g_utf8_get_char return type unichar not handled*)
-
-(*Not implemented g_utf8_get_char_validated return type unichar not handled*)
+(*SKIPPED : utf8_casefold*)
+(*SKIPPED : utf8_collate*)
+(*SKIPPED : utf8_collate_key*)
+(*SKIPPED : utf8_collate_key_for_filename*)
+(*SKIPPED : utf8_find_next_char*)
+(*SKIPPED : utf8_find_prev_char*)
+(*SKIPPED : utf8_get_char*)
+(*SKIPPED : utf8_get_char_validated*)
 (*SKIPPED : utf8_make_valid*)
-
-val utf8_normalize:
-  string -> int64 -> Normalize_mode.t -> string
-
-val utf8_offset_to_pointer:
-  string -> int64 -> string
-
-val utf8_pointer_to_offset:
-  string -> string -> int64
-
-val utf8_prev_char:
-  string -> string
-
-(*Not implemented g_utf8_strchr type unichar not implemented*)
-
-val utf8_strdown:
-  string -> int64 -> string
-
-val utf8_strlen:
-  string -> int64 -> int64
-
-val utf8_strncpy:
-  string -> string -> Unsigned.uint64 -> string
-
-(*Not implemented g_utf8_strrchr type unichar not implemented*)
-
-val utf8_strreverse:
-  string -> int64 -> string
-
-val utf8_strup:
-  string -> int64 -> string
-
-val utf8_substring:
-  string -> int64 -> int64 -> string
-
-(*Not implemented g_utf8_to_ucs4 return type unichar not handled*)
-
-(*Not implemented g_utf8_to_ucs4_fast return type unichar not handled*)
-
-(* Not implemented g_utf8_to_utf16 - out argument not handled
-string -> int64 -> (Unsigned.uint16 ptr, int64, int64)
-*)
-
-(*Not implemented g_utf8_validate type C Array type for Types.Array tag not implemented*)
+(*SKIPPED : utf8_normalize*)
+(*SKIPPED : utf8_offset_to_pointer*)
+(*SKIPPED : utf8_pointer_to_offset*)
+(*SKIPPED : utf8_prev_char*)
+(*SKIPPED : utf8_strchr*)
+(*SKIPPED : utf8_strdown*)
+(*SKIPPED : utf8_strlen*)
+(*SKIPPED : utf8_strncpy*)
+(*SKIPPED : utf8_strrchr*)
+(*SKIPPED : utf8_strreverse*)
+(*SKIPPED : utf8_strup*)
+(*SKIPPED : utf8_substring*)
+(*SKIPPED : utf8_to_ucs4*)
+(*SKIPPED : utf8_to_ucs4_fast*)
+(*SKIPPED : utf8_to_utf16*)
+(*SKIPPED : utf8_validate*)
 (*SKIPPED : uuid_string_is_valid*)
 (*SKIPPED : uuid_string_random*)
 
