@@ -17,6 +17,7 @@
  *)
 
 open GObject_introspection
+
 module Option = struct
   let value ~default value_or_none =
     match value_or_none with
@@ -417,3 +418,53 @@ let type_info_to_bindings_types type_info maybe_null =
       | Arg as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
       | Type as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
       | Unresolved as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
+
+let allocate_type_bindings type_info var_name =
+  let _get_allocate_type_and_def_value () =
+    let check_if_pointer (ctypes_t, default_value) =
+      if Type_info.is_pointer type_info then
+        (Printf.sprintf "(ptr_opt %s)" ctypes_t, "None")
+      else (ctypes_t, default_value)
+    in
+    match Type_info.get_interface type_info with
+    | None -> (
+      match Type_info.get_tag type_info with
+      | Types.Void -> None
+      | Types.Boolean -> Some (check_if_pointer ("bool", "false"))
+      | Types.Int8 -> Some (check_if_pointer ("int8_t", "0"))
+      | Types.Uint8 -> Some (check_if_pointer ("uint8_t", "0"))
+      | Types.Int16 -> Some (check_if_pointer ("int16_t", "0"))
+      | Types.Uint16 -> Some (check_if_pointer ("uint16_t", "0"))
+      | Types.Int32 -> Some (check_if_pointer ("int32_t", "0"))
+      | Types.Uint32 -> Some (check_if_pointer ("uint32_t", "0"))
+      | Types.Int64 -> Some (check_if_pointer ("int64_t", "0"))
+      | Types.Uint64 -> Some (check_if_pointer ("uint64_t", "0"))
+      | Types.Float -> Some (check_if_pointer ("float", "0.0"))
+      | Types.Double -> Some (check_if_pointer ("double", "0.0"))
+      | Types.GType -> None
+      | Types.Utf8 | Types.Filename -> Some ("string_opt", "None")
+      | Types.Array -> None
+      | Types.Interface -> None
+      | Types.GList -> Some (check_if_pointer ("List.t_typ", "None"))
+      | Types.GSList -> Some (check_if_pointer ("SList.t_typ", "None"))
+      | Types.GHash -> Some (check_if_pointer ("Hash_table.t_typ", "None"))
+      | Types.Error -> Some (check_if_pointer ("Error.t_typ", "None"))
+      | Types.Unichar -> None
+      )
+    | Some interface ->
+        match Base_info.get_type interface with
+        | Invalid | Function | Callback | Boxed | Enum | Flags -> None
+        | Struct -> (
+          match get_binding_name interface with
+          | None -> None
+          | Some name ->
+          Some (check_if_pointer ((Printf.sprintf "%s.t_typ" name), "None"))
+        )
+        | Object | Interface | Constant | Invalid_0 | Union | Value | Signal
+        | Vfunc | Property | Field | Arg | Type | Unresolved -> None
+  in
+  match _get_allocate_type_and_def_value () with
+  | None -> None
+  | Some (t, v) ->
+      let s = Printf.sprintf "let %s_ptr = allocate %s %s in \n" var_name t v in
+      Some s

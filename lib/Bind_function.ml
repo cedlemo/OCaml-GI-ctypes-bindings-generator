@@ -148,6 +148,13 @@ let get_ctypes_type = function
   | Skipped message -> raise (Failure (Printf.sprintf "get_ocaml_type : Skipped -> %s" message))
   | Arg arg -> arg.ctypes_type
 
+(* get the Type_info.t of an argument or raise an exception if it is not
+ * implemented or if it is skipped. *)
+let get_type_info = function
+  | Not_implemented message -> raise (Failure (Printf.sprintf "get_type_info : Not_implemented -> %s" message))
+  | Skipped message -> raise (Failure (Printf.sprintf "get_type_info : Skipped -> %s" message))
+  | Arg arg -> arg.type_info
+
 let get_args_information callable container skip_types =
   let n = Callable_info.get_n_args callable in
   let is_method = Callable_info.is_method callable in
@@ -268,8 +275,12 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
       let _ = File.bprintf mli "let %s =\n" (String.concat " " function_decl) in
       let var_out_allocate = List.map (fun a ->
         let name = get_escaped_arg_name a in
-        let ctypes_type = get_ctypes_type a in
-        File.bprintf ml "  let %s_ptr = allocate (%s) None in\n" name ctypes_type
+        match get_type_info a with
+        | None -> raise (Failure "generate_callable_bindings_when_out_args: no typeinfo for arg")
+        | Some type_info ->
+            match allocate_type_bindings type_info name with
+            | None -> raise (Failure "generate_callable_bindings_when_out_args: unable to get type to allocate")
+            | Some s -> File.bprintf ml "  %s" s
       ) args.out_list in
       let _ = File.bprintf mli "%s" (String.concat " -> " (List.map (fun a -> get_ocaml_type a) args.in_list)) in
       let _ = File.bprintf mli " -> %s\n" ocaml_types_out in
