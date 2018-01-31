@@ -466,6 +466,5 @@ let allocate_type_bindings type_info var_name =
   match _get_allocate_type_and_def_value () with
   | None -> None
   | Some (t, v) ->
-      let _ = print_endline var_name in
       let s = Printf.sprintf "let %s_ptr = allocate %s %s in \n" var_name t v in
       Some s
