@@ -24,7 +24,9 @@ let lookup_extended hash_table lookup_key =
     foreign (ptr t_typ @-> ptr_opt void @ -> ptr_opt void @-> ptr_opt void @-> returning bool)
   in
   let ret = lookup_extended_raw hash_table lookup_key orig_key_ptr value_ptr in
-  (ret, @!(orig_key) @!(value))
+  let orig_key = match orig_key_ptr with | None -> None | Some ptr -> @!ptr in
+  let value = match value_ptr with | None -> None | Some ptr -> @!ptr in
+  (ret, orig_key value)
 *)
 let remove =
   foreign "g_hash_table_remove" (ptr t_typ @-> ptr_opt void @-> returning (bool))

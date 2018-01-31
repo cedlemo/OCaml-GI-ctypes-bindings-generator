@@ -320,13 +320,15 @@ let compute_checksum_for_string =
 
 (* string -> int64 -> string -> string -> (string, Unsigned.uint64, Unsigned.uint64)*)
 let convert str len to_codeset from_codeset =
-  let bytes_read_ptr = allocate (uint64_t) None in
-  let bytes_written_ptr = allocate (uint64_t) None in
+  let bytes_read_ptr = allocate uint64_t 0 in
+  let bytes_written_ptr = allocate uint64_t 0 in
   let convert_raw g_convert =
     foreign (string @-> int64_t @-> string @-> string @ -> uint64_t @-> uint64_t @-> returning string)
   in
   let ret = convert_raw str len to_codeset from_codeset bytes_read_ptr bytes_written_ptr in
-  (ret, @!(bytes_read) @!(bytes_written))
+  let bytes_read = @!bytes_read_ptr in
+  let bytes_written = @!bytes_written_ptr in
+  (ret, bytes_read bytes_written)
 *)
 
 let convert_error_quark =
@@ -469,12 +471,13 @@ let file_error_quark =
 
 (* string option -> (int32, string)*)
 let file_open_tmp tmpl =
-  let name_used_ptr = allocate (string) None in
+  let name_used_ptr = allocate string_opt None in
   let file_open_tmp_raw g_file_open_tmp =
     foreign (string_opt @ -> string @-> returning int32_t)
   in
   let ret = file_open_tmp_raw tmpl name_used_ptr in
-  (ret, @!(name_used))
+  let name_used = name_used_ptr in
+  (ret, name_used)
 *)
 
 let file_read_link filename =
@@ -504,12 +507,13 @@ let filename_display_name =
 
 (* string -> (string, string option)*)
 let filename_from_uri uri =
-  let hostname_ptr = allocate (string_opt) None in
+  let hostname_ptr = allocate string_opt None in
   let filename_from_uri_raw g_filename_from_uri =
     foreign (string @ -> string_opt @-> returning string)
   in
   let ret = filename_from_uri_raw uri hostname_ptr in
-  (ret, @!(hostname))
+  let hostname = hostname_ptr in
+  (ret, hostname)
 *)
 
 (*Not implemented g_filename_from_utf8 return type C Array type for Types.Array tag not handled*)
@@ -530,13 +534,15 @@ let filename_to_uri filename hostname =
 
 (* string -> int64 -> (string, Unsigned.uint64, Unsigned.uint64)*)
 let filename_to_utf8 opsysstring len =
-  let bytes_read_ptr = allocate (uint64_t) None in
-  let bytes_written_ptr = allocate (uint64_t) None in
+  let bytes_read_ptr = allocate uint64_t 0 in
+  let bytes_written_ptr = allocate uint64_t 0 in
   let filename_to_utf8_raw g_filename_to_utf8 =
     foreign (string @-> int64_t @ -> uint64_t @-> uint64_t @-> returning string)
   in
   let ret = filename_to_utf8_raw opsysstring len bytes_read_ptr bytes_written_ptr in
-  (ret, @!(bytes_read) @!(bytes_written))
+  let bytes_read = @!bytes_read_ptr in
+  let bytes_written = @!bytes_written_ptr in
+  (ret, bytes_read bytes_written)
 *)
 
 let find_program_in_path =
@@ -559,12 +565,13 @@ let get_application_name =
 
 (*  -> (bool, string)*)
 let get_charset =
-  let charset_ptr = allocate (string) None in
+  let charset_ptr = allocate string_opt None in
   let get_charset_raw g_get_charset =
     foreign ( @ -> string @-> returning bool)
   in
   let ret = get_charset_raw  charset_ptr in
-  (ret, @!(charset))
+  let charset = charset_ptr in
+  (ret, charset)
 *)
 
 let get_codeset =
@@ -659,7 +666,9 @@ let hash_table_lookup_extended hash_table lookup_key =
     foreign (ptr Hash_table.t_typ @-> ptr_opt void @ -> ptr_opt void @-> ptr_opt void @-> returning bool)
   in
   let ret = hash_table_lookup_extended_raw hash_table lookup_key orig_key_ptr value_ptr in
-  (ret, @!(orig_key) @!(value))
+  let orig_key = match orig_key_ptr with | None -> None | Some ptr -> @!ptr in
+  let value = match value_ptr with | None -> None | Some ptr -> @!ptr in
+  (ret, orig_key value)
 *)
 
 let hash_table_remove =
@@ -759,26 +768,30 @@ let key_file_error_quark =
 
 (* string -> int64 -> (string, Unsigned.uint64, Unsigned.uint64)*)
 let locale_from_utf8 utf8string len =
-  let bytes_read_ptr = allocate (uint64_t) None in
-  let bytes_written_ptr = allocate (uint64_t) None in
+  let bytes_read_ptr = allocate uint64_t 0 in
+  let bytes_written_ptr = allocate uint64_t 0 in
   let locale_from_utf8_raw g_locale_from_utf8 =
     foreign (string @-> int64_t @ -> uint64_t @-> uint64_t @-> returning string)
   in
   let ret = locale_from_utf8_raw utf8string len bytes_read_ptr bytes_written_ptr in
-  (ret, @!(bytes_read) @!(bytes_written))
+  let bytes_read = @!bytes_read_ptr in
+  let bytes_written = @!bytes_written_ptr in
+  (ret, bytes_read bytes_written)
 *)
 
 (* Not implemented g_locale_to_utf8 - out argument not handled
 
 (* string -> int64 -> (string, Unsigned.uint64, Unsigned.uint64)*)
 let locale_to_utf8 opsysstring len =
-  let bytes_read_ptr = allocate (uint64_t) None in
-  let bytes_written_ptr = allocate (uint64_t) None in
+  let bytes_read_ptr = allocate uint64_t 0 in
+  let bytes_written_ptr = allocate uint64_t 0 in
   let locale_to_utf8_raw g_locale_to_utf8 =
     foreign (string @-> int64_t @ -> uint64_t @-> uint64_t @-> returning string)
   in
   let ret = locale_to_utf8_raw opsysstring len bytes_read_ptr bytes_written_ptr in
-  (ret, @!(bytes_read) @!(bytes_written))
+  let bytes_read = @!bytes_read_ptr in
+  let bytes_written = @!bytes_written_ptr in
+  (ret, bytes_read bytes_written)
 *)
 (*SKIPPED : log_default_handler*)
 (*SKIPPED : log_remove_handler*)
@@ -889,7 +902,8 @@ let propagate_error src =
     foreign (ptr Error.t_typ @ -> ptr_opt Error.t_typ @-> returning void)
   in
   let ret = propagate_error_raw src dest_ptr in
-  (ret, @!(dest))
+  let dest = match dest_ptr with | None -> None | Some ptr -> @!ptr in
+  (ret, dest)
 *)
 
 let quark_from_static_string =
@@ -925,12 +939,13 @@ let random_set_seed =
 
 (* string -> (bool, bool)*)
 let regex_check_replacement replacement =
-  let has_references_ptr = allocate (bool) None in
+  let has_references_ptr = allocate bool false in
   let regex_check_replacement_raw g_regex_check_replacement =
     foreign (string @ -> bool @-> returning bool)
   in
   let ret = regex_check_replacement_raw replacement has_references_ptr in
-  (ret, @!(has_references))
+  let has_references = @!has_references_ptr in
+  (ret, has_references)
 *)
 
 let regex_error_quark =
@@ -977,12 +992,13 @@ let set_application_name =
 
 (* Unsigned.uint32 -> int32 -> string -> (unit, Error.t structure ptr)*)
 let set_error_literal domain code message =
-  let err_ptr = allocate (ptr Error.t_typ) None in
+  let err_ptr = allocate (ptr_opt Error.t_typ) None in
   let set_error_literal_raw g_set_error_literal =
     foreign (uint32_t @-> int32_t @-> string @ -> ptr Error.t_typ @-> returning void)
   in
   let ret = set_error_literal_raw domain code message err_ptr in
-  (ret, @!(err))
+  let err = match err_ptr with | None -> None | Some ptr -> @!ptr in
+  (ret, err)
 *)
 
 let set_prgname =
@@ -1180,12 +1196,13 @@ let strstr_len =
 
 (* string -> (float, string)*)
 let strtod nptr =
-  let endptr_ptr = allocate (string) None in
+  let endptr_ptr = allocate string_opt None in
   let strtod_raw g_strtod =
     foreign (string @ -> string @-> returning double)
   in
   let ret = strtod_raw nptr endptr_ptr in
-  (ret, @!(endptr))
+  let endptr = endptr_ptr in
+  (ret, endptr)
 *)
 (*DEPRECATED : strup*)
 (*SKIPPED : strv_contains*)
@@ -1259,12 +1276,13 @@ let thread_yield =
 
 (* string -> (bool, Time_val.t structure)*)
 let time_val_from_iso8601 iso_date =
-  let time__ptr = allocate (Time_val.t_typ) None in
+  let time__ptr = allocate Time_val.t_typ None in
   let time_val_from_iso8601_raw g_time_val_from_iso8601 =
     foreign (string @ -> Time_val.t_typ @-> returning bool)
   in
   let ret = time_val_from_iso8601_raw iso_date time__ptr in
-  (ret, @!(time_))
+  let time_ = @!time__ptr in
+  (ret, time_)
 *)
 
 (*Not implemented g_timeout_add_full type callback not implemented*)
@@ -1430,13 +1448,15 @@ let usleep =
 
 (* Unsigned.uint16 ptr -> int64 -> (string, int64, int64)*)
 let utf16_to_utf8 str len =
-  let items_read_ptr = allocate (int64_t) None in
-  let items_written_ptr = allocate (int64_t) None in
+  let items_read_ptr = allocate int64_t 0 in
+  let items_written_ptr = allocate int64_t 0 in
   let utf16_to_utf8_raw g_utf16_to_utf8 =
     foreign (ptr uint16_t @-> int64_t @ -> int64_t @-> int64_t @-> returning string)
   in
   let ret = utf16_to_utf8_raw str len items_read_ptr items_written_ptr in
-  (ret, @!(items_read) @!(items_written))
+  let items_read = @!items_read_ptr in
+  let items_written = @!items_written_ptr in
+  (ret, items_read items_written)
 *)
 (*SKIPPED : utf8_casefold*)
 (*SKIPPED : utf8_collate*)
@@ -1503,10 +1523,11 @@ let variant_type_string_is_valid =
 
 (* string -> string option -> (bool, string)*)
 let variant_type_string_scan _string limit =
-  let endptr_ptr = allocate (string) None in
+  let endptr_ptr = allocate string_opt None in
   let variant_type_string_scan_raw g_variant_type_string_scan =
     foreign (string @-> string_opt @ -> string @-> returning bool)
   in
   let ret = variant_type_string_scan_raw _string limit endptr_ptr in
-  (ret, @!(endptr))
+  let endptr = endptr_ptr in
+  (ret, endptr)
 *)
