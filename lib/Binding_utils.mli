@@ -94,9 +94,11 @@ val type_tag_to_bindings_types:
 val type_info_to_bindings_types:
   Type_info.t structure ptr -> bool -> bindings_types
 
-(** Create from a Type_info.t the allocation instructions with Ctypes. *)
+(** Create from a Type_info.t the allocation instructions with Ctypes and
+ *  the instructions in order to get the value from the pointer of the
+ *  allocated out argument. *)
 val allocate_type_bindings:
-  Type_info.t structure ptr -> string -> string option
+  Type_info.t structure ptr -> string -> (string * string) option
 
 (** Check if a string match on of the pattern in a list. *)
 val match_one_of:

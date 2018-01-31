@@ -423,8 +423,10 @@ let allocate_type_bindings type_info var_name =
   let _get_allocate_type_and_def_value () =
     let check_if_pointer (ctypes_t, default_value) =
       if Type_info.is_pointer type_info then
-        (Printf.sprintf "(ptr_opt %s)" ctypes_t, "None")
-      else (ctypes_t, default_value)
+        (Printf.sprintf "(ptr_opt %s)" ctypes_t,
+         "None",
+         Printf.sprintf "match %s_ptr with | None -> None | Some ptr -> @!ptr" var_name)
+      else (ctypes_t, default_value, Printf.sprintf "@!%s_ptr" var_name)
     in
     match Type_info.get_interface type_info with
     | None -> (
@@ -442,7 +444,7 @@ let allocate_type_bindings type_info var_name =
       | Types.Float -> Some (check_if_pointer ("float", "0.0"))
       | Types.Double -> Some (check_if_pointer ("double", "0.0"))
       | Types.GType -> None
-      | Types.Utf8 | Types.Filename -> Some ("string_opt", "None")
+      | Types.Utf8 | Types.Filename -> Some ("string_opt", "None", var_name ^ "_ptr")
       | Types.Array -> None
       | Types.Interface -> None
       | Types.GList -> Some (check_if_pointer ("List.t_typ", "None"))
@@ -465,6 +467,8 @@ let allocate_type_bindings type_info var_name =
   in
   match _get_allocate_type_and_def_value () with
   | None -> None
-  | Some (t, v) ->
-      let s = Printf.sprintf "let %s_ptr = allocate %s %s in \n" var_name t v in
-      Some s
+  | Some (t, v, r) ->
+      let allocate_instructions =
+        Printf.sprintf "let %s_ptr = allocate %s %s in\n" var_name t v in
+      let get_value = Printf.sprintf "%s" r in
+      Some (allocate_instructions, get_value)

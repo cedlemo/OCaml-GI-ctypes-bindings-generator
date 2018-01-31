@@ -273,14 +273,14 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
       let function_decl = name :: (get_escaped_arg_names args.in_list) in
       let _ = File.bprintf ml "let %s =\n" (String.concat " " function_decl) in
       let _ = File.bprintf mli "let %s =\n" (String.concat " " function_decl) in
-      let var_out_allocate = List.map (fun a ->
+      let _ = List.iter (fun a ->
         let name = get_escaped_arg_name a in
         match get_type_info a with
         | None -> raise (Failure "generate_callable_bindings_when_out_args: no typeinfo for arg")
         | Some type_info ->
             match allocate_type_bindings type_info name with
             | None -> raise (Failure "generate_callable_bindings_when_out_args: unable to get type to allocate")
-            | Some s -> File.bprintf ml "  %s" s
+            | Some (s, _) -> File.bprintf ml "  %s" s
       ) args.out_list in
       let _ = File.bprintf mli "%s" (String.concat " -> " (List.map (fun a -> get_ocaml_type a) args.in_list)) in
       let _ = File.bprintf mli " -> %s\n" ocaml_types_out in
@@ -290,7 +290,16 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
       let _ = File.bprintf ml " @-> returning %s)\n  in\n" ctypes_ret in
       let _ = File.bprintf ml "  let ret = %s_raw %s %s in\n" name (String.concat " " (List.map (fun a -> get_escaped_arg_name a) args.in_list))
                                                             (String.concat " " (List.map (fun a -> (get_escaped_arg_name a) ^ "_ptr") args.out_list)) in
-      File.bprintf ml "  (ret, %s)\n" (String.concat " " (List.map (fun a -> Printf.sprintf "@!(%s)" (get_escaped_arg_name a)) args.out_list))
+      let _ = List.iter (fun a ->
+        let name = get_escaped_arg_name a in
+        match get_type_info a with
+        | None -> raise (Failure "generate_callable_bindings_when_out_args: no typeinfo for arg")
+        | Some type_info ->
+            match allocate_type_bindings type_info name with
+            | None -> raise (Failure "generate_callable_bindings_when_out_args: unable to get type to allocate")
+            | Some (_, g) -> File.bprintf ml "  let %s = %s in\n" name g
+      ) args.out_list in
+      File.bprintf ml "  (ret, %s)\n" (String.concat " " (List.map (fun a -> get_escaped_arg_name a) args.out_list))
    (* generate the function return types with the args out
    generate the function signature with only "in args"
    allocate the args out
