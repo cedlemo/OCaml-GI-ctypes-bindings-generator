@@ -11,6 +11,6 @@ val add:
 val to_iso8601:
   t structure ptr -> string option
 (* Not implemented g_time_val_from_iso8601 - out argument not handled
-let from_iso8601 iso_date =
+let from_iso8601 :
 string -> (bool, t structure)
 *)

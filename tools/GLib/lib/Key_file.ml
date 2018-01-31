@@ -132,12 +132,12 @@ let load_from_data self data length flags =
 
 (* t structure ptr -> string -> Key_file_flags.t_list -> (bool, string)*)
 let load_from_data_dirs self file flags =
-  let full_path_ptr = allocate string_opt None in
+  let full_path_ptr = allocate string  in
   let load_from_data_dirs_raw g_key_file_load_from_data_dirs =
     foreign (ptr t_typ @-> string @-> Key_file_flags.t_list_view @ -> string @-> returning bool)
   in
   let ret = load_from_data_dirs_raw self file flags full_path_ptr in
-  let full_path = full_path_ptr in
+  let full_path = @!full_path_ptr in
   (ret, full_path)
 *)
 (*Not implemented g_key_file_load_from_dirs type C Array type for Types.Array tag not implemented*)

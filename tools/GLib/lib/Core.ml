@@ -471,12 +471,12 @@ let file_error_quark =
 
 (* string option -> (int32, string)*)
 let file_open_tmp tmpl =
-  let name_used_ptr = allocate string_opt None in
+  let name_used_ptr = allocate string  in
   let file_open_tmp_raw g_file_open_tmp =
     foreign (string_opt @ -> string @-> returning int32_t)
   in
   let ret = file_open_tmp_raw tmpl name_used_ptr in
-  let name_used = name_used_ptr in
+  let name_used = @!name_used_ptr in
   (ret, name_used)
 *)
 
@@ -507,12 +507,12 @@ let filename_display_name =
 
 (* string -> (string, string option)*)
 let filename_from_uri uri =
-  let hostname_ptr = allocate string_opt None in
+  let hostname_ptr = allocate string  in
   let filename_from_uri_raw g_filename_from_uri =
     foreign (string @ -> string_opt @-> returning string)
   in
   let ret = filename_from_uri_raw uri hostname_ptr in
-  let hostname = hostname_ptr in
+  let hostname = @!hostname_ptr in
   (ret, hostname)
 *)
 
@@ -563,14 +563,14 @@ let get_application_name =
 
 (* Not implemented g_get_charset - out argument not handled
 
-(*  -> (bool, string)*)
-let get_charset =
-  let charset_ptr = allocate string_opt None in
+(* unit -> (bool, string)*)
+let get_charset () =
+  let charset_ptr = allocate string  in
   let get_charset_raw g_get_charset =
     foreign ( @ -> string @-> returning bool)
   in
   let ret = get_charset_raw  charset_ptr in
-  let charset = charset_ptr in
+  let charset = @!charset_ptr in
   (ret, charset)
 *)
 
@@ -1196,12 +1196,12 @@ let strstr_len =
 
 (* string -> (float, string)*)
 let strtod nptr =
-  let endptr_ptr = allocate string_opt None in
+  let endptr_ptr = allocate string  in
   let strtod_raw g_strtod =
     foreign (string @ -> string @-> returning double)
   in
   let ret = strtod_raw nptr endptr_ptr in
-  let endptr = endptr_ptr in
+  let endptr = @!endptr_ptr in
   (ret, endptr)
 *)
 (*DEPRECATED : strup*)
@@ -1523,11 +1523,11 @@ let variant_type_string_is_valid =
 
 (* string -> string option -> (bool, string)*)
 let variant_type_string_scan _string limit =
-  let endptr_ptr = allocate string_opt None in
+  let endptr_ptr = allocate string  in
   let variant_type_string_scan_raw g_variant_type_string_scan =
     foreign (string @-> string_opt @ -> string @-> returning bool)
   in
   let ret = variant_type_string_scan_raw _string limit endptr_ptr in
-  let endptr = endptr_ptr in
+  let endptr = @!endptr_ptr in
   (ret, endptr)
 *)

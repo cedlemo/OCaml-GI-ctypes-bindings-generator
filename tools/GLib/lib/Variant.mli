@@ -57,7 +57,7 @@ val compare:
 (*Not implemented g_variant_dup_bytestring_array return type C Array type for Types.Array tag not handled*)
 (*Not implemented g_variant_dup_objv return type C Array type for Types.Array tag not handled*)
 (* Not implemented g_variant_dup_string - out argument not handled
-let dup_string self =
+let dup_string :
 t structure ptr -> (string, Unsigned.uint64)
 *)
 (*Not implemented g_variant_dup_strv return type C Array type for Types.Array tag not handled*)
@@ -92,7 +92,7 @@ val get_normal_form:
 val get_size:
   t structure ptr -> Unsigned.uint64
 (* Not implemented g_variant_get_string - out argument not handled
-let get_string self =
+let get_string :
 t structure ptr -> (string, Unsigned.uint64)
 *)
 (*Not implemented g_variant_get_strv return type C Array type for Types.Array tag not handled*)

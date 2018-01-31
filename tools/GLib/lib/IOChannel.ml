@@ -75,14 +75,14 @@ let read =
 
 (* t structure ptr -> (IOStatus.t, string, Unsigned.uint64, Unsigned.uint64)*)
 let read_line self =
-  let str_return_ptr = allocate string_opt None in
+  let str_return_ptr = allocate string  in
   let length_ptr = allocate uint64_t 0 in
   let terminator_pos_ptr = allocate uint64_t 0 in
   let read_line_raw g_io_channel_read_line =
     foreign (ptr t_typ @ -> string @-> uint64_t @-> uint64_t @-> returning IOStatus.t_view)
   in
   let ret = read_line_raw self str_return_ptr length_ptr terminator_pos_ptr in
-  let str_return = str_return_ptr in
+  let str_return = @!str_return_ptr in
   let length = @!length_ptr in
   let terminator_pos = @!terminator_pos_ptr in
   (ret, str_return length terminator_pos)

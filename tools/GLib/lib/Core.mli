@@ -295,7 +295,7 @@ val compute_checksum_for_string:
 (*Not implemented g_compute_hmac_for_string type C Array type for Types.Array tag not implemented*)
 
 (* Not implemented g_convert - out argument not handled
-let convert str len to_codeset from_codeset =
+let convert :
 string -> int64 -> string -> string -> (string, Unsigned.uint64, Unsigned.uint64)
 *)
 
@@ -409,7 +409,7 @@ val file_error_quark:
 (*Not implemented g_file_get_contents type C Array type for Types.Array tag not implemented*)
 
 (* Not implemented g_file_open_tmp - out argument not handled
-let file_open_tmp tmpl =
+let file_open_tmp :
 string option -> (int32, string)
 *)
 
@@ -428,7 +428,7 @@ val filename_display_name:
   string -> string
 
 (* Not implemented g_filename_from_uri - out argument not handled
-let filename_from_uri uri =
+let filename_from_uri :
 string -> (string, string option)
 *)
 
@@ -438,7 +438,7 @@ val filename_to_uri:
   string -> string option -> (string option, Error.t structure ptr option) result
 
 (* Not implemented g_filename_to_utf8 - out argument not handled
-let filename_to_utf8 opsysstring len =
+let filename_to_utf8 :
 string -> int64 -> (string, Unsigned.uint64, Unsigned.uint64)
 *)
 
@@ -459,8 +459,8 @@ val get_application_name:
   unit -> string
 
 (* Not implemented g_get_charset - out argument not handled
-let get_charset =
- -> (bool, string)
+let get_charset :
+unit -> (bool, string)
 *)
 
 val get_codeset:
@@ -546,7 +546,7 @@ val hash_table_lookup:
   Hash_table.t structure ptr -> unit ptr option -> unit ptr option
 
 (* Not implemented g_hash_table_lookup_extended - out argument not handled
-let hash_table_lookup_extended hash_table lookup_key =
+let hash_table_lookup_extended :
 Hash_table.t structure ptr -> unit ptr option -> (bool, unit ptr option, unit ptr option)
 *)
 
@@ -644,12 +644,12 @@ val key_file_error_quark:
 (*Not implemented g_listenv return type C Array type for Types.Array tag not handled*)
 
 (* Not implemented g_locale_from_utf8 - out argument not handled
-let locale_from_utf8 utf8string len =
+let locale_from_utf8 :
 string -> int64 -> (string, Unsigned.uint64, Unsigned.uint64)
 *)
 
 (* Not implemented g_locale_to_utf8 - out argument not handled
-let locale_to_utf8 opsysstring len =
+let locale_to_utf8 :
 string -> int64 -> (string, Unsigned.uint64, Unsigned.uint64)
 *)
 (*SKIPPED : log_default_handler*)
@@ -753,7 +753,7 @@ val poll:
   Poll_fd.t structure ptr -> Unsigned.uint32 -> int32 -> int32
 
 (* Not implemented g_propagate_error - out argument not handled
-let propagate_error src =
+let propagate_error :
 Error.t structure ptr -> (unit, Error.t structure ptr option)
 *)
 
@@ -787,7 +787,7 @@ val random_set_seed:
 (*SKIPPED : realloc_n*)
 
 (* Not implemented g_regex_check_replacement - out argument not handled
-let regex_check_replacement replacement =
+let regex_check_replacement :
 string -> (bool, bool)
 *)
 
@@ -832,7 +832,7 @@ val set_application_name:
   string -> unit
 
 (* Not implemented g_set_error_literal - out argument not handled
-let set_error_literal domain code message =
+let set_error_literal :
 Unsigned.uint32 -> int32 -> string -> (unit, Error.t structure ptr)
 *)
 
@@ -1001,7 +1001,7 @@ val strstr_len:
   string -> int64 -> string -> string
 
 (* Not implemented g_strtod - out argument not handled
-let strtod nptr =
+let strtod :
 string -> (float, string)
 *)
 (*DEPRECATED : strup*)
@@ -1073,7 +1073,7 @@ val thread_yield:
   unit -> unit
 
 (* Not implemented g_time_val_from_iso8601 - out argument not handled
-let time_val_from_iso8601 iso_date =
+let time_val_from_iso8601 :
 string -> (bool, Time_val.t structure)
 *)
 
@@ -1219,7 +1219,7 @@ val usleep:
 (*Not implemented g_utf16_to_ucs4 return type unichar not handled*)
 
 (* Not implemented g_utf16_to_utf8 - out argument not handled
-let utf16_to_utf8 str len =
+let utf16_to_utf8 :
 Unsigned.uint16 ptr -> int64 -> (string, int64, int64)
 *)
 (*SKIPPED : utf8_casefold*)
@@ -1275,6 +1275,6 @@ val variant_type_string_is_valid:
   string -> bool
 
 (* Not implemented g_variant_type_string_scan - out argument not handled
-let variant_type_string_scan _string limit =
+let variant_type_string_scan :
 string -> string option -> (bool, string)
 *)

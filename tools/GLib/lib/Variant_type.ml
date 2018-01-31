@@ -63,11 +63,11 @@ let string_is_valid =
 
 (* string -> string option -> (bool, string)*)
 let string_scan _string limit =
-  let endptr_ptr = allocate string_opt None in
+  let endptr_ptr = allocate string  in
   let string_scan_raw g_variant_type_string_scan =
     foreign (string @-> string_opt @ -> string @-> returning bool)
   in
   let ret = string_scan_raw _string limit endptr_ptr in
-  let endptr = endptr_ptr in
+  let endptr = @!endptr_ptr in
   (ret, endptr)
 *)

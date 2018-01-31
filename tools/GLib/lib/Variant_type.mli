@@ -59,6 +59,6 @@ val checked_:
 val string_is_valid:
   string -> bool
 (* Not implemented g_variant_type_string_scan - out argument not handled
-let string_scan _string limit =
+let string_scan :
 string -> string option -> (bool, string)
 *)

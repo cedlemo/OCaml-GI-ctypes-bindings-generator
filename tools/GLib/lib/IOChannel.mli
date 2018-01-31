@@ -52,7 +52,7 @@ val read:
   t structure ptr -> string -> Unsigned.uint64 -> Unsigned.uint64 ptr -> IOError.t
 (*Not implemented g_io_channel_read_chars type C Array type for Types.Array tag not implemented*)
 (* Not implemented g_io_channel_read_line - out argument not handled
-let read_line self =
+let read_line :
 t structure ptr -> (IOStatus.t, string, Unsigned.uint64, Unsigned.uint64)
 *)
 val read_line_string:
