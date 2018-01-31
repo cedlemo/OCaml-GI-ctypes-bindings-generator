@@ -429,7 +429,7 @@ let allocate_type_bindings type_info var_name =
     match Type_info.get_interface type_info with
     | None -> (
       match Type_info.get_tag type_info with
-      | Types.Void -> None
+      | Types.Void -> Some (check_if_pointer ("void", "None"))
       | Types.Boolean -> Some (check_if_pointer ("bool", "false"))
       | Types.Int8 -> Some (check_if_pointer ("int8_t", "0"))
       | Types.Uint8 -> Some (check_if_pointer ("uint8_t", "0"))
@@ -466,5 +466,6 @@ let allocate_type_bindings type_info var_name =
   match _get_allocate_type_and_def_value () with
   | None -> None
   | Some (t, v) ->
+      let _ = print_endline var_name in
       let s = Printf.sprintf "let %s_ptr = allocate %s %s in \n" var_name t v in
       Some s
