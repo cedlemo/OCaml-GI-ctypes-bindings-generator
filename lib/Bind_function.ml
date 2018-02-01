@@ -287,8 +287,8 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
             | Some (s, _) -> File.bprintf ml "  %s" s
       ) args.out_list in
       let _ = File.bprintf mli " -> %s\n" ocaml_types_out in
-      let _ = File.bprintf ml "  let %s_raw %s =\n" name symbol in
-      let _ = File.bprintf ml "    foreign (%s " (String.concat " @-> " (List.map (fun a -> get_ctypes_type a) args.in_list)) in
+      let _ = File.bprintf ml "  let %s_raw =\n" name in
+      let _ = File.bprintf ml "    foreign \"%s\" (%s " symbol (String.concat " @-> " (List.map (fun a -> get_ctypes_type a) args.in_list)) in
       let _ = File.bprintf ml "@ -> %s" (String.concat " @-> " (List.map (fun a -> get_ctypes_type a) args.out_list)) in
       let _ = File.bprintf ml " @-> returning %s)\n  in\n" ctypes_ret in
       let _ = File.bprintf ml "  let ret = %s_raw %s %s in\n" name (String.concat " " (List.map (fun a -> get_escaped_arg_name a) args.in_list))
