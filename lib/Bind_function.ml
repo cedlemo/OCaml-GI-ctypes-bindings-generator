@@ -258,8 +258,11 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
     | Args args ->
       let ocaml_types_out =
         List.map (fun a -> get_ocaml_type a) args.out_list
-        |> String.concat " * "
-        |> Printf.sprintf "(%s * %s)" ocaml_ret
+        |> function
+          | [] -> Printf.sprintf "(%s)" ocaml_ret
+          | ocaml_args -> let all_elements =
+            if ocaml_ret = "unit" then ocaml_args else ocaml_ret :: ocaml_args
+            in Printf.sprintf "(%s)" (String.concat " * " all_elements)
       in
       (* signature helper in the ml file *)
       let _ = File.bprintf ml "\n(* %s" (match args.in_list with
@@ -297,7 +300,11 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
             | None -> raise (Failure "generate_callable_bindings_when_out_args: unable to get type to allocate")
             | Some (_, g) -> File.bprintf ml "  let %s = %s in\n" name g
       ) args.out_list in
-      File.bprintf ml "  (ret, %s)\n" (String.concat " " (List.map (fun a -> get_escaped_arg_name a) args.out_list))
+      if ocaml_ret = "unit" then
+        match args.out_list with
+        | [] -> File.buff_add_line ml "  (ret)"
+        | _ -> File.bprintf ml "  (%s)\n" (String.concat ", " (List.map (fun a -> get_escaped_arg_name a) args.out_list))
+      else File.bprintf ml "  (ret, %s)\n" (String.concat ", " (List.map (fun a -> get_escaped_arg_name a) args.out_list))
    (* generate the function return types with the args out
    generate the function signature with only "in args"
    allocate the args out
