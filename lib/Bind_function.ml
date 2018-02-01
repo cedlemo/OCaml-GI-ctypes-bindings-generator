@@ -258,13 +258,8 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
     | Args args ->
       let ocaml_types_out =
         List.map (fun a -> get_ocaml_type a) args.out_list
-        |> String.concat ", "
-        |> Printf.sprintf "(%s, %s)" ocaml_ret
-      in
-      let ctypes_types_out =
-        List.map (fun a -> get_ctypes_type a) args.out_list
         |> String.concat " * "
-        |> Printf.sprintf "(%s * %s)" ctypes_ret
+        |> Printf.sprintf "(%s * %s)" ocaml_ret
       in
       (* signature helper in the ml file *)
       let _ = File.bprintf ml "\n(* %s" (match args.in_list with
@@ -277,6 +272,7 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
       let _ = File.bprintf ml "let %s =\n" (String.concat " " function_decl) in
       let _ = File.bprintf mli "let %s :\n" name in
       let _ = File.bprintf mli "%s" (match args.in_list with | [] -> "unit" | _ -> (String.concat " -> " (List.map (fun a -> get_ocaml_type a) args.in_list))) in
+      let _ = File.bprintf mli " -> %s\n" ocaml_types_out in
       let _ = List.iter (fun a ->
         let name = get_escaped_arg_name a in
         match get_type_info a with
@@ -286,10 +282,9 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
             | None -> raise (Failure "generate_callable_bindings_when_out_args: unable to get type to allocate")
             | Some (s, _) -> File.bprintf ml "  %s" s
       ) args.out_list in
-      let _ = File.bprintf mli " -> %s\n" ocaml_types_out in
       let _ = File.bprintf ml "  let %s_raw =\n" name in
       let _ = File.bprintf ml "    foreign \"%s\" (%s " symbol (String.concat " @-> " (List.map (fun a -> get_ctypes_type a) args.in_list)) in
-      let _ = File.bprintf ml "@ -> %s" (String.concat " @-> " (List.map (fun a -> get_ctypes_type a) args.out_list)) in
+      let _ = File.bprintf ml "@-> %s" (String.concat " @-> " (List.map (fun a -> get_ctypes_type a) args.out_list)) in
       let _ = File.bprintf ml " @-> returning %s)\n  in\n" ctypes_ret in
       let _ = File.bprintf ml "  let ret = %s_raw %s %s in\n" name (String.concat " " (List.map (fun a -> get_escaped_arg_name a) args.in_list))
                                                             (String.concat " " (List.map (fun a -> (get_escaped_arg_name a) ^ "_ptr") args.out_list)) in
