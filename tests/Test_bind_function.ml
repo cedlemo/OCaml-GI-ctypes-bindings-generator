@@ -95,6 +95,30 @@ let test_function_bindings_for_in_args_only_function test_ctxt =
      in
      Test_utils.test_writing test_ctxt function_info name writer mli_content ml_content
 
+let test_function_bindings_for_in_args_only_function_gerror test_ctxt =
+  let name = "dir_make_tmp" in
+  match Repository.find_by_name repo namespace name with
+  | None -> assert_equal_string name " has not been found"
+  | Some info -> let function_info = Function_info.from_baseinfo info in
+     let mli_content ="val dir_make_tmp:\n  \
+  string option -> (string option, Error.t structure ptr option) result" in
+     let ml_content =
+"let dir_make_tmp tmpl =\n  \
+  let dir_make_tmp_raw =\n    \
+    foreign \"g_dir_make_tmp\" (string_opt@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (string_opt))\n  \
+  in\n  \
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in\n  \
+  let value = dir_make_tmp_raw tmpl (Some err_ptr_ptr) in\n  \
+  match (!@ err_ptr_ptr) with\n    \
+   | None -> Ok value\n    \
+   | Some _ -> let err_ptr = !@ err_ptr_ptr in\n      \
+     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in\n      \
+     Error (err_ptr)" in
+     let writer = fun name info sources ->
+       let _ = Bind_function.append_ctypes_function_bindings name info "Core" sources [] in
+       Binding_utils.Sources.write_buffs sources
+     in
+     Test_utils.test_writing test_ctxt function_info name writer mli_content ml_content
 
 let test_function_bindings_for_args_out_function test_ctxt =
   let container = "DateTime" in
@@ -136,4 +160,5 @@ let tests =
     "Bind_function escape bad function name" >:: test_escape_bad_function_name;
     "Bind_function test function bindings for in args only function" >:: test_function_bindings_for_in_args_only_function;
     "Bind_function test function bindings for args out function" >:: test_function_bindings_for_args_out_function;
+    "Bind_funtcion test function bindings for in args only function that can throw GError" >:: test_function_bindings_for_in_args_only_function_gerror;
   ]
