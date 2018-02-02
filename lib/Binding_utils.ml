@@ -426,7 +426,7 @@ let allocate_type_bindings type_info var_name =
         (Printf.sprintf "(ptr_opt %s)" ctypes_t,
          "None",
          Printf.sprintf "match %s_ptr with | None -> None | Some ptr -> @!ptr" var_name)
-      else (ctypes_t, default_value, Printf.sprintf "@!%s_ptr" var_name)
+      else (ctypes_t, default_value, Printf.sprintf "!@ %s_ptr" var_name)
     in
     match Type_info.get_interface type_info with
     | None -> (
@@ -434,13 +434,13 @@ let allocate_type_bindings type_info var_name =
       | Types.Void -> Some (check_if_pointer ("void", "None"))
       | Types.Boolean -> Some (check_if_pointer ("bool", "false"))
       | Types.Int8 -> Some (check_if_pointer ("int8_t", "0"))
-      | Types.Uint8 -> Some (check_if_pointer ("uint8_t", "0"))
+      | Types.Uint8 -> Some (check_if_pointer ("uint8_t", "Unsigned.UInt8.zero"))
       | Types.Int16 -> Some (check_if_pointer ("int16_t", "0"))
-      | Types.Uint16 -> Some (check_if_pointer ("uint16_t", "0"))
-      | Types.Int32 -> Some (check_if_pointer ("int32_t", "0"))
-      | Types.Uint32 -> Some (check_if_pointer ("uint32_t", "0"))
-      | Types.Int64 -> Some (check_if_pointer ("int64_t", "0"))
-      | Types.Uint64 -> Some (check_if_pointer ("uint64_t", "0"))
+      | Types.Uint16 -> Some (check_if_pointer ("uint16_t", "Unsigned.UInt16.zero"))
+      | Types.Int32 -> Some (check_if_pointer ("int32_t", "Int32.zero"))
+      | Types.Uint32 -> Some (check_if_pointer ("uint32_t", "Unsigned.UInt32.zero"))
+      | Types.Int64 -> Some (check_if_pointer ("int64_t", "Int64.zero"))
+      | Types.Uint64 -> Some (check_if_pointer ("uint64_t", "Unsigned.UInt64.zero"))
       | Types.Float -> Some (check_if_pointer ("float", "0.0"))
       | Types.Double -> Some (check_if_pointer ("double", "0.0"))
       | Types.GType -> None
