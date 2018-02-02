@@ -82,6 +82,10 @@ type arg_lists = {in_list : arg list; out_list : arg list; in_out_list : arg lis
 
 type args = No_args | Args of arg_lists
 
+let has_in_arg = function
+  | No_args -> false
+  | Args args -> if List.length args.in_list > 0 then true else false
+
 let has_out_arg = function
   | No_args -> false
   | Args args -> if List.length args.out_list > 0 then true else false
@@ -144,6 +148,10 @@ let get_ocaml_type = function
 (** get the OCaml types of a list of arguments. *)
 let get_ocaml_types =
   List.map (fun a -> get_ocaml_type a)
+
+(** Transform a list of arguments to the corresponding mli signature. *)
+let ocaml_types_to_mli_sig l =
+  String.concat " -> " (get_ocaml_types l)
 
 (* get the Ctypes type of an argument and raise an exception if it is not implemented
  * or if it is skipped. *)
@@ -209,13 +217,21 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
   let mli = Sources.mli sources in
   let ml = Sources.ml sources in
   let (ocaml_ret, ctypes_ret) = List.hd ret_types in
+  let error_ocaml_type = "Error.t structure ptr option" in
+  let error_ocaml_ctypes = "ptr_opt Error.t_typ" in
+  let write_mli_signature ocaml_ret () =
+    let _ = File.bprintf mli "val %s:\n  " name in
+    match arguments with
+    | No_args -> File.bprintf mli "unit -> (%s, %s) result\n" ocaml_ret error_ocaml_type
+    | Args args -> File.bprintf mli "%s -> (%s, %s) result\n" (ocaml_types_to_mli_sig args.in_list) ocaml_ret error_ocaml_type
+  in
   let _ = File.bprintf mli "val %s:\n  " name in
   if Callable_info.can_throw_gerror callable then (
     let ocaml_ret' = if ocaml_ret = "string" then "string option" else ocaml_ret in
     let ctypes_ret' = if ctypes_ret = "string" then "string_opt" else ctypes_ret in
     let _ = match arguments with
       | No_args ->
-        let _ = File.bprintf mli "unit -> (%s, Error.t structure ptr option) result\n" ocaml_ret' in
+        let _ = File.bprintf mli "unit -> (%s, %s) result\n" ocaml_ret' error_ocaml_type in
         let _ = File.bprintf ml "let %s () =\n" name in
         let name_raw = name ^ "_raw" in
         let _ = File.bprintf ml "  let %s =\n    foreign \"%s\" " name_raw symbol in
@@ -223,7 +239,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
         let _ = File.buff_add_line ml "  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in" in
         File.bprintf ml "  let value = %s (Some err_ptr_ptr) in\n" name_raw
       | Args args ->
-        let _ = File.bprintf mli "%s -> (%s, Error.t structure ptr option) result\n" (String.concat " -> " (List.map (fun a -> get_ocaml_type a) args.in_list)) ocaml_ret' in
+        let _ = File.bprintf mli "%s -> (%s, Error.t structure ptr option) result\n" (ocaml_types_to_mli_sig args.in_list) ocaml_ret' in
         let arg_names = get_escaped_arg_names args.in_list |> String.concat " " in
         let _ = File.bprintf ml "let %s %s =\n" name arg_names in
         let name_raw = name ^ "_raw" in
@@ -243,7 +259,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
     let _ = match arguments with
       | No_args -> let _ = File.bprintf mli "%s" "unit" in
         File.bprintf ml "(%s" "void"
-      | Args args -> let _ = File.bprintf mli "%s" (String.concat " -> " (List.map (fun a -> get_ocaml_type a) args.in_list)) in
+      | Args args -> let _ = File.bprintf mli "%s" (ocaml_types_to_mli_sig args.in_list) in
         File.bprintf ml "(%s" (String.concat " @-> " (List.map (fun a -> get_ctypes_type a) args.in_list))
     in
     let _ = File.bprintf mli " -> %s\n" ocaml_ret in
@@ -258,6 +274,7 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
   match arguments with
   | No_args -> raise (Failure "generate_callable_bindings_when_out_args with No_args")
   | Args args -> begin
+      let no_in_args = not (has_in_arg arguments) in
       let ocaml_types_out =
         match get_ocaml_types args.out_list with
         | [] -> Printf.sprintf "(%s)" ocaml_ret
@@ -267,11 +284,11 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
       in
       let write_mli_signature () =
         let _ = File.bprintf mli "val %s :\n" name in
-        let _ = File.bprintf mli "  %s" (match args.in_list with | [] -> "unit" | _ -> (String.concat " -> " (get_ocaml_types args.in_list))) in
+        let _ = File.bprintf mli "  %s" (if no_in_args then "unit" else ocaml_types_to_mli_sig args.in_list) in
         File.bprintf mli " -> %s\n" ocaml_types_out
       in
       let write_function_name () =
-        let function_decl = name :: (match args.in_list with | [] -> "()" :: [] | _ -> get_escaped_arg_names args.in_list) in
+        let function_decl = name :: (if no_in_args then "()" :: [] else get_escaped_arg_names args.in_list) in
         File.bprintf ml "let %s =\n" (String.concat " " function_decl)
       in
       let write_out_argument_allocation_instructions a =
