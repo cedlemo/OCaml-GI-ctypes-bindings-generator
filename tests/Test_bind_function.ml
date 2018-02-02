@@ -79,10 +79,47 @@ let test_escape_bad_function_name test_ctxt =
   in
   Test_utils.test_writing test_ctxt method_info "double" writer mli_content ml_content
 
+let test_function_bindings_for_args_out_function test_ctxt =
+  let container = "DateTime" in
+  let name = "get_ymd" in
+  match Repository.find_by_name repo namespace container with
+  | None -> assert_equal_string container " has not been found"
+  | Some date_time_info ->
+      let struct_info = Struct_info.from_baseinfo date_time_info in
+      match Struct_info.find_method struct_info name with
+      | None -> assert_equal_string name " has not been found"
+      | Some method_info ->
+        let mli_content =
+          "(* Not implemented g_date_time_get_ymd - out argument not handled\n\
+          val get_ymd :\n  \
+           t structure ptr -> (int32 * int32 * int32)\n*)" in
+        let ml_content = "(* Not implemented g_date_time_get_ymd - out argument not handled\n\
+                          \n\
+                          (* t structure ptr -> (int32 * int32 * int32)*)\n\
+                          let get_ymd self =\n  \
+                          let year_ptr = allocate int32_t Int32.zero in\n  \
+                          let month_ptr = allocate int32_t Int32.zero in\n  \
+                          let day_ptr = allocate int32_t Int32.zero in\n  \
+                          let get_ymd_raw =\n    \
+                          foreign \"g_date_time_get_ymd\" (ptr t_typ @-> ptr int32_t @-> ptr int32_t @-> ptr int32_t @-> returning void)\n  \
+                          in\n  \
+                          let ret = get_ymd_raw self year_ptr month_ptr day_ptr in\n  \
+                          let year = !@ year_ptr in\n  \
+                          let month = !@ month_ptr in\n  \
+                          let day = !@ day_ptr in\n  \
+                          (year, month, day)\n*)" in
+        let writer = fun name info sources ->
+          let _ = Bind_function.append_ctypes_function_bindings name info container sources [] in
+          Binding_utils.Sources.write_buffs sources
+        in
+        Test_utils.test_writing test_ctxt method_info "get_ymd" writer mli_content ml_content
+
+
 let tests =
   "GObject Introspection Bind_function tests" >:::
   [
     "Bind_function get arguments ctypes" >:: test_get_arguments_types;
     "Bind_function get return types" >:: test_get_return_types;
-    "Bind_function escape bad function name" >:: test_escape_bad_function_name
+    "Bind_function escape bad function name" >:: test_escape_bad_function_name;
+    "Bind_function test function bindings for args out function" >:: test_function_bindings_for_args_out_function;
   ]
