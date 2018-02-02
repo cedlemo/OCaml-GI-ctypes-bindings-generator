@@ -138,7 +138,7 @@ let test_function_bindings_for_args_out_function test_ctxt =
                           let month_ptr = allocate int32_t Int32.zero in\n  \
                           let day_ptr = allocate int32_t Int32.zero in\n  \
                           let get_ymd_raw =\n    \
-                          foreign \"g_date_time_get_ymd\" (ptr t_typ @-> ptr int32_t @-> ptr int32_t @-> ptr int32_t @-> returning void)\n  \
+                          foreign \"g_date_time_get_ymd\" (ptr t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)\n  \
                           in\n  \
                           let ret = get_ymd_raw self year_ptr month_ptr day_ptr in\n  \
                           let year = !@ year_ptr in\n  \

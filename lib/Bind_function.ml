@@ -57,23 +57,6 @@ let get_return_types callable container skip_types =
       | Arg_info.Everything -> ()
       *)
 
-(* Build function bindings :
- * - get the Callable_info
- * - find out the numbers of arguments
- *   - for each argument :
- *     - get the direction :
- *       - in
- *       - out
- *       - in/out
- *     - get the transfert method
- *       - nothing
- *       - container
- *       - everything
- *     - get the Type_info
- *       - get the Tag (scalar data or complex data)
- *     - find out if it is a pointer
- *)
-
 type arg = Not_implemented of string
          | Skipped of string
          | Arg of {name : string; ocaml_type : string; ctypes_type : string; type_info : Type_info.t structure ptr option}
@@ -259,8 +242,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
     end
     else begin
       match arguments with
-      | No_args -> let _ = File.bprintf mli "%s" "unit" in
-          File.bprintf ml "(%s" "void"
+      | No_args -> File.bprintf mli "unit -> %s\n" ocaml_ret
       | Args args ->
           let _ = File.bprintf mli "%s" (ocaml_types_to_mli_sig args.in_list) in
           File.bprintf mli " -> %s\n" ocaml_ret
@@ -346,8 +328,11 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
       in
       let write_foreign_declaration () =
         let _ = File.bprintf ml "  let %s_raw =\n" name in
-        let _ = File.bprintf ml "    foreign \"%s\" (%s " symbol (ctypes_types_to_foreign_sig args.in_list) in
-        let _ = File.bprintf ml "@-> %s" (String.concat " @-> " (List.map (fun a -> "ptr " ^ (get_ctypes_type a)) args.out_list)) in
+        let _ = match args.in_list with
+        | [] -> File.bprintf ml "    foreign \"%s\" (" symbol
+        | _ -> File.bprintf ml "    foreign \"%s\" (%s @-> " symbol (ctypes_types_to_foreign_sig args.in_list)
+        in
+        let _ = File.bprintf ml "%s" (String.concat " @-> " (List.map (fun a -> Printf.sprintf "ptr (%s)" (get_ctypes_type a)) args.out_list)) in
         File.bprintf ml " @-> returning %s)\n  in\n" ctypes_ret
       in
       let write_compute_result () =
