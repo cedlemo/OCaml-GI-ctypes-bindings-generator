@@ -90,13 +90,9 @@ let test_function_bindings_for_args_out_function test_ctxt =
       | None -> assert_equal_string name " has not been found"
       | Some method_info ->
         let mli_content =
-          "(* Not implemented g_date_time_get_ymd - out argument not handled\n\
-          val get_ymd :\n  \
-           t structure ptr -> (int32 * int32 * int32)\n*)" in
-        let ml_content = "(* Not implemented g_date_time_get_ymd - out argument not handled\n\
-                          \n\
-                          (* t structure ptr -> (int32 * int32 * int32)*)\n\
-                          let get_ymd self =\n  \
+          "val get_ymd :\n  \
+           t structure ptr -> (int32 * int32 * int32)" in
+        let ml_content = "let get_ymd self =\n  \
                           let year_ptr = allocate int32_t Int32.zero in\n  \
                           let month_ptr = allocate int32_t Int32.zero in\n  \
                           let day_ptr = allocate int32_t Int32.zero in\n  \
@@ -107,7 +103,7 @@ let test_function_bindings_for_args_out_function test_ctxt =
                           let year = !@ year_ptr in\n  \
                           let month = !@ month_ptr in\n  \
                           let day = !@ day_ptr in\n  \
-                          (year, month, day)\n*)" in
+                          (year, month, day)" in
         let writer = fun name info sources ->
           let _ = Bind_function.append_ctypes_function_bindings name info container sources [] in
           Binding_utils.Sources.write_buffs sources
