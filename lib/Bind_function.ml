@@ -134,12 +134,16 @@ let get_escaped_arg_name = function
   | Skipped message -> raise (Failure (Printf.sprintf "get_escaped_arg_names : Skipped -> %s" message))
   | Arg arg -> Binding_utils.ensure_valid_variable_name arg.name
 
-(* get the OCaml type of an argument and raise an exception if it is not implemented
- * or if it is skipped. *)
+(** get the OCaml type of an argument and raise an exception if it is not implemented
+ *  or if it is skipped. *)
 let get_ocaml_type = function
   | Not_implemented message -> raise (Failure (Printf.sprintf "get_ocaml_type : Not_implemented -> %s" message))
   | Skipped message -> raise (Failure (Printf.sprintf "get_ocaml_type : Skipped -> %s" message))
   | Arg arg -> arg.ocaml_type
+
+(** get the OCaml types of a list of arguments. *)
+let get_ocaml_types =
+  List.map (fun a -> get_ocaml_type a)
 
 (* get the Ctypes type of an argument and raise an exception if it is not implemented
  * or if it is skipped. *)
@@ -251,32 +255,26 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
   let (ocaml_ret, ctypes_ret) = List.hd ret_types in
   let mli = Sources.mli sources in
   let ml = Sources.ml sources in
-  let _ = File.bprintf mli "(* Not implemented %s - out argument not handled\n" symbol in
-  let _ = File.bprintf ml "(* Not implemented %s - out argument not handled\n" symbol in
-  let _ = match arguments with
-    | No_args -> raise (Failure "generate_callable_bindings_when_out_args with No_args")
-    | Args args ->
+  match arguments with
+  | No_args -> raise (Failure "generate_callable_bindings_when_out_args with No_args")
+  | Args args -> begin
       let ocaml_types_out =
-        List.map (fun a -> get_ocaml_type a) args.out_list
-        |> function
-          | [] -> Printf.sprintf "(%s)" ocaml_ret
-          | ocaml_args -> let all_elements =
-            if ocaml_ret = "unit" then ocaml_args else ocaml_ret :: ocaml_args
-            in Printf.sprintf "(%s)" (String.concat " * " all_elements)
+        match get_ocaml_types args.out_list with
+        | [] -> Printf.sprintf "(%s)" ocaml_ret
+        | args_types -> let all_elements =
+          if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
+          in Printf.sprintf "(%s)" (String.concat " * " all_elements)
       in
-      (* signature helper in the ml file *)
-      let _ = File.bprintf ml "\n(* %s" (match args.in_list with
-        | [] -> "unit"
-        | h :: t -> (String.concat " -> " (List.map (fun a -> get_ocaml_type a) args.in_list)))
+      let write_mli_signature () =
+        let _ = File.bprintf mli "val %s :\n" name in
+        let _ = File.bprintf mli "  %s" (match args.in_list with | [] -> "unit" | _ -> (String.concat " -> " (get_ocaml_types args.in_list))) in
+        File.bprintf mli " -> %s\n" ocaml_types_out
       in
-      let _ = File.bprintf ml " -> %s*)\n" ocaml_types_out in
-      (* signature helper in the ml file *)
-      let function_decl = name :: (match args.in_list with | [] -> "()" :: [] | _ -> get_escaped_arg_names args.in_list) in
-      let _ = File.bprintf ml "let %s =\n" (String.concat " " function_decl) in
-      let _ = File.bprintf mli "val %s :\n" name in
-      let _ = File.bprintf mli "  %s" (match args.in_list with | [] -> "unit" | _ -> (String.concat " -> " (List.map (fun a -> get_ocaml_type a) args.in_list))) in
-      let _ = File.bprintf mli " -> %s\n" ocaml_types_out in
-      let _ = List.iter (fun a ->
+      let write_function_name () =
+        let function_decl = name :: (match args.in_list with | [] -> "()" :: [] | _ -> get_escaped_arg_names args.in_list) in
+        File.bprintf ml "let %s =\n" (String.concat " " function_decl)
+      in
+      let write_out_argument_allocation_instructions a =
         let name = get_escaped_arg_name a in
         match get_type_info a with
         | None -> raise (Failure "generate_callable_bindings_when_out_args: no typeinfo for arg")
@@ -284,14 +282,18 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
             match allocate_type_bindings type_info name with
             | None -> raise (Failure "generate_callable_bindings_when_out_args: unable to get type to allocate")
             | Some (s, _) -> File.bprintf ml "  %s" s
-      ) args.out_list in
-      let _ = File.bprintf ml "  let %s_raw =\n" name in
-      let _ = File.bprintf ml "    foreign \"%s\" (%s " symbol (String.concat " @-> " (List.map (fun a -> get_ctypes_type a) args.in_list)) in
-      let _ = File.bprintf ml "@-> %s" (String.concat " @-> " (List.map (fun a -> "ptr " ^ (get_ctypes_type a)) args.out_list)) in
-      let _ = File.bprintf ml " @-> returning %s)\n  in\n" ctypes_ret in
-      let _ = File.bprintf ml "  let ret = %s_raw %s %s in\n" name (String.concat " " (List.map (fun a -> get_escaped_arg_name a) args.in_list))
-                                                            (String.concat " " (List.map (fun a -> (get_escaped_arg_name a) ^ "_ptr") args.out_list)) in
-      let _ = List.iter (fun a ->
+      in
+      let write_foreign_declaration () =
+        let _ = File.bprintf ml "  let %s_raw =\n" name in
+        let _ = File.bprintf ml "    foreign \"%s\" (%s " symbol (String.concat " @-> " (List.map (fun a -> get_ctypes_type a) args.in_list)) in
+        let _ = File.bprintf ml "@-> %s" (String.concat " @-> " (List.map (fun a -> "ptr " ^ (get_ctypes_type a)) args.out_list)) in
+        File.bprintf ml " @-> returning %s)\n  in\n" ctypes_ret
+      in
+      let write_compute_result () =
+        File.bprintf ml "  let ret = %s_raw %s %s in\n" name (String.concat " " (List.map (fun a -> get_escaped_arg_name a) args.in_list))
+                                                            (String.concat " " (List.map (fun a -> (get_escaped_arg_name a) ^ "_ptr") args.out_list))
+      in
+      let write_get_value_from_pointer_instructions a =
         let name = get_escaped_arg_name a in
         match get_type_info a with
         | None -> raise (Failure "generate_callable_bindings_when_out_args: no typeinfo for arg")
@@ -299,22 +301,22 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
             match allocate_type_bindings type_info name with
             | None -> raise (Failure "generate_callable_bindings_when_out_args: unable to get type to allocate")
             | Some (_, g) -> File.bprintf ml "  let %s = %s in\n" name g
-      ) args.out_list in
-      if ocaml_ret = "unit" then
-        match args.out_list with
-        | [] -> File.buff_add_line ml "  (ret)"
-        | _ -> File.bprintf ml "  (%s)\n" (String.concat ", " (List.map (fun a -> get_escaped_arg_name a) args.out_list))
-      else File.bprintf ml "  (ret, %s)\n" (String.concat ", " (List.map (fun a -> get_escaped_arg_name a) args.out_list))
-   (* generate the function return types with the args out
-   generate the function signature with only "in args"
-   allocate the args out
-   create the raw function binding
-   call it
-   return the args out value
-   *)
-  in
-  let _ = File.buff_add_line mli "*)" in
-  File.buff_add_line ml "*)"
+      in
+      let write_build_return_value_instructions () =
+        if ocaml_ret = "unit" then
+          match args.out_list with
+          | [] -> File.buff_add_line ml "  (ret)"
+          | _ -> File.bprintf ml "  (%s)\n" (String.concat ", " (List.map (fun a -> get_escaped_arg_name a) args.out_list))
+        else File.bprintf ml "  (ret, %s)\n" (String.concat ", " (List.map (fun a -> get_escaped_arg_name a) args.out_list))
+      in
+      write_mli_signature ();
+      write_function_name ();
+      List.iter write_out_argument_allocation_instructions args.out_list;
+      write_foreign_declaration ();
+      write_compute_result ();
+      List.iter write_get_value_from_pointer_instructions args.out_list;
+      write_build_return_value_instructions ()
+    end
 
 let should_be_implemented args sources symbol =
   let open Binding_utils in
