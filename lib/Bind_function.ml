@@ -227,6 +227,16 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
   let (ocaml_ret, ctypes_ret) = List.hd ret_types in
   let error_ocaml_type = "Error.t structure ptr option" in
   let error_ocaml_ctypes = "ptr_opt Error.t_typ" in
+  let allocate_gerror = "let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in" in
+  let return_gerror_result ?(indent=1) () =
+    let sep = String.make (indent * 2) ' ' in
+    Printf.sprintf
+    "%smatch (!@ err_ptr_ptr) with\n  %s\
+    | None -> Ok value\n  %s\
+    | Some _ -> let err_ptr = !@ err_ptr_ptr in\n    %s\
+      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in\n    %s\
+      Error (err_ptr)" sep sep sep sep sep
+  in
   let write_mli_signature ocaml_ret () =
     let _ = File.bprintf mli "val %s:\n  " name in
     match arguments with
@@ -244,7 +254,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
         let name_raw = name ^ "_raw" in
         let _ = File.bprintf ml "  let %s =\n    foreign \"%s\" " name_raw symbol in
         let _ = File.bprintf ml "(ptr_opt (ptr_opt Error.t_typ) @-> returning (%s))\n  in\n" ctypes_ret' in
-        let _ = File.buff_add_line ml "  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in" in
+        let _ = File.bprintf ml "  %s" allocate_gerror in
         File.bprintf ml "  let value = %s (Some err_ptr_ptr) in\n" name_raw
       | Args args ->
         let _ = File.bprintf mli "%s -> (%s, Error.t structure ptr option) result\n" (ocaml_types_to_mli_sig args.in_list) ocaml_ret' in
@@ -257,18 +267,14 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
         let _ = File.buff_add_line ml "  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in" in
         File.bprintf ml "  let value = %s %s (Some err_ptr_ptr) in\n" name_raw arg_names
     in
-    let _ = File.buff_add_line ml "  match (!@ err_ptr_ptr) with" in
-    let _ = File.buff_add_line ml "   | None -> Ok value" in
-    let _ = File.buff_add_line ml "   | Some _ -> let err_ptr = !@ err_ptr_ptr in" in
-    let _ = File.buff_add_line ml "     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in" in
-    File.buff_add_line ml "     Error (err_ptr)"
+    File.buff_add_line ml (return_gerror_result ())
   ) else (
     let _ = File.bprintf ml "let %s =\n  foreign \"%s\" " name symbol in
     let _ = match arguments with
       | No_args -> let _ = File.bprintf mli "%s" "unit" in
         File.bprintf ml "(%s" "void"
       | Args args -> let _ = File.bprintf mli "%s" (ocaml_types_to_mli_sig args.in_list) in
-        File.bprintf ml "(%s" (String.concat " @-> " (List.map (fun a -> get_ctypes_type a) args.in_list))
+        File.bprintf ml "(%s" (ctypes_types_to_foreign_sig args.in_list)
     in
     let _ = File.bprintf mli " -> %s\n" ocaml_ret in
     File.bprintf ml " @-> returning (%s))\n" ctypes_ret
