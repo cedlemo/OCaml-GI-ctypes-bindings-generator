@@ -273,8 +273,8 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
       (* signature helper in the ml file *)
       let function_decl = name :: (match args.in_list with | [] -> "()" :: [] | _ -> get_escaped_arg_names args.in_list) in
       let _ = File.bprintf ml "let %s =\n" (String.concat " " function_decl) in
-      let _ = File.bprintf mli "let %s :\n" name in
-      let _ = File.bprintf mli "%s" (match args.in_list with | [] -> "unit" | _ -> (String.concat " -> " (List.map (fun a -> get_ocaml_type a) args.in_list))) in
+      let _ = File.bprintf mli "val %s :\n" name in
+      let _ = File.bprintf mli "  %s" (match args.in_list with | [] -> "unit" | _ -> (String.concat " -> " (List.map (fun a -> get_ocaml_type a) args.in_list))) in
       let _ = File.bprintf mli " -> %s\n" ocaml_types_out in
       let _ = List.iter (fun a ->
         let name = get_escaped_arg_name a in
