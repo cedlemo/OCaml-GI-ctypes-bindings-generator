@@ -79,6 +79,23 @@ let test_escape_bad_function_name test_ctxt =
   in
   Test_utils.test_writing test_ctxt method_info "double" writer mli_content ml_content
 
+let test_function_bindings_for_in_args_only_function test_ctxt =
+  let name = "date_get_sunday_weeks_in_year" in
+  match Repository.find_by_name repo namespace name with
+  | None -> assert_equal_string name " has not been found"
+  | Some info -> let function_info = Function_info.from_baseinfo info in
+     let mli_content = "val date_get_sunday_weeks_in_year:\n  \
+     Unsigned.uint16 -> Unsigned.uint8" in
+     let ml_content = "let date_get_sunday_weeks_in_year =\n  \
+                       foreign \"g_date_get_sunday_weeks_in_year\" \
+                       (uint16_t @-> returning (uint8_t))" in
+     let writer = fun name info sources ->
+       let _ = Bind_function.append_ctypes_function_bindings name info "Core" sources [] in
+       Binding_utils.Sources.write_buffs sources
+     in
+     Test_utils.test_writing test_ctxt function_info name writer mli_content ml_content
+
+
 let test_function_bindings_for_args_out_function test_ctxt =
   let container = "DateTime" in
   let name = "get_ymd" in
@@ -117,5 +134,6 @@ let tests =
     "Bind_function get arguments ctypes" >:: test_get_arguments_types;
     "Bind_function get return types" >:: test_get_return_types;
     "Bind_function escape bad function name" >:: test_escape_bad_function_name;
+    "Bind_function test function bindings for in args only function" >:: test_function_bindings_for_in_args_only_function;
     "Bind_function test function bindings for args out function" >:: test_function_bindings_for_args_out_function;
   ]
