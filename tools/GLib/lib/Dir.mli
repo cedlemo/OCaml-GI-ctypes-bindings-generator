@@ -6,7 +6,7 @@ val t_typ : t structure typ
 val close:
   t structure ptr -> unit
 val read_name:
-  t structure ptr -> string
+  t structure ptr -> string option
 val rewind:
   t structure ptr -> unit
 val make_tmp:

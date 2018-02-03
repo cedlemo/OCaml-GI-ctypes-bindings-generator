@@ -11,9 +11,9 @@ let add_main_entries =
 let free =
   foreign "g_option_context_free" (ptr t_typ @-> returning (void))
 let get_description =
-  foreign "g_option_context_get_description" (ptr t_typ @-> returning (string))
+  foreign "g_option_context_get_description" (ptr t_typ @-> returning (string_opt))
 let get_help =
-  foreign "g_option_context_get_help" (ptr t_typ @-> bool @-> ptr_opt Option_group.t_typ @-> returning (string))
+  foreign "g_option_context_get_help" (ptr t_typ @-> bool @-> ptr_opt Option_group.t_typ @-> returning (string_opt))
 let get_help_enabled =
   foreign "g_option_context_get_help_enabled" (ptr t_typ @-> returning (bool))
 let get_ignore_unknown_options =
@@ -23,7 +23,7 @@ let get_main_group =
 let get_strict_posix =
   foreign "g_option_context_get_strict_posix" (ptr t_typ @-> returning (bool))
 let get_summary =
-  foreign "g_option_context_get_summary" (ptr t_typ @-> returning (string))
+  foreign "g_option_context_get_summary" (ptr t_typ @-> returning (string_opt))
 (*Not implemented g_option_context_parse type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_option_context_parse_strv type C Array type for Types.Array tag not implemented*)
 let set_description =

@@ -11,7 +11,7 @@ val free:
   t structure ptr -> unit
 (*SKIPPED : g_mapped_file_get_bytes return type Bytes.t structure ptr*)
 val get_contents:
-  t structure ptr -> string
+  t structure ptr -> string option
 val get_length:
   t structure ptr -> Unsigned.uint64
 val ref:

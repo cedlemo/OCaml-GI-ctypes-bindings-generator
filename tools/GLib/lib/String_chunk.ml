@@ -9,8 +9,8 @@ let clear =
 let free =
   foreign "g_string_chunk_free" (ptr t_typ @-> returning (void))
 let insert =
-  foreign "g_string_chunk_insert" (ptr t_typ @-> string @-> returning (string))
+  foreign "g_string_chunk_insert" (ptr t_typ @-> string @-> returning (string_opt))
 let insert_const =
-  foreign "g_string_chunk_insert_const" (ptr t_typ @-> string @-> returning (string))
+  foreign "g_string_chunk_insert_const" (ptr t_typ @-> string @-> returning (string_opt))
 let insert_len =
-  foreign "g_string_chunk_insert_len" (ptr t_typ @-> string @-> int64_t @-> returning (string))
+  foreign "g_string_chunk_insert_len" (ptr t_typ @-> string @-> int64_t @-> returning (string_opt))

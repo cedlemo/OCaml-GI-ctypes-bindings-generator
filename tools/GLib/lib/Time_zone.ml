@@ -15,7 +15,7 @@ let adjust_time =
 let find_interval =
   foreign "g_time_zone_find_interval" (ptr t_typ @-> Time_type.t_view @-> int64_t @-> returning (int32_t))
 let get_abbreviation =
-  foreign "g_time_zone_get_abbreviation" (ptr t_typ @-> int32_t @-> returning (string))
+  foreign "g_time_zone_get_abbreviation" (ptr t_typ @-> int32_t @-> returning (string_opt))
 let get_offset =
   foreign "g_time_zone_get_offset" (ptr t_typ @-> int32_t @-> returning (int32_t))
 let is_dst =

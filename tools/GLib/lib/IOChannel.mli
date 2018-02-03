@@ -41,19 +41,19 @@ val get_buffered:
 val get_close_on_unref:
   t structure ptr -> bool
 val get_encoding:
-  t structure ptr -> string
+  t structure ptr -> string option
 val get_flags:
   t structure ptr -> IOFlags.t_list
 val get_line_term:
-  t structure ptr -> int32 ptr -> string
+  t structure ptr -> int32 ptr -> string option
 val init:
   t structure ptr -> unit
 val read:
   t structure ptr -> string -> Unsigned.uint64 -> Unsigned.uint64 ptr -> IOError.t
 (*Not implemented g_io_channel_read_chars type C Array type for Types.Array tag not implemented*)
-(* Not implemented g_io_channel_read_line - out argument not handled
-let read_line :
-t structure ptr -> (IOStatus.t, string, Unsigned.uint64, Unsigned.uint64)
+(*
+val read_line :
+  t structure ptr -> (IOStatus.t * string * Unsigned.uint64 * Unsigned.uint64)
 *)
 val read_line_string:
   t structure ptr -> String.t structure ptr -> Unsigned.uint64 ptr option -> (IOStatus.t, Error.t structure ptr option) result

@@ -10,7 +10,7 @@ val add:
   t structure ptr -> int64 -> unit
 val to_iso8601:
   t structure ptr -> string option
-(* Not implemented g_time_val_from_iso8601 - out argument not handled
-let from_iso8601 :
-string -> (bool, t structure)
+(*
+val from_iso8601 :
+  string -> (bool * t structure)
 *)

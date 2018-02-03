@@ -57,16 +57,14 @@ let compare =
 (*Not implemented g_variant_dup_bytestring return type C Array type for Types.Array tag not handled*)
 (*Not implemented g_variant_dup_bytestring_array return type C Array type for Types.Array tag not handled*)
 (*Not implemented g_variant_dup_objv return type C Array type for Types.Array tag not handled*)
-(* Not implemented g_variant_dup_string - out argument not handled
-
-(* t structure ptr -> (string, Unsigned.uint64)*)
+(*
 let dup_string self =
-  let length_ptr = allocate uint64_t 0 in
-  let dup_string_raw g_variant_dup_string =
-    foreign (ptr t_typ @ -> uint64_t @-> returning string)
+  let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
+  let dup_string_raw =
+    foreign "g_variant_dup_string" (ptr t_typ @-> ptr (uint64_t) @-> returning string)
   in
   let ret = dup_string_raw self length_ptr in
-  let length = @!length_ptr in
+  let length = !@ length_ptr in
   (ret, length)
 *)
 (*Not implemented g_variant_dup_strv return type C Array type for Types.Array tag not handled*)
@@ -100,23 +98,21 @@ let get_normal_form =
 (*Not implemented g_variant_get_objv return type C Array type for Types.Array tag not handled*)
 let get_size =
   foreign "g_variant_get_size" (ptr t_typ @-> returning (uint64_t))
-(* Not implemented g_variant_get_string - out argument not handled
-
-(* t structure ptr -> (string, Unsigned.uint64)*)
+(*
 let get_string self =
-  let length_ptr = allocate uint64_t 0 in
-  let get_string_raw g_variant_get_string =
-    foreign (ptr t_typ @ -> uint64_t @-> returning string)
+  let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
+  let get_string_raw =
+    foreign "g_variant_get_string" (ptr t_typ @-> ptr (uint64_t) @-> returning string)
   in
   let ret = get_string_raw self length_ptr in
-  let length = @!length_ptr in
+  let length = !@ length_ptr in
   (ret, length)
 *)
 (*Not implemented g_variant_get_strv return type C Array type for Types.Array tag not handled*)
 let get_type =
   foreign "g_variant_get_type" (ptr t_typ @-> returning (ptr Variant_type.t_typ))
 let get_type_string =
-  foreign "g_variant_get_type_string" (ptr t_typ @-> returning (string))
+  foreign "g_variant_get_type_string" (ptr t_typ @-> returning (string_opt))
 let get_uint16 =
   foreign "g_variant_get_uint16" (ptr t_typ @-> returning (uint16_t))
 let get_uint32 =
@@ -140,7 +136,7 @@ let lookup_value =
 let n_children =
   foreign "g_variant_n_children" (ptr t_typ @-> returning (uint64_t))
 let print =
-  foreign "g_variant_print" (ptr t_typ @-> bool @-> returning (string))
+  foreign "g_variant_print" (ptr t_typ @-> bool @-> returning (string_opt))
 let ref =
   foreign "g_variant_ref" (ptr t_typ @-> returning (ptr t_typ))
 let ref_sink =
@@ -162,12 +158,12 @@ let parse _type text limit endptr =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = parse_raw _type text limit endptr (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-   | None -> Ok value
-   | Some _ -> let err_ptr = !@ err_ptr_ptr in
-     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-     Error (err_ptr)
+    | None -> Ok value
+    | Some _ -> let err_ptr = !@ err_ptr_ptr in
+      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+      Error (err_ptr)
 let parse_error_print_context =
-  foreign "g_variant_parse_error_print_context" (ptr Error.t_typ @-> string @-> returning (string))
+  foreign "g_variant_parse_error_print_context" (ptr Error.t_typ @-> string @-> returning (string_opt))
 let parse_error_quark =
   foreign "g_variant_parse_error_quark" (void @-> returning (uint32_t))
 let parser_get_error_quark =

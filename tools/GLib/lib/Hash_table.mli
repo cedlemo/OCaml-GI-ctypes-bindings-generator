@@ -13,9 +13,9 @@ val insert:
   t structure ptr -> unit ptr option -> unit ptr option -> bool
 val lookup:
   t structure ptr -> unit ptr option -> unit ptr option
-(* Not implemented g_hash_table_lookup_extended - out argument not handled
-let lookup_extended :
-t structure ptr -> unit ptr option -> (bool, unit ptr option, unit ptr option)
+(*
+val lookup_extended :
+  t structure ptr -> unit ptr option -> (bool * unit ptr option * unit ptr option)
 *)
 val remove:
   t structure ptr -> unit ptr option -> bool

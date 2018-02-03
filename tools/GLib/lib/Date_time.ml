@@ -45,7 +45,7 @@ let add_years =
 let difference =
   foreign "g_date_time_difference" (ptr t_typ @-> ptr t_typ @-> returning (int64_t))
 let format =
-  foreign "g_date_time_format" (ptr t_typ @-> string @-> returning (string))
+  foreign "g_date_time_format" (ptr t_typ @-> string @-> returning (string_opt))
 let get_day_of_month =
   foreign "g_date_time_get_day_of_month" (ptr t_typ @-> returning (int32_t))
 let get_day_of_week =
@@ -65,7 +65,7 @@ let get_second =
 let get_seconds =
   foreign "g_date_time_get_seconds" (ptr t_typ @-> returning (double))
 let get_timezone_abbreviation =
-  foreign "g_date_time_get_timezone_abbreviation" (ptr t_typ @-> returning (string))
+  foreign "g_date_time_get_timezone_abbreviation" (ptr t_typ @-> returning (string_opt))
 let get_utc_offset =
   foreign "g_date_time_get_utc_offset" (ptr t_typ @-> returning (int64_t))
 let get_week_numbering_year =
@@ -74,22 +74,18 @@ let get_week_of_year =
   foreign "g_date_time_get_week_of_year" (ptr t_typ @-> returning (int32_t))
 let get_year =
   foreign "g_date_time_get_year" (ptr t_typ @-> returning (int32_t))
-(* Not implemented g_date_time_get_ymd - out argument not handled
-
-(* t structure ptr -> (unit, int32, int32, int32)*)
 let get_ymd self =
-  let year_ptr = allocate int32_t 0 in
-  let month_ptr = allocate int32_t 0 in
-  let day_ptr = allocate int32_t 0 in
-  let get_ymd_raw g_date_time_get_ymd =
-    foreign (ptr t_typ @ -> int32_t @-> int32_t @-> int32_t @-> returning void)
+  let year_ptr = allocate int32_t Int32.zero in
+  let month_ptr = allocate int32_t Int32.zero in
+  let day_ptr = allocate int32_t Int32.zero in
+  let get_ymd_raw =
+    foreign "g_date_time_get_ymd" (ptr t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
   in
   let ret = get_ymd_raw self year_ptr month_ptr day_ptr in
-  let year = @!year_ptr in
-  let month = @!month_ptr in
-  let day = @!day_ptr in
-  (ret, year month day)
-*)
+  let year = !@ year_ptr in
+  let month = !@ month_ptr in
+  let day = !@ day_ptr in
+  (year, month, day)
 let is_daylight_savings =
   foreign "g_date_time_is_daylight_savings" (ptr t_typ @-> returning (bool))
 let ref =

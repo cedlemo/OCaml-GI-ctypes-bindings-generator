@@ -9,7 +9,7 @@ val end_parse:
 val free:
   t structure ptr -> unit
 val get_element:
-  t structure ptr -> string
+  t structure ptr -> string option
 val get_position:
   t structure ptr -> int32 ptr option -> int32 ptr option -> unit
 val get_user_data:

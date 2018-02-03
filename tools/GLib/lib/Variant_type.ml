@@ -16,7 +16,7 @@ let new_maybe =
 let copy =
   foreign "g_variant_type_copy" (ptr t_typ @-> returning (ptr t_typ))
 let dup_string =
-  foreign "g_variant_type_dup_string" (ptr t_typ @-> returning (string))
+  foreign "g_variant_type_dup_string" (ptr t_typ @-> returning (string_opt))
 let element =
   foreign "g_variant_type_element" (ptr t_typ @-> returning (ptr t_typ))
 let equal =
@@ -59,15 +59,13 @@ let checked_ =
   foreign "g_variant_type_checked_" (string @-> returning (ptr t_typ))
 let string_is_valid =
   foreign "g_variant_type_string_is_valid" (string @-> returning (bool))
-(* Not implemented g_variant_type_string_scan - out argument not handled
-
-(* string -> string option -> (bool, string)*)
+(*
 let string_scan _string limit =
   let endptr_ptr = allocate string  in
-  let string_scan_raw g_variant_type_string_scan =
-    foreign (string @-> string_opt @ -> string @-> returning bool)
+  let string_scan_raw =
+    foreign "g_variant_type_string_scan" (string @-> string_opt @-> ptr (string) @-> returning bool)
   in
   let ret = string_scan_raw _string limit endptr_ptr in
-  let endptr = @!endptr_ptr in
+  let endptr = !@ endptr_ptr in
   (ret, endptr)
 *)

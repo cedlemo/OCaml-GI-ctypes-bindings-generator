@@ -36,7 +36,7 @@ val get_current_time:
 val get_id:
   t structure ptr -> Unsigned.uint32
 val get_name:
-  t structure ptr -> string
+  t structure ptr -> string option
 val get_priority:
   t structure ptr -> int32
 val get_ready_time:

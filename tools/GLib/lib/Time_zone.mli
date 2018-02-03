@@ -14,7 +14,7 @@ val adjust_time:
 val find_interval:
   t structure ptr -> Time_type.t -> int64 -> int32
 val get_abbreviation:
-  t structure ptr -> int32 -> string
+  t structure ptr -> int32 -> string option
 val get_offset:
   t structure ptr -> int32 -> int32
 val is_dst:

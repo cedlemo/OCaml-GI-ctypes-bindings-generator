@@ -10,9 +10,9 @@ val add_main_entries:
 val free:
   t structure ptr -> unit
 val get_description:
-  t structure ptr -> string
+  t structure ptr -> string option
 val get_help:
-  t structure ptr -> bool -> Option_group.t structure ptr option -> string
+  t structure ptr -> bool -> Option_group.t structure ptr option -> string option
 val get_help_enabled:
   t structure ptr -> bool
 val get_ignore_unknown_options:
@@ -22,7 +22,7 @@ val get_main_group:
 val get_strict_posix:
   t structure ptr -> bool
 val get_summary:
-  t structure ptr -> string
+  t structure ptr -> string option
 (*Not implemented g_option_context_parse type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_option_context_parse_strv type C Array type for Types.Array tag not implemented*)
 val set_description:

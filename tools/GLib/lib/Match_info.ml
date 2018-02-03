@@ -11,42 +11,38 @@ let expand_references self string_to_expand =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = expand_references_raw self string_to_expand (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-   | None -> Ok value
-   | Some _ -> let err_ptr = !@ err_ptr_ptr in
-     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-     Error (err_ptr)
+    | None -> Ok value
+    | Some _ -> let err_ptr = !@ err_ptr_ptr in
+      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+      Error (err_ptr)
 let fetch =
   foreign "g_match_info_fetch" (ptr t_typ @-> int32_t @-> returning (string_opt))
 (*Not implemented g_match_info_fetch_all return type C Array type for Types.Array tag not handled*)
 let fetch_named =
   foreign "g_match_info_fetch_named" (ptr t_typ @-> string @-> returning (string_opt))
-(* Not implemented g_match_info_fetch_named_pos - out argument not handled
-
-(* t structure ptr -> string -> (bool, int32, int32)*)
+(*
 let fetch_named_pos self name =
-  let start_pos_ptr = allocate int32_t 0 in
-  let end_pos_ptr = allocate int32_t 0 in
-  let fetch_named_pos_raw g_match_info_fetch_named_pos =
-    foreign (ptr t_typ @-> string @ -> int32_t @-> int32_t @-> returning bool)
+  let start_pos_ptr = allocate int32_t Int32.zero in
+  let end_pos_ptr = allocate int32_t Int32.zero in
+  let fetch_named_pos_raw =
+    foreign "g_match_info_fetch_named_pos" (ptr t_typ @-> string @-> ptr (int32_t) @-> ptr (int32_t) @-> returning bool)
   in
   let ret = fetch_named_pos_raw self name start_pos_ptr end_pos_ptr in
-  let start_pos = @!start_pos_ptr in
-  let end_pos = @!end_pos_ptr in
-  (ret, start_pos end_pos)
+  let start_pos = !@ start_pos_ptr in
+  let end_pos = !@ end_pos_ptr in
+  (ret, start_pos, end_pos)
 *)
-(* Not implemented g_match_info_fetch_pos - out argument not handled
-
-(* t structure ptr -> int32 -> (bool, int32, int32)*)
+(*
 let fetch_pos self match_num =
-  let start_pos_ptr = allocate int32_t 0 in
-  let end_pos_ptr = allocate int32_t 0 in
-  let fetch_pos_raw g_match_info_fetch_pos =
-    foreign (ptr t_typ @-> int32_t @ -> int32_t @-> int32_t @-> returning bool)
+  let start_pos_ptr = allocate int32_t Int32.zero in
+  let end_pos_ptr = allocate int32_t Int32.zero in
+  let fetch_pos_raw =
+    foreign "g_match_info_fetch_pos" (ptr t_typ @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning bool)
   in
   let ret = fetch_pos_raw self match_num start_pos_ptr end_pos_ptr in
-  let start_pos = @!start_pos_ptr in
-  let end_pos = @!end_pos_ptr in
-  (ret, start_pos end_pos)
+  let start_pos = !@ start_pos_ptr in
+  let end_pos = !@ end_pos_ptr in
+  (ret, start_pos, end_pos)
 *)
 let free =
   foreign "g_match_info_free" (ptr t_typ @-> returning (void))
@@ -55,7 +51,7 @@ let get_match_count =
 let get_regex =
   foreign "g_match_info_get_regex" (ptr t_typ @-> returning (ptr Regex.t_typ))
 let get_string =
-  foreign "g_match_info_get_string" (ptr t_typ @-> returning (string))
+  foreign "g_match_info_get_string" (ptr t_typ @-> returning (string_opt))
 let is_partial_match =
   foreign "g_match_info_is_partial_match" (ptr t_typ @-> returning (bool))
 let matches =
@@ -67,10 +63,10 @@ let next self =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = next_raw self (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-   | None -> Ok value
-   | Some _ -> let err_ptr = !@ err_ptr_ptr in
-     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-     Error (err_ptr)
+    | None -> Ok value
+    | Some _ -> let err_ptr = !@ err_ptr_ptr in
+      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+      Error (err_ptr)
 let ref =
   foreign "g_match_info_ref" (ptr t_typ @-> returning (ptr t_typ))
 let unref =

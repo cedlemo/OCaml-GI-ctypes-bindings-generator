@@ -12,14 +12,14 @@ let end_parse self =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = end_parse_raw self (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-   | None -> Ok value
-   | Some _ -> let err_ptr = !@ err_ptr_ptr in
-     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-     Error (err_ptr)
+    | None -> Ok value
+    | Some _ -> let err_ptr = !@ err_ptr_ptr in
+      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+      Error (err_ptr)
 let free =
   foreign "g_markup_parse_context_free" (ptr t_typ @-> returning (void))
 let get_element =
-  foreign "g_markup_parse_context_get_element" (ptr t_typ @-> returning (string))
+  foreign "g_markup_parse_context_get_element" (ptr t_typ @-> returning (string_opt))
 let get_position =
   foreign "g_markup_parse_context_get_position" (ptr t_typ @-> ptr_opt int32_t @-> ptr_opt int32_t @-> returning (void))
 let get_user_data =
@@ -31,10 +31,10 @@ let parse self text text_len =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = parse_raw self text text_len (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-   | None -> Ok value
-   | Some _ -> let err_ptr = !@ err_ptr_ptr in
-     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-     Error (err_ptr)
+    | None -> Ok value
+    | Some _ -> let err_ptr = !@ err_ptr_ptr in
+      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+      Error (err_ptr)
 let pop =
   foreign "g_markup_parse_context_pop" (ptr t_typ @-> returning (ptr_opt void))
 let push =

@@ -44,7 +44,7 @@ val add_years:
 val difference:
   t structure ptr -> t structure ptr -> int64
 val format:
-  t structure ptr -> string -> string
+  t structure ptr -> string -> string option
 val get_day_of_month:
   t structure ptr -> int32
 val get_day_of_week:
@@ -64,7 +64,7 @@ val get_second:
 val get_seconds:
   t structure ptr -> float
 val get_timezone_abbreviation:
-  t structure ptr -> string
+  t structure ptr -> string option
 val get_utc_offset:
   t structure ptr -> int64
 val get_week_numbering_year:
@@ -73,10 +73,8 @@ val get_week_of_year:
   t structure ptr -> int32
 val get_year:
   t structure ptr -> int32
-(* Not implemented g_date_time_get_ymd - out argument not handled
-let get_ymd :
-t structure ptr -> (unit, int32, int32, int32)
-*)
+val get_ymd :
+  t structure ptr -> (int32 * int32 * int32)
 val is_daylight_savings:
   t structure ptr -> bool
 val ref:

@@ -24,7 +24,7 @@ val get_locale_string:
   t structure ptr -> string -> string -> string option -> (string option, Error.t structure ptr option) result
 (*Not implemented g_key_file_get_locale_string_list return type C Array type for Types.Array tag not handled*)
 val get_start_group:
-  t structure ptr -> string
+  t structure ptr -> string option
 val get_string:
   t structure ptr -> string -> string -> (string option, Error.t structure ptr option) result
 (*Not implemented g_key_file_get_string_list return type C Array type for Types.Array tag not handled*)
@@ -37,9 +37,9 @@ val has_group:
 (*SKIPPED :  g_key_file_load_from_bytes type Bytes.t structure ptr skipped*)
 val load_from_data:
   t structure ptr -> string -> Unsigned.uint64 -> Key_file_flags.t_list -> (bool, Error.t structure ptr option) result
-(* Not implemented g_key_file_load_from_data_dirs - out argument not handled
-let load_from_data_dirs :
-t structure ptr -> string -> Key_file_flags.t_list -> (bool, string)
+(*
+val load_from_data_dirs :
+  t structure ptr -> string -> Key_file_flags.t_list -> (bool * string)
 *)
 (*Not implemented g_key_file_load_from_dirs type C Array type for Types.Array tag not implemented*)
 val load_from_file:
@@ -77,9 +77,9 @@ val set_uint64:
   t structure ptr -> string -> string -> Unsigned.uint64 -> unit
 val set_value:
   t structure ptr -> string -> string -> string -> unit
-(* Not implemented g_key_file_to_data - out argument not handled
-let to_data :
-t structure ptr -> (string, Unsigned.uint64)
+(*
+val to_data :
+  t structure ptr -> (string * Unsigned.uint64)
 *)
 val unref:
   t structure ptr -> unit

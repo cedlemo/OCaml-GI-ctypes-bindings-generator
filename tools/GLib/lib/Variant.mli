@@ -56,9 +56,9 @@ val compare:
 (*Not implemented g_variant_dup_bytestring return type C Array type for Types.Array tag not handled*)
 (*Not implemented g_variant_dup_bytestring_array return type C Array type for Types.Array tag not handled*)
 (*Not implemented g_variant_dup_objv return type C Array type for Types.Array tag not handled*)
-(* Not implemented g_variant_dup_string - out argument not handled
-let dup_string :
-t structure ptr -> (string, Unsigned.uint64)
+(*
+val dup_string :
+  t structure ptr -> (string * Unsigned.uint64)
 *)
 (*Not implemented g_variant_dup_strv return type C Array type for Types.Array tag not handled*)
 val equal:
@@ -91,15 +91,15 @@ val get_normal_form:
 (*Not implemented g_variant_get_objv return type C Array type for Types.Array tag not handled*)
 val get_size:
   t structure ptr -> Unsigned.uint64
-(* Not implemented g_variant_get_string - out argument not handled
-let get_string :
-t structure ptr -> (string, Unsigned.uint64)
+(*
+val get_string :
+  t structure ptr -> (string * Unsigned.uint64)
 *)
 (*Not implemented g_variant_get_strv return type C Array type for Types.Array tag not handled*)
 val get_type:
   t structure ptr -> Variant_type.t structure ptr
 val get_type_string:
-  t structure ptr -> string
+  t structure ptr -> string option
 val get_uint16:
   t structure ptr -> Unsigned.uint16
 val get_uint32:
@@ -123,7 +123,7 @@ val lookup_value:
 val n_children:
   t structure ptr -> Unsigned.uint64
 val print:
-  t structure ptr -> bool -> string
+  t structure ptr -> bool -> string option
 val ref:
   t structure ptr -> t structure ptr
 val ref_sink:
@@ -141,7 +141,7 @@ val is_signature:
 val parse:
   Variant_type.t structure ptr option -> string -> string option -> string option -> (t structure ptr, Error.t structure ptr option) result
 val parse_error_print_context:
-  Error.t structure ptr -> string -> string
+  Error.t structure ptr -> string -> string option
 val parse_error_quark:
   unit -> Unsigned.uint32
 val parser_get_error_quark:

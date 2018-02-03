@@ -38,7 +38,7 @@ let get_current_time =
 let get_id =
   foreign "g_source_get_id" (ptr t_typ @-> returning (uint32_t))
 let get_name =
-  foreign "g_source_get_name" (ptr t_typ @-> returning (string))
+  foreign "g_source_get_name" (ptr t_typ @-> returning (string_opt))
 let get_priority =
   foreign "g_source_get_priority" (ptr t_typ @-> returning (int32_t))
 let get_ready_time =

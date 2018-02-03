@@ -15,7 +15,7 @@ val new_maybe:
 val copy:
   t structure ptr -> t structure ptr
 val dup_string:
-  t structure ptr -> string
+  t structure ptr -> string option
 val element:
   t structure ptr -> t structure ptr
 val equal:
@@ -58,7 +58,7 @@ val checked_:
   string -> t structure ptr
 val string_is_valid:
   string -> bool
-(* Not implemented g_variant_type_string_scan - out argument not handled
-let string_scan :
-string -> string option -> (bool, string)
+(*
+val string_scan :
+  string -> string option -> (bool * string)
 *)
