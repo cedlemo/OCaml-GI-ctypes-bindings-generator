@@ -214,14 +214,14 @@ let error_ctypes_type = "ptr_opt Error.t_typ"
 
 let allocate_gerror = "let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in"
 
-let return_gerror_result ?(indent=1) () =
+let return_gerror_result ?(indent=1) ?(ret="value") () =
   let sep = String.make (indent * 2) ' ' in
   Printf.sprintf
   "%smatch (!@ err_ptr_ptr) with\n  %s\
-  | None -> Ok value\n  %s\
+  | None -> Ok %s\n  %s\
   | Some _ -> let err_ptr = !@ err_ptr_ptr in\n    %s\
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in\n    %s\
-    Error (err_ptr)" sep sep sep sep sep
+    Error (err_ptr)" sep sep ret sep sep sep
 
 let generate_callable_bindings_when_only_in_arg callable name symbol arguments ret_types sources =
   let open Binding_utils in
@@ -301,18 +301,24 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
   match arguments with
   | No_args -> raise_failure "with No_args"
   | Args args -> begin
+      let can_throw_gerror = Callable_info.can_throw_gerror callable in
       let no_in_args = not (has_in_arg arguments) in
       let ocaml_types_out =
         match get_ocaml_types args.out_list with
         | [] -> Printf.sprintf "(%s)" ocaml_ret
         | args_types -> let all_elements =
           if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
-          in Printf.sprintf "(%s)" (String.concat " * " all_elements)
+          in Printf.sprintf "%s" (String.concat " * " all_elements)
       in
       let write_mli_signature () =
         let _ = File.bprintf mli "val %s :\n" name in
         let _ = File.bprintf mli "  %s" (if no_in_args then "unit" else ocaml_types_to_mli_sig args.in_list) in
-        File.bprintf mli " -> %s\n" ocaml_types_out
+        if can_throw_gerror then begin
+          File.bprintf mli " -> (%s, %s) result\n" ocaml_types_out error_ocaml_type
+        end
+        else begin
+          File.bprintf mli " -> (%s)\n" ocaml_types_out
+        end
       in
       let write_function_name () =
         let function_decl = name :: (if no_in_args then "()" :: [] else get_escaped_arg_names args.in_list) in
@@ -320,12 +326,15 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
       in
       let write_out_argument_allocation_instructions a =
         let name = get_escaped_arg_name a in
-        match get_type_info a with
-        | None -> raise_failure "no typeinfo for arg"
-        | Some type_info ->
-            match allocate_type_bindings type_info name with
-            | None -> raise_failure "unable to get type to allocate"
-            | Some (s, _) -> File.bprintf ml "  %s" s
+        let _ = match get_type_info a with
+          | None -> raise_failure "no typeinfo for arg"
+          | Some type_info ->
+              match allocate_type_bindings type_info name with
+              | None -> raise_failure "unable to get type to allocate"
+              | Some (s, _) -> File.bprintf ml "  %s" s
+        in if can_throw_gerror then begin
+          File.bprintf ml "  %s\n" allocate_gerror;
+        end
       in
       let write_foreign_declaration () =
         let _ = File.bprintf ml "  let %s_raw =\n" name in
@@ -334,7 +343,10 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
         | _ -> File.bprintf ml "    foreign \"%s\" (%s @-> " symbol (ctypes_types_to_foreign_sig args.in_list)
         in
         let _ = File.bprintf ml "%s" (String.concat " @-> " (List.map (fun a -> Printf.sprintf "ptr (%s)" (get_ctypes_type a)) args.out_list)) in
-        File.bprintf ml " @-> returning %s)\n  in\n" ctypes_ret
+        if can_throw_gerror then
+          File.bprintf ml " @-> ptr_opt (%s) @-> returning (%s))\n  in\n" error_ctypes_type ctypes_ret
+        else
+          File.bprintf ml " @-> returning %s)\n  in\n" ctypes_ret
       in
       let write_compute_result () =
         let in_arg_names = get_escaped_arg_names args.in_list in
@@ -342,16 +354,24 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
           List.map (fun a -> (get_escaped_arg_name a) ^ "_ptr") args.out_list
         in
         let arg_names = String.concat " " (in_arg_names @ out_arg_names) in
-        File.bprintf ml "  let ret = %s_raw %s in\n" name arg_names
+        if can_throw_gerror then
+          File.bprintf ml "  let ret = %s_raw %s (Some err_ptr_ptr) in\n" name arg_names
+        else
+          File.bprintf ml "  let ret = %s_raw %s in\n" name arg_names
       in
       let write_get_value_from_pointer_instructions a =
-        let name = get_escaped_arg_name a in
-        match get_type_info a with
-        | None -> raise_failure "no typeinfo for arg"
-        | Some type_info ->
-            match allocate_type_bindings type_info name with
-            | None -> raise_failure "unable to get type to allocate"
-            | Some (_, g) -> File.bprintf ml "  let %s = %s in\n" name g
+        if can_throw_gerror then begin
+          File.bprintf ml "let get_ret_value () =\n  "
+        end;
+        begin
+          let name = get_escaped_arg_name a in
+          match get_type_info a with
+          | None -> raise_failure "no typeinfo for arg"
+          | Some type_info ->
+              match allocate_type_bindings type_info name with
+              | None -> raise_failure "unable to get type to allocate"
+              | Some (_, g) -> File.bprintf ml "  let %s = %s in\n" name g
+        end
       in
       let write_build_return_value_instructions () =
         if ocaml_ret = "unit" then
@@ -360,9 +380,13 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
           | _ -> escaped_arg_names_to_tuple_form args.out_list
               |> File.bprintf ml "  (%s)\n"
         else escaped_arg_names_to_tuple_form args.out_list
-          |> File.bprintf ml "  (ret, %s)\n"
+          |> File.bprintf ml "  (ret, %s)\n" ;
+        if can_throw_gerror then begin
+          File.buff_add_line ml "  in";
+          File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
+        end
       in
-      let to_implement = ["get_charset"; "get_ymd"] in
+      let to_implement = ["get_charset"; "get_ymd"; "filename_from_uri"] in
       let comment = not (List.exists (fun s -> s = name) to_implement) in
       if comment then begin
         File.buff_add_line mli "(*";
