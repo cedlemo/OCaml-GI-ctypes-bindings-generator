@@ -130,7 +130,7 @@ let load_from_data self data length flags =
       Error (err_ptr)
 (*
 let load_from_data_dirs self file flags =
-  let full_path_ptr = allocate string  in
+  let full_path_ptr = allocate string " " in
   let load_from_data_dirs_raw =
     foreign "g_key_file_load_from_data_dirs" (ptr t_typ @-> string @-> Key_file_flags.t_list_view @-> ptr (string) @-> returning bool)
   in

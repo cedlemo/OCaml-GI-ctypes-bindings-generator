@@ -279,7 +279,7 @@ let checksum_type_get_length =
 let child_watch_source_new =
   foreign "g_child_watch_source_new" (int32_t @-> returning (ptr Source.t_typ))
 
-let clear_error  =
+let clear_error () =
   let clear_error_raw =
     foreign "g_clear_error" (ptr_opt (ptr_opt Error.t_typ) @-> returning (void))
   in
@@ -467,7 +467,7 @@ let file_error_quark =
 
 (*
 let file_open_tmp tmpl =
-  let name_used_ptr = allocate string  in
+  let name_used_ptr = allocate string " " in
   let file_open_tmp_raw =
     foreign "g_file_open_tmp" (string_opt @-> ptr (string) @-> returning int32_t)
   in
@@ -501,7 +501,7 @@ let filename_display_name =
 
 (*
 let filename_from_uri uri =
-  let hostname_ptr = allocate string  in
+  let hostname_ptr = allocate string " " in
   let filename_from_uri_raw =
     foreign "g_filename_from_uri" (string @-> ptr (string_opt) @-> returning string)
   in
@@ -554,7 +554,7 @@ let get_application_name =
   foreign "g_get_application_name" (void @-> returning (string_opt))
 
 let get_charset () =
-  let charset_ptr = allocate string  in
+  let charset_ptr = allocate string " " in
   let get_charset_raw =
     foreign "g_get_charset" (ptr (string) @-> returning bool)
   in
@@ -1170,7 +1170,7 @@ let strstr_len =
 
 (*
 let strtod nptr =
-  let endptr_ptr = allocate string  in
+  let endptr_ptr = allocate string " " in
   let strtod_raw =
     foreign "g_strtod" (string @-> ptr (string) @-> returning double)
   in
@@ -1491,7 +1491,7 @@ let variant_type_string_is_valid =
 
 (*
 let variant_type_string_scan _string limit =
-  let endptr_ptr = allocate string  in
+  let endptr_ptr = allocate string " " in
   let variant_type_string_scan_raw =
     foreign "g_variant_type_string_scan" (string @-> string_opt @-> ptr (string) @-> returning bool)
   in

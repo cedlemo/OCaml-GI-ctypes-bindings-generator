@@ -73,7 +73,7 @@ let read =
 (*Not implemented g_io_channel_read_chars type C Array type for Types.Array tag not implemented*)
 (*
 let read_line self =
-  let str_return_ptr = allocate string  in
+  let str_return_ptr = allocate string " " in
   let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let terminator_pos_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let read_line_raw =

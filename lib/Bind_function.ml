@@ -229,6 +229,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
   let ml = Sources.ml sources in
   let (ocaml_ret, ctypes_ret) = List.hd ret_types in
   let can_throw_gerror = Callable_info.can_throw_gerror callable in
+  let no_args = match arguments with No_args -> true | _ -> false in
   let arg_names = match arguments with
     | No_args -> ""
     | Args args -> escaped_arg_names_space_sep args.in_list
@@ -250,7 +251,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
   in
   let write_function_name () =
     if can_throw_gerror then begin
-      File.bprintf ml "let %s %s =\n" name arg_names
+      File.bprintf ml "let %s %s =\n" name (if no_args then "()" else arg_names)
     end
     else begin
       File.bprintf ml "let %s =\n" name

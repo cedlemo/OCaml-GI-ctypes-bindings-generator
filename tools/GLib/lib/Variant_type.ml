@@ -61,7 +61,7 @@ let string_is_valid =
   foreign "g_variant_type_string_is_valid" (string @-> returning (bool))
 (*
 let string_scan _string limit =
-  let endptr_ptr = allocate string  in
+  let endptr_ptr = allocate string " " in
   let string_scan_raw =
     foreign "g_variant_type_string_scan" (string @-> string_opt @-> ptr (string) @-> returning bool)
   in
