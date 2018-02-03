@@ -151,6 +151,52 @@ let test_function_bindings_for_args_out_function test_ctxt =
         in
         Test_utils.test_writing test_ctxt method_info "get_ymd" writer mli_content ml_content
 
+(*
+
+let filename_from_uri uri =
+  let hostname_ptr = allocate string_opt None in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let filename_from_uri_raw =
+    foreign "g_filename_from_uri" (string @-> ptr (string_opt) @-> ptr_opt (ptr_opt Error.t_typ) @-> returning (string))
+  in
+  let ret = filename_from_uri_raw uri hostname_ptr (Some err_ptr_ptr) in
+  let get_ret_value () =
+    let hostname = !@ hostname_ptr in
+    (ret, hostname)
+  in
+  match (!@ err_ptr_ptr) with
+    | None -> Ok (get_ret_value ())
+    | Some _ -> let err_ptr = !@ err_ptr_ptr in
+      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+      Error (err_ptr)
+*)
+let test_function_bindings_for_args_out_with_gerror_function test_ctxt =
+  let container = "Core" in
+  let name = "filename_from_uri" in
+  match Repository.find_by_name repo namespace name with
+  | None -> assert_equal_string name " has not been found"
+  | Some info -> let function_info = Function_info.from_baseinfo info in
+    let mli_content = "val filename_from_uri :\n  \
+    string -> (string * string option, Error.t structure ptr option) result" in
+    let ml_content = "let filename_from_uri uri =\n  \
+                      let hostname_ptr = allocate string \" \" in\n  \
+                      let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in\n  \
+                      let filename_from_uri_raw =\n     \
+                      foreign \"g_filename_from_uri\" (string @-> ptr (string_opt) @-> ptr_opt (ptr_opt Error.t_typ) @-> returning (string))\n  \
+                      in\n  \
+                      let ret = filename_from_uri_raw uri hostname_ptr (Some err_ptr_ptr) in\n  \
+                      match (!@ err_ptr_ptr) with\n    \
+                      | None -> let hostname = !@ hostname_ptr\n       \
+                      in Ok (ret, hostname)\n    \
+                      | Some _ -> let err_ptr = !@ err_ptr_ptr in\n      \
+                        let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in\n      \
+                        Error (err_ptr)"
+    in
+    let writer = fun name info sources ->
+      let _ = Bind_function.append_ctypes_function_bindings name info container sources [] in
+      Binding_utils.Sources.write_buffs sources
+    in
+    Test_utils.test_writing test_ctxt function_info name writer mli_content ml_content
 
 let tests =
   "GObject Introspection Bind_function tests" >:::
@@ -161,4 +207,5 @@ let tests =
     "Bind_function test function bindings for in args only function" >:: test_function_bindings_for_in_args_only_function;
     "Bind_function test function bindings for args out function" >:: test_function_bindings_for_args_out_function;
     "Bind_funtcion test function bindings for in args only function that can throw GError" >:: test_function_bindings_for_in_args_only_function_gerror;
+    "Bind_function test function bindings for args out with gerror function" >:: test_function_bindings_for_args_out_with_gerror_function;
   ]
