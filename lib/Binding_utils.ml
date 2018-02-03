@@ -444,7 +444,7 @@ let allocate_type_bindings type_info var_name =
       | Types.Float -> Some (check_if_pointer ("float", "0.0"))
       | Types.Double -> Some (check_if_pointer ("double", "0.0"))
       | Types.GType -> None
-      | Types.Utf8 | Types.Filename -> Some ("string", "", Printf.sprintf "!@ %s_ptr" var_name)
+      | Types.Utf8 | Types.Filename -> Some ("string", "\" \"", Printf.sprintf "!@ %s_ptr" var_name)
       | Types.Array -> None
       | Types.Interface -> None
       | Types.GList -> Some (check_if_pointer ("List.t_typ", "None"))
