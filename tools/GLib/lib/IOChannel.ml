@@ -74,17 +74,28 @@ let read =
 (*
 let read_line self =
   let str_return_ptr = allocate string " " in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let terminator_pos_ptr = allocate uint64_t Unsigned.UInt64.zero in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let read_line_raw =
-    foreign "g_io_channel_read_line" (ptr t_typ @-> ptr (string) @-> ptr (uint64_t) @-> ptr (uint64_t) @-> returning IOStatus.t_view)
+    foreign "g_io_channel_read_line" (ptr t_typ @-> ptr (string) @-> ptr (uint64_t) @-> ptr (uint64_t) @-> ptr_opt (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
   in
-  let ret = read_line_raw self str_return_ptr length_ptr terminator_pos_ptr in
-  let str_return = !@ str_return_ptr in
-  let length = !@ length_ptr in
-  let terminator_pos = !@ terminator_pos_ptr in
+  let ret = read_line_raw self str_return_ptr length_ptr terminator_pos_ptr (Some err_ptr_ptr) in
+let get_ret_value () =
+    let str_return = !@ str_return_ptr in
+let get_ret_value () =
+    let length = !@ length_ptr in
+let get_ret_value () =
+    let terminator_pos = !@ terminator_pos_ptr in
   (ret, str_return, length, terminator_pos)
-*)
+  in
+  match (!@ err_ptr_ptr) with
+    | None -> Ok (get_ret_value ())
+    | Some _ -> let err_ptr = !@ err_ptr_ptr in
+      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+      Error (err_ptr)*)
 let read_line_string self buffer terminator_pos =
   let read_line_string_raw =
     foreign "g_io_channel_read_line_string" (ptr t_typ @-> ptr String.t_typ @-> ptr_opt uint64_t@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))

@@ -41,7 +41,7 @@ val unref:
   t structure ptr -> unit
 (*
 val check_replacement :
-  string -> (bool * bool)
+  string -> (bool * bool, Error.t structure ptr option) result
 *)
 val error_quark:
   unit -> Unsigned.uint32

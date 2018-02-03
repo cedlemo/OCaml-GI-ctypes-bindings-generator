@@ -296,7 +296,7 @@ val compute_checksum_for_string:
 
 (*
 val convert :
-  string -> int64 -> string -> string -> (string * Unsigned.uint64 * Unsigned.uint64)
+  string -> int64 -> string -> string -> (string * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
 *)
 
 val convert_error_quark:
@@ -410,7 +410,7 @@ val file_error_quark:
 
 (*
 val file_open_tmp :
-  string option -> (int32 * string)
+  string option -> (int32 * string, Error.t structure ptr option) result
 *)
 
 val file_read_link:
@@ -427,10 +427,8 @@ val filename_display_basename:
 val filename_display_name:
   string -> string option
 
-(*
 val filename_from_uri :
-  string -> (string * string option)
-*)
+  string -> (string * string option, Error.t structure ptr option) result
 
 (*Not implemented g_filename_from_utf8 return type C Array type for Types.Array tag not handled*)
 
@@ -439,7 +437,7 @@ val filename_to_uri:
 
 (*
 val filename_to_utf8 :
-  string -> int64 -> (string * Unsigned.uint64 * Unsigned.uint64)
+  string -> int64 -> (string * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
 *)
 
 val find_program_in_path:
@@ -643,12 +641,12 @@ val key_file_error_quark:
 
 (*
 val locale_from_utf8 :
-  string -> int64 -> (string * Unsigned.uint64 * Unsigned.uint64)
+  string -> int64 -> (string * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
 *)
 
 (*
 val locale_to_utf8 :
-  string -> int64 -> (string * Unsigned.uint64 * Unsigned.uint64)
+  string -> int64 -> (string * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
 *)
 (*SKIPPED : log_default_handler*)
 (*SKIPPED : log_remove_handler*)
@@ -786,7 +784,7 @@ val random_set_seed:
 
 (*
 val regex_check_replacement :
-  string -> (bool * bool)
+  string -> (bool * bool, Error.t structure ptr option) result
 *)
 
 val regex_error_quark:
@@ -1218,7 +1216,7 @@ val usleep:
 
 (*
 val utf16_to_utf8 :
-  Unsigned.uint16 ptr -> int64 -> (string * int64 * int64)
+  Unsigned.uint16 ptr -> int64 -> (string * int64 * int64, Error.t structure ptr option) result
 *)
 (*SKIPPED : utf8_casefold*)
 (*SKIPPED : utf8_collate*)

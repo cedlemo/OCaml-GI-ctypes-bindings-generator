@@ -53,7 +53,7 @@ val read:
 (*Not implemented g_io_channel_read_chars type C Array type for Types.Array tag not implemented*)
 (*
 val read_line :
-  t structure ptr -> (IOStatus.t * string * Unsigned.uint64 * Unsigned.uint64)
+  t structure ptr -> (IOStatus.t * string * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
 *)
 val read_line_string:
   t structure ptr -> String.t structure ptr -> Unsigned.uint64 ptr option -> (IOStatus.t, Error.t structure ptr option) result

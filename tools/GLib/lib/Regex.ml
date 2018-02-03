@@ -64,13 +64,20 @@ let unref =
 (*
 let check_replacement replacement =
   let has_references_ptr = allocate bool false in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let check_replacement_raw =
-    foreign "g_regex_check_replacement" (string @-> ptr (bool) @-> returning bool)
+    foreign "g_regex_check_replacement" (string @-> ptr (bool) @-> ptr_opt (ptr_opt Error.t_typ) @-> returning (bool))
   in
-  let ret = check_replacement_raw replacement has_references_ptr in
-  let has_references = !@ has_references_ptr in
+  let ret = check_replacement_raw replacement has_references_ptr (Some err_ptr_ptr) in
+let get_ret_value () =
+    let has_references = !@ has_references_ptr in
   (ret, has_references)
-*)
+  in
+  match (!@ err_ptr_ptr) with
+    | None -> Ok (get_ret_value ())
+    | Some _ -> let err_ptr = !@ err_ptr_ptr in
+      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+      Error (err_ptr)*)
 let error_quark =
   foreign "g_regex_error_quark" (void @-> returning (uint32_t))
 let escape_nul =
