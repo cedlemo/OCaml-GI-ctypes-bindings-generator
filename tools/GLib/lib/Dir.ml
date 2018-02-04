@@ -17,7 +17,7 @@ let make_tmp tmpl =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = make_tmp_raw tmpl (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-    | None -> Ok value
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)
+  | None -> Ok value
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)

@@ -11,10 +11,10 @@ let expand_references self string_to_expand =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = expand_references_raw self string_to_expand (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-    | None -> Ok value
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)
+  | None -> Ok value
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
 let fetch =
   foreign "g_match_info_fetch" (ptr t_typ @-> int32_t @-> returning (string_opt))
 (*Not implemented g_match_info_fetch_all return type C Array type for Types.Array tag not handled*)
@@ -63,10 +63,10 @@ let next self =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = next_raw self (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-    | None -> Ok value
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)
+  | None -> Ok value
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
 let ref =
   foreign "g_match_info_ref" (ptr t_typ @-> returning (ptr t_typ))
 let unref =

@@ -158,10 +158,10 @@ let parse _type text limit endptr =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = parse_raw _type text limit endptr (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-    | None -> Ok value
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)
+  | None -> Ok value
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
 let parse_error_print_context =
   foreign "g_variant_parse_error_print_context" (ptr Error.t_typ @-> string @-> returning (string_opt))
 let parse_error_quark =

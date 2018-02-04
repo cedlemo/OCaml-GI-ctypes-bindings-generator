@@ -33,10 +33,10 @@ let new_file filename mode =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = new_file_raw filename mode (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-    | None -> Ok value
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)
+  | None -> Ok value
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
 let unix_new =
   foreign "g_io_channel_unix_new" (int32_t @-> returning (ptr t_typ))
 let close =
@@ -48,10 +48,10 @@ let flush self =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = flush_raw self (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-    | None -> Ok value
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)
+  | None -> Ok value
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
 let get_buffer_condition =
   foreign "g_io_channel_get_buffer_condition" (ptr t_typ @-> returning (IOCondition.t_list_view))
 let get_buffer_size =
@@ -83,19 +83,19 @@ let read_line self =
     foreign "g_io_channel_read_line" (ptr t_typ @-> ptr (string) @-> ptr (uint64_t) @-> ptr (uint64_t) @-> ptr_opt (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
   in
   let ret = read_line_raw self str_return_ptr length_ptr terminator_pos_ptr (Some err_ptr_ptr) in
-let get_ret_value () =
+  let get_ret_value () =
     let str_return = !@ str_return_ptr in
-let get_ret_value () =
+  let get_ret_value () =
     let length = !@ length_ptr in
-let get_ret_value () =
+  let get_ret_value () =
     let terminator_pos = !@ terminator_pos_ptr in
-  (ret, str_return, length, terminator_pos)
+    (ret, str_return, length, terminator_pos)
   in
   match (!@ err_ptr_ptr) with
-    | None -> Ok (get_ret_value ())
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)*)
+  | None -> Ok (get_ret_value ())
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)*)
 let read_line_string self buffer terminator_pos =
   let read_line_string_raw =
     foreign "g_io_channel_read_line_string" (ptr t_typ @-> ptr String.t_typ @-> ptr_opt uint64_t@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
@@ -103,10 +103,10 @@ let read_line_string self buffer terminator_pos =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = read_line_string_raw self buffer terminator_pos (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-    | None -> Ok value
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)
+  | None -> Ok value
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
 (*Not implemented g_io_channel_read_to_end type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_io_channel_read_unichar type unichar not implemented*)
 let ref =
@@ -120,10 +120,10 @@ let seek_position self offset _type =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = seek_position_raw self offset _type (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-    | None -> Ok value
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)
+  | None -> Ok value
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
 let set_buffer_size =
   foreign "g_io_channel_set_buffer_size" (ptr t_typ @-> uint64_t @-> returning (void))
 let set_buffered =
@@ -137,10 +137,10 @@ let set_encoding self encoding =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = set_encoding_raw self encoding (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-    | None -> Ok value
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)
+  | None -> Ok value
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
 let set_flags self flags =
   let set_flags_raw =
     foreign "g_io_channel_set_flags" (ptr t_typ @-> IOFlags.t_list_view@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
@@ -148,10 +148,10 @@ let set_flags self flags =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = set_flags_raw self flags (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-    | None -> Ok value
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)
+  | None -> Ok value
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
 let set_line_term =
   foreign "g_io_channel_set_line_term" (ptr t_typ @-> string_opt @-> int32_t @-> returning (void))
 let shutdown self flush =
@@ -161,10 +161,10 @@ let shutdown self flush =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = shutdown_raw self flush (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-    | None -> Ok value
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)
+  | None -> Ok value
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
 let unix_get_fd =
   foreign "g_io_channel_unix_get_fd" (ptr t_typ @-> returning (int32_t))
 let unref =

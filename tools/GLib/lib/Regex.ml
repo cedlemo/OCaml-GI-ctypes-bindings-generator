@@ -11,10 +11,10 @@ let create pattern compile_options match_options =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = create_raw pattern compile_options match_options (Some err_ptr_ptr) in
   match (!@ err_ptr_ptr) with
-    | None -> Ok value
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)
+  | None -> Ok value
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
 let get_capture_count =
   foreign "g_regex_get_capture_count" (ptr t_typ @-> returning (int32_t))
 let get_compile_flags =
@@ -69,15 +69,15 @@ let check_replacement replacement =
     foreign "g_regex_check_replacement" (string @-> ptr (bool) @-> ptr_opt (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let ret = check_replacement_raw replacement has_references_ptr (Some err_ptr_ptr) in
-let get_ret_value () =
+  let get_ret_value () =
     let has_references = !@ has_references_ptr in
-  (ret, has_references)
+    (ret, has_references)
   in
   match (!@ err_ptr_ptr) with
-    | None -> Ok (get_ret_value ())
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)*)
+  | None -> Ok (get_ret_value ())
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)*)
 let error_quark =
   foreign "g_regex_error_quark" (void @-> returning (uint32_t))
 let escape_nul =
