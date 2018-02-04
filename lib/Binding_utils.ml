@@ -449,7 +449,7 @@ let allocate_type_bindings type_info var_name maybe_null =
           if maybe_null then
             Some ("string_opt",
                   "None",
-                  Printf.sprintf "(match %s_ptr with | None -> None | Some ptr -> !@ ptr)" var_name)
+                  Printf.sprintf "!@ %s_ptr" var_name)
           else
               Some ("string", "\" \"", Printf.sprintf "!@ %s_ptr" var_name)
       end

@@ -186,7 +186,7 @@ let test_function_bindings_for_args_out_with_gerror_function test_ctxt =
                       in\n  \
                       let ret = filename_from_uri_raw uri hostname_ptr (Some err_ptr_ptr) in\n  \
                       let get_ret_value () =\n    \
-                        let hostname = (match hostname_ptr with | None -> None | Some ptr -> !@ ptr) in\n    \
+                        let hostname = !@ hostname_ptr in\n    \
                         (ret, hostname)\n  \
                       in\n  \
                       match (!@ err_ptr_ptr) with\n  \

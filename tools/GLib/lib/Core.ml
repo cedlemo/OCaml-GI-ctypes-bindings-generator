@@ -523,7 +523,7 @@ let filename_from_uri uri =
   in
   let ret = filename_from_uri_raw uri hostname_ptr (Some err_ptr_ptr) in
   let get_ret_value () =
-    let hostname = (match hostname_ptr with | None -> None | Some ptr -> !@ ptr) in
+    let hostname = !@ hostname_ptr in
     (ret, hostname)
   in
   match (!@ err_ptr_ptr) with
