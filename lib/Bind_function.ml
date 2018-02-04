@@ -217,10 +217,10 @@ let allocate_gerror = "let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in"
 let return_gerror_result ?(indent=1) ?(ret="value") () =
   let sep = String.make (indent * 2) ' ' in
   Printf.sprintf
-  "%smatch (!@ err_ptr_ptr) with\n  %s\
-  | None -> Ok %s\n  %s\
-  | Some _ -> let err_ptr = !@ err_ptr_ptr in\n    %s\
-    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in\n    %s\
+  "%smatch (!@ err_ptr_ptr) with\n%s\
+  | None -> Ok %s\n%s\
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in\n  %s\
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in\n  %s\
     Error (err_ptr)" sep sep ret sep sep sep
 
 let generate_callable_bindings_when_only_in_arg callable name symbol arguments ret_types sources =
@@ -340,7 +340,7 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
         let _ = File.bprintf ml "  let %s_raw =\n" name in
         let _ = match args.in_list with
         | [] -> File.bprintf ml "    foreign \"%s\" (" symbol
-        | _ -> File.bprintf ml "    foreign \"%s\" (%s @-> " symbol (ctypes_types_to_foreign_sig args.in_list)
+        | _ -> File.bprintf ml  "    foreign \"%s\" (%s @-> " symbol (ctypes_types_to_foreign_sig args.in_list)
         in
         let _ = File.bprintf ml "%s" (String.concat " @-> " (List.map (fun a -> Printf.sprintf "ptr (%s)" (get_ctypes_type a)) args.out_list)) in
         if can_throw_gerror then
@@ -361,7 +361,7 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
       in
       let write_get_value_from_pointer_instructions a =
         if can_throw_gerror then begin
-          File.bprintf ml "let get_ret_value () =\n  "
+          File.bprintf ml "  let get_ret_value () =\n"
         end;
         begin
           let name = get_escaped_arg_name a in
@@ -370,17 +370,19 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
           | Some type_info ->
               match allocate_type_bindings type_info name with
               | None -> raise_failure "unable to get type to allocate"
-              | Some (_, g) -> File.bprintf ml "  let %s = %s in\n" name g
+              | Some (_, g) -> let indent = if can_throw_gerror then "    " else "  " in
+              File.bprintf ml "%slet %s = %s in\n" indent name g
         end
       in
       let write_build_return_value_instructions () =
+        let indent = if can_throw_gerror then "    " else "  " in
         if ocaml_ret = "unit" then
           match args.out_list with
-          | [] -> File.buff_add_line ml "  (ret)"
+          | [] -> File.bprintf ml "%s(ret)" indent
           | _ -> escaped_arg_names_to_tuple_form args.out_list
-              |> File.bprintf ml "  (%s)\n"
+              |> File.bprintf ml "%s(%s)\n" indent
         else escaped_arg_names_to_tuple_form args.out_list
-          |> File.bprintf ml "  (ret, %s)\n" ;
+          |> File.bprintf ml "%s(ret, %s)\n" indent;
         if can_throw_gerror then begin
           File.buff_add_line ml "  in";
           File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
@@ -403,7 +405,6 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
         File.buff_add_line mli "*)";
         File.buff_add_line ml "*)"
       end
-
     end
 
 let should_be_implemented args sources symbol =
