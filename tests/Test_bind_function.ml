@@ -105,10 +105,10 @@ let test_function_bindings_for_in_args_only_function_gerror test_ctxt =
      let ml_content =
 "let dir_make_tmp tmpl =\n  \
   let dir_make_tmp_raw =\n    \
-    foreign \"g_dir_make_tmp\" (string_opt@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (string_opt))\n  \
+    foreign \"g_dir_make_tmp\" (string_opt@-> ptr (ptr_opt Error.t_typ) @-> returning (string_opt))\n  \
   in\n  \
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in\n  \
-  let value = dir_make_tmp_raw tmpl (Some err_ptr_ptr) in\n  \
+  let value = dir_make_tmp_raw tmpl err_ptr_ptr in\n  \
   match (!@ err_ptr_ptr) with\n  \
   | None -> Ok value\n  \
   | Some _ -> let err_ptr = !@ err_ptr_ptr in\n    \
@@ -182,9 +182,9 @@ let test_function_bindings_for_args_out_with_gerror_function test_ctxt =
                       let hostname_ptr = allocate string_opt None in\n  \
                       let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in\n  \
                       let filename_from_uri_raw =\n    \
-                      foreign \"g_filename_from_uri\" (string @-> ptr (string_opt) @-> ptr_opt (ptr_opt Error.t_typ) @-> returning (string))\n  \
+                      foreign \"g_filename_from_uri\" (string @-> ptr (string_opt) @-> ptr (ptr_opt Error.t_typ) @-> returning (string))\n  \
                       in\n  \
-                      let ret = filename_from_uri_raw uri hostname_ptr (Some err_ptr_ptr) in\n  \
+                      let ret = filename_from_uri_raw uri hostname_ptr err_ptr_ptr in\n  \
                       let get_ret_value () =\n    \
                         let hostname = !@ hostname_ptr in\n    \
                         (ret, hostname)\n  \
