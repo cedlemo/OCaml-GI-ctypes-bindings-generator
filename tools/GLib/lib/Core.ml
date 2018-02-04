@@ -516,14 +516,14 @@ let filename_display_name =
   foreign "g_filename_display_name" (string @-> returning (string_opt))
 
 let filename_from_uri uri =
-  let hostname_ptr = allocate string " " in
+  let hostname_ptr = allocate string_opt None in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let filename_from_uri_raw =
     foreign "g_filename_from_uri" (string @-> ptr (string_opt) @-> ptr_opt (ptr_opt Error.t_typ) @-> returning (string))
   in
   let ret = filename_from_uri_raw uri hostname_ptr (Some err_ptr_ptr) in
   let get_ret_value () =
-    let hostname = !@ hostname_ptr in
+    let hostname = (match hostname_ptr with | None -> None | Some ptr -> !@ ptr) in
     (ret, hostname)
   in
   match (!@ err_ptr_ptr) with
