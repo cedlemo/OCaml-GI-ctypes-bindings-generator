@@ -269,10 +269,10 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
     if can_throw_gerror then begin
       let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
       let _ = match arguments with
-        | No_args -> File.bprintf ml "(ptr_opt (%s) @-> returning (%s))\n  in\n" error_ctypes_type ctypes_ret
+        | No_args -> File.bprintf ml "(ptr (%s) @-> returning (%s))\n  in\n" error_ctypes_type ctypes_ret
         | Args args ->
           let _ = File.bprintf ml "(%s" (ctypes_types_to_foreign_sig args.in_list) in
-          File.bprintf ml "@-> ptr_opt (%s) @-> returning (%s))\n  in\n" error_ctypes_type ctypes_ret
+          File.bprintf ml "@-> ptr (%s) @-> returning (%s))\n  in\n" error_ctypes_type ctypes_ret
       in
       File.bprintf ml "  %s\n" allocate_gerror
     end
@@ -287,7 +287,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
   in
   let write_compute_value_instructions_when_can_throw_error () =
     let _ =
-      File.bprintf ml "  let value = %s_raw %s (Some err_ptr_ptr) in\n" name arg_names
+      File.bprintf ml "  let value = %s_raw %s err_ptr_ptr in\n" name arg_names
     in
     File.buff_add_line ml (return_gerror_result ())
   in
@@ -353,7 +353,7 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
         in
         let _ = File.bprintf ml "%s" (String.concat " @-> " (List.map (fun a -> Printf.sprintf "ptr (%s)" (get_ctypes_type a)) args.out_list)) in
         if can_throw_gerror then
-          File.bprintf ml " @-> ptr_opt (%s) @-> returning (%s))\n  in\n" error_ctypes_type ctypes_ret
+          File.bprintf ml " @-> ptr (%s) @-> returning (%s))\n  in\n" error_ctypes_type ctypes_ret
         else
           File.bprintf ml " @-> returning %s)\n  in\n" ctypes_ret
       in
@@ -364,7 +364,7 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
         in
         let arg_names = String.concat " " (in_arg_names @ out_arg_names) in
         if can_throw_gerror then
-          File.bprintf ml "  let ret = %s_raw %s (Some err_ptr_ptr) in\n" name arg_names
+          File.bprintf ml "  let ret = %s_raw %s err_ptr_ptr in\n" name arg_names
         else
           File.bprintf ml "  let ret = %s_raw %s in\n" name arg_names
       in
