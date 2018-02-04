@@ -419,9 +419,10 @@ let type_info_to_bindings_types type_info maybe_null =
       | Type as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
       | Unresolved as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
 
-let allocate_type_bindings type_info var_name =
+let allocate_type_bindings type_info var_name maybe_null =
   let _get_allocate_type_and_def_value () =
     let check_if_pointer (ctypes_t, default_value) =
+      (* Consider that a pointer can always be null no need to check for maybe_null. *)
       if Type_info.is_pointer type_info then
         (Printf.sprintf "(ptr_opt %s)" ctypes_t,
          "None",
@@ -444,7 +445,14 @@ let allocate_type_bindings type_info var_name =
       | Types.Float -> Some (check_if_pointer ("float", "0.0"))
       | Types.Double -> Some (check_if_pointer ("double", "0.0"))
       | Types.GType -> None
-      | Types.Utf8 | Types.Filename -> Some ("string", "\" \"", Printf.sprintf "!@ %s_ptr" var_name)
+      | Types.Utf8 | Types.Filename -> begin
+          if maybe_null then
+            Some ("string_opt",
+                  "None",
+                  Printf.sprintf "(match %s_ptr with | None -> None | Some ptr -> !@ ptr)" var_name)
+          else
+              Some ("string", "\" \"", Printf.sprintf "!@ %s_ptr" var_name)
+      end
       | Types.Array -> None
       | Types.Interface -> None
       | Types.GList -> Some (check_if_pointer ("List.t_typ", "None"))

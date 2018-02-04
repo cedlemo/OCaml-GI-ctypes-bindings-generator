@@ -59,7 +59,7 @@ let get_return_types callable container skip_types =
 
 type arg = Not_implemented of string
          | Skipped of string
-         | Arg of {name : string; ocaml_type : string; ctypes_type : string; type_info : Type_info.t structure ptr option}
+         | Arg of {name : string; ocaml_type : string; ctypes_type : string; may_be_null: bool; type_info : Type_info.t structure ptr option}
 
 type arg_lists = {in_list : arg list; out_list : arg list; in_out_list : arg list}
 
@@ -104,6 +104,13 @@ let has_skipped_arg = function
     | None -> match search args.out_list with
               | Some a -> Some a
               | None -> search args.in_out_list
+
+let arg_may_be_null = function
+  | Not_implemented message -> raise (Failure (Printf.sprintf "arg_may_be_null : Not_implemented -> %s" message))
+  | Skipped message -> raise (Failure (Printf.sprintf "arg_may_be_null : Skipped -> %s" message))
+  | Arg arg -> arg.may_be_null
+
+
 
 (** Get the escaped name (valid OCaml variable name) of the argument. Raise a Failure
  *  exception. It is an error to try to get the name of the argument while I should
@@ -179,14 +186,15 @@ let get_args_information callable container skip_types =
                             match Base_info.get_name info' with
                             | None -> raise (Failure "It should have a name :Bind_function Arg_info.in")
                             | Some s -> s ) in
-          Arg {name; ocaml_type; ctypes_type; type_info = Some t_info}
+          Arg {name; ocaml_type; ctypes_type; may_be_null; type_info = Some t_info}
     in
     let append_self_if_needed l =
       if is_method then
          let arg = Arg { name = "self";
                          ocaml_type = "t structure ptr";
                          ctypes_type = "ptr t_typ";
-                         type_info = None } in
+                         type_info = None ;
+                         may_be_null = false } in
          arg :: l
       else l
     in
@@ -329,7 +337,8 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
         let _ = match get_type_info a with
           | None -> raise_failure "no typeinfo for arg"
           | Some type_info ->
-              match allocate_type_bindings type_info name with
+              let may_be_null = arg_may_be_null a in
+              match allocate_type_bindings type_info name may_be_null with
               | None -> raise_failure "unable to get type to allocate"
               | Some (s, _) -> File.bprintf ml "  %s" s
         in if can_throw_gerror then begin
@@ -368,7 +377,8 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
           match get_type_info a with
           | None -> raise_failure "no typeinfo for arg"
           | Some type_info ->
-              match allocate_type_bindings type_info name with
+              let may_be_null = arg_may_be_null a in
+              match allocate_type_bindings type_info name may_be_null with
               | None -> raise_failure "unable to get type to allocate"
               | Some (_, g) -> let indent = if can_throw_gerror then "    " else "  " in
               File.bprintf ml "%slet %s = %s in\n" indent name g

@@ -35,6 +35,7 @@ type arg =
          | Arg of { name : string;
                     ocaml_type : string;
                     ctypes_type : string;
+                    may_be_null : bool;
                     type_info : Type_info.t structure ptr option}
 
 type arg_lists = { in_list : arg list;

@@ -98,7 +98,7 @@ val type_info_to_bindings_types:
  *  the instructions in order to get the value from the pointer of the
  *  allocated out argument. *)
 val allocate_type_bindings:
-  Type_info.t structure ptr -> string -> (string * string) option
+  Type_info.t structure ptr -> string -> bool -> (string * string) option
 
 (** Check if a string match on of the pattern in a list. *)
 val match_one_of:
