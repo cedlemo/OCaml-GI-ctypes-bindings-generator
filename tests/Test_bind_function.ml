@@ -179,14 +179,14 @@ let test_function_bindings_for_args_out_with_gerror_function test_ctxt =
     let mli_content = "val filename_from_uri :\n  \
     string -> (string * string option, Error.t structure ptr option) result" in
     let ml_content = "let filename_from_uri uri =\n  \
-                      let hostname_ptr = allocate string \" \" in\n  \
+                      let hostname_ptr = allocate string_opt None in\n  \
                       let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in\n  \
                       let filename_from_uri_raw =\n    \
                       foreign \"g_filename_from_uri\" (string @-> ptr (string_opt) @-> ptr_opt (ptr_opt Error.t_typ) @-> returning (string))\n  \
                       in\n  \
                       let ret = filename_from_uri_raw uri hostname_ptr (Some err_ptr_ptr) in\n  \
                       let get_ret_value () =\n    \
-                        let hostname = !@ hostname_ptr in\n    \
+                        let hostname = (match hostname_ptr with | None -> None | Some ptr -> !@ ptr) in\n    \
                         (ret, hostname)\n  \
                       in\n  \
                       match (!@ err_ptr_ptr) with\n  \
