@@ -7,10 +7,10 @@ let t_typ : t structure typ = structure "Markup_parse_context"
 (*Not implemented g_markup_parse_context_new type callback not implemented*)
 let end_parse self =
   let end_parse_raw =
-    foreign "g_markup_parse_context_end_parse" (ptr t_typ@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_markup_parse_context_end_parse" (ptr t_typ@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = end_parse_raw self (Some err_ptr_ptr) in
+  let value = end_parse_raw self err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -26,10 +26,10 @@ let get_user_data =
   foreign "g_markup_parse_context_get_user_data" (ptr t_typ @-> returning (ptr_opt void))
 let parse self text text_len =
   let parse_raw =
-    foreign "g_markup_parse_context_parse" (ptr t_typ @-> string @-> int64_t@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_markup_parse_context_parse" (ptr t_typ @-> string @-> int64_t@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = parse_raw self text text_len (Some err_ptr_ptr) in
+  let value = parse_raw self text text_len err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in

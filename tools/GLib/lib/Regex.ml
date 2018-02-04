@@ -6,10 +6,10 @@ let t_typ : t structure typ = structure "Regex"
 
 let create pattern compile_options match_options =
   let create_raw =
-    foreign "g_regex_new" (string @-> Regex_compile_flags.t_list_view @-> Regex_match_flags.t_list_view@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
+    foreign "g_regex_new" (string @-> Regex_compile_flags.t_list_view @-> Regex_match_flags.t_list_view@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = create_raw pattern compile_options match_options (Some err_ptr_ptr) in
+  let value = create_raw pattern compile_options match_options err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -66,9 +66,9 @@ let check_replacement replacement =
   let has_references_ptr = allocate bool false in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let check_replacement_raw =
-    foreign "g_regex_check_replacement" (string @-> ptr (bool) @-> ptr_opt (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_regex_check_replacement" (string @-> ptr (bool) @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
-  let ret = check_replacement_raw replacement has_references_ptr (Some err_ptr_ptr) in
+  let ret = check_replacement_raw replacement has_references_ptr err_ptr_ptr in
   let get_ret_value () =
     let has_references = !@ has_references_ptr in
     (ret, has_references)

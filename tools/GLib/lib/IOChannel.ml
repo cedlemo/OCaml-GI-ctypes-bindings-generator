@@ -28,10 +28,10 @@ let _ = seal t_typ
 
 let new_file filename mode =
   let new_file_raw =
-    foreign "g_io_channel_new_file" (string @-> string@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (ptr t_typ))
+    foreign "g_io_channel_new_file" (string @-> string@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = new_file_raw filename mode (Some err_ptr_ptr) in
+  let value = new_file_raw filename mode err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -43,10 +43,10 @@ let close =
   foreign "g_io_channel_close" (ptr t_typ @-> returning (void))
 let flush self =
   let flush_raw =
-    foreign "g_io_channel_flush" (ptr t_typ@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
+    foreign "g_io_channel_flush" (ptr t_typ@-> ptr (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = flush_raw self (Some err_ptr_ptr) in
+  let value = flush_raw self err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -80,9 +80,9 @@ let read_line self =
   let terminator_pos_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let read_line_raw =
-    foreign "g_io_channel_read_line" (ptr t_typ @-> ptr (string) @-> ptr (uint64_t) @-> ptr (uint64_t) @-> ptr_opt (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
+    foreign "g_io_channel_read_line" (ptr t_typ @-> ptr (string) @-> ptr (uint64_t) @-> ptr (uint64_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
   in
-  let ret = read_line_raw self str_return_ptr length_ptr terminator_pos_ptr (Some err_ptr_ptr) in
+  let ret = read_line_raw self str_return_ptr length_ptr terminator_pos_ptr err_ptr_ptr in
   let get_ret_value () =
     let str_return = !@ str_return_ptr in
   let get_ret_value () =
@@ -98,10 +98,10 @@ let read_line self =
     Error (err_ptr)*)
 let read_line_string self buffer terminator_pos =
   let read_line_string_raw =
-    foreign "g_io_channel_read_line_string" (ptr t_typ @-> ptr String.t_typ @-> ptr_opt uint64_t@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
+    foreign "g_io_channel_read_line_string" (ptr t_typ @-> ptr String.t_typ @-> ptr_opt uint64_t@-> ptr (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = read_line_string_raw self buffer terminator_pos (Some err_ptr_ptr) in
+  let value = read_line_string_raw self buffer terminator_pos err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -115,10 +115,10 @@ let seek =
   foreign "g_io_channel_seek" (ptr t_typ @-> int64_t @-> Seek_type.t_view @-> returning (IOError.t_view))
 let seek_position self offset _type =
   let seek_position_raw =
-    foreign "g_io_channel_seek_position" (ptr t_typ @-> int64_t @-> Seek_type.t_view@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
+    foreign "g_io_channel_seek_position" (ptr t_typ @-> int64_t @-> Seek_type.t_view@-> ptr (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = seek_position_raw self offset _type (Some err_ptr_ptr) in
+  let value = seek_position_raw self offset _type err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -132,10 +132,10 @@ let set_close_on_unref =
   foreign "g_io_channel_set_close_on_unref" (ptr t_typ @-> bool @-> returning (void))
 let set_encoding self encoding =
   let set_encoding_raw =
-    foreign "g_io_channel_set_encoding" (ptr t_typ @-> string_opt@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
+    foreign "g_io_channel_set_encoding" (ptr t_typ @-> string_opt@-> ptr (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = set_encoding_raw self encoding (Some err_ptr_ptr) in
+  let value = set_encoding_raw self encoding err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -143,10 +143,10 @@ let set_encoding self encoding =
     Error (err_ptr)
 let set_flags self flags =
   let set_flags_raw =
-    foreign "g_io_channel_set_flags" (ptr t_typ @-> IOFlags.t_list_view@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
+    foreign "g_io_channel_set_flags" (ptr t_typ @-> IOFlags.t_list_view@-> ptr (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = set_flags_raw self flags (Some err_ptr_ptr) in
+  let value = set_flags_raw self flags err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -156,10 +156,10 @@ let set_line_term =
   foreign "g_io_channel_set_line_term" (ptr t_typ @-> string_opt @-> int32_t @-> returning (void))
 let shutdown self flush =
   let shutdown_raw =
-    foreign "g_io_channel_shutdown" (ptr t_typ @-> bool@-> ptr_opt (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
+    foreign "g_io_channel_shutdown" (ptr t_typ @-> bool@-> ptr (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = shutdown_raw self flush (Some err_ptr_ptr) in
+  let value = shutdown_raw self flush err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
