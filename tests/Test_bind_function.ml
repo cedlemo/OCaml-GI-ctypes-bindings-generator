@@ -1,5 +1,5 @@
 (*
- * Copyright 2017 Cedric LE MOIGNE, cedlemo@gmx.com
+ * Copyright 2017-2018 Cedric LE MOIGNE, cedlemo@gmx.com
  * This file is part of OCaml-GObject-Introspection.
  *
  * OCaml-GObject-Introspection is free software: you can redistribute it and/or modify
@@ -151,25 +151,6 @@ let test_function_bindings_for_args_out_function test_ctxt =
         in
         Test_utils.test_writing test_ctxt method_info "get_ymd" writer mli_content ml_content
 
-(*
-
-let filename_from_uri uri =
-  let hostname_ptr = allocate string_opt None in
-  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let filename_from_uri_raw =
-    foreign "g_filename_from_uri" (string @-> ptr (string_opt) @-> ptr_opt (ptr_opt Error.t_typ) @-> returning (string))
-  in
-  let ret = filename_from_uri_raw uri hostname_ptr (Some err_ptr_ptr) in
-  let get_ret_value () =
-    let hostname = !@ hostname_ptr in
-    (ret, hostname)
-  in
-  match (!@ err_ptr_ptr) with
-    | None -> Ok (get_ret_value ())
-    | Some _ -> let err_ptr = !@ err_ptr_ptr in
-      let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-      Error (err_ptr)
-*)
 let test_function_bindings_for_args_out_with_gerror_function test_ctxt =
   let container = "Core" in
   let name = "filename_from_uri" in
@@ -177,12 +158,12 @@ let test_function_bindings_for_args_out_with_gerror_function test_ctxt =
   | None -> assert_equal_string name " has not been found"
   | Some info -> let function_info = Function_info.from_baseinfo info in
     let mli_content = "val filename_from_uri :\n  \
-    string -> (string * string option, Error.t structure ptr option) result" in
+    string -> (string option * string option, Error.t structure ptr option) result" in
     let ml_content = "let filename_from_uri uri =\n  \
                       let hostname_ptr = allocate string_opt None in\n  \
                       let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in\n  \
                       let filename_from_uri_raw =\n    \
-                      foreign \"g_filename_from_uri\" (string @-> ptr (string_opt) @-> ptr (ptr_opt Error.t_typ) @-> returning (string))\n  \
+                      foreign \"g_filename_from_uri\" (string @-> ptr (string_opt) @-> ptr (ptr_opt Error.t_typ) @-> returning (string_opt))\n  \
                       in\n  \
                       let ret = filename_from_uri_raw uri hostname_ptr err_ptr_ptr in\n  \
                       let get_ret_value () =\n    \
