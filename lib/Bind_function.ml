@@ -333,16 +333,13 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
       in
       let write_out_argument_allocation_instructions a =
         let name = get_escaped_arg_name a in
-        let _ = match get_type_info a with
-          | None -> raise_failure "no typeinfo for arg"
-          | Some type_info ->
-              let may_be_null = arg_may_be_null a in
-              match allocate_type_bindings type_info name may_be_null with
-              | None -> raise_failure "unable to get type to allocate"
-              | Some (s, _) -> File.bprintf ml "  %s" s
-        in if can_throw_gerror then begin
-          File.bprintf ml "  %s\n" allocate_gerror;
-        end
+        match get_type_info a with
+        | None -> raise_failure "no typeinfo for arg"
+        | Some type_info ->
+            let may_be_null = arg_may_be_null a in
+            match allocate_type_bindings type_info name may_be_null with
+            | None -> raise_failure "unable to get type to allocate"
+            | Some (s, _) -> File.bprintf ml "  %s" s
       in
       let write_foreign_declaration () =
         let _ = File.bprintf ml "  let %s_raw =\n" name in
@@ -368,20 +365,16 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
           File.bprintf ml "  let ret = %s_raw %s in\n" name arg_names
       in
       let write_get_value_from_pointer_instructions a =
-        if can_throw_gerror then begin
-          File.bprintf ml "  let get_ret_value () =\n"
-        end;
-        begin
-          let name = get_escaped_arg_name a in
-          match get_type_info a with
-          | None -> raise_failure "no typeinfo for arg"
-          | Some type_info ->
-              let may_be_null = arg_may_be_null a in
-              match allocate_type_bindings type_info name may_be_null with
-              | None -> raise_failure "unable to get type to allocate"
-              | Some (_, g) -> let indent = if can_throw_gerror then "    " else "  " in
-              File.bprintf ml "%slet %s = %s in\n" indent name g
-        end
+        let name = get_escaped_arg_name a in
+        match get_type_info a with
+        | None -> raise_failure "no typeinfo for arg"
+        | Some type_info ->
+            let may_be_null = arg_may_be_null a in
+            match allocate_type_bindings type_info name may_be_null with
+            | None -> raise_failure "unable to get type to allocate"
+            | Some (_, g) ->
+                let indent = if can_throw_gerror then "    " else "  " in
+                File.bprintf ml "%slet %s = %s in\n" indent name g
       in
       let write_build_return_value_instructions () =
         let indent = if can_throw_gerror then "    " else "  " in
@@ -397,7 +390,7 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
           File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
         end
       in
-      let to_implement = ["get_charset"; "get_ymd"; "filename_from_uri"] in
+      let to_implement = ["get_charset"; "get_ymd"; "filename_from_uri"; "convert"] in
       let comment = not (List.exists (fun s -> s = name) to_implement) in
       if comment then begin
         File.buff_add_line mli "(*";
@@ -406,8 +399,14 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
       write_mli_signature ();
       write_function_name ();
       List.iter write_out_argument_allocation_instructions args.out_list;
+      if can_throw_gerror then begin
+        File.bprintf ml "  %s\n" allocate_gerror
+      end;
       write_foreign_declaration ();
       write_compute_result ();
+      if can_throw_gerror then begin
+        File.bprintf ml "  let get_ret_value () =\n"
+      end;
       List.iter write_get_value_from_pointer_instructions args.out_list;
       write_build_return_value_instructions ();
       if comment then begin

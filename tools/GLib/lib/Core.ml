@@ -316,10 +316,8 @@ let compute_checksum_for_string =
 
 (*Not implemented g_compute_hmac_for_string type C Array type for Types.Array tag not implemented*)
 
-(*
 let convert str len to_codeset from_codeset =
   let bytes_read_ptr = allocate uint64_t Unsigned.UInt64.zero in
-  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let bytes_written_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let convert_raw =
@@ -328,7 +326,6 @@ let convert str len to_codeset from_codeset =
   let ret = convert_raw str len to_codeset from_codeset bytes_read_ptr bytes_written_ptr err_ptr_ptr in
   let get_ret_value () =
     let bytes_read = !@ bytes_read_ptr in
-  let get_ret_value () =
     let bytes_written = !@ bytes_written_ptr in
     (ret, bytes_read, bytes_written)
   in
@@ -336,8 +333,7 @@ let convert str len to_codeset from_codeset =
   | None -> Ok (get_ret_value ())
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-    Error (err_ptr)*)
-
+    Error (err_ptr)
 let convert_error_quark =
   foreign "g_convert_error_quark" (void @-> returning (uint32_t))
 
@@ -548,7 +544,6 @@ let filename_to_uri filename hostname =
 (*
 let filename_to_utf8 opsysstring len =
   let bytes_read_ptr = allocate uint64_t Unsigned.UInt64.zero in
-  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let bytes_written_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let filename_to_utf8_raw =
@@ -557,7 +552,6 @@ let filename_to_utf8 opsysstring len =
   let ret = filename_to_utf8_raw opsysstring len bytes_read_ptr bytes_written_ptr err_ptr_ptr in
   let get_ret_value () =
     let bytes_read = !@ bytes_read_ptr in
-  let get_ret_value () =
     let bytes_written = !@ bytes_written_ptr in
     (ret, bytes_read, bytes_written)
   in
@@ -783,7 +777,6 @@ let key_file_error_quark =
 (*
 let locale_from_utf8 utf8string len =
   let bytes_read_ptr = allocate uint64_t Unsigned.UInt64.zero in
-  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let bytes_written_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let locale_from_utf8_raw =
@@ -792,7 +785,6 @@ let locale_from_utf8 utf8string len =
   let ret = locale_from_utf8_raw utf8string len bytes_read_ptr bytes_written_ptr err_ptr_ptr in
   let get_ret_value () =
     let bytes_read = !@ bytes_read_ptr in
-  let get_ret_value () =
     let bytes_written = !@ bytes_written_ptr in
     (ret, bytes_read, bytes_written)
   in
@@ -805,7 +797,6 @@ let locale_from_utf8 utf8string len =
 (*
 let locale_to_utf8 opsysstring len =
   let bytes_read_ptr = allocate uint64_t Unsigned.UInt64.zero in
-  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let bytes_written_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let locale_to_utf8_raw =
@@ -814,7 +805,6 @@ let locale_to_utf8 opsysstring len =
   let ret = locale_to_utf8_raw opsysstring len bytes_read_ptr bytes_written_ptr err_ptr_ptr in
   let get_ret_value () =
     let bytes_read = !@ bytes_read_ptr in
-  let get_ret_value () =
     let bytes_written = !@ bytes_written_ptr in
     (ret, bytes_read, bytes_written)
   in
@@ -1474,7 +1464,6 @@ let usleep =
 (*
 let utf16_to_utf8 str len =
   let items_read_ptr = allocate int64_t Int64.zero in
-  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let items_written_ptr = allocate int64_t Int64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let utf16_to_utf8_raw =
@@ -1483,7 +1472,6 @@ let utf16_to_utf8 str len =
   let ret = utf16_to_utf8_raw str len items_read_ptr items_written_ptr err_ptr_ptr in
   let get_ret_value () =
     let items_read = !@ items_read_ptr in
-  let get_ret_value () =
     let items_written = !@ items_written_ptr in
     (ret, items_read, items_written)
   in

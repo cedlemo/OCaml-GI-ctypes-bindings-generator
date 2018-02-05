@@ -74,9 +74,7 @@ let read =
 (*
 let read_line self =
   let str_return_ptr = allocate string " " in
-  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
-  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let terminator_pos_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let read_line_raw =
@@ -85,9 +83,7 @@ let read_line self =
   let ret = read_line_raw self str_return_ptr length_ptr terminator_pos_ptr err_ptr_ptr in
   let get_ret_value () =
     let str_return = !@ str_return_ptr in
-  let get_ret_value () =
     let length = !@ length_ptr in
-  let get_ret_value () =
     let terminator_pos = !@ terminator_pos_ptr in
     (ret, str_return, length, terminator_pos)
   in

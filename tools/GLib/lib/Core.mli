@@ -294,10 +294,8 @@ val compute_checksum_for_string:
 
 (*Not implemented g_compute_hmac_for_string type C Array type for Types.Array tag not implemented*)
 
-(*
 val convert :
   string -> int64 -> string -> string -> (string option * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
-*)
 
 val convert_error_quark:
   unit -> Unsigned.uint32
