@@ -4,9 +4,9 @@ type t
 val t_typ : t structure typ
 
 val create:
-  string -> bool -> (t structure ptr, Error.t structure ptr option) result
+  string -> bool -> (t structure ptr option, Error.t structure ptr option) result
 val new_from_fd:
-  int32 -> bool -> (t structure ptr, Error.t structure ptr option) result
+  int32 -> bool -> (t structure ptr option, Error.t structure ptr option) result
 val free:
   t structure ptr -> unit
 (*SKIPPED : g_mapped_file_get_bytes return type Bytes.t structure ptr*)

@@ -296,7 +296,7 @@ val compute_checksum_for_string:
 
 (*
 val convert :
-  string -> int64 -> string -> string -> (string * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
+  string -> int64 -> string -> string -> (string option * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
 *)
 
 val convert_error_quark:
@@ -428,7 +428,7 @@ val filename_display_name:
   string -> string option
 
 val filename_from_uri :
-  string -> (string * string option, Error.t structure ptr option) result
+  string -> (string option * string option, Error.t structure ptr option) result
 
 (*Not implemented g_filename_from_utf8 return type C Array type for Types.Array tag not handled*)
 
@@ -437,7 +437,7 @@ val filename_to_uri:
 
 (*
 val filename_to_utf8 :
-  string -> int64 -> (string * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
+  string -> int64 -> (string option * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
 *)
 
 val find_program_in_path:
@@ -641,12 +641,12 @@ val key_file_error_quark:
 
 (*
 val locale_from_utf8 :
-  string -> int64 -> (string * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
+  string -> int64 -> (string option * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
 *)
 
 (*
 val locale_to_utf8 :
-  string -> int64 -> (string * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
+  string -> int64 -> (string option * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
 *)
 (*SKIPPED : log_default_handler*)
 (*SKIPPED : log_remove_handler*)
@@ -1216,7 +1216,7 @@ val usleep:
 
 (*
 val utf16_to_utf8 :
-  Unsigned.uint16 ptr -> int64 -> (string * int64 * int64, Error.t structure ptr option) result
+  Unsigned.uint16 ptr -> int64 -> (string option * int64 * int64, Error.t structure ptr option) result
 *)
 (*SKIPPED : utf8_casefold*)
 (*SKIPPED : utf8_collate*)
@@ -1255,7 +1255,7 @@ val variant_is_signature:
   string -> bool
 
 val variant_parse:
-  Variant_type.t structure ptr option -> string -> string option -> string option -> (Variant.t structure ptr, Error.t structure ptr option) result
+  Variant_type.t structure ptr option -> string -> string option -> string option -> (Variant.t structure ptr option, Error.t structure ptr option) result
 
 val variant_parse_error_print_context:
   Error.t structure ptr -> string -> string option

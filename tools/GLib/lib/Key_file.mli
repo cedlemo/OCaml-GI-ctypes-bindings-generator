@@ -79,7 +79,7 @@ val set_value:
   t structure ptr -> string -> string -> string -> unit
 (*
 val to_data :
-  t structure ptr -> (string * Unsigned.uint64, Error.t structure ptr option) result
+  t structure ptr -> (string option * Unsigned.uint64, Error.t structure ptr option) result
 *)
 val unref:
   t structure ptr -> unit

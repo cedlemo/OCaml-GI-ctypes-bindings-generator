@@ -6,7 +6,7 @@ let t_typ : t structure typ = structure "Mapped_file"
 
 let create filename writable =
   let create_raw =
-    foreign "g_mapped_file_new" (string @-> bool@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr t_typ))
+    foreign "g_mapped_file_new" (string @-> bool@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = create_raw filename writable err_ptr_ptr in
@@ -17,7 +17,7 @@ let create filename writable =
     Error (err_ptr)
 let new_from_fd fd writable =
   let new_from_fd_raw =
-    foreign "g_mapped_file_new_from_fd" (int32_t @-> bool@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr t_typ))
+    foreign "g_mapped_file_new_from_fd" (int32_t @-> bool@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = new_from_fd_raw fd writable err_ptr_ptr in

@@ -139,7 +139,7 @@ val is_object_path:
 val is_signature:
   string -> bool
 val parse:
-  Variant_type.t structure ptr option -> string -> string option -> string option -> (t structure ptr, Error.t structure ptr option) result
+  Variant_type.t structure ptr option -> string -> string option -> string option -> (t structure ptr option, Error.t structure ptr option) result
 val parse_error_print_context:
   Error.t structure ptr -> string -> string option
 val parse_error_quark:

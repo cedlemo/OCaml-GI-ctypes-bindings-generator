@@ -153,7 +153,7 @@ let is_signature =
   foreign "g_variant_is_signature" (string @-> returning (bool))
 let parse _type text limit endptr =
   let parse_raw =
-    foreign "g_variant_parse" (ptr_opt Variant_type.t_typ @-> string @-> string_opt @-> string_opt@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr t_typ))
+    foreign "g_variant_parse" (ptr_opt Variant_type.t_typ @-> string @-> string_opt @-> string_opt@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = parse_raw _type text limit endptr err_ptr_ptr in

@@ -323,7 +323,7 @@ let convert str len to_codeset from_codeset =
   let bytes_written_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let convert_raw =
-    foreign "g_convert" (string @-> int64_t @-> string @-> string @-> ptr (uint64_t) @-> ptr (uint64_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (string))
+    foreign "g_convert" (string @-> int64_t @-> string @-> string @-> ptr (uint64_t) @-> ptr (uint64_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (string_opt))
   in
   let ret = convert_raw str len to_codeset from_codeset bytes_read_ptr bytes_written_ptr err_ptr_ptr in
   let get_ret_value () =
@@ -519,7 +519,7 @@ let filename_from_uri uri =
   let hostname_ptr = allocate string_opt None in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let filename_from_uri_raw =
-    foreign "g_filename_from_uri" (string @-> ptr (string_opt) @-> ptr (ptr_opt Error.t_typ) @-> returning (string))
+    foreign "g_filename_from_uri" (string @-> ptr (string_opt) @-> ptr (ptr_opt Error.t_typ) @-> returning (string_opt))
   in
   let ret = filename_from_uri_raw uri hostname_ptr err_ptr_ptr in
   let get_ret_value () =
@@ -552,7 +552,7 @@ let filename_to_utf8 opsysstring len =
   let bytes_written_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let filename_to_utf8_raw =
-    foreign "g_filename_to_utf8" (string @-> int64_t @-> ptr (uint64_t) @-> ptr (uint64_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (string))
+    foreign "g_filename_to_utf8" (string @-> int64_t @-> ptr (uint64_t) @-> ptr (uint64_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (string_opt))
   in
   let ret = filename_to_utf8_raw opsysstring len bytes_read_ptr bytes_written_ptr err_ptr_ptr in
   let get_ret_value () =
@@ -787,7 +787,7 @@ let locale_from_utf8 utf8string len =
   let bytes_written_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let locale_from_utf8_raw =
-    foreign "g_locale_from_utf8" (string @-> int64_t @-> ptr (uint64_t) @-> ptr (uint64_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (string))
+    foreign "g_locale_from_utf8" (string @-> int64_t @-> ptr (uint64_t) @-> ptr (uint64_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (string_opt))
   in
   let ret = locale_from_utf8_raw utf8string len bytes_read_ptr bytes_written_ptr err_ptr_ptr in
   let get_ret_value () =
@@ -809,7 +809,7 @@ let locale_to_utf8 opsysstring len =
   let bytes_written_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let locale_to_utf8_raw =
-    foreign "g_locale_to_utf8" (string @-> int64_t @-> ptr (uint64_t) @-> ptr (uint64_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (string))
+    foreign "g_locale_to_utf8" (string @-> int64_t @-> ptr (uint64_t) @-> ptr (uint64_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (string_opt))
   in
   let ret = locale_to_utf8_raw opsysstring len bytes_read_ptr bytes_written_ptr err_ptr_ptr in
   let get_ret_value () =
@@ -1478,7 +1478,7 @@ let utf16_to_utf8 str len =
   let items_written_ptr = allocate int64_t Int64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let utf16_to_utf8_raw =
-    foreign "g_utf16_to_utf8" (ptr uint16_t @-> int64_t @-> ptr (int64_t) @-> ptr (int64_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (string))
+    foreign "g_utf16_to_utf8" (ptr uint16_t @-> int64_t @-> ptr (int64_t) @-> ptr (int64_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (string_opt))
   in
   let ret = utf16_to_utf8_raw str len items_read_ptr items_written_ptr err_ptr_ptr in
   let get_ret_value () =
@@ -1530,7 +1530,7 @@ let variant_is_signature =
 
 let variant_parse _type text limit endptr =
   let variant_parse_raw =
-    foreign "g_variant_parse" (ptr_opt Variant_type.t_typ @-> string @-> string_opt @-> string_opt@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr Variant.t_typ))
+    foreign "g_variant_parse" (ptr_opt Variant_type.t_typ @-> string @-> string_opt @-> string_opt@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Variant.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = variant_parse_raw _type text limit endptr err_ptr_ptr in

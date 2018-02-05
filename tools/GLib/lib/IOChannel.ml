@@ -28,7 +28,7 @@ let _ = seal t_typ
 
 let new_file filename mode =
   let new_file_raw =
-    foreign "g_io_channel_new_file" (string @-> string@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr t_typ))
+    foreign "g_io_channel_new_file" (string @-> string@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value = new_file_raw filename mode err_ptr_ptr in

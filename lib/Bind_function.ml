@@ -44,7 +44,8 @@ let get_return_types callable container skip_types =
   if Callable_info.skip_return callable then Type_names [("unit", "void")]
   else let ret = Callable_info.get_return_type callable in
     let may_be_null = Callable_info.may_return_null callable in
-    match Binding_utils.type_info_to_bindings_types ret may_be_null with
+    let can_throw_gerror = Callable_info.can_throw_gerror callable in
+    match Binding_utils.type_info_to_bindings_types ret (may_be_null || can_throw_gerror) with
     | Binding_utils.Not_implemented tag_name -> Not_handled tag_name
     | Types {ocaml = ocaml_type; ctypes = ctypes_typ} ->
         let types = filter_same_argument_type_as_container container (ocaml_type, ctypes_typ) in
@@ -109,8 +110,6 @@ let arg_may_be_null = function
   | Not_implemented message -> raise (Failure (Printf.sprintf "arg_may_be_null : Not_implemented -> %s" message))
   | Skipped message -> raise (Failure (Printf.sprintf "arg_may_be_null : Skipped -> %s" message))
   | Arg arg -> arg.may_be_null
-
-
 
 (** Get the escaped name (valid OCaml variable name) of the argument. Raise a Failure
  *  exception. It is an error to try to get the name of the argument while I should

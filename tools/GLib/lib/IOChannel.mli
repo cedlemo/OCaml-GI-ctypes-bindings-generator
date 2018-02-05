@@ -25,7 +25,7 @@ val f_reserved1: (unit ptr, t structure) field
 val f_reserved2: (unit ptr, t structure) field
 
 val new_file:
-  string -> string -> (t structure ptr, Error.t structure ptr option) result
+  string -> string -> (t structure ptr option, Error.t structure ptr option) result
 val unix_new:
   int32 -> t structure ptr
 val close:

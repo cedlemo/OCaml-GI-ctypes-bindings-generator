@@ -240,7 +240,7 @@ let to_data self =
   let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let to_data_raw =
-    foreign "g_key_file_to_data" (ptr t_typ @-> ptr (uint64_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (string))
+    foreign "g_key_file_to_data" (ptr t_typ @-> ptr (uint64_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (string_opt))
   in
   let ret = to_data_raw self length_ptr err_ptr_ptr in
   let get_ret_value () =
