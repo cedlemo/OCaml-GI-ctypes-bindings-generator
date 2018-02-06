@@ -398,12 +398,6 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
           File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
         end
       in
-      let to_implement = ["get_charset"; "get_ymd"; "filename_from_uri"; "convert"] in
-      let comment = not (List.exists (fun s -> s = name) to_implement) in
-      if comment then begin
-        File.buff_add_line mli "(*";
-        File.buff_add_line ml "(*"
-      end;
       write_mli_signature ();
       write_function_name ();
       List.iter write_out_argument_allocation_instructions args.out_list;
@@ -417,10 +411,6 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
       end;
       List.iter write_get_value_from_pointer_instructions args.out_list;
       write_build_return_value_instructions ();
-      if comment then begin
-        File.buff_add_line mli "*)";
-        File.buff_add_line ml "*)"
-      end
     end
 
 let should_be_implemented args sources symbol =
