@@ -87,6 +87,7 @@ let escape_OCaml_keywords variable_name =
   | "while"
   | "with" -> "_" ^ variable_name
   | "new" -> "create"
+  | "ref" -> "incr_ref"
   | _ -> variable_name
 
 let has_number_at_beginning variable_name =
