@@ -304,7 +304,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
   write_foreign_declaration ctypes_ret';
   if can_throw_gerror then write_compute_value_instructions_when_can_throw_error ()
 
-let generate_callable_bindings_when_out_args callable name symbol arguments ret_types sources =
+let generate_callable_bindings_when_out_args callable name container symbol arguments ret_types sources =
   let open Binding_utils in
   let name = ensure_valid_variable_name name in
   let (ocaml_ret, ctypes_ret) = List.hd ret_types in
@@ -347,7 +347,8 @@ let generate_callable_bindings_when_out_args callable name symbol arguments ret_
             let may_be_null = arg_may_be_null a in
             match allocate_type_bindings type_info name may_be_null with
             | None -> raise_failure "unable to get type to allocate"
-            | Some (s, _) -> File.bprintf ml "  %s" s
+            | Some (s, _) -> let pattern = container ^ "." in
+            File.bprintf ml "  %s" (Binding_utils.string_pattern_remove s pattern)
       in
       let write_foreign_declaration () =
         let _ = File.bprintf ml "  let %s_raw =\n" name in
@@ -443,7 +444,7 @@ let append_ctypes_function_bindings raw_name info container sources skip_types =
             Sources.buffs_add_skipped sources coms
         | Type_names ret_types ->
             if has_out_arg args then
-              generate_callable_bindings_when_out_args callable name symbol args ret_types sources
+              generate_callable_bindings_when_out_args callable name container symbol args ret_types sources
             else if has_in_out_arg args then
               let coms  = Printf.sprintf "Not implemented %s - in out argument not handled" symbol in
               Sources.buffs_add_comments sources coms
