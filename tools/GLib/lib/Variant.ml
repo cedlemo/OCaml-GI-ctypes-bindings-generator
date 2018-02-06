@@ -61,7 +61,7 @@ let compare =
 let dup_string self =
   let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let dup_string_raw =
-    foreign "g_variant_dup_string" (ptr t_typ @-> ptr (uint64_t) @-> returning string)
+    foreign "g_variant_dup_string" (ptr t_typ @-> ptr (uint64_t) @-> returning string_opt)
   in
   let ret = dup_string_raw self length_ptr in
   let length = !@ length_ptr in
@@ -102,7 +102,7 @@ let get_size =
 let get_string self =
   let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let get_string_raw =
-    foreign "g_variant_get_string" (ptr t_typ @-> ptr (uint64_t) @-> returning string)
+    foreign "g_variant_get_string" (ptr t_typ @-> ptr (uint64_t) @-> returning string_opt)
   in
   let ret = get_string_raw self length_ptr in
   let length = !@ length_ptr in

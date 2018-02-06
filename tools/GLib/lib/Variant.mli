@@ -58,7 +58,7 @@ val compare:
 (*Not implemented g_variant_dup_objv return type C Array type for Types.Array tag not handled*)
 (*
 val dup_string :
-  t structure ptr -> (string * Unsigned.uint64)
+  t structure ptr -> (string option * Unsigned.uint64)
 *)
 (*Not implemented g_variant_dup_strv return type C Array type for Types.Array tag not handled*)
 val equal:
@@ -93,7 +93,7 @@ val get_size:
   t structure ptr -> Unsigned.uint64
 (*
 val get_string :
-  t structure ptr -> (string * Unsigned.uint64)
+  t structure ptr -> (string option * Unsigned.uint64)
 *)
 (*Not implemented g_variant_get_strv return type C Array type for Types.Array tag not handled*)
 val get_type:

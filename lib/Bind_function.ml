@@ -48,9 +48,15 @@ let get_return_types callable container skip_types =
     match Binding_utils.type_info_to_bindings_types ret (may_be_null || can_throw_gerror) with
     | Binding_utils.Not_implemented tag_name -> Not_handled tag_name
     | Types {ocaml = ocaml_type; ctypes = ctypes_typ} ->
-        let types = filter_same_argument_type_as_container container (ocaml_type, ctypes_typ) in
         if Binding_utils.match_one_of ocaml_type skip_types then Skipped ocaml_type
-        else Type_names [types]
+        else begin
+          if ocaml_type = "string" then
+            Type_names [("string option", "string_opt")]
+          else
+            let types =
+              filter_same_argument_type_as_container container (ocaml_type, ctypes_typ)
+            in Type_names [types]
+        end
       (* TODO : how to free the returned data
       match Callable_info.get_caller_owns callable with
       | Arg_info.Nothing -> ()
