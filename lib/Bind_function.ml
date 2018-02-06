@@ -238,6 +238,7 @@ let return_gerror_result ?(indent=1) ?(ret="value") () =
 
 let generate_callable_bindings_when_only_in_arg callable name symbol arguments ret_types sources =
   let open Binding_utils in
+  let name = ensure_valid_variable_name name in
   let mli = Sources.mli sources in
   let ml = Sources.ml sources in
   let (ocaml_ret, ctypes_ret) = List.hd ret_types in
@@ -305,6 +306,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
 
 let generate_callable_bindings_when_out_args callable name symbol arguments ret_types sources =
   let open Binding_utils in
+  let name = ensure_valid_variable_name name in
   let (ocaml_ret, ctypes_ret) = List.hd ret_types in
   let mli = Sources.mli sources in
   let ml = Sources.ml sources in
