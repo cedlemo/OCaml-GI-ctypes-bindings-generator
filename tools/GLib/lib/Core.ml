@@ -114,6 +114,7 @@ external get_minor_version: unit -> int = "get_minor_version"
 let c_MINOR_VERSION = get_minor_version () |> Int32.of_int
 let c_MODULE_SUFFIX = "so"
 (*SKIPPED : MainContext*)
+(*SKIPPED : MatchInfo*)
 let c_OPTION_REMAINING = ""
 let c_PDP_ENDIAN = Int32.of_string "3412"
 let c_PI = 3.141593
@@ -127,6 +128,11 @@ let c_PRIORITY_HIGH = Int32.of_string "-100"
 let c_PRIORITY_HIGH_IDLE = Int32.of_string "100"
 let c_PRIORITY_LOW = Int32.of_string "300"
 (*SKIPPED : Rand*)
+(*SKIPPED : Regex*)
+(*SKIPPED : RegexCompileFlags*)
+(*SKIPPED : RegexError*)
+(*SKIPPED : RegexEvalCallback*)
+(*SKIPPED : RegexMatchFlags*)
 let c_SEARCHPATH_SEPARATOR = Int32.of_string "59"
 let c_SEARCHPATH_SEPARATOR_S = ";"
 let c_SIZEOF_LONG = Int32.of_string "8"
@@ -979,10 +985,9 @@ let regex_escape_nul =
 
 (*Not implemented g_regex_escape_string type C Array type for Types.Array tag not implemented*)
 
-let regex_match_simple =
-  foreign "g_regex_match_simple" (string @-> string @-> Regex_compile_flags.t_list_view @-> Regex_match_flags.t_list_view @-> returning (bool))
+(*SKIPPED :  g_regex_match_simple type Regex_compile_flags.t_list skipped*)
 
-(*Not implemented g_regex_split_simple return type C Array type for Types.Array tag not handled*)
+(*SKIPPED :  g_regex_split_simple type Regex_compile_flags.t_list skipped*)
 
 let reload_user_special_dirs_cache =
   foreign "g_reload_user_special_dirs_cache" (void @-> returning (void))

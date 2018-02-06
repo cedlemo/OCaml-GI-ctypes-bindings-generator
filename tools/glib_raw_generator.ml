@@ -70,6 +70,8 @@ let skip = [ "Hook"; (* skip for recursion pb *)
              "Data"; (* remove all Data related types . *)
              "Thread"; (* remove all Thread related types. *)
              "Ascii";
+             "Regex";      (* skip for recursion pb with Match_info. *)
+             "MatchInfo"; (* skip for recursion pb with Regex. *)
 ]
 
 let const_parser info sources =
