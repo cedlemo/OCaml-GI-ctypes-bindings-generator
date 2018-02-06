@@ -49,7 +49,7 @@ val modify_unix_fd:
   t structure ptr -> unit ptr -> IOCondition.t_list -> unit
 val query_unix_fd:
   t structure ptr -> unit ptr -> IOCondition.t_list
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
 val remove_child_source:
   t structure ptr -> t structure ptr -> unit

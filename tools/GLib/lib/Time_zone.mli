@@ -19,7 +19,7 @@ val get_offset:
   t structure ptr -> int32 -> int32
 val is_dst:
   t structure ptr -> int32 -> bool
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
 val unref:
   t structure ptr -> unit

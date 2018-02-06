@@ -124,7 +124,7 @@ val n_children:
   t structure ptr -> Unsigned.uint64
 val print:
   t structure ptr -> bool -> string option
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
 val ref_sink:
   t structure ptr -> t structure ptr

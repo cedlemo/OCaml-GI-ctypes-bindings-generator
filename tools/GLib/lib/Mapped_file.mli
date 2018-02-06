@@ -14,7 +14,7 @@ val get_contents:
   t structure ptr -> string option
 val get_length:
   t structure ptr -> Unsigned.uint64
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
 val unref:
   t structure ptr -> unit

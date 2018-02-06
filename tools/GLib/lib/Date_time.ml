@@ -88,7 +88,7 @@ let get_ymd self =
   (year, month, day)
 let is_daylight_savings =
   foreign "g_date_time_is_daylight_savings" (ptr t_typ @-> returning (bool))
-let ref =
+let incr_ref =
   foreign "g_date_time_ref" (ptr t_typ @-> returning (ptr t_typ))
 let to_local =
   foreign "g_date_time_to_local" (ptr t_typ @-> returning (ptr t_typ))

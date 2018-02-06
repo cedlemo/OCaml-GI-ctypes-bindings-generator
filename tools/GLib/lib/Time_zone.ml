@@ -20,7 +20,7 @@ let get_offset =
   foreign "g_time_zone_get_offset" (ptr t_typ @-> int32_t @-> returning (int32_t))
 let is_dst =
   foreign "g_time_zone_is_dst" (ptr t_typ @-> int32_t @-> returning (bool))
-let ref =
+let incr_ref =
   foreign "g_time_zone_ref" (ptr t_typ @-> returning (ptr t_typ))
 let unref =
   foreign "g_time_zone_unref" (ptr t_typ @-> returning (void))

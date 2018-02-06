@@ -20,7 +20,7 @@ val pop:
   t structure ptr -> unit ptr option
 val push:
   t structure ptr -> Markup_parser.t structure ptr -> unit ptr option -> unit
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
 val unref:
   t structure ptr -> unit

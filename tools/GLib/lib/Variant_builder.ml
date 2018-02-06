@@ -14,7 +14,7 @@ let _end =
   foreign "g_variant_builder_end" (ptr t_typ @-> returning (ptr Variant.t_typ))
 let _open =
   foreign "g_variant_builder_open" (ptr t_typ @-> ptr Variant_type.t_typ @-> returning (void))
-let ref =
+let incr_ref =
   foreign "g_variant_builder_ref" (ptr t_typ @-> returning (ptr t_typ))
 let unref =
   foreign "g_variant_builder_unref" (ptr t_typ @-> returning (void))

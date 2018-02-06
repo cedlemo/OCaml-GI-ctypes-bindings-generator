@@ -53,7 +53,7 @@ let match_all self _string match_options =
 *)
 (*Not implemented g_regex_match_all_full type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_regex_match_full type C Array type for Types.Array tag not implemented*)
-let ref =
+let incr_ref =
   foreign "g_regex_ref" (ptr t_typ @-> returning (ptr t_typ))
 (*Not implemented g_regex_replace type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_regex_replace_literal type C Array type for Types.Array tag not implemented*)

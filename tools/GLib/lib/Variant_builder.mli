@@ -13,7 +13,7 @@ val _end:
   t structure ptr -> Variant.t structure ptr
 val _open:
   t structure ptr -> Variant_type.t structure ptr -> unit
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
 val unref:
   t structure ptr -> unit

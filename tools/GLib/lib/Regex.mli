@@ -31,7 +31,7 @@ val match_all :
 *)
 (*Not implemented g_regex_match_all_full type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_regex_match_full type C Array type for Types.Array tag not implemented*)
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
 (*Not implemented g_regex_replace type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_regex_replace_literal type C Array type for Types.Array tag not implemented*)

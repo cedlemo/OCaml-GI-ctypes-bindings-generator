@@ -16,7 +16,7 @@ let insert_value =
   foreign "g_variant_dict_insert_value" (ptr t_typ @-> string @-> ptr Variant.t_typ @-> returning (void))
 let lookup_value =
   foreign "g_variant_dict_lookup_value" (ptr t_typ @-> string @-> ptr_opt Variant_type.t_typ @-> returning (ptr Variant.t_typ))
-let ref =
+let incr_ref =
   foreign "g_variant_dict_ref" (ptr t_typ @-> returning (ptr t_typ))
 let remove =
   foreign "g_variant_dict_remove" (ptr t_typ @-> string @-> returning (bool))

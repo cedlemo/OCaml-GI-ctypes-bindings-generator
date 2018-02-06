@@ -67,7 +67,7 @@ let next self =
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
-let ref =
+let incr_ref =
   foreign "g_match_info_ref" (ptr t_typ @-> returning (ptr t_typ))
 let unref =
   foreign "g_match_info_unref" (ptr t_typ @-> returning (void))

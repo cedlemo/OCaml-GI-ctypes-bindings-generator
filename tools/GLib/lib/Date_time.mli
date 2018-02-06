@@ -77,7 +77,7 @@ val get_ymd :
   t structure ptr -> (int32 * int32 * int32)
 val is_daylight_savings:
   t structure ptr -> bool
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
 val to_local:
   t structure ptr -> t structure ptr

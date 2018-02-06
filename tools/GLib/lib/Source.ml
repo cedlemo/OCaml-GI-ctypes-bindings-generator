@@ -51,7 +51,7 @@ let modify_unix_fd =
   foreign "g_source_modify_unix_fd" (ptr t_typ @-> ptr void @-> IOCondition.t_list_view @-> returning (void))
 let query_unix_fd =
   foreign "g_source_query_unix_fd" (ptr t_typ @-> ptr void @-> returning (IOCondition.t_list_view))
-let ref =
+let incr_ref =
   foreign "g_source_ref" (ptr t_typ @-> returning (ptr t_typ))
 let remove_child_source =
   foreign "g_source_remove_child_source" (ptr t_typ @-> ptr t_typ @-> returning (void))

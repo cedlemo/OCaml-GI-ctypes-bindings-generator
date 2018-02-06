@@ -59,7 +59,7 @@ val read_line_string:
   t structure ptr -> String.t structure ptr -> Unsigned.uint64 ptr option -> (IOStatus.t, Error.t structure ptr option) result
 (*Not implemented g_io_channel_read_to_end type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_io_channel_read_unichar type unichar not implemented*)
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
 val seek:
   t structure ptr -> int64 -> Seek_type.t -> IOError.t

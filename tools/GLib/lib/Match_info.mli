@@ -32,7 +32,7 @@ val matches:
   t structure ptr -> bool
 val next:
   t structure ptr -> (bool, Error.t structure ptr option) result
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
 val unref:
   t structure ptr -> unit

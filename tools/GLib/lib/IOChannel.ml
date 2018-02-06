@@ -105,7 +105,7 @@ let read_line_string self buffer terminator_pos =
     Error (err_ptr)
 (*Not implemented g_io_channel_read_to_end type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_io_channel_read_unichar type unichar not implemented*)
-let ref =
+let incr_ref =
   foreign "g_io_channel_ref" (ptr t_typ @-> returning (ptr t_typ))
 let seek =
   foreign "g_io_channel_seek" (ptr t_typ @-> int64_t @-> Seek_type.t_view @-> returning (IOError.t_view))

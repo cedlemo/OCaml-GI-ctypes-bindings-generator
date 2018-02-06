@@ -137,7 +137,7 @@ let n_children =
   foreign "g_variant_n_children" (ptr t_typ @-> returning (uint64_t))
 let print =
   foreign "g_variant_print" (ptr t_typ @-> bool @-> returning (string_opt))
-let ref =
+let incr_ref =
   foreign "g_variant_ref" (ptr t_typ @-> returning (ptr t_typ))
 let ref_sink =
   foreign "g_variant_ref_sink" (ptr t_typ @-> returning (ptr t_typ))

@@ -9,7 +9,7 @@ val is_running:
   t structure ptr -> bool
 val quit:
   t structure ptr -> unit
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
 val run:
   t structure ptr -> unit

@@ -33,7 +33,7 @@ let get_contents =
   foreign "g_mapped_file_get_contents" (ptr t_typ @-> returning (string_opt))
 let get_length =
   foreign "g_mapped_file_get_length" (ptr t_typ @-> returning (uint64_t))
-let ref =
+let incr_ref =
   foreign "g_mapped_file_ref" (ptr t_typ @-> returning (ptr t_typ))
 let unref =
   foreign "g_mapped_file_unref" (ptr t_typ @-> returning (void))

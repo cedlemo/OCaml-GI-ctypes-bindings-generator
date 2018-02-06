@@ -15,7 +15,7 @@ val insert_value:
   t structure ptr -> string -> Variant.t structure ptr -> unit
 val lookup_value:
   t structure ptr -> string -> Variant_type.t structure ptr option -> Variant.t structure ptr
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
 val remove:
   t structure ptr -> string -> bool
