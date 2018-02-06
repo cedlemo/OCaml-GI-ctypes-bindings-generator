@@ -436,7 +436,7 @@ let allocate_type_bindings type_info var_name maybe_null =
       if Type_info.is_pointer type_info then
         (Printf.sprintf "(ptr_opt %s)" ctypes_t,
          "None",
-         Printf.sprintf "match %s_ptr with | None -> None | Some ptr -> !@ ptr" var_name)
+         Printf.sprintf "!@ %s_ptr" var_name)
       else (ctypes_t, default_value, Printf.sprintf "!@ %s_ptr" var_name)
     in
     match Type_info.get_interface type_info with
