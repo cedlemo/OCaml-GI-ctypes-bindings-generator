@@ -276,7 +276,7 @@ let checksum_type_get_length =
 
 (*Not implemented g_child_watch_add_full type callback not implemented*)
 
-let child_watch_source_new =
+let child_watch_source_create =
   foreign "g_child_watch_source_new" (int32_t @-> returning (ptr Source.t_typ))
 
 let clear_error () =
@@ -737,7 +737,7 @@ let iconv =
 let idle_remove_by_data =
   foreign "g_idle_remove_by_data" (ptr_opt void @-> returning (bool))
 
-let idle_source_new =
+let idle_source_create =
   foreign "g_idle_source_new" (void @-> returning (ptr Source.t_typ))
 
 let int64_equal =
@@ -1170,13 +1170,13 @@ let strescape =
 let strfreev =
   foreign "g_strfreev" (string_opt @-> returning (void))
 
-let string_new =
+let string_create =
   foreign "g_string_new" (string_opt @-> returning (ptr String.t_typ))
 
-let string_new_len =
+let string_create_len =
   foreign "g_string_new_len" (string @-> int64_t @-> returning (ptr String.t_typ))
 
-let string_sized_new =
+let string_sized_create =
   foreign "g_string_sized_new" (uint64_t @-> returning (ptr String.t_typ))
 
 let strip_context =
@@ -1306,10 +1306,10 @@ let time_val_from_iso8601 iso_date =
 
 (*Not implemented g_timeout_add_seconds_full type callback not implemented*)
 
-let timeout_source_new =
+let timeout_source_create =
   foreign "g_timeout_source_new" (uint32_t @-> returning (ptr Source.t_typ))
 
-let timeout_source_new_seconds =
+let timeout_source_create_seconds =
   foreign "g_timeout_source_new_seconds" (uint32_t @-> returning (ptr Source.t_typ))
 (*DEPRECATED : trash_stack_height*)
 (*DEPRECATED : trash_stack_peek*)
@@ -1404,7 +1404,7 @@ let unix_error_quark =
 
 (*Not implemented g_unix_fd_add_full type callback not implemented*)
 
-let unix_fd_source_new =
+let unix_fd_source_create =
   foreign "g_unix_fd_source_new" (int32_t @-> IOCondition.t_list_view @-> returning (ptr Source.t_typ))
 
 let unix_open_pipe fds flags =
@@ -1433,7 +1433,7 @@ let unix_set_fd_nonblocking fd nonblock =
 
 (*Not implemented g_unix_signal_add_full type callback not implemented*)
 
-let unix_signal_source_new =
+let unix_signal_source_create =
   foreign "g_unix_signal_source_new" (int32_t @-> returning (ptr Source.t_typ))
 
 let unlink =

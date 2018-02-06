@@ -5,7 +5,7 @@ val t_typ : t structure typ
 
 val create:
   string -> bool -> (t structure ptr option, Error.t structure ptr option) result
-val new_from_fd:
+val create_from_fd:
   int32 -> bool -> (t structure ptr option, Error.t structure ptr option) result
 val free:
   t structure ptr -> unit

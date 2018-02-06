@@ -5,9 +5,9 @@ val t_typ : t structure typ
 
 val create:
   string option -> t structure ptr
-val new_local:
+val create_local:
   unit -> t structure ptr
-val new_utc:
+val create_utc:
   unit -> t structure ptr
 val adjust_time:
   t structure ptr -> Time_type.t -> int64 ptr -> int32

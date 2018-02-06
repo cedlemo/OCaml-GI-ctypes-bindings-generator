@@ -12,9 +12,9 @@ val f_year: (Unsigned.uint32, t structure) field
 
 val create:
   unit -> t structure ptr
-val new_dmy:
+val create_dmy:
   Unsigned.uint8 -> Date_month.t -> Unsigned.uint16 -> t structure ptr
-val new_julian:
+val create_julian:
   Unsigned.uint32 -> t structure ptr
 val add_days:
   t structure ptr -> Unsigned.uint32 -> unit

@@ -5,46 +5,46 @@ type t
 let t_typ : t structure typ = structure "Variant"
 
 (*Not implemented g_variant_new_array type C Array type for Types.Array tag not implemented*)
-let new_boolean =
+let create_boolean =
   foreign "g_variant_new_boolean" (bool @-> returning (ptr t_typ))
-let new_byte =
+let create_byte =
   foreign "g_variant_new_byte" (uint8_t @-> returning (ptr t_typ))
 (*Not implemented g_variant_new_bytestring type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_variant_new_bytestring_array type C Array type for Types.Array tag not implemented*)
-let new_dict_entry =
+let create_dict_entry =
   foreign "g_variant_new_dict_entry" (ptr t_typ @-> ptr t_typ @-> returning (ptr t_typ))
-let new_double =
+let create_double =
   foreign "g_variant_new_double" (double @-> returning (ptr t_typ))
-let new_fixed_array =
+let create_fixed_array =
   foreign "g_variant_new_fixed_array" (ptr Variant_type.t_typ @-> ptr_opt void @-> uint64_t @-> uint64_t @-> returning (ptr t_typ))
 (*SKIPPED :  g_variant_new_from_bytes type Bytes.t structure ptr skipped*)
 (*Not implemented g_variant_new_from_data type C Array type for Types.Array tag not implemented*)
-let new_handle =
+let create_handle =
   foreign "g_variant_new_handle" (int32_t @-> returning (ptr t_typ))
-let new_int16 =
+let create_int16 =
   foreign "g_variant_new_int16" (int16_t @-> returning (ptr t_typ))
-let new_int32 =
+let create_int32 =
   foreign "g_variant_new_int32" (int32_t @-> returning (ptr t_typ))
-let new_int64 =
+let create_int64 =
   foreign "g_variant_new_int64" (int64_t @-> returning (ptr t_typ))
-let new_maybe =
+let create_maybe =
   foreign "g_variant_new_maybe" (ptr_opt Variant_type.t_typ @-> ptr_opt t_typ @-> returning (ptr t_typ))
-let new_object_path =
+let create_object_path =
   foreign "g_variant_new_object_path" (string @-> returning (ptr t_typ))
 (*Not implemented g_variant_new_objv type C Array type for Types.Array tag not implemented*)
-let new_signature =
+let create_signature =
   foreign "g_variant_new_signature" (string @-> returning (ptr t_typ))
-let new_string =
+let create_string =
   foreign "g_variant_new_string" (string @-> returning (ptr t_typ))
 (*Not implemented g_variant_new_strv type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_variant_new_tuple type C Array type for Types.Array tag not implemented*)
-let new_uint16 =
+let create_uint16 =
   foreign "g_variant_new_uint16" (uint16_t @-> returning (ptr t_typ))
-let new_uint32 =
+let create_uint32 =
   foreign "g_variant_new_uint32" (uint32_t @-> returning (ptr t_typ))
-let new_uint64 =
+let create_uint64 =
   foreign "g_variant_new_uint64" (uint64_t @-> returning (ptr t_typ))
-let new_variant =
+let create_variant =
   foreign "g_variant_new_variant" (ptr t_typ @-> returning (ptr t_typ))
 let byteswap =
   foreign "g_variant_byteswap" (ptr t_typ @-> returning (ptr t_typ))

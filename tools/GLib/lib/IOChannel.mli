@@ -24,9 +24,9 @@ val f_is_seekable: (Unsigned.uint32, t structure) field
 val f_reserved1: (unit ptr, t structure) field
 val f_reserved2: (unit ptr, t structure) field
 
-val new_file:
+val create_file:
   string -> string -> (t structure ptr option, Error.t structure ptr option) result
-val unix_new:
+val unix_create:
   int32 -> t structure ptr
 val close:
   t structure ptr -> unit

@@ -5,11 +5,11 @@ val t_typ : t structure typ
 
 val create:
   string -> t structure ptr
-val new_array:
+val create_array:
   t structure ptr -> t structure ptr
-val new_dict_entry:
+val create_dict_entry:
   t structure ptr -> t structure ptr -> t structure ptr
-val new_maybe:
+val create_maybe:
   t structure ptr -> t structure ptr
 (*Not implemented g_variant_type_new_tuple type C Array type for Types.Array tag not implemented*)
 val copy:

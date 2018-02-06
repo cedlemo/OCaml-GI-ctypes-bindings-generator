@@ -14,9 +14,9 @@ let _ = seal t_typ
 
 let create =
   foreign "g_date_new" (void @-> returning (ptr t_typ))
-let new_dmy =
+let create_dmy =
   foreign "g_date_new_dmy" (uint8_t @-> Date_month.t_view @-> uint16_t @-> returning (ptr t_typ))
-let new_julian =
+let create_julian =
   foreign "g_date_new_julian" (uint32_t @-> returning (ptr t_typ))
 let add_days =
   foreign "g_date_add_days" (ptr t_typ @-> uint32_t @-> returning (void))

@@ -15,12 +15,12 @@ let create filename writable =
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
-let new_from_fd fd writable =
-  let new_from_fd_raw =
+let create_from_fd fd writable =
+  let create_from_fd_raw =
     foreign "g_mapped_file_new_from_fd" (int32_t @-> bool@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = new_from_fd_raw fd writable err_ptr_ptr in
+  let value = create_from_fd_raw fd writable err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in

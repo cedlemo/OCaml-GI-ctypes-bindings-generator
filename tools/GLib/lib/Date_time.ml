@@ -6,23 +6,23 @@ let t_typ : t structure typ = structure "Date_time"
 
 let create =
   foreign "g_date_time_new" (ptr Time_zone.t_typ @-> int32_t @-> int32_t @-> int32_t @-> int32_t @-> int32_t @-> double @-> returning (ptr t_typ))
-let new_from_timeval_local =
+let create_from_timeval_local =
   foreign "g_date_time_new_from_timeval_local" (ptr Time_val.t_typ @-> returning (ptr t_typ))
-let new_from_timeval_utc =
+let create_from_timeval_utc =
   foreign "g_date_time_new_from_timeval_utc" (ptr Time_val.t_typ @-> returning (ptr t_typ))
-let new_from_unix_local =
+let create_from_unix_local =
   foreign "g_date_time_new_from_unix_local" (int64_t @-> returning (ptr t_typ))
-let new_from_unix_utc =
+let create_from_unix_utc =
   foreign "g_date_time_new_from_unix_utc" (int64_t @-> returning (ptr t_typ))
-let new_local =
+let create_local =
   foreign "g_date_time_new_local" (int32_t @-> int32_t @-> int32_t @-> int32_t @-> int32_t @-> double @-> returning (ptr t_typ))
-let new_now =
+let create_now =
   foreign "g_date_time_new_now" (ptr Time_zone.t_typ @-> returning (ptr t_typ))
-let new_now_local =
+let create_now_local =
   foreign "g_date_time_new_now_local" (void @-> returning (ptr t_typ))
-let new_now_utc =
+let create_now_utc =
   foreign "g_date_time_new_now_utc" (void @-> returning (ptr t_typ))
-let new_utc =
+let create_utc =
   foreign "g_date_time_new_utc" (int32_t @-> int32_t @-> int32_t @-> int32_t @-> int32_t @-> double @-> returning (ptr t_typ))
 let add =
   foreign "g_date_time_add" (ptr t_typ @-> int64_t @-> returning (ptr t_typ))

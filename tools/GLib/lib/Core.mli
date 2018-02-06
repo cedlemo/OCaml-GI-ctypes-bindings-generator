@@ -272,7 +272,7 @@ val checksum_type_get_length:
 
 (*Not implemented g_child_watch_add_full type callback not implemented*)
 
-val child_watch_source_new:
+val child_watch_source_create:
   int32 -> Source.t structure ptr
 
 val clear_error:
@@ -600,7 +600,7 @@ val iconv:
 val idle_remove_by_data:
   unit ptr option -> bool
 
-val idle_source_new:
+val idle_source_create:
   unit -> Source.t structure ptr
 
 val int64_equal:
@@ -951,13 +951,13 @@ val strescape:
 val strfreev:
   string option -> unit
 
-val string_new:
+val string_create:
   string option -> String.t structure ptr
 
-val string_new_len:
+val string_create_len:
   string -> int64 -> String.t structure ptr
 
-val string_sized_new:
+val string_sized_create:
   Unsigned.uint64 -> String.t structure ptr
 
 val strip_context:
@@ -1075,10 +1075,10 @@ val time_val_from_iso8601 :
 
 (*Not implemented g_timeout_add_seconds_full type callback not implemented*)
 
-val timeout_source_new:
+val timeout_source_create:
   Unsigned.uint32 -> Source.t structure ptr
 
-val timeout_source_new_seconds:
+val timeout_source_create_seconds:
   Unsigned.uint32 -> Source.t structure ptr
 (*DEPRECATED : trash_stack_height*)
 (*DEPRECATED : trash_stack_peek*)
@@ -1173,7 +1173,7 @@ val unix_error_quark:
 
 (*Not implemented g_unix_fd_add_full type callback not implemented*)
 
-val unix_fd_source_new:
+val unix_fd_source_create:
   int32 -> IOCondition.t_list -> Source.t structure ptr
 
 val unix_open_pipe:
@@ -1184,7 +1184,7 @@ val unix_set_fd_nonblocking:
 
 (*Not implemented g_unix_signal_add_full type callback not implemented*)
 
-val unix_signal_source_new:
+val unix_signal_source_create:
   int32 -> Source.t structure ptr
 
 val unlink:

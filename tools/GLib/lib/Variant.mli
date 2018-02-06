@@ -4,46 +4,46 @@ type t
 val t_typ : t structure typ
 
 (*Not implemented g_variant_new_array type C Array type for Types.Array tag not implemented*)
-val new_boolean:
+val create_boolean:
   bool -> t structure ptr
-val new_byte:
+val create_byte:
   Unsigned.uint8 -> t structure ptr
 (*Not implemented g_variant_new_bytestring type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_variant_new_bytestring_array type C Array type for Types.Array tag not implemented*)
-val new_dict_entry:
+val create_dict_entry:
   t structure ptr -> t structure ptr -> t structure ptr
-val new_double:
+val create_double:
   float -> t structure ptr
-val new_fixed_array:
+val create_fixed_array:
   Variant_type.t structure ptr -> unit ptr option -> Unsigned.uint64 -> Unsigned.uint64 -> t structure ptr
 (*SKIPPED :  g_variant_new_from_bytes type Bytes.t structure ptr skipped*)
 (*Not implemented g_variant_new_from_data type C Array type for Types.Array tag not implemented*)
-val new_handle:
+val create_handle:
   int32 -> t structure ptr
-val new_int16:
+val create_int16:
   int -> t structure ptr
-val new_int32:
+val create_int32:
   int32 -> t structure ptr
-val new_int64:
+val create_int64:
   int64 -> t structure ptr
-val new_maybe:
+val create_maybe:
   Variant_type.t structure ptr option -> t structure ptr option -> t structure ptr
-val new_object_path:
+val create_object_path:
   string -> t structure ptr
 (*Not implemented g_variant_new_objv type C Array type for Types.Array tag not implemented*)
-val new_signature:
+val create_signature:
   string -> t structure ptr
-val new_string:
+val create_string:
   string -> t structure ptr
 (*Not implemented g_variant_new_strv type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_variant_new_tuple type C Array type for Types.Array tag not implemented*)
-val new_uint16:
+val create_uint16:
   Unsigned.uint16 -> t structure ptr
-val new_uint32:
+val create_uint32:
   Unsigned.uint32 -> t structure ptr
-val new_uint64:
+val create_uint64:
   Unsigned.uint64 -> t structure ptr
-val new_variant:
+val create_variant:
   t structure ptr -> t structure ptr
 val byteswap:
   t structure ptr -> t structure ptr

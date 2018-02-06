@@ -6,11 +6,11 @@ let t_typ : t structure typ = structure "Variant_type"
 
 let create =
   foreign "g_variant_type_new" (string @-> returning (ptr t_typ))
-let new_array =
+let create_array =
   foreign "g_variant_type_new_array" (ptr t_typ @-> returning (ptr t_typ))
-let new_dict_entry =
+let create_dict_entry =
   foreign "g_variant_type_new_dict_entry" (ptr t_typ @-> ptr t_typ @-> returning (ptr t_typ))
-let new_maybe =
+let create_maybe =
   foreign "g_variant_type_new_maybe" (ptr t_typ @-> returning (ptr t_typ))
 (*Not implemented g_variant_type_new_tuple type C Array type for Types.Array tag not implemented*)
 let copy =

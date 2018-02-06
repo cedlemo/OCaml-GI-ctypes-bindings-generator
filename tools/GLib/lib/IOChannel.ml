@@ -26,18 +26,18 @@ let f_reserved1 = field t_typ "reserved1" (ptr void)
 let f_reserved2 = field t_typ "reserved2" (ptr void)
 let _ = seal t_typ
 
-let new_file filename mode =
-  let new_file_raw =
+let create_file filename mode =
+  let create_file_raw =
     foreign "g_io_channel_new_file" (string @-> string@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = new_file_raw filename mode err_ptr_ptr in
+  let value = create_file_raw filename mode err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
-let unix_new =
+let unix_create =
   foreign "g_io_channel_unix_new" (int32_t @-> returning (ptr t_typ))
 let close =
   foreign "g_io_channel_close" (ptr t_typ @-> returning (void))
