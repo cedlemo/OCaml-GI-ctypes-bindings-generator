@@ -6,12 +6,12 @@ sudo: required
 services:
   - docker
 
-env:
 matrix:
   include:
     - env: TYPE=ubuntu-17.10
     - env: TYPE=debian-buster
     - env: TYPE=centos-7
+    - env: TYPE=ubuntu-16.04
   allow_failures:
     - env: TYPE=ubuntu-16.04
 
