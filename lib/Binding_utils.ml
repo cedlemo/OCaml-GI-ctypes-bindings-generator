@@ -139,11 +139,20 @@ let escape_Ctypes_types name =
   | "complex64" -> "_" ^ name
   | _ -> name
 
+let escape_new_pattern name =
+  let pattern = Str.regexp "^new_\\(.*\\)" in
+  let name = Str.global_replace pattern "create_\\1" name in
+  let pattern = Str.regexp "\\(.*\\)_new$" in
+  let name = Str.global_replace pattern "\\1_create" name in
+  let pattern = Str.regexp "\\(.*\\)_new_\\(.*\\)" in
+  Str.global_replace pattern "\\1_create_\\2" name
+
 let ensure_valid_variable_name name =
   escape_OCaml_keywords name
   |> escape_OCaml_types
   |> escape_Ctypes_types
   |> escape_number_at_beginning
+  |> escape_new_pattern
 
 let generate_n_meaningless_arg_names n =
   if n < 0 then ""
