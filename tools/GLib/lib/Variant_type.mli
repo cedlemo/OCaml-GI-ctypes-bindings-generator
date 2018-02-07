@@ -58,7 +58,5 @@ val checked_:
   string -> t structure ptr
 val string_is_valid:
   string -> bool
-(*
 val string_scan :
   string -> string option -> (bool * string)
-*)

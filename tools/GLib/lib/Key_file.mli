@@ -37,10 +37,8 @@ val has_group:
 (*SKIPPED :  g_key_file_load_from_bytes type Bytes.t structure ptr skipped*)
 val load_from_data:
   t structure ptr -> string -> Unsigned.uint64 -> Key_file_flags.t_list -> (bool, Error.t structure ptr option) result
-(*
 val load_from_data_dirs :
   t structure ptr -> string -> Key_file_flags.t_list -> (bool * string, Error.t structure ptr option) result
-*)
 (*Not implemented g_key_file_load_from_dirs type C Array type for Types.Array tag not implemented*)
 val load_from_file:
   t structure ptr -> string -> Key_file_flags.t_list -> (bool, Error.t structure ptr option) result
@@ -77,10 +75,8 @@ val set_uint64:
   t structure ptr -> string -> string -> Unsigned.uint64 -> unit
 val set_value:
   t structure ptr -> string -> string -> string -> unit
-(*
 val to_data :
   t structure ptr -> (string option * Unsigned.uint64, Error.t structure ptr option) result
-*)
 val unref:
   t structure ptr -> unit
 val error_quark:

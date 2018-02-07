@@ -59,7 +59,6 @@ let checked_ =
   foreign "g_variant_type_checked_" (string @-> returning (ptr t_typ))
 let string_is_valid =
   foreign "g_variant_type_string_is_valid" (string @-> returning (bool))
-(*
 let string_scan _string limit =
   let endptr_ptr = allocate string " " in
   let string_scan_raw =
@@ -68,4 +67,3 @@ let string_scan _string limit =
   let ret = string_scan_raw _string limit endptr_ptr in
   let endptr = !@ endptr_ptr in
   (ret, endptr)
-*)

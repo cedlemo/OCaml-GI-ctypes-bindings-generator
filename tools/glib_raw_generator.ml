@@ -72,6 +72,7 @@ let skip = [ "Hook"; (* skip for recursion pb *)
              "Ascii";
              "Regex";      (* skip for recursion pb with Match_info. *)
              "MatchInfo"; (* skip for recursion pb with Regex. *)
+             "TimeVal";  (* type that will be deprecated. *)
 ]
 
 let const_parser info sources =

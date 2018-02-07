@@ -57,7 +57,6 @@ let compare =
 (*Not implemented g_variant_dup_bytestring return type C Array type for Types.Array tag not handled*)
 (*Not implemented g_variant_dup_bytestring_array return type C Array type for Types.Array tag not handled*)
 (*Not implemented g_variant_dup_objv return type C Array type for Types.Array tag not handled*)
-(*
 let dup_string self =
   let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let dup_string_raw =
@@ -66,7 +65,6 @@ let dup_string self =
   let ret = dup_string_raw self length_ptr in
   let length = !@ length_ptr in
   (ret, length)
-*)
 (*Not implemented g_variant_dup_strv return type C Array type for Types.Array tag not handled*)
 let equal =
   foreign "g_variant_equal" (ptr t_typ @-> ptr t_typ @-> returning (bool))
@@ -98,7 +96,6 @@ let get_normal_form =
 (*Not implemented g_variant_get_objv return type C Array type for Types.Array tag not handled*)
 let get_size =
   foreign "g_variant_get_size" (ptr t_typ @-> returning (uint64_t))
-(*
 let get_string self =
   let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let get_string_raw =
@@ -107,7 +104,6 @@ let get_string self =
   let ret = get_string_raw self length_ptr in
   let length = !@ length_ptr in
   (ret, length)
-*)
 (*Not implemented g_variant_get_strv return type C Array type for Types.Array tag not handled*)
 let get_type =
   foreign "g_variant_get_type" (ptr t_typ @-> returning (ptr Variant_type.t_typ))

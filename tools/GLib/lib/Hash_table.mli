@@ -13,10 +13,8 @@ val insert:
   t structure ptr -> unit ptr option -> unit ptr option -> bool
 val lookup:
   t structure ptr -> unit ptr option -> unit ptr option
-(*
 val lookup_extended :
   t structure ptr -> unit ptr option -> (bool * unit ptr option * unit ptr option)
-*)
 val remove:
   t structure ptr -> unit ptr option -> bool
 val remove_all:

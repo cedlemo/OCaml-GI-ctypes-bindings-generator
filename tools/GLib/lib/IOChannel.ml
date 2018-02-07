@@ -71,7 +71,6 @@ let init =
 let read =
   foreign "g_io_channel_read" (ptr t_typ @-> string @-> uint64_t @-> ptr uint64_t @-> returning (IOError.t_view))
 (*Not implemented g_io_channel_read_chars type C Array type for Types.Array tag not implemented*)
-(*
 let read_line self =
   let str_return_ptr = allocate string " " in
   let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
@@ -91,8 +90,7 @@ let read_line self =
   | None -> Ok (get_ret_value ())
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-    Error (err_ptr)*)
-let read_line_string self buffer terminator_pos =
+    Error (err_ptr)let read_line_string self buffer terminator_pos =
   let read_line_string_raw =
     foreign "g_io_channel_read_line_string" (ptr t_typ @-> ptr String.t_typ @-> ptr_opt uint64_t@-> ptr (ptr_opt Error.t_typ) @-> returning (IOStatus.t_view))
   in

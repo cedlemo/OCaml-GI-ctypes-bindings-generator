@@ -12,10 +12,8 @@ val f_dummy6: (unit ptr, t structure) field
 
 val init:
   t structure ptr -> Hash_table.t structure ptr -> unit
-(*
 val next :
   t structure ptr -> (bool * unit ptr option * unit ptr option)
-*)
 val remove:
   t structure ptr -> unit
 val replace:

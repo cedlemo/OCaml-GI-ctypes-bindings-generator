@@ -128,7 +128,6 @@ let load_from_data self data length flags =
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
-(*
 let load_from_data_dirs self file flags =
   let full_path_ptr = allocate string " " in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
@@ -144,8 +143,7 @@ let load_from_data_dirs self file flags =
   | None -> Ok (get_ret_value ())
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-    Error (err_ptr)*)
-(*Not implemented g_key_file_load_from_dirs type C Array type for Types.Array tag not implemented*)
+    Error (err_ptr)(*Not implemented g_key_file_load_from_dirs type C Array type for Types.Array tag not implemented*)
 let load_from_file self file flags =
   let load_from_file_raw =
     foreign "g_key_file_load_from_file" (ptr t_typ @-> string @-> Key_file_flags.t_list_view@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
@@ -235,7 +233,6 @@ let set_uint64 =
   foreign "g_key_file_set_uint64" (ptr t_typ @-> string @-> string @-> uint64_t @-> returning (void))
 let set_value =
   foreign "g_key_file_set_value" (ptr t_typ @-> string @-> string @-> string @-> returning (void))
-(*
 let to_data self =
   let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
@@ -251,8 +248,7 @@ let to_data self =
   | None -> Ok (get_ret_value ())
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-    Error (err_ptr)*)
-let unref =
+    Error (err_ptr)let unref =
   foreign "g_key_file_unref" (ptr t_typ @-> returning (void))
 let error_quark =
   foreign "g_key_file_error_quark" (void @-> returning (uint32_t))

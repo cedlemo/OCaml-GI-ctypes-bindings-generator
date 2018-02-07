@@ -175,6 +175,7 @@ let c_TIME_SPAN_SECOND = 1000000L
 (*SKIPPED : ThreadError*)
 (*SKIPPED : ThreadFunc*)
 (*SKIPPED : ThreadPool*)
+(*SKIPPED : TimeVal*)
 (*DEPRECATED : TrashStack*)
 let c_UNICHAR_MAX_DECOMPOSITION_LENGTH = Int32.of_string "18"
 let c_URI_RESERVED_CHARS_GENERIC_DELIMITERS = ":/?#[]@"
@@ -476,7 +477,6 @@ let file_error_quark =
 
 (*Not implemented g_file_get_contents type C Array type for Types.Array tag not implemented*)
 
-(*
 let file_open_tmp tmpl =
   let name_used_ptr = allocate string " " in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
@@ -492,8 +492,7 @@ let file_open_tmp tmpl =
   | None -> Ok (get_ret_value ())
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-    Error (err_ptr)*)
-
+    Error (err_ptr)
 let file_read_link filename =
   let file_read_link_raw =
     foreign "g_file_read_link" (string@-> ptr (ptr_opt Error.t_typ) @-> returning (string_opt))
@@ -547,7 +546,6 @@ let filename_to_uri filename hostname =
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
 
-(*
 let filename_to_utf8 opsysstring len =
   let bytes_read_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let bytes_written_ptr = allocate uint64_t Unsigned.UInt64.zero in
@@ -565,8 +563,7 @@ let filename_to_utf8 opsysstring len =
   | None -> Ok (get_ret_value ())
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-    Error (err_ptr)*)
-
+    Error (err_ptr)
 let find_program_in_path =
   foreign "g_find_program_in_path" (string @-> returning (string_opt))
 
@@ -674,7 +671,6 @@ let hash_table_insert =
 let hash_table_lookup =
   foreign "g_hash_table_lookup" (ptr Hash_table.t_typ @-> ptr_opt void @-> returning (ptr_opt void))
 
-(*
 let hash_table_lookup_extended hash_table lookup_key =
   let orig_key_ptr = allocate (ptr_opt void) None in
   let value_ptr = allocate (ptr_opt void) None in
@@ -682,10 +678,9 @@ let hash_table_lookup_extended hash_table lookup_key =
     foreign "g_hash_table_lookup_extended" (ptr Hash_table.t_typ @-> ptr_opt void @-> ptr (ptr_opt void) @-> ptr (ptr_opt void) @-> returning bool)
   in
   let ret = hash_table_lookup_extended_raw hash_table lookup_key orig_key_ptr value_ptr in
-  let orig_key = match orig_key_ptr with | None -> None | Some ptr -> !@ ptr in
-  let value = match value_ptr with | None -> None | Some ptr -> !@ ptr in
+  let orig_key = !@ orig_key_ptr in
+  let value = !@ value_ptr in
   (ret, orig_key, value)
-*)
 
 let hash_table_remove =
   foreign "g_hash_table_remove" (ptr Hash_table.t_typ @-> ptr_opt void @-> returning (bool))
@@ -780,7 +775,6 @@ let key_file_error_quark =
 
 (*Not implemented g_listenv return type C Array type for Types.Array tag not handled*)
 
-(*
 let locale_from_utf8 utf8string len =
   let bytes_read_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let bytes_written_ptr = allocate uint64_t Unsigned.UInt64.zero in
@@ -798,9 +792,7 @@ let locale_from_utf8 utf8string len =
   | None -> Ok (get_ret_value ())
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-    Error (err_ptr)*)
-
-(*
+    Error (err_ptr)
 let locale_to_utf8 opsysstring len =
   let bytes_read_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let bytes_written_ptr = allocate uint64_t Unsigned.UInt64.zero in
@@ -818,8 +810,7 @@ let locale_to_utf8 opsysstring len =
   | None -> Ok (get_ret_value ())
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-    Error (err_ptr)*)
-(*SKIPPED : log_default_handler*)
+    Error (err_ptr)(*SKIPPED : log_default_handler*)
 (*SKIPPED : log_remove_handler*)
 (*SKIPPED : log_set_always_fatal*)
 (*SKIPPED : log_set_fatal_mask*)
@@ -919,16 +910,14 @@ let pointer_bit_unlock =
 let poll =
   foreign "g_poll" (ptr Poll_fd.t_typ @-> uint32_t @-> int32_t @-> returning (int32_t))
 
-(*
 let propagate_error src =
   let dest_ptr = allocate (ptr_opt Error.t_typ) None in
   let propagate_error_raw =
     foreign "g_propagate_error" (ptr Error.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning void)
   in
   let ret = propagate_error_raw src dest_ptr in
-  let dest = match dest_ptr with | None -> None | Some ptr -> !@ ptr in
+  let dest = !@ dest_ptr in
   (dest)
-*)
 
 let quark_from_static_string =
   foreign "g_quark_from_static_string" (string_opt @-> returning (uint32_t))
@@ -959,7 +948,6 @@ let random_set_seed =
 (*SKIPPED : realloc*)
 (*SKIPPED : realloc_n*)
 
-(*
 let regex_check_replacement replacement =
   let has_references_ptr = allocate bool false in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
@@ -975,8 +963,7 @@ let regex_check_replacement replacement =
   | None -> Ok (get_ret_value ())
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-    Error (err_ptr)*)
-
+    Error (err_ptr)
 let regex_error_quark =
   foreign "g_regex_error_quark" (void @-> returning (uint32_t))
 
@@ -1016,16 +1003,14 @@ let rmdir =
 let set_application_name =
   foreign "g_set_application_name" (string @-> returning (void))
 
-(*
 let set_error_literal domain code message =
   let err_ptr = allocate (ptr_opt Error.t_typ) None in
   let set_error_literal_raw =
     foreign "g_set_error_literal" (uint32_t @-> int32_t @-> string @-> ptr (ptr Error.t_typ) @-> returning void)
   in
   let ret = set_error_literal_raw domain code message err_ptr in
-  let err = match err_ptr with | None -> None | Some ptr -> !@ ptr in
+  let err = !@ err_ptr in
   (err)
-*)
 
 let set_prgname =
   foreign "g_set_prgname" (string @-> returning (void))
@@ -1218,7 +1203,6 @@ let strsignal =
 let strstr_len =
   foreign "g_strstr_len" (string @-> int64_t @-> string @-> returning (string_opt))
 
-(*
 let strtod nptr =
   let endptr_ptr = allocate string " " in
   let strtod_raw =
@@ -1227,7 +1211,6 @@ let strtod nptr =
   let ret = strtod_raw nptr endptr_ptr in
   let endptr = !@ endptr_ptr in
   (ret, endptr)
-*)
 (*DEPRECATED : strup*)
 (*SKIPPED : strv_contains*)
 
@@ -1296,7 +1279,6 @@ let thread_pool_stop_unused_threads =
 let thread_yield =
   foreign "g_thread_yield" (void @-> returning (void))
 
-(*
 let time_val_from_iso8601 iso_date =
   let time__ptr = allocate Time_val.t_typ None in
   let time_val_from_iso8601_raw =
@@ -1305,7 +1287,6 @@ let time_val_from_iso8601 iso_date =
   let ret = time_val_from_iso8601_raw iso_date time__ptr in
   let time_ = !@ time__ptr in
   (ret, time_)
-*)
 
 (*Not implemented g_timeout_add_full type callback not implemented*)
 
@@ -1466,7 +1447,6 @@ let usleep =
 
 (*Not implemented g_utf16_to_ucs4 return type unichar not handled*)
 
-(*
 let utf16_to_utf8 str len =
   let items_read_ptr = allocate int64_t Int64.zero in
   let items_written_ptr = allocate int64_t Int64.zero in
@@ -1484,8 +1464,7 @@ let utf16_to_utf8 str len =
   | None -> Ok (get_ret_value ())
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
-    Error (err_ptr)*)
-(*SKIPPED : utf8_casefold*)
+    Error (err_ptr)(*SKIPPED : utf8_casefold*)
 (*SKIPPED : utf8_collate*)
 (*SKIPPED : utf8_collate_key*)
 (*SKIPPED : utf8_collate_key_for_filename*)
@@ -1546,7 +1525,6 @@ let variant_type_checked_ =
 let variant_type_string_is_valid =
   foreign "g_variant_type_string_is_valid" (string @-> returning (bool))
 
-(*
 let variant_type_string_scan _string limit =
   let endptr_ptr = allocate string " " in
   let variant_type_string_scan_raw =
@@ -1555,4 +1533,3 @@ let variant_type_string_scan _string limit =
   let ret = variant_type_string_scan_raw _string limit endptr_ptr in
   let endptr = !@ endptr_ptr in
   (ret, endptr)
-*)

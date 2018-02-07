@@ -14,7 +14,6 @@ let insert =
   foreign "g_hash_table_insert" (ptr t_typ @-> ptr_opt void @-> ptr_opt void @-> returning (bool))
 let lookup =
   foreign "g_hash_table_lookup" (ptr t_typ @-> ptr_opt void @-> returning (ptr_opt void))
-(*
 let lookup_extended hash_table lookup_key =
   let orig_key_ptr = allocate (ptr_opt void) None in
   let value_ptr = allocate (ptr_opt void) None in
@@ -22,10 +21,9 @@ let lookup_extended hash_table lookup_key =
     foreign "g_hash_table_lookup_extended" (ptr t_typ @-> ptr_opt void @-> ptr (ptr_opt void) @-> ptr (ptr_opt void) @-> returning bool)
   in
   let ret = lookup_extended_raw hash_table lookup_key orig_key_ptr value_ptr in
-  let orig_key = match orig_key_ptr with | None -> None | Some ptr -> !@ ptr in
-  let value = match value_ptr with | None -> None | Some ptr -> !@ ptr in
+  let orig_key = !@ orig_key_ptr in
+  let value = !@ value_ptr in
   (ret, orig_key, value)
-*)
 let remove =
   foreign "g_hash_table_remove" (ptr t_typ @-> ptr_opt void @-> returning (bool))
 let remove_all =
