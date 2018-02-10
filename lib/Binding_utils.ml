@@ -478,7 +478,8 @@ let allocate_type_bindings type_info var_name maybe_null =
           match get_binding_name interface with
           | None -> None
           | Some name ->
-          Some (check_if_pointer ((Printf.sprintf "%s.t_typ" name), "None"))
+          Some (check_if_pointer ((Printf.sprintf "%s.t_typ" name),
+                                  (Printf.sprintf "(make %s.t_typ)" name)))
         )
         | Object | Interface | Constant | Invalid_0 | Union | Value | Signal
         | Vfunc | Property | Field | Arg | Type | Unresolved -> None
