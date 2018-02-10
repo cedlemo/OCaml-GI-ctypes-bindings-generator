@@ -171,7 +171,6 @@ val c_TIME_SPAN_SECOND : int64
 (*SKIPPED : ThreadError*)
 (*SKIPPED : ThreadFunc*)
 (*SKIPPED : ThreadPool*)
-(*SKIPPED : TimeVal*)
 (*DEPRECATED : TrashStack*)
 val c_UNICHAR_MAX_DECOMPOSITION_LENGTH : int32
 val c_URI_RESERVED_CHARS_GENERIC_DELIMITERS : string
@@ -816,9 +815,7 @@ val rmdir:
 
 val set_application_name:
   string -> unit
-
-val set_error_literal :
-  Unsigned.uint32 -> int32 -> string -> (Error.t structure ptr)
+(*SKIPPED : set_error_literal*)
 
 val set_prgname:
   string -> unit

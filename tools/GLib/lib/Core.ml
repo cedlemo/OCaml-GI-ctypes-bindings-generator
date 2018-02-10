@@ -175,7 +175,6 @@ let c_TIME_SPAN_SECOND = 1000000L
 (*SKIPPED : ThreadError*)
 (*SKIPPED : ThreadFunc*)
 (*SKIPPED : ThreadPool*)
-(*SKIPPED : TimeVal*)
 (*DEPRECATED : TrashStack*)
 let c_UNICHAR_MAX_DECOMPOSITION_LENGTH = Int32.of_string "18"
 let c_URI_RESERVED_CHARS_GENERIC_DELIMITERS = ":/?#[]@"
@@ -1002,15 +1001,7 @@ let rmdir =
 
 let set_application_name =
   foreign "g_set_application_name" (string @-> returning (void))
-
-let set_error_literal domain code message =
-  let err_ptr = allocate (ptr_opt Error.t_typ) None in
-  let set_error_literal_raw =
-    foreign "g_set_error_literal" (uint32_t @-> int32_t @-> string @-> ptr (ptr Error.t_typ) @-> returning void)
-  in
-  let ret = set_error_literal_raw domain code message err_ptr in
-  let err = !@ err_ptr in
-  (err)
+(*SKIPPED : set_error_literal*)
 
 let set_prgname =
   foreign "g_set_prgname" (string @-> returning (void))
@@ -1280,7 +1271,7 @@ let thread_yield =
   foreign "g_thread_yield" (void @-> returning (void))
 
 let time_val_from_iso8601 iso_date =
-  let time__ptr = allocate Time_val.t_typ None in
+  let time__ptr = allocate Time_val.t_typ (make Time_val.t_typ) in
   let time_val_from_iso8601_raw =
     foreign "g_time_val_from_iso8601" (string @-> ptr (Time_val.t_typ) @-> returning bool)
   in
