@@ -38,4 +38,8 @@ https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#introduction
     - [Enumerations](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#enumerations)
       - [Simple Enumerations](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#simple-enumerations)
       - [Flags : enumerations for bitwise operations](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#flags--enumerations-for-bitwise-operations)
-
+    - [Functions](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#functions)
+      - [Functions with only in arguments](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#functions-with-only-in-arguments)
+      - [Functions with out arguments](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#functions-with-out-arguments)
+      - [Functions with in/out arguments](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#functions-with-inout-arguments)
+      - [Recognizable patterns in functions](https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/wiki#patterns)
