@@ -72,7 +72,8 @@ let skip = [ "Hook"; (* skip for recursion pb *)
              "Ascii";
              "Regex";      (* skip for recursion pb with Match_info. *)
              "MatchInfo"; (* skip for recursion pb with Regex. *)
-             "TimeVal";  (* type that will be deprecated. *)
+             "set_error_literal"; (* TODO: issue with GError ptr that is not set to
+                                   * optional in the foreign declaration. *)
 ]
 
 let const_parser info sources =
