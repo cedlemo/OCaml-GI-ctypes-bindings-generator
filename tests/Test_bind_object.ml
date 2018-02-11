@@ -1,5 +1,5 @@
 (*
- * Copyright 2017-2018 Cedric LE MOIGNE, cedlemo@gmx.com
+ * Copyright 2018 Cedric LE MOIGNE, cedlemo@gmx.com
  * This file is part of OCaml-GObject-Introspection.
  *
  * OCaml-GObject-Introspection is free software: you can redistribute it and/or modify
@@ -16,19 +16,28 @@
  * along with OCaml-GObject-Introspection.  If not, see <http://www.gnu.org/licenses/>.
  *)
 
+open Test_utils
 open OUnit2
+open GI_bindings_generator
+open GObject_introspection
 
-let () =
-  run_test_tt_main
-  ("GObjectIntrospection" >:::
-    [
-      Test_loader.tests;
-      Test_bind_struct.tests;
-      Test_bind_enum.tests;
-      Test_bind_constant.tests;
-      Test_bind_union.tests;
-      Test_bind_function.tests;
-      Test_bind_object.tests;
-      Test_binding_utils.tests;
-    ]
-  )
+let repo = Repository.get_default ()
+
+let get_object_info namespace name =
+  match Repository.find_by_name repo namespace name with
+  | None -> None
+  | Some (base_info) ->
+    match Base_info.get_type base_info with
+    | Base_info.Object -> let object_info = Object_info.from_baseinfo base_info in
+      Some object_info
+    | _ -> None
+
+let object_test namespace name fn =
+  match get_object_info namespace name with
+  | None -> assert_equal_string name "No base info found"
+  | Some (info) -> fn info
+
+let tests =
+  "GObject Introspection Bind_object tests" >:::
+  [
+  ]
