@@ -10,10 +10,8 @@ let f_value = field t_typ "value" (string)
 (*Struct field DBus_annotation_info : C Array type for Types.Array tag tag not implemented*)
 let _ = seal t_typ
 
-let ref =
+let incr_ref =
   foreign "g_dbus_annotation_info_ref" (ptr t_typ @-> returning (ptr t_typ))
-
 let unref =
   foreign "g_dbus_annotation_info_unref" (ptr t_typ @-> returning (void))
-
-(*Not implemented g_dbus_annotation_info_lookup argument typeC Array type for Types.Array tag not handled*)
+(*Not implemented g_dbus_annotation_info_lookup type C Array type for Types.Array tag not implemented*)

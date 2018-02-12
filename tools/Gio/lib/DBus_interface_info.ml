@@ -14,25 +14,17 @@ let _ = seal t_typ
 
 let cache_build =
   foreign "g_dbus_interface_info_cache_build" (ptr t_typ @-> returning (void))
-
 let cache_release =
   foreign "g_dbus_interface_info_cache_release" (ptr t_typ @-> returning (void))
-
 let generate_xml =
   foreign "g_dbus_interface_info_generate_xml" (ptr t_typ @-> uint32_t @-> ptr String.t_typ @-> returning (void))
-
 let lookup_method =
   foreign "g_dbus_interface_info_lookup_method" (ptr t_typ @-> string @-> returning (ptr DBus_method_info.t_typ))
-
 let lookup_property =
   foreign "g_dbus_interface_info_lookup_property" (ptr t_typ @-> string @-> returning (ptr DBus_property_info.t_typ))
-
 let lookup_signal =
   foreign "g_dbus_interface_info_lookup_signal" (ptr t_typ @-> string @-> returning (ptr DBus_signal_info.t_typ))
-
-let ref =
+let incr_ref =
   foreign "g_dbus_interface_info_ref" (ptr t_typ @-> returning (ptr t_typ))
-
 let unref =
   foreign "g_dbus_interface_info_unref" (ptr t_typ @-> returning (void))
-

@@ -11,9 +11,7 @@ let f_flags = field t_typ "flags" (DBus_property_info_flags.t_list_view)
 (*Struct field DBus_property_info : C Array type for Types.Array tag tag not implemented*)
 let _ = seal t_typ
 
-let ref =
+let incr_ref =
   foreign "g_dbus_property_info_ref" (ptr t_typ @-> returning (ptr t_typ))
-
 let unref =
   foreign "g_dbus_property_info_unref" (ptr t_typ @-> returning (void))
-

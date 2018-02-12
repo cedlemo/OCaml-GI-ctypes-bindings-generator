@@ -1,13 +1,5 @@
-module GI = GObject_introspection
-module Base_info = GI.Base_info
-module Bind_constant = GI.Bind_constant
-module Bind_function = GI.Bind_function
-module Binding_utils = GI.Binding_utils
-module Constant_info = GI.Constant_info
-module Function_info = GI.Function_info
-module Loader = GI.Loader
-module Types = GI.Types
-module Type_info = GI.Type_info
+module BG = GI_bindings_generator
+module Loader = BG.Loader
 
 (* This tool is used to  generate the raw bindings of Gio 2 in
  * the OCaml-glib package
@@ -24,7 +16,8 @@ let print_infos loader =
 let skip = [ ]
 
 let () =
-  match Loader.load "Gio" () with
+  let version = "2.0" in
+  match Loader.load "Gio" ~version () with
   | None -> print_endline "Please check the namespace, something is wrong"
   | Some loader -> print_infos loader;
     let loader = Loader.set_build_path loader "tools/" in

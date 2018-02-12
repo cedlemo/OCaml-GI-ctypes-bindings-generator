@@ -8,19 +8,13 @@ val f_n_infos: (int32, t structure) field
 
 val create:
   unit -> t structure ptr
-
 val add:
   t structure ptr -> string -> File_attribute_type.t -> File_attribute_info_flags.t_list -> unit
-
 val dup:
   t structure ptr -> t structure ptr
-
 val lookup:
   t structure ptr -> string -> File_attribute_info.t structure ptr
-
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
-
 val unref:
   t structure ptr -> unit
-

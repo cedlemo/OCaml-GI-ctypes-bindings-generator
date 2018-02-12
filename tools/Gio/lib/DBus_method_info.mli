@@ -9,9 +9,7 @@ val f_name: (string, t structure) field
 (*Struct field DBus_method_info : C Array type for Types.Array tag tag not implemented*)
 (*Struct field DBus_method_info : C Array type for Types.Array tag tag not implemented*)
 
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
-
 val unref:
   t structure ptr -> unit
-

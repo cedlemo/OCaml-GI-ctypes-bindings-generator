@@ -12,25 +12,17 @@ val f_name: (string, t structure) field
 
 val cache_build:
   t structure ptr -> unit
-
 val cache_release:
   t structure ptr -> unit
-
 val generate_xml:
   t structure ptr -> Unsigned.uint32 -> String.t structure ptr -> unit
-
 val lookup_method:
   t structure ptr -> string -> DBus_method_info.t structure ptr
-
 val lookup_property:
   t structure ptr -> string -> DBus_property_info.t structure ptr
-
 val lookup_signal:
   t structure ptr -> string -> DBus_signal_info.t structure ptr
-
-val ref:
+val incr_ref:
   t structure ptr -> t structure ptr
-
 val unref:
   t structure ptr -> unit
-

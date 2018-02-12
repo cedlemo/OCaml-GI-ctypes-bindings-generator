@@ -10,9 +10,7 @@ let f_signature = field t_typ "signature" (string)
 (*Struct field DBus_arg_info : C Array type for Types.Array tag tag not implemented*)
 let _ = seal t_typ
 
-let ref =
+let incr_ref =
   foreign "g_dbus_arg_info_ref" (ptr t_typ @-> returning (ptr t_typ))
-
 let unref =
   foreign "g_dbus_arg_info_unref" (ptr t_typ @-> returning (void))
-
