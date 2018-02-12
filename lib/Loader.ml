@@ -96,51 +96,49 @@ let generate_bindings gi_info const_parser
                               union_parser
                               skip =
         match Base_info.get_type gi_info.info with
-        | Base_info.Function -> (
+        | Base_info.Function -> begin
           match function_parser with
             | None -> Bind_function.parse_function_info gi_info.info gi_info.sources skip
             | Some function_parser_alt -> function_parser_alt gi_info.info gi_info.sources skip
-          )
-        | Base_info.Struct ->
+        end
+        | Base_info.Struct -> begin
             let info' = Struct_info.from_baseinfo gi_info.info in
             if Struct_info.is_gtype_struct info' then ()
             else (
-              let sources = generate_module_files gi_info.loader gi_info.base_name in (
-              match struct_parser with
-              | None -> Bind_struct.parse_struct_info gi_info.info sources skip;
-              | Some struct_parser_info -> struct_parser_info gi_info.info sources skip;
-              );
-              Binding_utils.Sources.close sources
-          )
-        | Base_info.Enum -> (
-            let sources = generate_module_files gi_info.loader gi_info.base_name in (
+              let sources = generate_module_files gi_info.loader gi_info.base_name in
+              begin match struct_parser with
+              | None -> Bind_struct.parse_struct_info gi_info.info sources skip
+              | Some struct_parser_info -> struct_parser_info gi_info.info sources skip
+              end;
+              Binding_utils.Sources.close sources)
+        end
+        | Base_info.Enum -> begin
+            let sources = generate_module_files gi_info.loader gi_info.base_name in
             match enum_parser with
             | None -> Bind_enum.parse_enum_info gi_info.info sources
             | Some enum_parser_fn -> enum_parser_fn gi_info.info sources;
               Binding_utils.Sources.close sources
-          )
-        )
-        | Base_info.Flags -> (
-            let sources = generate_module_files gi_info.loader gi_info.base_name in (
+        end
+        | Base_info.Flags -> begin
+            let sources = generate_module_files gi_info.loader gi_info.base_name in
             match flags_parser with
             | None -> Bind_enum.parse_flags_info gi_info.info sources
             | Some flags_parser_fn -> flags_parser_fn gi_info.info sources;
               Binding_utils.Sources.close sources
-          )
-        )
-        | Base_info.Constant -> (
+        end
+        | Base_info.Constant -> begin
            match const_parser with
           | None -> Bind_constant.parse_constant_info gi_info.info gi_info.sources
           | Some const_parser_info -> const_parser_info gi_info.info gi_info.sources
-        )
-        | Base_info.Union -> (
+        end
+        | Base_info.Union -> begin
           let sources = generate_module_files gi_info.loader gi_info.base_name in
           let _ = ( match union_parser with
             | None -> Bind_union.parse_union_info gi_info.info sources skip
             | Some union_parser_fn -> union_parser_fn gi_info.info sources skip
           ) in
           Binding_utils.Sources.close sources
-        )
+        end
         | Base_info.Callback -> ()
         | Base_info.Invalid -> ()
         | Base_info.Value -> ()
