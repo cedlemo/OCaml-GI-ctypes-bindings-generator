@@ -55,6 +55,9 @@ let get_lib_path loader =
 let get_namespace loader =
   loader.namespace
 
+let get_loaded_namespaces loader =
+  Repository.get_loaded_namespaces loader.repo
+
 let get_version loader =
   loader.version
 

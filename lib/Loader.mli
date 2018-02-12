@@ -29,9 +29,13 @@ type t
 val load:
   string -> ?version:string -> unit -> t option
 
-(** Get the namespace of the loader. *)
+(** Get the initial namespace of the loader. *)
 val get_namespace:
   t -> string
+
+(** Get loaded namespaces by the GObject_introspection.Repository.t. *)
+val get_loaded_namespaces:
+  t -> string list
 
 (** Get the version of the loaded namespace.*)
 val get_version:
