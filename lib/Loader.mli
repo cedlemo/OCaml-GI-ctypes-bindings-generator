@@ -1,5 +1,5 @@
 (*
- * Copyright 2017 Cedric LE MOIGNE, cedlemo@gmx.com
+ * Copyright 2017-2018 Cedric LE MOIGNE, cedlemo@gmx.com
  * This file is part of OCaml-GObject-Introspection.
  *
  * OCaml-GObject-Introspection is free software: you can redistribute it and/or modify
@@ -87,6 +87,7 @@ type gi_info = { base_name: string;
   @param flags_parser allows user to customize the Enum_info bindings generator
          for Enum used as flags (Ored).
   @param function_parser allows user to customize the Core function bindings.
+  @param object_parser allows user to customize the Object_info bindings.
   @param struct_parser allows user to customize the GIStructureInfo bindings
     generator.
   @param union_parser allows user to customize the Union_info bindings generator.
@@ -101,6 +102,7 @@ val parse:
   ?enum_parser:(Base_info.t structure ptr -> Binding_utils.Sources.t -> unit) ->
   ?flags_parser:(Base_info.t structure ptr -> Binding_utils.Sources.t -> unit) ->
   ?function_parser:(Base_info.t structure ptr -> Binding_utils.Sources.t -> string list -> unit) ->
+  ?object_parser:(Base_info.t structure ptr -> Binding_utils.Sources.t -> string list -> unit) ->
   ?struct_parser:(Base_info.t structure ptr -> Binding_utils.Sources.t -> string list -> unit) ->
   ?union_parser:(Base_info.t structure ptr -> Binding_utils.Sources.t -> string list -> unit) ->
   ?skip:string list ->

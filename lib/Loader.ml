@@ -1,5 +1,5 @@
 (*
- * Copyright 2017 Cedric LE MOIGNE, cedlemo@gmx.com
+ * Copyright 2017-2018 Cedric LE MOIGNE, cedlemo@gmx.com
  * This file is part of OCaml-GObject-Introspection.
  *
  * OCaml-GObject-Introspection is free software: you can redistribute it and/or modify
@@ -92,6 +92,7 @@ let generate_bindings gi_info const_parser
                               enum_parser
                               flags_parser
                               function_parser
+                              object_parser
                               struct_parser
                               union_parser
                               skip =
@@ -149,7 +150,16 @@ let generate_bindings gi_info const_parser
         | Base_info.Arg -> ()
         | Base_info.Type -> ()
         | Base_info.Unresolved -> ()
-        | Base_info.Object -> ()
+        | Base_info.Object -> begin
+            let info' = Object_info.from_baseinfo gi_info.info in
+            let sources = generate_module_files gi_info.loader gi_info.base_name in
+            begin match object_parser with
+            | None -> Bind_object.parse_object_info gi_info.info sources skip
+            | Some object_parser_info -> object_parser_info gi_info.info sources skip
+            end;
+            Binding_utils.Sources.close sources
+        end
+
         | Base_info.Invalid_0 -> ()
         | Base_info.Interface -> ()
         | Base_info.Boxed -> ()
@@ -160,6 +170,7 @@ let parse loader
     ?enum_parser
     ?flags_parser
     ?function_parser
+    ?object_parser
     ?struct_parser
     ?union_parser
     ?(skip = [])
@@ -189,6 +200,7 @@ let parse loader
                                     enum_parser
                                     flags_parser
                                     function_parser
+                                    object_parser
                                     struct_parser
                                     union_parser
                                     skip
