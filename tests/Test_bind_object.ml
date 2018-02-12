@@ -37,7 +37,24 @@ let object_test namespace name fn =
   | None -> assert_equal_string name "No base info found"
   | Some (info) -> fn info
 
+let test_append_ctypes_object_declaration test_ctxt =
+  let namespace = "GObject" in
+  let name = "Object" in
+  let writer = fun name info sources -> (
+    let _ = Bind_object.append_ctypes_object_declaration name sources in
+    Binding_utils.Sources.write_buffs sources
+  )
+  in
+  let mli_content = "type t\n\
+                     val t_typ : t typ\n" in
+  let ml_content = "type t = unit ptr\n\
+                    let t_typ : t typ = ptr void\n" in
+  object_test namespace name (fun info ->
+    test_writing test_ctxt info name writer mli_content ml_content
+    )
+
 let tests =
   "GObject Introspection Bind_object tests" >:::
   [
+    "Test append Ctypes object declaration" >:: test_append_ctypes_object_declaration;
   ]
