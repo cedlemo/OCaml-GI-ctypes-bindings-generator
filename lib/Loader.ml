@@ -151,7 +151,6 @@ let generate_bindings gi_info const_parser
         | Base_info.Type -> ()
         | Base_info.Unresolved -> ()
         | Base_info.Object -> begin
-            let info' = Object_info.from_baseinfo gi_info.info in
             let sources = generate_module_files gi_info.loader gi_info.base_name in
             begin match object_parser with
             | None -> Bind_object.parse_object_info gi_info.info sources skip
