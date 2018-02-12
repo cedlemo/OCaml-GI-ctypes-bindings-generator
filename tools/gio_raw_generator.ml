@@ -9,9 +9,12 @@ module Loader = BG.Loader
 
 let print_infos loader =
   let namespace = Loader.get_namespace loader in
+  let namespaces = Loader.get_loaded_namespaces loader in
   let version = Loader.get_version loader in
   print_endline (">> " ^ namespace);
-  print_endline ("\t - version :" ^ version)
+  print_endline ("\t - version : " ^ version);
+  print_endline "\t - loaded namespaces :";
+  List.iter (fun n -> print_endline ("\t\t + " ^ n)) namespaces
 
 let skip = [ ]
 
