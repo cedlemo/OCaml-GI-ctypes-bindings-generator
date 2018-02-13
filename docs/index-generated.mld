@@ -1,0 +1,2 @@
+{1 Library gi-bindings-generator}
+The entry point for this library is module {!module:GI_bindings_generator}.
