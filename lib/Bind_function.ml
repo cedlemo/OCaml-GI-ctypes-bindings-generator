@@ -340,13 +340,16 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
         File.bprintf ml "let %s =\n" (String.concat " " function_decl)
       in
       let write_out_argument_allocation_instructions a =
-        let name = get_escaped_arg_name a in
+        let name' = get_escaped_arg_name a in
         match get_type_info a with
         | None -> raise_failure "no typeinfo for arg"
         | Some type_info ->
             let may_be_null = arg_may_be_null a in
-            match allocate_type_bindings type_info name may_be_null with
-            | None -> raise_failure "unable to get type to allocate"
+            match allocate_type_bindings type_info name' may_be_null with
+            | None -> let message = Printf.sprintf
+                                    "unable to get type to allocate for\
+                                    %s argument in %s function" name' name in
+                      raise_failure message
             | Some (s, _) -> let pattern = container ^ "." in
             File.bprintf ml "  %s" (Binding_utils.string_pattern_remove s pattern)
       in
