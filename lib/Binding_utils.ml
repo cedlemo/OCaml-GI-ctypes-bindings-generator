@@ -454,7 +454,7 @@ let allocate_type_bindings type_info var_name maybe_null =
       | Types.Uint64 -> Some (check_if_pointer ("uint64_t", "Unsigned.UInt64.zero"))
       | Types.Float -> Some (check_if_pointer ("float", "0.0"))
       | Types.Double -> Some (check_if_pointer ("double", "0.0"))
-      | Types.GType -> None
+      | Types.GType -> Some (check_if_pointer ("int64_t", "Int64.zero"))
       | Types.Utf8 | Types.Filename -> begin
           if maybe_null then
             Some ("string_opt",
@@ -481,8 +481,9 @@ let allocate_type_bindings type_info var_name maybe_null =
           Some (check_if_pointer ((Printf.sprintf "%s.t_typ" name),
                                   (Printf.sprintf "(make %s.t_typ)" name)))
         )
+        | Type -> Some (check_if_pointer ("int64_t", "Int64.zero"))
         | Object | Interface | Constant | Invalid_0 | Union | Value | Signal
-        | Vfunc | Property | Field | Arg | Type | Unresolved -> None
+        | Vfunc | Property | Field | Arg | Unresolved -> None
   in
   match _get_allocate_type_and_def_value () with
   | None -> None
