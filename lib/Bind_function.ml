@@ -345,13 +345,16 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
         | None -> raise_failure "no typeinfo for arg"
         | Some type_info ->
             let may_be_null = arg_may_be_null a in
-            match allocate_type_bindings type_info name' may_be_null with
-            | None -> let message = Printf.sprintf
-                                    "unable to get type to allocate for\
-                                    %s argument in %s function" name' name in
-                      raise_failure message
-            | Some (s, _) -> let pattern = container ^ "." in
-            File.bprintf ml "  %s" (Binding_utils.string_pattern_remove s pattern)
+            match allocate_out_argument type_info name' may_be_null with
+            | Error message ->
+                let message' = Printf.sprintf
+                               "unable to get type to allocate for \
+                                argument named %s of type '%s' in function %s"
+                                name' message name  in
+                raise_failure message'
+            | Ok instructions -> let pattern = container ^ "." in
+                Binding_utils.string_pattern_remove instructions pattern
+                |> File.bprintf ml "  %s"
       in
       let write_foreign_declaration () =
         let _ = File.bprintf ml "  let %s_raw =\n" name in
