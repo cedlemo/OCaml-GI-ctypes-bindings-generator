@@ -94,15 +94,13 @@ val type_tag_to_bindings_types:
 val type_info_to_bindings_types:
   Type_info.t structure ptr -> bool -> bindings_types
 
-(** Create from a Type_info.t the allocation instructions with Ctypes and
- *  the instructions in order to get the value from the pointer of the
- *  allocated out argument. *)
-val allocate_type_bindings:
-  Type_info.t structure ptr -> string -> bool -> (string * string) option
-
+(** Create from a Type_info.t the allocation instructions for out argument
+ *  in function bindings. *)
 val allocate_out_argument:
   Type_info.t structure ptr -> string -> bool -> (string, string) result
 
+(** Create from a Type_info.t the instructions in order to get the value
+ *  from an out argument in function bindings. *)
 val get_out_argument_value:
   Type_info.t structure ptr -> string -> bool -> (string, string) result
 
