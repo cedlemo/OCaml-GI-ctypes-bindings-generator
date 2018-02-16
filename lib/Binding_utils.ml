@@ -582,3 +582,43 @@ let allocate_out_argument type_info var_name maybe_null =
       | Arg as t -> Error (Base_info.string_of_baseinfo_type t)
       | Unresolved as t -> Error (Base_info.string_of_baseinfo_type t)
 
+let get_out_argument_value type_info var_name maybe_null =
+  let _get_value_simple_instructions () =
+    let s = Printf.sprintf "let %s = !@ %s_ptr in\n" var_name var_name
+    in Ok s
+  in
+  match Type_info.get_interface type_info with
+  | None -> (
+    match Type_info.get_tag type_info with
+    | Types.Void | Types.Boolean | Types.Int8 | Types.Uint8 | Types.Int16
+    | Types.Uint16 | Types.Int32 | Types.Uint32 | Types.Int64 | Types.Uint64
+    | Types.Float | Types.Double | Types.GType | Types.Utf8 | Types.Filename
+    | Types.Array | Types.Interface | Types.GList | Types.GSList | Types.GHash
+    | Types.Error -> _get_value_simple_instructions ()
+    | Types.Unichar as t -> Error (Types.string_of_tag t)
+    )
+  | Some interface ->
+      match Base_info.get_type interface with
+      | Struct -> begin match get_binding_name interface with
+        | None -> Error (Printf.sprintf "%s interface struct without name" var_name)
+        | Some _ -> _get_value_simple_instructions ()
+      end
+      | Type -> _get_value_simple_instructions ()
+      | Enum as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Invalid as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Function as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Callback as t  -> Error (Base_info.string_of_baseinfo_type t)
+      | Boxed as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Flags as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Object as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Interface as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Constant as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Invalid_0 as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Union as t  -> Error (Base_info.string_of_baseinfo_type t)
+      | Value as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Signal as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Vfunc as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Property as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Field as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Arg as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Unresolved as t -> Error (Base_info.string_of_baseinfo_type t)
