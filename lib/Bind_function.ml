@@ -380,16 +380,20 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
           File.bprintf ml "  let ret = %s_raw %s in\n" name arg_names
       in
       let write_get_value_from_pointer_instructions a =
-        let name = get_escaped_arg_name a in
+        let name' = get_escaped_arg_name a in
         match get_type_info a with
         | None -> raise_failure "no typeinfo for arg"
         | Some type_info ->
             let may_be_null = arg_may_be_null a in
-            match allocate_type_bindings type_info name may_be_null with
-            | None -> raise_failure "unable to get type to allocate"
-            | Some (_, g) ->
+            match get_out_argument_value type_info name' may_be_null with
+            | Error message -> let message' =
+                Printf.sprintf "unable to get instructions to get value \
+                                for argument named %s of type '%s' in function %s"
+                                name' message name in
+                raise_failure message'
+            | Ok instructions ->
                 let indent = if can_throw_gerror then "    " else "  " in
-                File.bprintf ml "%slet %s = %s in\n" indent name g
+                File.bprintf ml "%s%s" indent instructions
       in
       let write_build_return_value_instructions () =
         let indent = if can_throw_gerror then "    " else "  " in
