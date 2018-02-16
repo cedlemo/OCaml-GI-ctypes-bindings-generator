@@ -100,6 +100,9 @@ val type_info_to_bindings_types:
 val allocate_type_bindings:
   Type_info.t structure ptr -> string -> bool -> (string * string) option
 
+val allocate_out_argument:
+  Type_info.t structure ptr -> string -> bool -> (string, string) result
+
 (** Check if a string match on of the pattern in a list. *)
 val match_one_of:
   string -> string list -> bool

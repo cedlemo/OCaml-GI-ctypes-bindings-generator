@@ -473,7 +473,6 @@ let allocate_type_bindings type_info var_name maybe_null =
       )
     | Some interface ->
         match Base_info.get_type interface with
-        | Invalid | Function | Callback | Boxed | Enum | Flags -> None
         | Struct -> (
           match get_binding_name interface with
           | None -> None
@@ -482,8 +481,10 @@ let allocate_type_bindings type_info var_name maybe_null =
                                   (Printf.sprintf "(make %s.t_typ)" name)))
         )
         | Type -> Some (check_if_pointer ("int64_t", "Int64.zero"))
-        | Object | Interface | Constant | Invalid_0 | Union | Value | Signal
-        | Vfunc | Property | Field | Arg | Unresolved -> None
+        | Enum
+        | Invalid | Function | Callback | Boxed | Flags | Object
+        | Interface | Constant | Invalid_0 | Union | Value | Signal | Vfunc
+        | Property | Field | Arg | Unresolved -> None
   in
   match _get_allocate_type_and_def_value () with
   | None -> None
@@ -492,3 +493,92 @@ let allocate_type_bindings type_info var_name maybe_null =
         Printf.sprintf "let %s_ptr = allocate %s %s in\n" var_name t v in
       let get_value = Printf.sprintf "%s" r in
       Some (allocate_instructions, get_value)
+
+let allocate_out_argument type_info var_name maybe_null =
+  let check_if_pointer (ctypes_t, default_value) =
+    (* Consider that a pointer can always be null no need to check for maybe_null. *)
+    if Type_info.is_pointer type_info then
+      (Printf.sprintf "(ptr_opt %s)" ctypes_t,
+       "None")
+    else (ctypes_t, default_value)
+  in
+  let _allocate_simple_instructions (ctypes_type, default_value) =
+    let s = Printf.sprintf
+            "let %s_ptr = allocate %s %s in\n"
+            var_name ctypes_type default_value
+    in Ok s
+  in
+  match Type_info.get_interface type_info with
+  | None -> (
+    match Type_info.get_tag type_info with
+    | Types.Void -> check_if_pointer ("void", "None")
+                    |> _allocate_simple_instructions
+    | Types.Boolean -> check_if_pointer ("bool", "false")
+                    |> _allocate_simple_instructions
+    | Types.Int8 -> check_if_pointer ("int8_t", "0")
+                    |> _allocate_simple_instructions
+    | Types.Uint8 -> check_if_pointer ("uint8_t", "Unsigned.UInt8.zero")
+                    |> _allocate_simple_instructions
+    | Types.Int16 -> check_if_pointer ("int16_t", "0")
+                    |> _allocate_simple_instructions
+    | Types.Uint16 -> check_if_pointer ("uint16_t", "Unsigned.UInt16.zero")
+                    |> _allocate_simple_instructions
+    | Types.Int32 -> check_if_pointer ("int32_t", "Int32.zero")
+                    |> _allocate_simple_instructions
+    | Types.Uint32 -> check_if_pointer ("uint32_t", "Unsigned.UInt32.zero")
+                    |> _allocate_simple_instructions
+    | Types.Int64 -> check_if_pointer ("int64_t", "Int64.zero")
+                    |> _allocate_simple_instructions
+    | Types.Uint64 -> check_if_pointer ("uint64_t", "Unsigned.UInt64.zero")
+                    |> _allocate_simple_instructions
+    | Types.Float -> check_if_pointer ("float", "0.0")
+                    |> _allocate_simple_instructions
+    | Types.Double -> check_if_pointer ("double", "0.0")
+                    |> _allocate_simple_instructions
+    | Types.GType -> check_if_pointer ("int64_t", "Int64.zero")
+                    |> _allocate_simple_instructions
+    | Types.Utf8 | Types.Filename -> begin
+        (if maybe_null then ("string_opt", "None") else ("string", "\" \""))
+        |> _allocate_simple_instructions
+    end
+    | Types.Array as t -> Error (Types.string_of_tag t)
+    | Types.Interface as t -> Error (Types.string_of_tag t)
+    | Types.GList -> check_if_pointer ("List.t_typ", "None")
+                    |> _allocate_simple_instructions
+    | Types.GSList -> check_if_pointer ("SList.t_typ", "None")
+                    |> _allocate_simple_instructions
+    | Types.GHash -> check_if_pointer ("Hash_table.t_typ", "None")
+                    |> _allocate_simple_instructions
+    | Types.Error -> check_if_pointer ("Error.t_typ", "None")
+                    |> _allocate_simple_instructions
+    | Types.Unichar as t -> Error (Types.string_of_tag t)
+    )
+  | Some interface ->
+      match Base_info.get_type interface with
+      | Struct -> begin match get_binding_name interface with
+        | None -> Error (Printf.sprintf "%s interface struct without name" var_name)
+        | Some name -> check_if_pointer ((Printf.sprintf "%s.t_typ" name),
+                                        (Printf.sprintf "(make %s.t_typ)" name))
+                    |> _allocate_simple_instructions
+      end
+      | Type -> check_if_pointer ("int64_t", "Int64.zero")
+                |> _allocate_simple_instructions
+      | Enum as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Invalid as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Function as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Callback as t  -> Error (Base_info.string_of_baseinfo_type t)
+      | Boxed as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Flags as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Object as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Interface as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Constant as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Invalid_0 as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Union as t  -> Error (Base_info.string_of_baseinfo_type t)
+      | Value as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Signal as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Vfunc as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Property as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Field as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Arg as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Unresolved as t -> Error (Base_info.string_of_baseinfo_type t)
+
