@@ -13,10 +13,7 @@ let _ = seal t_typ
 
 let fini =
   foreign "g_static_resource_fini" (ptr t_typ @-> returning (void))
-
 let get_resource =
   foreign "g_static_resource_get_resource" (ptr t_typ @-> returning (ptr Resource.t_typ))
-
 let init =
   foreign "g_static_resource_init" (ptr t_typ @-> returning (void))
-

@@ -1,0 +1,11 @@
+open Ctypes
+
+type t
+val t_typ : t typ
+
+(*Not implemented g_simple_action_group_new return type object not handled*)
+(*Not implemented g_simple_action_group_add_entries type C Array type for Types.Array tag not implemented*)
+(*Not implemented g_simple_action_group_insert type interface not implemented*)
+(*Not implemented g_simple_action_group_lookup return type interface not handled*)
+val remove:
+  t structure ptr -> string -> unit

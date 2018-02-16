@@ -11,10 +11,7 @@ val f_padding: (unit ptr, t structure) field
 
 val fini:
   t structure ptr -> unit
-
 val get_resource:
   t structure ptr -> Resource.t structure ptr
-
 val init:
   t structure ptr -> unit
-
