@@ -151,6 +151,48 @@ let test_function_bindings_for_args_out_function test_ctxt =
         in
         Test_utils.test_writing test_ctxt method_info "get_ymd" writer mli_content ml_content
 
+let test_function_bindings_for_args_out_as_enum_function test_ctxt =
+  let namespace = "Gio" in
+  let repo = Repository.get_default () in
+  let _ = Repository.require repo namespace () in
+  let container = "FileInfo" in
+  let name = "get_attribute_data" in
+  match Repository.find_by_name repo namespace name with
+  | None -> assert_equal_string name "No base info found"
+  | Some (base_info) -> match Base_info.get_type base_info with
+    | Base_info.Function -> begin let info = Function_info.from_baseinfo base_info in
+    let mli_content = "val get_attribute_data :\n  \
+                       t structure ptr -> string -> \
+                       (bool * File_attribute_type.t \
+                       * unit ptr * File_attribute_status.t)"
+    in let ml_content =
+      "let get_attribute_data self attribute =\n  \
+       let _type_ptr = allocate File_attribute_type.t_view \
+       (File_attribute_type.t_view.of_value (Unsigned.UInt32.zero)) in\n  \
+       let value_pp_ptr = allocate (ptr_opt void) None in\n  \
+       let status_ptr = allocate File_attribute_status.t_view \
+       (File_attribute_status.t_view.of_value (Unsigned.UInt32.zero)) in\n  \
+       let get_attribute_data_raw =\n    \
+       foreign \"g_file_info_get_attribute_data\" (ptr t_typ @-> string @-> \
+       ptr (File_attribute_type.t_view) @-> ptr (ptr void) @-> ptr \
+       (File_attribute_status.t_view) @-> returning bool)\n  \
+       in\n  \
+       let ret = get_attribute_data_raw self attribute _type_ptr value_pp_ptr \
+       status_ptr in\n  \
+       let _type = (!@ _type_ptr) in\n  \
+       let value_pp = !@ value_pp_ptr in\n  \
+       let status = (!@ status_ptr) in\n  \
+       (ret, _type, value_pp, status)"
+    in
+    let writer = fun name info sources ->
+      let _ = Bind_function.append_ctypes_function_bindings name info container sources [] in
+      Binding_utils.Sources.write_buffs sources
+    in
+    Test_utils.test_writing test_ctxt info name writer mli_content ml_content
+
+    end
+    | _ -> assert_equal_string name "Should be a function"
+
 let test_function_bindings_for_args_out_with_gerror_function test_ctxt =
   let container = "Core" in
   let name = "filename_from_uri" in
@@ -190,6 +232,7 @@ let tests =
     "Bind_function escape bad function name" >:: test_escape_bad_function_name;
     "Bind_function test function bindings for in args only function" >:: test_function_bindings_for_in_args_only_function;
     "Bind_function test function bindings for args out function" >:: test_function_bindings_for_args_out_function;
+    (* "Bind_function test function bindings for args out as enum function" >:: test_function_bindings_for_args_out_as_enum_function; *)
     "Bind_funtcion test function bindings for in args only function that can throw GError" >:: test_function_bindings_for_in_args_only_function_gerror;
     "Bind_function test function bindings for args out with gerror function" >:: test_function_bindings_for_args_out_with_gerror_function;
   ]
