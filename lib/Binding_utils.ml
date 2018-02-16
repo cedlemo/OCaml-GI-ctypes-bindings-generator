@@ -407,7 +407,10 @@ let type_info_to_bindings_types type_info maybe_null =
         match get_binding_name interface with
         | None -> Not_implemented (Base_info.string_of_baseinfo_type t)
         | Some name ->
-        Types {ocaml = Printf.sprintf "%s.t" name; ctypes = Printf.sprintf "%s.t_view" name}
+            if Type_info.is_pointer type_info then
+              Types {ocaml = Printf.sprintf "**%s.t" name; ctypes = Printf.sprintf "**%s.t_view" name}
+            else
+              Types {ocaml = Printf.sprintf "%s.t" name; ctypes = Printf.sprintf "%s.t_view" name}
       )
       | Flags as t -> (
         match get_binding_name interface with
@@ -563,7 +566,19 @@ let allocate_out_argument type_info var_name maybe_null =
       end
       | Type -> check_if_pointer ("int64_t", "Int64.zero")
                 |> _allocate_simple_instructions
-      | Enum as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Enum -> begin match get_binding_name interface with
+        | None -> Error (Printf.sprintf "%s interface enum without name" var_name)
+        | Some name -> let enum_info = Enum_info.from_baseinfo interface in
+            let view_name = Printf.sprintf "%s.t_view" name in
+            let def_val_constructor deflt =
+              Printf.sprintf "(%s.of_value (%s))" view_name deflt
+            in
+            match Enum_info.get_storage_type enum_info with
+            | Types.Int32 -> _allocate_simple_instructions (view_name, def_val_constructor "Int32.zero")
+            | Types.Uint32 -> _allocate_simple_instructions (view_name, def_val_constructor "Unsigned.UInt32.zero")
+            | _ -> Error (Printf.sprintf "%s interface enum %s with a bad storage type" var_name name)
+      end
+
       | Invalid as t -> Error (Base_info.string_of_baseinfo_type t)
       | Function as t -> Error (Base_info.string_of_baseinfo_type t)
       | Callback as t  -> Error (Base_info.string_of_baseinfo_type t)
@@ -587,6 +602,11 @@ let get_out_argument_value type_info var_name maybe_null =
     let s = Printf.sprintf "let %s = !@ %s_ptr in\n" var_name var_name
     in Ok s
   in
+  let _get_value_enum_instructions name =
+    let s =
+      Printf.sprintf "let %s = (!@ %s_ptr) in\n" var_name var_name
+    in Ok s
+  in
   match Type_info.get_interface type_info with
   | None -> (
     match Type_info.get_tag type_info with
@@ -604,7 +624,10 @@ let get_out_argument_value type_info var_name maybe_null =
         | Some _ -> _get_value_simple_instructions ()
       end
       | Type -> _get_value_simple_instructions ()
-      | Enum as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Enum -> begin match get_binding_name interface with
+        | None -> Error (Printf.sprintf "%s interface enum without name" var_name)
+        | Some name -> _get_value_enum_instructions name
+      end
       | Invalid as t -> Error (Base_info.string_of_baseinfo_type t)
       | Function as t -> Error (Base_info.string_of_baseinfo_type t)
       | Callback as t  -> Error (Base_info.string_of_baseinfo_type t)
