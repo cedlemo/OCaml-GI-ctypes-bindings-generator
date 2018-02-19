@@ -501,7 +501,7 @@ let allocate_out_argument type_info var_name maybe_null =
       end
       | Type -> check_if_pointer ("int64_t", "Int64.zero")
                 |> _allocate_simple_instructions
-      | Enum -> begin match get_binding_name interface with
+      | Enum | Flags -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface enum without name" var_name)
         | Some name -> let enum_info = Enum_info.from_baseinfo interface in
             let view_name = Printf.sprintf "%s.t_view" name in
@@ -518,7 +518,6 @@ let allocate_out_argument type_info var_name maybe_null =
       | Function as t -> Error (Base_info.string_of_baseinfo_type t)
       | Callback as t  -> Error (Base_info.string_of_baseinfo_type t)
       | Boxed as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Flags as t -> Error (Base_info.string_of_baseinfo_type t)
       | Object as t -> Error (Base_info.string_of_baseinfo_type t)
       | Interface as t -> Error (Base_info.string_of_baseinfo_type t)
       | Constant as t -> Error (Base_info.string_of_baseinfo_type t)
@@ -559,7 +558,7 @@ let get_out_argument_value type_info var_name maybe_null =
         | Some _ -> _get_value_simple_instructions ()
       end
       | Type -> _get_value_simple_instructions ()
-      | Enum -> begin match get_binding_name interface with
+      | Enum | Flags -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface enum without name" var_name)
         | Some name -> _get_value_enum_instructions name
       end
@@ -567,7 +566,6 @@ let get_out_argument_value type_info var_name maybe_null =
       | Function as t -> Error (Base_info.string_of_baseinfo_type t)
       | Callback as t  -> Error (Base_info.string_of_baseinfo_type t)
       | Boxed as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Flags as t -> Error (Base_info.string_of_baseinfo_type t)
       | Object as t -> Error (Base_info.string_of_baseinfo_type t)
       | Interface as t -> Error (Base_info.string_of_baseinfo_type t)
       | Constant as t -> Error (Base_info.string_of_baseinfo_type t)
