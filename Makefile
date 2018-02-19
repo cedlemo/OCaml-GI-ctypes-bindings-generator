@@ -19,3 +19,10 @@ update_glib2_raw :
 	jbuilder build tools/glib_raw_generator.exe
 	./_build/default/tools/glib_raw_generator.exe
 	cp -rf tools/GLib/lib/* ../OCaml-GLib2/lib/
+
+.PHONY : update_gtk3_raw
+update_gtk3_raw :
+	jbuilder clean
+	jbuilder build tools/gtk3_raw_generator.exe
+	./_build/default/tools/gtk3_raw_generator.exe
+	cp -rf tools/GLib/lib/* ../OCaml-Gtk3/lib/
