@@ -418,7 +418,12 @@ let type_info_to_bindings_types type_info maybe_null =
         | Some name ->
         Types {ocaml = Printf.sprintf "%s.t_list" name; ctypes = Printf.sprintf "%s.t_list_view" name}
       )
-      | Object as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
+      | Object as t -> (
+        match get_binding_name interface with
+        | None -> Not_implemented (Base_info.string_of_baseinfo_type t)
+        | Some name ->
+        Types {ocaml = Printf.sprintf "%s.t" name; ctypes = Printf.sprintf "%s.t_typ" name}
+      )
       | Interface as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
       | Constant as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
       | Invalid_0 as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
@@ -513,12 +518,16 @@ let allocate_out_argument type_info var_name maybe_null =
             | Types.Uint32 -> _allocate_simple_instructions (view_name, def_val_constructor "Unsigned.UInt32.zero")
             | _ -> Error (Printf.sprintf "%s interface enum %s with a bad storage type" var_name name)
       end
-
+      | Object as t -> begin match get_binding_name interface with
+        | None -> Error (Printf.sprintf "%s interface object without name" var_name)
+        | Some name -> check_if_pointer ((Printf.sprintf "%s.t_typ" name),
+                                        (Printf.sprintf "(coerce (void ptr) %s.t_typ null)" name))
+                    |> _allocate_simple_instructions
+      end
       | Invalid as t -> Error (Base_info.string_of_baseinfo_type t)
       | Function as t -> Error (Base_info.string_of_baseinfo_type t)
       | Callback as t  -> Error (Base_info.string_of_baseinfo_type t)
       | Boxed as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Object as t -> Error (Base_info.string_of_baseinfo_type t)
       | Interface as t -> Error (Base_info.string_of_baseinfo_type t)
       | Constant as t -> Error (Base_info.string_of_baseinfo_type t)
       | Invalid_0 as t -> Error (Base_info.string_of_baseinfo_type t)
@@ -562,11 +571,14 @@ let get_out_argument_value type_info var_name maybe_null =
         | None -> Error (Printf.sprintf "%s interface enum without name" var_name)
         | Some name -> _get_value_enum_instructions name
       end
+      | Object as t -> begin match get_binding_name interface with
+        | None -> Error (Printf.sprintf "%s interface object without name" var_name)
+        | Some _ -> _get_value_simple_instructions ()
+      end
       | Invalid as t -> Error (Base_info.string_of_baseinfo_type t)
       | Function as t -> Error (Base_info.string_of_baseinfo_type t)
       | Callback as t  -> Error (Base_info.string_of_baseinfo_type t)
       | Boxed as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Object as t -> Error (Base_info.string_of_baseinfo_type t)
       | Interface as t -> Error (Base_info.string_of_baseinfo_type t)
       | Constant as t -> Error (Base_info.string_of_baseinfo_type t)
       | Invalid_0 as t -> Error (Base_info.string_of_baseinfo_type t)
