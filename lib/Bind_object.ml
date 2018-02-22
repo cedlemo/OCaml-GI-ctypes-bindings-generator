@@ -57,7 +57,7 @@ let append_ctypes_object_methods_bindings object_name info sources skip_types =
     match Base_info.get_name base_info with
     | None -> ()
     | Some name ->
-        Bind_function.append_ctypes_function_bindings name method_info object_name sources skip_types
+        Bind_function.append_ctypes_function_bindings name method_info (object_name, "t", "t_typ") sources skip_types
   done
 
 let parse_object_info info sources skip_types =

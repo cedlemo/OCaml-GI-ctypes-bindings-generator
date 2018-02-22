@@ -175,6 +175,7 @@ let get_type_info = function
   | Arg arg -> arg.type_info
 
 let get_args_information callable container skip_types =
+  let container_name, container_t, container_typ = container in
   let n = Callable_info.get_n_args callable in
   let is_method = Callable_info.is_method callable in
   if n = 0 && not is_method then No_args
@@ -185,7 +186,7 @@ let get_args_information callable container skip_types =
       match Binding_utils.type_info_to_bindings_types t_info may_be_null with
       | Binding_utils.Not_implemented tag_name -> Not_implemented tag_name
       | Types {ocaml = ocaml_type'; ctypes = ctypes_type'} ->
-          let (ocaml_type, ctypes_type) = filter_same_argument_type_as_container container (ocaml_type', ctypes_type') in
+          let (ocaml_type, ctypes_type) = filter_same_argument_type_as_container container_name (ocaml_type', ctypes_type') in
           if Binding_utils.match_one_of ocaml_type skip_types then Skipped ocaml_type
           else let name = ( let info' = Arg_info.to_baseinfo arg in
                             match Base_info.get_name info' with
@@ -196,8 +197,8 @@ let get_args_information callable container skip_types =
     let append_self_if_needed l =
       if is_method then
          let arg = Arg { name = "self";
-                         ocaml_type = "t structure ptr";
-                         ctypes_type = "ptr t_typ";
+                         ocaml_type = container_t;
+                         ctypes_type = container_typ;
                          type_info = None ;
                          may_be_null = false } in
          arg :: l
@@ -444,9 +445,10 @@ let append_ctypes_function_bindings raw_name info container sources skip_types =
   let symbol = Function_info.get_symbol info in
   let name = Binding_utils.ensure_valid_variable_name (if raw_name = "" then symbol else raw_name) in
   let callable = Function_info.to_callableinfo info in
+  let container_name, container_t, container_typ = container in
   let args = get_args_information callable container skip_types in
   if should_be_implemented args sources symbol then (
-        match get_return_types callable container skip_types with
+        match get_return_types callable container_name skip_types with
         | Not_handled t ->
             let coms = Printf.sprintf "Not implemented %s return type %s not handled" symbol t in
             Sources.buffs_add_comments sources coms
@@ -454,7 +456,7 @@ let append_ctypes_function_bindings raw_name info container sources skip_types =
             Sources.buffs_add_skipped sources coms
         | Type_names ret_types ->
             if has_out_arg args then
-              generate_callable_bindings_when_out_args callable name container symbol args ret_types sources
+              generate_callable_bindings_when_out_args callable name container_name symbol args ret_types sources
             else if has_in_out_arg args then
               let coms  = Printf.sprintf "Not implemented %s - in out argument not handled" symbol in
               Sources.buffs_add_comments sources coms
@@ -467,6 +469,6 @@ let parse_function_info info sources skip_types =
   | None -> ()
   | Some name ->
      let info' = Function_info.from_baseinfo info in
-     let _ = append_ctypes_function_bindings name info' "Core" sources skip_types in
+     let _ = append_ctypes_function_bindings name info' ("Core","", "") sources skip_types in
      let _ = Sources.buffs_add_eol sources in
      Sources.write_buffs sources
