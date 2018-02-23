@@ -43,7 +43,7 @@ let test_get_arguments_types test_ctx =
   test_function_info name (fun info ->
       let open Bind_function in
       let callable = Function_info.to_callableinfo info in
-      match get_args_information callable "none" [] with
+      match get_args_information callable ("none", "", "") [] with
       | No_args -> assert_equal_string "It should return " "some arguments"
       | Args arg_lists ->
           let _ = assert_equal_int 2 (List.length arg_lists.in_list) in
@@ -74,7 +74,7 @@ let test_escape_bad_function_name test_ctxt =
   let ml_content = "let _double =\n  \
                     foreign \"g_rand_double\" (ptr t_typ @-> returning (double))" in
   let writer = fun name info sources ->
-    let _ = Bind_function.append_ctypes_function_bindings name info container sources [] in
+    let _ = Bind_function.append_ctypes_function_bindings name info (container, "t structure", "t_typ") sources [] in
     Binding_utils.Sources.write_buffs sources
   in
   Test_utils.test_writing test_ctxt method_info "double" writer mli_content ml_content
@@ -90,7 +90,7 @@ let test_function_bindings_for_in_args_only_function test_ctxt =
                        foreign \"g_date_get_sunday_weeks_in_year\" \
                        (uint16_t @-> returning (uint8_t))" in
      let writer = fun name info sources ->
-       let _ = Bind_function.append_ctypes_function_bindings name info "Core" sources [] in
+       let _ = Bind_function.append_ctypes_function_bindings name info ("Core", "", "") sources [] in
        Binding_utils.Sources.write_buffs sources
      in
      Test_utils.test_writing test_ctxt function_info name writer mli_content ml_content
@@ -115,7 +115,7 @@ let test_function_bindings_for_in_args_only_function_gerror test_ctxt =
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in\n    \
     Error (err_ptr)" in
      let writer = fun name info sources ->
-       let _ = Bind_function.append_ctypes_function_bindings name info "Core" sources [] in
+       let _ = Bind_function.append_ctypes_function_bindings name info ("Core","","") sources [] in
        Binding_utils.Sources.write_buffs sources
      in
      Test_utils.test_writing test_ctxt function_info name writer mli_content ml_content
@@ -146,7 +146,7 @@ let test_function_bindings_for_args_out_function test_ctxt =
                           let day = !@ day_ptr in\n  \
                           (year, month, day)" in
         let writer = fun name info sources ->
-          let _ = Bind_function.append_ctypes_function_bindings name info container sources [] in
+          let _ = Bind_function.append_ctypes_function_bindings name info (container, "t structure", "t") sources [] in
           Binding_utils.Sources.write_buffs sources
         in
         Test_utils.test_writing test_ctxt method_info "get_ymd" writer mli_content ml_content
@@ -185,7 +185,7 @@ let test_function_bindings_for_args_out_as_enum_function test_ctxt =
        (ret, _type, value_pp, status)"
     in
     let writer = fun name info sources ->
-      let _ = Bind_function.append_ctypes_function_bindings name info container sources [] in
+      let _ = Bind_function.append_ctypes_function_bindings name info (container, "t", "t_typ") sources [] in
       Binding_utils.Sources.write_buffs sources
     in
     Test_utils.test_writing test_ctxt info name writer mli_content ml_content
@@ -219,7 +219,7 @@ let test_function_bindings_for_args_out_with_gerror_function test_ctxt =
                         Error (err_ptr)"
     in
     let writer = fun name info sources ->
-      let _ = Bind_function.append_ctypes_function_bindings name info container sources [] in
+      let _ = Bind_function.append_ctypes_function_bindings name info (container, "", "") sources [] in
       Binding_utils.Sources.write_buffs sources
     in
     Test_utils.test_writing test_ctxt function_info name writer mli_content ml_content
