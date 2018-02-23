@@ -3,37 +3,42 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_menu_item_new return type object not handled*)
-(*Not implemented gtk_menu_item_new_with_label return type object not handled*)
-(*Not implemented gtk_menu_item_new_with_mnemonic return type object not handled*)
+val create:
+  unit -> Widget.t
+val create_with_label:
+  string -> Widget.t
+val create_with_mnemonic:
+  string -> Widget.t
 val activate:
-  t structure ptr -> unit
+  t -> unit
 val deselect:
-  t structure ptr -> unit
+  t -> unit
 val get_accel_path:
-  t structure ptr -> string option
+  t -> string option
 val get_label:
-  t structure ptr -> string option
+  t -> string option
 val get_reserve_indicator:
-  t structure ptr -> bool
+  t -> bool
 val get_right_justified:
-  t structure ptr -> bool
-(*Not implemented gtk_menu_item_get_submenu return type object not handled*)
+  t -> bool
+val get_submenu:
+  t -> Widget.t
 val get_use_underline:
-  t structure ptr -> bool
+  t -> bool
 val select:
-  t structure ptr -> unit
+  t -> unit
 val set_accel_path:
-  t structure ptr -> string option -> unit
+  t -> string option -> unit
 val set_label:
-  t structure ptr -> string -> unit
+  t -> string -> unit
 val set_reserve_indicator:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_right_justified:
-  t structure ptr -> bool -> unit
-(*Not implemented gtk_menu_item_set_submenu type object not implemented*)
+  t -> bool -> unit
+val set_submenu:
+  t -> Menu.t -> unit
 val set_use_underline:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val toggle_size_allocate:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 (*Not implemented gtk_menu_item_toggle_size_request - in out argument not handled*)

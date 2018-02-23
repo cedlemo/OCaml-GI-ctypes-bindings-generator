@@ -3,14 +3,21 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_viewport_new type object not implemented*)
-(*Not implemented gtk_viewport_get_bin_window return type object not handled*)
-(*Not implemented gtk_viewport_get_hadjustment return type object not handled*)
+val create:
+  Adjustment.t -> Adjustment.t -> Widget.t
+val get_bin_window:
+  t -> Window.t
+val get_hadjustment:
+  t -> Adjustment.t
 val get_shadow_type:
-  t structure ptr -> Shadow_type.t
-(*Not implemented gtk_viewport_get_vadjustment return type object not handled*)
-(*Not implemented gtk_viewport_get_view_window return type object not handled*)
-(*Not implemented gtk_viewport_set_hadjustment type object not implemented*)
+  t -> Shadow_type.t
+val get_vadjustment:
+  t -> Adjustment.t
+val get_view_window:
+  t -> Window.t
+val set_hadjustment:
+  t -> Adjustment.t -> unit
 val set_shadow_type:
-  t structure ptr -> Shadow_type.t -> unit
-(*Not implemented gtk_viewport_set_vadjustment type object not implemented*)
+  t -> Shadow_type.t -> unit
+val set_vadjustment:
+  t -> Adjustment.t -> unit

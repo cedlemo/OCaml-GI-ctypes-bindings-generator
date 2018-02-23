@@ -3,21 +3,29 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_font_selection_new return type object not handled*)
-(*Not implemented gtk_font_selection_get_face return type object not handled*)
-(*Not implemented gtk_font_selection_get_face_list return type object not handled*)
-(*Not implemented gtk_font_selection_get_family return type object not handled*)
-(*Not implemented gtk_font_selection_get_family_list return type object not handled*)
+val create:
+  unit -> Widget.t
+val get_face:
+  t -> Font_face.t
+val get_face_list:
+  t -> Widget.t
+val get_family:
+  t -> Font_family.t
+val get_family_list:
+  t -> Widget.t
 val get_font_name:
-  t structure ptr -> string option
-(*Not implemented gtk_font_selection_get_preview_entry return type object not handled*)
+  t -> string option
+val get_preview_entry:
+  t -> Widget.t
 val get_preview_text:
-  t structure ptr -> string option
+  t -> string option
 val get_size:
-  t structure ptr -> int32
-(*Not implemented gtk_font_selection_get_size_entry return type object not handled*)
-(*Not implemented gtk_font_selection_get_size_list return type object not handled*)
+  t -> int32
+val get_size_entry:
+  t -> Widget.t
+val get_size_list:
+  t -> Widget.t
 val set_font_name:
-  t structure ptr -> string -> bool
+  t -> string -> bool
 val set_preview_text:
-  t structure ptr -> string -> unit
+  t -> string -> unit

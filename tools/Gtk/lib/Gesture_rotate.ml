@@ -4,6 +4,7 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_gesture_rotate_new type object not implemented*)
+let create =
+  foreign "gtk_gesture_rotate_new" (Widget.t_typ @-> returning (Gesture.t_typ))
 let get_angle_delta =
-  foreign "gtk_gesture_rotate_get_angle_delta" (ptr t_typ @-> returning (double))
+  foreign "gtk_gesture_rotate_get_angle_delta" (t_typ @-> returning (double))

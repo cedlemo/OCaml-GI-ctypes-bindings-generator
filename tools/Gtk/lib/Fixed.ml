@@ -4,6 +4,9 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_fixed_new return type object not handled*)
-(*Not implemented gtk_fixed_move type object not implemented*)
-(*Not implemented gtk_fixed_put type object not implemented*)
+let create =
+  foreign "gtk_fixed_new" (void @-> returning (Widget.t_typ))
+let move =
+  foreign "gtk_fixed_move" (t_typ @-> Widget.t_typ @-> int32_t @-> int32_t @-> returning (void))
+let put =
+  foreign "gtk_fixed_put" (t_typ @-> Widget.t_typ @-> int32_t @-> int32_t @-> returning (void))

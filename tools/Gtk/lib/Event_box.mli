@@ -3,12 +3,13 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_event_box_new return type object not handled*)
+val create:
+  unit -> Widget.t
 val get_above_child:
-  t structure ptr -> bool
+  t -> bool
 val get_visible_window:
-  t structure ptr -> bool
+  t -> bool
 val set_above_child:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_visible_window:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

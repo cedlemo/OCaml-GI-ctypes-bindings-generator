@@ -3,12 +3,17 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_button_box_new return type object not handled*)
-(*Not implemented gtk_button_box_get_child_non_homogeneous type object not implemented*)
-(*Not implemented gtk_button_box_get_child_secondary type object not implemented*)
+val create:
+  Orientation.t -> Widget.t
+val get_child_non_homogeneous:
+  t -> Widget.t -> bool
+val get_child_secondary:
+  t -> Widget.t -> bool
 val get_layout:
-  t structure ptr -> Button_box_style.t
-(*Not implemented gtk_button_box_set_child_non_homogeneous type object not implemented*)
-(*Not implemented gtk_button_box_set_child_secondary type object not implemented*)
+  t -> Button_box_style.t
+val set_child_non_homogeneous:
+  t -> Widget.t -> bool -> unit
+val set_child_secondary:
+  t -> Widget.t -> bool -> unit
 val set_layout:
-  t structure ptr -> Button_box_style.t -> unit
+  t -> Button_box_style.t -> unit

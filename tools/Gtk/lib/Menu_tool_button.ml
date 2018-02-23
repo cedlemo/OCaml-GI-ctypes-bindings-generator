@@ -4,11 +4,15 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_menu_tool_button_new type object not implemented*)
-(*Not implemented gtk_menu_tool_button_new_from_stock return type object not handled*)
-(*Not implemented gtk_menu_tool_button_get_menu return type object not handled*)
+let create =
+  foreign "gtk_menu_tool_button_new" (Widget.t_typ @-> string_opt @-> returning (Tool_item.t_typ))
+let create_from_stock =
+  foreign "gtk_menu_tool_button_new_from_stock" (string @-> returning (Tool_item.t_typ))
+let get_menu =
+  foreign "gtk_menu_tool_button_get_menu" (t_typ @-> returning (Widget.t_typ))
 let set_arrow_tooltip_markup =
-  foreign "gtk_menu_tool_button_set_arrow_tooltip_markup" (ptr t_typ @-> string @-> returning (void))
+  foreign "gtk_menu_tool_button_set_arrow_tooltip_markup" (t_typ @-> string @-> returning (void))
 let set_arrow_tooltip_text =
-  foreign "gtk_menu_tool_button_set_arrow_tooltip_text" (ptr t_typ @-> string @-> returning (void))
-(*Not implemented gtk_menu_tool_button_set_menu type object not implemented*)
+  foreign "gtk_menu_tool_button_set_arrow_tooltip_text" (t_typ @-> string @-> returning (void))
+let set_menu =
+  foreign "gtk_menu_tool_button_set_menu" (t_typ @-> Widget.t_typ @-> returning (void))

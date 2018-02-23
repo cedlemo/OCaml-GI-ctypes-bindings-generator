@@ -3,9 +3,11 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_toggle_tool_button_new return type object not handled*)
-(*Not implemented gtk_toggle_tool_button_new_from_stock return type object not handled*)
+val create:
+  unit -> Tool_item.t
+val create_from_stock:
+  string -> Tool_item.t
 val get_active:
-  t structure ptr -> bool
+  t -> bool
 val set_active:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

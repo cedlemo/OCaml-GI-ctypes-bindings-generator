@@ -278,9 +278,11 @@ val c_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID : int32
 (*DEPRECATED : ToolbarSpaceStyle*)
 (*DEPRECATED : TranslateFunc*)
 (*DEPRECATED : UIManagerItemType*)
-(*Not implemented gtk_accel_groups_activate type object not implemented*)
+val accel_groups_activate:
+  Object.t -> Unsigned.uint32 -> Modifier_type.t_list -> bool
 
-(*Not implemented gtk_accel_groups_from_object type object not implemented*)
+val accel_groups_from_object:
+  Object.t -> SList.t structure ptr
 
 val accelerator_get_default_mod_mask:
   unit -> Modifier_type.t_list
@@ -288,12 +290,14 @@ val accelerator_get_default_mod_mask:
 val accelerator_get_label:
   Unsigned.uint32 -> Modifier_type.t_list -> string option
 
-(*Not implemented gtk_accelerator_get_label_with_keycode type object not implemented*)
+val accelerator_get_label_with_keycode:
+  Display.t -> Unsigned.uint32 -> Unsigned.uint32 -> Modifier_type.t_list -> string option
 
 val accelerator_name:
   Unsigned.uint32 -> Modifier_type.t_list -> string option
 
-(*Not implemented gtk_accelerator_name_with_keycode type object not implemented*)
+val accelerator_name_with_keycode:
+  Display.t -> Unsigned.uint32 -> Unsigned.uint32 -> Modifier_type.t_list -> string option
 
 val accelerator_parse :
   string -> (Unsigned.uint32 * Modifier_type.t_list)
@@ -322,16 +326,20 @@ val binding_entry_skip:
 val binding_set_find:
   string -> Binding_set.t structure ptr option
 
-(*Not implemented gtk_bindings_activate type object not implemented*)
+val bindings_activate:
+  Object.t -> Unsigned.uint32 -> Modifier_type.t_list -> bool
 
-(*Not implemented gtk_bindings_activate_event type object not implemented*)
+val bindings_activate_event:
+  Object.t -> Event_key.t structure ptr -> bool
 
 val builder_error_quark:
   unit -> Unsigned.uint32
 
-(*Not implemented gtk_cairo_should_draw_window type object not implemented*)
+val cairo_should_draw_window:
+  Context.t structure ptr -> Window.t -> bool
 
-(*Not implemented gtk_cairo_transform_to_window type object not implemented*)
+val cairo_transform_to_window:
+  Context.t structure ptr -> Widget.t -> Window.t -> unit
 
 val check_version:
   Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> string option
@@ -339,9 +347,11 @@ val check_version:
 val css_provider_error_quark:
   unit -> Unsigned.uint32
 
-(*Not implemented gtk_device_grab_add type object not implemented*)
+val device_grab_add:
+  Widget.t -> Device.t -> bool -> unit
 
-(*Not implemented gtk_device_grab_remove type object not implemented*)
+val device_grab_remove:
+  Widget.t -> Device.t -> unit
 
 val disable_setlocale:
   unit -> unit
@@ -349,24 +359,32 @@ val disable_setlocale:
 val distribute_natural_allocation:
   int32 -> Unsigned.uint32 -> Requested_size.t structure ptr -> int32
 
-(*Not implemented gtk_drag_cancel type object not implemented*)
+val drag_cancel:
+  Drag_context.t -> unit
 
-(*Not implemented gtk_drag_finish type object not implemented*)
+val drag_finish:
+  Drag_context.t -> bool -> bool -> Unsigned.uint32 -> unit
 
-(*Not implemented gtk_drag_get_source_widget type object not implemented*)
+val drag_get_source_widget:
+  Drag_context.t -> Widget.t
 
-(*Not implemented gtk_drag_set_icon_default type object not implemented*)
+val drag_set_icon_default:
+  Drag_context.t -> unit
 
-(*Not implemented gtk_drag_set_icon_gicon type object not implemented*)
+(*Not implemented gtk_drag_set_icon_gicon type interface not implemented*)
 
-(*Not implemented gtk_drag_set_icon_name type object not implemented*)
+val drag_set_icon_name:
+  Drag_context.t -> string -> int32 -> int32 -> unit
 
-(*Not implemented gtk_drag_set_icon_pixbuf type object not implemented*)
+val drag_set_icon_pixbuf:
+  Drag_context.t -> Pixbuf.t -> int32 -> int32 -> unit
 
 (*DEPRECATED : drag_set_icon_stock*)
-(*Not implemented gtk_drag_set_icon_surface type object not implemented*)
+val drag_set_icon_surface:
+  Drag_context.t -> Surface.t structure ptr -> unit
 
-(*Not implemented gtk_drag_set_icon_widget type object not implemented*)
+val drag_set_icon_widget:
+  Drag_context.t -> Widget.t -> int32 -> int32 -> unit
 
 (*DEPRECATED : draw_insertion_cursor*)
 val events_pending:
@@ -383,7 +401,8 @@ val get_binary_age:
 
 (*Not implemented gtk_get_current_event return type union not handled*)
 
-(*Not implemented gtk_get_current_event_device return type object not handled*)
+val get_current_event_device:
+  unit -> Device.t
 
 val get_current_event_state :
   unit -> (bool * Modifier_type.t_list)
@@ -417,7 +436,8 @@ val get_minor_version:
 val get_option_group:
   bool -> Option_group.t structure ptr
 
-(*Not implemented gtk_grab_get_current return type object not handled*)
+val grab_get_current:
+  unit -> Widget.t
 
 (*DEPRECATED : icon_size_from_name*)
 (*DEPRECATED : icon_size_get_name*)
@@ -485,11 +505,12 @@ val paper_size_get_paper_sizes:
 val print_error_quark:
   unit -> Unsigned.uint32
 
-(*Not implemented gtk_print_run_page_setup_dialog type object not implemented*)
+val print_run_page_setup_dialog:
+  Window.t -> Page_setup.t -> Print_settings.t -> Page_setup.t
 
-(*Not implemented gtk_print_run_page_setup_dialog_async type object not implemented*)
+(*Not implemented gtk_print_run_page_setup_dialog_async type callback not implemented*)
 
-(*Not implemented gtk_propagate_event type object not implemented*)
+(*Not implemented gtk_propagate_event type union not implemented*)
 
 (*DEPRECATED : rc_add_default_file*)
 (*DEPRECATED : rc_find_module_in_path*)
@@ -507,15 +528,20 @@ val print_error_quark:
 (*DEPRECATED : rc_parse_priority*)
 (*DEPRECATED : rc_parse_state*)
 (*DEPRECATED : rc_parse_string*)
-(*Not implemented gtk_rc_property_parse_border type object not implemented*)
+val rc_property_parse_border:
+  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
 
-(*Not implemented gtk_rc_property_parse_color type object not implemented*)
+val rc_property_parse_color:
+  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
 
-(*Not implemented gtk_rc_property_parse_enum type object not implemented*)
+val rc_property_parse_enum:
+  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
 
-(*Not implemented gtk_rc_property_parse_flags type object not implemented*)
+val rc_property_parse_flags:
+  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
 
-(*Not implemented gtk_rc_property_parse_requisition type object not implemented*)
+val rc_property_parse_requisition:
+  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
 
 (*DEPRECATED : rc_reparse_all*)
 (*DEPRECATED : rc_reparse_all_for_settings*)
@@ -527,66 +553,92 @@ val recent_chooser_error_quark:
 val recent_manager_error_quark:
   unit -> Unsigned.uint32
 
-(*Not implemented gtk_render_activity type object not implemented*)
+val render_activity:
+  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
-(*Not implemented gtk_render_arrow type object not implemented*)
+val render_arrow:
+  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
-(*Not implemented gtk_render_background type object not implemented*)
+val render_background:
+  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
-(*Not implemented gtk_render_background_get_clip type object not implemented*)
+val render_background_get_clip :
+  Style_context.t -> float -> float -> float -> float -> (Rectangle.t structure)
 
-(*Not implemented gtk_render_check type object not implemented*)
+val render_check:
+  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
-(*Not implemented gtk_render_expander type object not implemented*)
+val render_expander:
+  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
-(*Not implemented gtk_render_extension type object not implemented*)
+val render_extension:
+  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> Position_type.t -> unit
 
-(*Not implemented gtk_render_focus type object not implemented*)
+val render_focus:
+  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
-(*Not implemented gtk_render_frame type object not implemented*)
+val render_frame:
+  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
-(*Not implemented gtk_render_frame_gap type object not implemented*)
+val render_frame_gap:
+  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> Position_type.t -> float -> float -> unit
 
-(*Not implemented gtk_render_handle type object not implemented*)
+val render_handle:
+  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
-(*Not implemented gtk_render_icon type object not implemented*)
+val render_icon:
+  Style_context.t -> Context.t structure ptr -> Pixbuf.t -> float -> float -> unit
 
 (*DEPRECATED : render_icon_pixbuf*)
-(*Not implemented gtk_render_icon_surface type object not implemented*)
+val render_icon_surface:
+  Style_context.t -> Context.t structure ptr -> Surface.t structure ptr -> float -> float -> unit
 
-(*Not implemented gtk_render_insertion_cursor type object not implemented*)
+val render_insertion_cursor:
+  Style_context.t -> Context.t structure ptr -> float -> float -> Layout.t -> int32 -> Direction.t -> unit
 
-(*Not implemented gtk_render_layout type object not implemented*)
+val render_layout:
+  Style_context.t -> Context.t structure ptr -> float -> float -> Layout.t -> unit
 
-(*Not implemented gtk_render_line type object not implemented*)
+val render_line:
+  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
-(*Not implemented gtk_render_option type object not implemented*)
+val render_option:
+  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
-(*Not implemented gtk_render_slider type object not implemented*)
+val render_slider:
+  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> Orientation.t -> unit
 
 val rgb_to_hsv :
   float -> float -> float -> (float * float * float)
 
-(*Not implemented gtk_selection_add_target type object not implemented*)
+val selection_add_target:
+  Widget.t -> Atom.t structure ptr -> Atom.t structure ptr -> Unsigned.uint32 -> unit
 
-(*Not implemented gtk_selection_add_targets type object not implemented*)
+(*Not implemented gtk_selection_add_targets type C Array type for Types.Array tag not implemented*)
 
-(*Not implemented gtk_selection_clear_targets type object not implemented*)
+val selection_clear_targets:
+  Widget.t -> Atom.t structure ptr -> unit
 
-(*Not implemented gtk_selection_convert type object not implemented*)
+val selection_convert:
+  Widget.t -> Atom.t structure ptr -> Atom.t structure ptr -> Unsigned.uint32 -> bool
 
-(*Not implemented gtk_selection_owner_set type object not implemented*)
+val selection_owner_set:
+  Widget.t -> Atom.t structure ptr -> Unsigned.uint32 -> bool
 
-(*Not implemented gtk_selection_owner_set_for_display type object not implemented*)
+val selection_owner_set_for_display:
+  Display.t -> Widget.t -> Atom.t structure ptr -> Unsigned.uint32 -> bool
 
-(*Not implemented gtk_selection_remove_all type object not implemented*)
+val selection_remove_all:
+  Widget.t -> unit
 
 val set_debug_flags:
   Unsigned.uint32 -> unit
 
-(*Not implemented gtk_show_uri type object not implemented*)
+val show_uri:
+  Screen.t -> string -> Unsigned.uint32 -> (bool, Error.t structure ptr option) result
 
-(*Not implemented gtk_show_uri_on_window type object not implemented*)
+val show_uri_on_window:
+  Window.t -> string -> Unsigned.uint32 -> (bool, Error.t structure ptr option) result
 
 (*DEPRECATED : stock_add*)
 (*DEPRECATED : stock_add_static*)
@@ -606,11 +658,12 @@ val set_debug_flags:
 (*Not implemented gtk_targets_include_uri type C Array type for Types.Array tag not implemented*)
 
 (*DEPRECATED : test_create_simple_window*)
-(*Not implemented gtk_test_find_label type object not implemented*)
+val test_find_label:
+  Widget.t -> string -> Widget.t
 
-(*Not implemented gtk_test_find_sibling type object not implemented*)
+(*Not implemented gtk_test_find_sibling type gType not implemented*)
 
-(*Not implemented gtk_test_find_widget type object not implemented*)
+(*Not implemented gtk_test_find_widget type gType not implemented*)
 
 (*Not implemented gtk_test_list_all_types return type C Array type for Types.Array tag not handled*)
 
@@ -623,15 +676,19 @@ val test_register_all_types:
 (*DEPRECATED : test_text_get*)
 (*DEPRECATED : test_text_set*)
 (*DEPRECATED : test_widget_click*)
-(*Not implemented gtk_test_widget_send_key type object not implemented*)
+val test_widget_send_key:
+  Widget.t -> Unsigned.uint32 -> Modifier_type.t_list -> bool
 
-(*Not implemented gtk_test_widget_wait_for_draw type object not implemented*)
+val test_widget_wait_for_draw:
+  Widget.t -> unit
 
 (*Not implemented gtk_tree_get_row_drag_data type interface not implemented*)
 
-(*Not implemented gtk_tree_row_reference_deleted type object not implemented*)
+val tree_row_reference_deleted:
+  Object.t -> Tree_path.t structure ptr -> unit
 
-(*Not implemented gtk_tree_row_reference_inserted type object not implemented*)
+val tree_row_reference_inserted:
+  Object.t -> Tree_path.t structure ptr -> unit
 
 (*Not implemented gtk_tree_set_row_drag_data type interface not implemented*)
 

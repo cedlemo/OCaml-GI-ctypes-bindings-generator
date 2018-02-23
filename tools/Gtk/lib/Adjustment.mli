@@ -3,38 +3,39 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_adjustment_new return type object not handled*)
+val create:
+  float -> float -> float -> float -> float -> float -> t
 val changed:
-  t structure ptr -> unit
+  t -> unit
 val clamp_page:
-  t structure ptr -> float -> float -> unit
+  t -> float -> float -> unit
 val configure:
-  t structure ptr -> float -> float -> float -> float -> float -> float -> unit
+  t -> float -> float -> float -> float -> float -> float -> unit
 val get_lower:
-  t structure ptr -> float
+  t -> float
 val get_minimum_increment:
-  t structure ptr -> float
+  t -> float
 val get_page_increment:
-  t structure ptr -> float
+  t -> float
 val get_page_size:
-  t structure ptr -> float
+  t -> float
 val get_step_increment:
-  t structure ptr -> float
+  t -> float
 val get_upper:
-  t structure ptr -> float
+  t -> float
 val get_value:
-  t structure ptr -> float
+  t -> float
 val set_lower:
-  t structure ptr -> float -> unit
+  t -> float -> unit
 val set_page_increment:
-  t structure ptr -> float -> unit
+  t -> float -> unit
 val set_page_size:
-  t structure ptr -> float -> unit
+  t -> float -> unit
 val set_step_increment:
-  t structure ptr -> float -> unit
+  t -> float -> unit
 val set_upper:
-  t structure ptr -> float -> unit
+  t -> float -> unit
 val set_value:
-  t structure ptr -> float -> unit
+  t -> float -> unit
 val value_changed:
-  t structure ptr -> unit
+  t -> unit

@@ -3,12 +3,13 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_file_chooser_native_new type object not implemented*)
+val create:
+  string option -> Window.t -> File_chooser_action.t -> string option -> string option -> t
 val get_accept_label:
-  t structure ptr -> string option
+  t -> string option
 val get_cancel_label:
-  t structure ptr -> string option
+  t -> string option
 val set_accept_label:
-  t structure ptr -> string option -> unit
+  t -> string option -> unit
 val set_cancel_label:
-  t structure ptr -> string option -> unit
+  t -> string option -> unit

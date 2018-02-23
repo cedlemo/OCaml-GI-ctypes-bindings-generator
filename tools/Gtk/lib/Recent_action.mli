@@ -3,9 +3,11 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_recent_action_new return type object not handled*)
-(*Not implemented gtk_recent_action_new_for_manager type object not implemented*)
+val create:
+  string -> string option -> string option -> string option -> Action.t
+val create_for_manager:
+  string -> string option -> string option -> string option -> Recent_manager.t -> Action.t
 val get_show_numbers:
-  t structure ptr -> bool
+  t -> bool
 val set_show_numbers:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

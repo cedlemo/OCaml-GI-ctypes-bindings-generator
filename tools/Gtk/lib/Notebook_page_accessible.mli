@@ -3,6 +3,7 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_notebook_page_accessible_new type object not implemented*)
+val create:
+  Notebook_accessible.t -> Widget.t -> Object.t
 val invalidate:
-  t structure ptr -> unit
+  t -> unit

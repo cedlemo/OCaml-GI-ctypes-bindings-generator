@@ -3,91 +3,103 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_tree_view_column_new return type object not handled*)
-(*Not implemented gtk_tree_view_column_new_with_area type object not implemented*)
-(*Not implemented gtk_tree_view_column_add_attribute type object not implemented*)
-(*Not implemented gtk_tree_view_column_cell_get_position type object not implemented*)
+val create:
+  unit -> t
+val create_with_area:
+  Cell_area.t -> t
+val add_attribute:
+  t -> Cell_renderer.t -> string -> int32 -> unit
+val cell_get_position :
+  t -> Cell_renderer.t -> (bool * int32 * int32)
 val cell_get_size :
-  t structure ptr -> Rectangle.t structure ptr option -> (int32 * int32 * int32 * int32)
+  t -> Rectangle.t structure ptr option -> (int32 * int32 * int32 * int32)
 val cell_is_visible:
-  t structure ptr -> bool
+  t -> bool
 (*Not implemented gtk_tree_view_column_cell_set_cell_data type interface not implemented*)
 val clear:
-  t structure ptr -> unit
-(*Not implemented gtk_tree_view_column_clear_attributes type object not implemented*)
+  t -> unit
+val clear_attributes:
+  t -> Cell_renderer.t -> unit
 val clicked:
-  t structure ptr -> unit
-(*Not implemented gtk_tree_view_column_focus_cell type object not implemented*)
+  t -> unit
+val focus_cell:
+  t -> Cell_renderer.t -> unit
 val get_alignment:
-  t structure ptr -> float
-(*Not implemented gtk_tree_view_column_get_button return type object not handled*)
+  t -> float
+val get_button:
+  t -> Widget.t
 val get_clickable:
-  t structure ptr -> bool
+  t -> bool
 val get_expand:
-  t structure ptr -> bool
+  t -> bool
 val get_fixed_width:
-  t structure ptr -> int32
+  t -> int32
 val get_max_width:
-  t structure ptr -> int32
+  t -> int32
 val get_min_width:
-  t structure ptr -> int32
+  t -> int32
 val get_reorderable:
-  t structure ptr -> bool
+  t -> bool
 val get_resizable:
-  t structure ptr -> bool
+  t -> bool
 val get_sizing:
-  t structure ptr -> Tree_view_column_sizing.t
+  t -> Tree_view_column_sizing.t
 val get_sort_column_id:
-  t structure ptr -> int32
+  t -> int32
 val get_sort_indicator:
-  t structure ptr -> bool
+  t -> bool
 val get_sort_order:
-  t structure ptr -> Sort_type.t
+  t -> Sort_type.t
 val get_spacing:
-  t structure ptr -> int32
+  t -> int32
 val get_title:
-  t structure ptr -> string option
-(*Not implemented gtk_tree_view_column_get_tree_view return type object not handled*)
+  t -> string option
+val get_tree_view:
+  t -> Widget.t
 val get_visible:
-  t structure ptr -> bool
-(*Not implemented gtk_tree_view_column_get_widget return type object not handled*)
+  t -> bool
+val get_widget:
+  t -> Widget.t
 val get_width:
-  t structure ptr -> int32
+  t -> int32
 val get_x_offset:
-  t structure ptr -> int32
-(*Not implemented gtk_tree_view_column_pack_end type object not implemented*)
-(*Not implemented gtk_tree_view_column_pack_start type object not implemented*)
+  t -> int32
+val pack_end:
+  t -> Cell_renderer.t -> bool -> unit
+val pack_start:
+  t -> Cell_renderer.t -> bool -> unit
 val queue_resize:
-  t structure ptr -> unit
+  t -> unit
 val set_alignment:
-  t structure ptr -> float -> unit
-(*Not implemented gtk_tree_view_column_set_cell_data_func type object not implemented*)
+  t -> float -> unit
+(*Not implemented gtk_tree_view_column_set_cell_data_func type callback not implemented*)
 val set_clickable:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_expand:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_fixed_width:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_max_width:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_min_width:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_reorderable:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_resizable:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_sizing:
-  t structure ptr -> Tree_view_column_sizing.t -> unit
+  t -> Tree_view_column_sizing.t -> unit
 val set_sort_column_id:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_sort_indicator:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_sort_order:
-  t structure ptr -> Sort_type.t -> unit
+  t -> Sort_type.t -> unit
 val set_spacing:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_title:
-  t structure ptr -> string -> unit
+  t -> string -> unit
 val set_visible:
-  t structure ptr -> bool -> unit
-(*Not implemented gtk_tree_view_column_set_widget type object not implemented*)
+  t -> bool -> unit
+val set_widget:
+  t -> Widget.t -> unit

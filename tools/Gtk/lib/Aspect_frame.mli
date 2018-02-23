@@ -3,6 +3,7 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_aspect_frame_new return type object not handled*)
+val create:
+  string option -> float -> float -> float -> bool -> Widget.t
 val set:
-  t structure ptr -> float -> float -> float -> bool -> unit
+  t -> float -> float -> float -> bool -> unit

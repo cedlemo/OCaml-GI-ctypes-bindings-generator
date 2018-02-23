@@ -3,23 +3,31 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_box_new return type object not handled*)
+val create:
+  Orientation.t -> int32 -> Widget.t
 val get_baseline_position:
-  t structure ptr -> Baseline_position.t
-(*Not implemented gtk_box_get_center_widget return type object not handled*)
+  t -> Baseline_position.t
+val get_center_widget:
+  t -> Widget.t
 val get_homogeneous:
-  t structure ptr -> bool
+  t -> bool
 val get_spacing:
-  t structure ptr -> int32
-(*Not implemented gtk_box_pack_end type object not implemented*)
-(*Not implemented gtk_box_pack_start type object not implemented*)
-(*Not implemented gtk_box_query_child_packing type object not implemented*)
-(*Not implemented gtk_box_reorder_child type object not implemented*)
+  t -> int32
+val pack_end:
+  t -> Widget.t -> bool -> bool -> Unsigned.uint32 -> unit
+val pack_start:
+  t -> Widget.t -> bool -> bool -> Unsigned.uint32 -> unit
+val query_child_packing :
+  t -> Widget.t -> (bool * bool * Unsigned.uint32 * Pack_type.t)
+val reorder_child:
+  t -> Widget.t -> int32 -> unit
 val set_baseline_position:
-  t structure ptr -> Baseline_position.t -> unit
-(*Not implemented gtk_box_set_center_widget type object not implemented*)
-(*Not implemented gtk_box_set_child_packing type object not implemented*)
+  t -> Baseline_position.t -> unit
+val set_center_widget:
+  t -> Widget.t -> unit
+val set_child_packing:
+  t -> Widget.t -> bool -> bool -> Unsigned.uint32 -> Pack_type.t -> unit
 val set_homogeneous:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_spacing:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit

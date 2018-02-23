@@ -4,7 +4,7 @@ open Foreign
 type t
 let t_typ : t structure typ = structure "Table_child"
 
-(*Struct field Table_child : object tag not implemented*)
+let f_widget = field t_typ "widget" (Widget.t_typ)
 let f_left_attach = field t_typ "left_attach" (uint16_t)
 let f_right_attach = field t_typ "right_attach" (uint16_t)
 let f_top_attach = field t_typ "top_attach" (uint16_t)

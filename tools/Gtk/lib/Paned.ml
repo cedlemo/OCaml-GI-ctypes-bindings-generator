@@ -4,19 +4,27 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_paned_new return type object not handled*)
-(*Not implemented gtk_paned_add1 type object not implemented*)
-(*Not implemented gtk_paned_add2 type object not implemented*)
-(*Not implemented gtk_paned_get_child1 return type object not handled*)
-(*Not implemented gtk_paned_get_child2 return type object not handled*)
-(*Not implemented gtk_paned_get_handle_window return type object not handled*)
+let create =
+  foreign "gtk_paned_new" (Orientation.t_view @-> returning (Widget.t_typ))
+let add1 =
+  foreign "gtk_paned_add1" (t_typ @-> Widget.t_typ @-> returning (void))
+let add2 =
+  foreign "gtk_paned_add2" (t_typ @-> Widget.t_typ @-> returning (void))
+let get_child1 =
+  foreign "gtk_paned_get_child1" (t_typ @-> returning (Widget.t_typ))
+let get_child2 =
+  foreign "gtk_paned_get_child2" (t_typ @-> returning (Widget.t_typ))
+let get_handle_window =
+  foreign "gtk_paned_get_handle_window" (t_typ @-> returning (Window.t_typ))
 let get_position =
-  foreign "gtk_paned_get_position" (ptr t_typ @-> returning (int32_t))
+  foreign "gtk_paned_get_position" (t_typ @-> returning (int32_t))
 let get_wide_handle =
-  foreign "gtk_paned_get_wide_handle" (ptr t_typ @-> returning (bool))
-(*Not implemented gtk_paned_pack1 type object not implemented*)
-(*Not implemented gtk_paned_pack2 type object not implemented*)
+  foreign "gtk_paned_get_wide_handle" (t_typ @-> returning (bool))
+let pack1 =
+  foreign "gtk_paned_pack1" (t_typ @-> Widget.t_typ @-> bool @-> bool @-> returning (void))
+let pack2 =
+  foreign "gtk_paned_pack2" (t_typ @-> Widget.t_typ @-> bool @-> bool @-> returning (void))
 let set_position =
-  foreign "gtk_paned_set_position" (ptr t_typ @-> int32_t @-> returning (void))
+  foreign "gtk_paned_set_position" (t_typ @-> int32_t @-> returning (void))
 let set_wide_handle =
-  foreign "gtk_paned_set_wide_handle" (ptr t_typ @-> bool @-> returning (void))
+  foreign "gtk_paned_set_wide_handle" (t_typ @-> bool @-> returning (void))

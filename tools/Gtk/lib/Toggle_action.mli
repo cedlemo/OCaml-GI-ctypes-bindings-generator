@@ -3,14 +3,15 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_toggle_action_new return type object not handled*)
+val create:
+  string -> string option -> string option -> string option -> t
 val get_active:
-  t structure ptr -> bool
+  t -> bool
 val get_draw_as_radio:
-  t structure ptr -> bool
+  t -> bool
 val set_active:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_draw_as_radio:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val toggled:
-  t structure ptr -> unit
+  t -> unit

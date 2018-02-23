@@ -4,12 +4,13 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_file_chooser_native_new type object not implemented*)
+let create =
+  foreign "gtk_file_chooser_native_new" (string_opt @-> Window.t_typ @-> File_chooser_action.t_view @-> string_opt @-> string_opt @-> returning (t_typ))
 let get_accept_label =
-  foreign "gtk_file_chooser_native_get_accept_label" (ptr t_typ @-> returning (string_opt))
+  foreign "gtk_file_chooser_native_get_accept_label" (t_typ @-> returning (string_opt))
 let get_cancel_label =
-  foreign "gtk_file_chooser_native_get_cancel_label" (ptr t_typ @-> returning (string_opt))
+  foreign "gtk_file_chooser_native_get_cancel_label" (t_typ @-> returning (string_opt))
 let set_accept_label =
-  foreign "gtk_file_chooser_native_set_accept_label" (ptr t_typ @-> string_opt @-> returning (void))
+  foreign "gtk_file_chooser_native_set_accept_label" (t_typ @-> string_opt @-> returning (void))
 let set_cancel_label =
-  foreign "gtk_file_chooser_native_set_cancel_label" (ptr t_typ @-> string_opt @-> returning (void))
+  foreign "gtk_file_chooser_native_set_cancel_label" (t_typ @-> string_opt @-> returning (void))

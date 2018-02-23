@@ -8,12 +8,14 @@ val create_linear:
 val create_radial:
   float -> float -> float -> float -> float -> float -> t structure ptr
 val add_color_stop:
-  t structure ptr -> float -> Symbolic_color.t structure ptr -> unit
+  t structure -> float -> Symbolic_color.t structure ptr -> unit
 val incr_ref:
-  t structure ptr -> t structure ptr
-(*Not implemented gtk_gradient_resolve type object not implemented*)
-(*Not implemented gtk_gradient_resolve_for_context type object not implemented*)
+  t structure -> t structure ptr
+val resolve :
+  t structure -> Style_properties.t -> (bool * Pattern.t structure ptr)
+val resolve_for_context:
+  t structure -> Style_context.t -> Pattern.t structure ptr
 val to_string:
-  t structure ptr -> string option
+  t structure -> string option
 val unref:
-  t structure ptr -> unit
+  t structure -> unit

@@ -4,14 +4,21 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_viewport_new type object not implemented*)
-(*Not implemented gtk_viewport_get_bin_window return type object not handled*)
-(*Not implemented gtk_viewport_get_hadjustment return type object not handled*)
+let create =
+  foreign "gtk_viewport_new" (Adjustment.t_typ @-> Adjustment.t_typ @-> returning (Widget.t_typ))
+let get_bin_window =
+  foreign "gtk_viewport_get_bin_window" (t_typ @-> returning (Window.t_typ))
+let get_hadjustment =
+  foreign "gtk_viewport_get_hadjustment" (t_typ @-> returning (Adjustment.t_typ))
 let get_shadow_type =
-  foreign "gtk_viewport_get_shadow_type" (ptr t_typ @-> returning (Shadow_type.t_view))
-(*Not implemented gtk_viewport_get_vadjustment return type object not handled*)
-(*Not implemented gtk_viewport_get_view_window return type object not handled*)
-(*Not implemented gtk_viewport_set_hadjustment type object not implemented*)
+  foreign "gtk_viewport_get_shadow_type" (t_typ @-> returning (Shadow_type.t_view))
+let get_vadjustment =
+  foreign "gtk_viewport_get_vadjustment" (t_typ @-> returning (Adjustment.t_typ))
+let get_view_window =
+  foreign "gtk_viewport_get_view_window" (t_typ @-> returning (Window.t_typ))
+let set_hadjustment =
+  foreign "gtk_viewport_set_hadjustment" (t_typ @-> Adjustment.t_typ @-> returning (void))
 let set_shadow_type =
-  foreign "gtk_viewport_set_shadow_type" (ptr t_typ @-> Shadow_type.t_view @-> returning (void))
-(*Not implemented gtk_viewport_set_vadjustment type object not implemented*)
+  foreign "gtk_viewport_set_shadow_type" (t_typ @-> Shadow_type.t_view @-> returning (void))
+let set_vadjustment =
+  foreign "gtk_viewport_set_vadjustment" (t_typ @-> Adjustment.t_typ @-> returning (void))

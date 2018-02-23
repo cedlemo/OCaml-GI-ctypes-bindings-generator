@@ -4,4 +4,5 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_hbox_new return type object not handled*)
+let create =
+  foreign "gtk_hbox_new" (bool @-> int32_t @-> returning (Widget.t_typ))

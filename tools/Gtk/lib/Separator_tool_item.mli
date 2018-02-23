@@ -3,8 +3,9 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_separator_tool_item_new return type object not handled*)
+val create:
+  unit -> Tool_item.t
 val get_draw:
-  t structure ptr -> bool
+  t -> bool
 val set_draw:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

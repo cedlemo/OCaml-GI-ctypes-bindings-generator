@@ -6,40 +6,42 @@ val t_typ : t structure typ
 val create:
   unit -> t structure ptr
 val copy:
-  t structure ptr -> t structure ptr
+  t structure -> t structure ptr
 val free:
-  t structure ptr -> unit
+  t structure -> unit
 val get_direction:
-  t structure ptr -> Text_direction.t
+  t structure -> Text_direction.t
 val get_direction_wildcarded:
-  t structure ptr -> bool
+  t structure -> bool
 val get_filename:
-  t structure ptr -> string option
+  t structure -> string option
 val get_icon_name:
-  t structure ptr -> string option
-(*Not implemented gtk_icon_source_get_pixbuf return type object not handled*)
+  t structure -> string option
+val get_pixbuf:
+  t structure -> Pixbuf.t
 val get_size:
-  t structure ptr -> int32
+  t structure -> int32
 val get_size_wildcarded:
-  t structure ptr -> bool
+  t structure -> bool
 val get_state:
-  t structure ptr -> State_type.t
+  t structure -> State_type.t
 val get_state_wildcarded:
-  t structure ptr -> bool
+  t structure -> bool
 val set_direction:
-  t structure ptr -> Text_direction.t -> unit
+  t structure -> Text_direction.t -> unit
 val set_direction_wildcarded:
-  t structure ptr -> bool -> unit
+  t structure -> bool -> unit
 val set_filename:
-  t structure ptr -> string -> unit
+  t structure -> string -> unit
 val set_icon_name:
-  t structure ptr -> string option -> unit
-(*Not implemented gtk_icon_source_set_pixbuf type object not implemented*)
+  t structure -> string option -> unit
+val set_pixbuf:
+  t structure -> Pixbuf.t -> unit
 val set_size:
-  t structure ptr -> int32 -> unit
+  t structure -> int32 -> unit
 val set_size_wildcarded:
-  t structure ptr -> bool -> unit
+  t structure -> bool -> unit
 val set_state:
-  t structure ptr -> State_type.t -> unit
+  t structure -> State_type.t -> unit
 val set_state_wildcarded:
-  t structure ptr -> bool -> unit
+  t structure -> bool -> unit

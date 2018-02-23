@@ -3,6 +3,7 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_gesture_zoom_new type object not implemented*)
+val create:
+  Widget.t -> Gesture.t
 val get_scale_delta:
-  t structure ptr -> float
+  t -> float

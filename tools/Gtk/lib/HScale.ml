@@ -4,5 +4,7 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_hscale_new type object not implemented*)
-(*Not implemented gtk_hscale_new_with_range return type object not handled*)
+let create =
+  foreign "gtk_hscale_new" (Adjustment.t_typ @-> returning (Widget.t_typ))
+let create_with_range =
+  foreign "gtk_hscale_new_with_range" (double @-> double @-> double @-> returning (Widget.t_typ))

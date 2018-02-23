@@ -4,8 +4,9 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_spinner_new return type object not handled*)
+let create =
+  foreign "gtk_spinner_new" (void @-> returning (Widget.t_typ))
 let start =
-  foreign "gtk_spinner_start" (ptr t_typ @-> returning (void))
+  foreign "gtk_spinner_start" (t_typ @-> returning (void))
 let stop =
-  foreign "gtk_spinner_stop" (ptr t_typ @-> returning (void))
+  foreign "gtk_spinner_stop" (t_typ @-> returning (void))

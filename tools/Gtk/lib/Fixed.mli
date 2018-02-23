@@ -3,6 +3,9 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_fixed_new return type object not handled*)
-(*Not implemented gtk_fixed_move type object not implemented*)
-(*Not implemented gtk_fixed_put type object not implemented*)
+val create:
+  unit -> Widget.t
+val move:
+  t -> Widget.t -> int32 -> int32 -> unit
+val put:
+  t -> Widget.t -> int32 -> int32 -> unit

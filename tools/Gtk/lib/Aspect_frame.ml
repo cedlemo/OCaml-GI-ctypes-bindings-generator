@@ -4,6 +4,7 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_aspect_frame_new return type object not handled*)
+let create =
+  foreign "gtk_aspect_frame_new" (string_opt @-> float @-> float @-> float @-> bool @-> returning (Widget.t_typ))
 let set =
-  foreign "gtk_aspect_frame_set" (ptr t_typ @-> float @-> float @-> float @-> bool @-> returning (void))
+  foreign "gtk_aspect_frame_set" (t_typ @-> float @-> float @-> float @-> bool @-> returning (void))

@@ -3,57 +3,63 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_print_operation_new return type object not handled*)
+val create:
+  unit -> t
 val cancel:
-  t structure ptr -> unit
+  t -> unit
 val draw_page_finish:
-  t structure ptr -> unit
-(*Not implemented gtk_print_operation_get_default_page_setup return type object not handled*)
+  t -> unit
+val get_default_page_setup:
+  t -> Page_setup.t
 val get_embed_page_setup:
-  t structure ptr -> bool
+  t -> bool
 val get_error:
-  t structure ptr -> (unit, Error.t structure ptr option) result
+  t -> (unit, Error.t structure ptr option) result
 val get_has_selection:
-  t structure ptr -> bool
+  t -> bool
 val get_n_pages_to_print:
-  t structure ptr -> int32
-(*Not implemented gtk_print_operation_get_print_settings return type object not handled*)
+  t -> int32
+val get_print_settings:
+  t -> Print_settings.t
 val get_status:
-  t structure ptr -> Print_status.t
+  t -> Print_status.t
 val get_status_string:
-  t structure ptr -> string option
+  t -> string option
 val get_support_selection:
-  t structure ptr -> bool
+  t -> bool
 val is_finished:
-  t structure ptr -> bool
-(*Not implemented gtk_print_operation_run type object not implemented*)
+  t -> bool
+val run:
+  t -> Print_operation_action.t -> Window.t -> (Print_operation_result.t, Error.t structure ptr option) result
 val set_allow_async:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_current_page:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_custom_tab_label:
-  t structure ptr -> string option -> unit
-(*Not implemented gtk_print_operation_set_default_page_setup type object not implemented*)
+  t -> string option -> unit
+val set_default_page_setup:
+  t -> Page_setup.t -> unit
 val set_defer_drawing:
-  t structure ptr -> unit
+  t -> unit
 val set_embed_page_setup:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_export_filename:
-  t structure ptr -> string -> unit
+  t -> string -> unit
 val set_has_selection:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_job_name:
-  t structure ptr -> string -> unit
+  t -> string -> unit
 val set_n_pages:
-  t structure ptr -> int32 -> unit
-(*Not implemented gtk_print_operation_set_print_settings type object not implemented*)
+  t -> int32 -> unit
+val set_print_settings:
+  t -> Print_settings.t -> unit
 val set_show_progress:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_support_selection:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_track_print_status:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_unit:
-  t structure ptr -> Unit.t -> unit
+  t -> Unit.t -> unit
 val set_use_full_page:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

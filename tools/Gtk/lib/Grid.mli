@@ -3,40 +3,45 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_grid_new return type object not handled*)
-(*Not implemented gtk_grid_attach type object not implemented*)
-(*Not implemented gtk_grid_attach_next_to type object not implemented*)
+val create:
+  unit -> Widget.t
+val attach:
+  t -> Widget.t -> int32 -> int32 -> int32 -> int32 -> unit
+val attach_next_to:
+  t -> Widget.t -> Widget.t -> Position_type.t -> int32 -> int32 -> unit
 val get_baseline_row:
-  t structure ptr -> int32
-(*Not implemented gtk_grid_get_child_at return type object not handled*)
+  t -> int32
+val get_child_at:
+  t -> int32 -> int32 -> Widget.t
 val get_column_homogeneous:
-  t structure ptr -> bool
+  t -> bool
 val get_column_spacing:
-  t structure ptr -> Unsigned.uint32
+  t -> Unsigned.uint32
 val get_row_baseline_position:
-  t structure ptr -> int32 -> Baseline_position.t
+  t -> int32 -> Baseline_position.t
 val get_row_homogeneous:
-  t structure ptr -> bool
+  t -> bool
 val get_row_spacing:
-  t structure ptr -> Unsigned.uint32
+  t -> Unsigned.uint32
 val insert_column:
-  t structure ptr -> int32 -> unit
-(*Not implemented gtk_grid_insert_next_to type object not implemented*)
+  t -> int32 -> unit
+val insert_next_to:
+  t -> Widget.t -> Position_type.t -> unit
 val insert_row:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val remove_column:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val remove_row:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_baseline_row:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_column_homogeneous:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_column_spacing:
-  t structure ptr -> Unsigned.uint32 -> unit
+  t -> Unsigned.uint32 -> unit
 val set_row_baseline_position:
-  t structure ptr -> int32 -> Baseline_position.t -> unit
+  t -> int32 -> Baseline_position.t -> unit
 val set_row_homogeneous:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_row_spacing:
-  t structure ptr -> Unsigned.uint32 -> unit
+  t -> Unsigned.uint32 -> unit

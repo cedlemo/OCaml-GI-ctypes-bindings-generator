@@ -4,12 +4,17 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_button_box_new return type object not handled*)
-(*Not implemented gtk_button_box_get_child_non_homogeneous type object not implemented*)
-(*Not implemented gtk_button_box_get_child_secondary type object not implemented*)
+let create =
+  foreign "gtk_button_box_new" (Orientation.t_view @-> returning (Widget.t_typ))
+let get_child_non_homogeneous =
+  foreign "gtk_button_box_get_child_non_homogeneous" (t_typ @-> Widget.t_typ @-> returning (bool))
+let get_child_secondary =
+  foreign "gtk_button_box_get_child_secondary" (t_typ @-> Widget.t_typ @-> returning (bool))
 let get_layout =
-  foreign "gtk_button_box_get_layout" (ptr t_typ @-> returning (Button_box_style.t_view))
-(*Not implemented gtk_button_box_set_child_non_homogeneous type object not implemented*)
-(*Not implemented gtk_button_box_set_child_secondary type object not implemented*)
+  foreign "gtk_button_box_get_layout" (t_typ @-> returning (Button_box_style.t_view))
+let set_child_non_homogeneous =
+  foreign "gtk_button_box_set_child_non_homogeneous" (t_typ @-> Widget.t_typ @-> bool @-> returning (void))
+let set_child_secondary =
+  foreign "gtk_button_box_set_child_secondary" (t_typ @-> Widget.t_typ @-> bool @-> returning (void))
 let set_layout =
-  foreign "gtk_button_box_set_layout" (ptr t_typ @-> Button_box_style.t_view @-> returning (void))
+  foreign "gtk_button_box_set_layout" (t_typ @-> Button_box_style.t_view @-> returning (void))

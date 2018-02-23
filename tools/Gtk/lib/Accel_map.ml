@@ -12,7 +12,8 @@ let change_entry =
   foreign "gtk_accel_map_change_entry" (string @-> uint32_t @-> Modifier_type.t_list_view @-> bool @-> returning (bool))
 (*Not implemented gtk_accel_map_foreach type callback not implemented*)
 (*Not implemented gtk_accel_map_foreach_unfiltered type callback not implemented*)
-(*Not implemented gtk_accel_map_get return type object not handled*)
+let get =
+  foreign "gtk_accel_map_get" (void @-> returning (t_typ))
 let load =
   foreign "gtk_accel_map_load" (string @-> returning (void))
 let load_fd =

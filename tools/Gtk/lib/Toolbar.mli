@@ -3,30 +3,35 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_toolbar_new return type object not handled*)
+val create:
+  unit -> Widget.t
 val get_drop_index:
-  t structure ptr -> int32 -> int32 -> int32
+  t -> int32 -> int32 -> int32
 val get_icon_size:
-  t structure ptr -> Icon_size.t
-(*Not implemented gtk_toolbar_get_item_index type object not implemented*)
+  t -> Icon_size.t
+val get_item_index:
+  t -> Tool_item.t -> int32
 val get_n_items:
-  t structure ptr -> int32
-(*Not implemented gtk_toolbar_get_nth_item return type object not handled*)
+  t -> int32
+val get_nth_item:
+  t -> int32 -> Tool_item.t
 val get_relief_style:
-  t structure ptr -> Relief_style.t
+  t -> Relief_style.t
 val get_show_arrow:
-  t structure ptr -> bool
+  t -> bool
 val get_style:
-  t structure ptr -> Toolbar_style.t
-(*Not implemented gtk_toolbar_insert type object not implemented*)
-(*Not implemented gtk_toolbar_set_drop_highlight_item type object not implemented*)
+  t -> Toolbar_style.t
+val insert:
+  t -> Tool_item.t -> int32 -> unit
+val set_drop_highlight_item:
+  t -> Tool_item.t -> int32 -> unit
 val set_icon_size:
-  t structure ptr -> Icon_size.t -> unit
+  t -> Icon_size.t -> unit
 val set_show_arrow:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_style:
-  t structure ptr -> Toolbar_style.t -> unit
+  t -> Toolbar_style.t -> unit
 val unset_icon_size:
-  t structure ptr -> unit
+  t -> unit
 val unset_style:
-  t structure ptr -> unit
+  t -> unit

@@ -3,15 +3,17 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_text_mark_new return type object not handled*)
-(*Not implemented gtk_text_mark_get_buffer return type object not handled*)
+val create:
+  string option -> bool -> t
+val get_buffer:
+  t -> Text_buffer.t
 val get_deleted:
-  t structure ptr -> bool
+  t -> bool
 val get_left_gravity:
-  t structure ptr -> bool
+  t -> bool
 val get_name:
-  t structure ptr -> string option
+  t -> string option
 val get_visible:
-  t structure ptr -> bool
+  t -> bool
 val set_visible:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

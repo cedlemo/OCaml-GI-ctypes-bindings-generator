@@ -3,17 +3,22 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_style_new return type object not handled*)
-(*Not implemented gtk_style_apply_default_background type object not implemented*)
-(*Not implemented gtk_style_copy return type object not handled*)
+val create:
+  unit -> t
+val apply_default_background:
+  t -> Context.t structure ptr -> Window.t -> State_type.t -> int32 -> int32 -> int32 -> int32 -> unit
+val copy:
+  t -> t
 val detach:
-  t structure ptr -> unit
+  t -> unit
 (*Not implemented gtk_style_get_style_property type gType not implemented*)
 val has_context:
-  t structure ptr -> bool
+  t -> bool
 val lookup_color :
-  t structure ptr -> string -> (bool * Color.t structure)
+  t -> string -> (bool * Color.t structure)
 val lookup_icon_set:
-  t structure ptr -> string -> Icon_set.t structure ptr
-(*Not implemented gtk_style_render_icon type object not implemented*)
-(*Not implemented gtk_style_set_background type object not implemented*)
+  t -> string -> Icon_set.t structure ptr
+val render_icon:
+  t -> Icon_source.t structure ptr -> Text_direction.t -> State_type.t -> int32 -> Widget.t -> string option -> Pixbuf.t
+val set_background:
+  t -> Window.t -> State_type.t -> unit

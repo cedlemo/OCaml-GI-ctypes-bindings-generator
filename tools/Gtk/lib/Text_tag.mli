@@ -3,11 +3,12 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_text_tag_new return type object not handled*)
+val create:
+  string option -> t
 val changed:
-  t structure ptr -> bool -> unit
-(*Not implemented gtk_text_tag_event type object not implemented*)
+  t -> bool -> unit
+(*Not implemented gtk_text_tag_event type union not implemented*)
 val get_priority:
-  t structure ptr -> int32
+  t -> int32
 val set_priority:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit

@@ -3,19 +3,27 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_paned_new return type object not handled*)
-(*Not implemented gtk_paned_add1 type object not implemented*)
-(*Not implemented gtk_paned_add2 type object not implemented*)
-(*Not implemented gtk_paned_get_child1 return type object not handled*)
-(*Not implemented gtk_paned_get_child2 return type object not handled*)
-(*Not implemented gtk_paned_get_handle_window return type object not handled*)
+val create:
+  Orientation.t -> Widget.t
+val add1:
+  t -> Widget.t -> unit
+val add2:
+  t -> Widget.t -> unit
+val get_child1:
+  t -> Widget.t
+val get_child2:
+  t -> Widget.t
+val get_handle_window:
+  t -> Window.t
 val get_position:
-  t structure ptr -> int32
+  t -> int32
 val get_wide_handle:
-  t structure ptr -> bool
-(*Not implemented gtk_paned_pack1 type object not implemented*)
-(*Not implemented gtk_paned_pack2 type object not implemented*)
+  t -> bool
+val pack1:
+  t -> Widget.t -> bool -> bool -> unit
+val pack2:
+  t -> Widget.t -> bool -> bool -> unit
 val set_position:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_wide_handle:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

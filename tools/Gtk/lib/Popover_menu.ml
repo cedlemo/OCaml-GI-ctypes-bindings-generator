@@ -4,6 +4,7 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_popover_menu_new return type object not handled*)
+let create =
+  foreign "gtk_popover_menu_new" (void @-> returning (Widget.t_typ))
 let open_submenu =
-  foreign "gtk_popover_menu_open_submenu" (ptr t_typ @-> string @-> returning (void))
+  foreign "gtk_popover_menu_open_submenu" (t_typ @-> string @-> returning (void))

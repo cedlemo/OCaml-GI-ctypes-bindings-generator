@@ -3,34 +3,41 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_popover_new type object not implemented*)
-(*Not implemented gtk_popover_new_from_model type object not implemented*)
-(*Not implemented gtk_popover_bind_model type object not implemented*)
+val create:
+  Widget.t -> Widget.t
+val create_from_model:
+  Widget.t -> Menu_model.t -> Widget.t
+val bind_model:
+  t -> Menu_model.t -> string option -> unit
 val get_constrain_to:
-  t structure ptr -> Popover_constraint.t
-(*Not implemented gtk_popover_get_default_widget return type object not handled*)
+  t -> Popover_constraint.t
+val get_default_widget:
+  t -> Widget.t
 val get_modal:
-  t structure ptr -> bool
+  t -> bool
 val get_pointing_to :
-  t structure ptr -> (bool * Rectangle.t structure)
+  t -> (bool * Rectangle.t structure)
 val get_position:
-  t structure ptr -> Position_type.t
-(*Not implemented gtk_popover_get_relative_to return type object not handled*)
+  t -> Position_type.t
+val get_relative_to:
+  t -> Widget.t
 val get_transitions_enabled:
-  t structure ptr -> bool
+  t -> bool
 val popdown:
-  t structure ptr -> unit
+  t -> unit
 val popup:
-  t structure ptr -> unit
+  t -> unit
 val set_constrain_to:
-  t structure ptr -> Popover_constraint.t -> unit
-(*Not implemented gtk_popover_set_default_widget type object not implemented*)
+  t -> Popover_constraint.t -> unit
+val set_default_widget:
+  t -> Widget.t -> unit
 val set_modal:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_pointing_to:
-  t structure ptr -> Rectangle.t structure ptr -> unit
+  t -> Rectangle.t structure ptr -> unit
 val set_position:
-  t structure ptr -> Position_type.t -> unit
-(*Not implemented gtk_popover_set_relative_to type object not implemented*)
+  t -> Position_type.t -> unit
+val set_relative_to:
+  t -> Widget.t -> unit
 val set_transitions_enabled:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

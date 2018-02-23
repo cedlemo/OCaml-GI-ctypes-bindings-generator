@@ -29,10 +29,10 @@ val f_letter_spacing: (int32, t structure) field
 val create:
   unit -> t structure ptr
 val copy:
-  t structure ptr -> t structure ptr
+  t structure -> t structure ptr
 val copy_values:
-  t structure ptr -> t structure ptr -> unit
+  t structure -> t structure ptr -> unit
 val incr_ref:
-  t structure ptr -> t structure ptr
+  t structure -> t structure ptr
 val unref:
-  t structure ptr -> unit
+  t structure -> unit

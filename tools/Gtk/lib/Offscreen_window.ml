@@ -4,7 +4,9 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_offscreen_window_new return type object not handled*)
-(*Not implemented gtk_offscreen_window_get_pixbuf return type object not handled*)
+let create =
+  foreign "gtk_offscreen_window_new" (void @-> returning (Widget.t_typ))
+let get_pixbuf =
+  foreign "gtk_offscreen_window_get_pixbuf" (t_typ @-> returning (Pixbuf.t_typ))
 let get_surface =
-  foreign "gtk_offscreen_window_get_surface" (ptr t_typ @-> returning (ptr_opt Surface.t_typ))
+  foreign "gtk_offscreen_window_get_surface" (t_typ @-> returning (ptr_opt Surface.t_typ))

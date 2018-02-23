@@ -4,4 +4,5 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_bin_get_child return type object not handled*)
+let get_child =
+  foreign "gtk_bin_get_child" (t_typ @-> returning (Widget.t_typ))

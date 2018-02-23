@@ -4,5 +4,7 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_rc_style_new return type object not handled*)
-(*Not implemented gtk_rc_style_copy return type object not handled*)
+let create =
+  foreign "gtk_rc_style_new" (void @-> returning (t_typ))
+let copy =
+  foreign "gtk_rc_style_copy" (t_typ @-> returning (t_typ))

@@ -12,6 +12,6 @@ let _ = seal t_typ
 let create =
   foreign "gtk_target_entry_new" (string @-> uint32_t @-> uint32_t @-> returning (ptr t_typ))
 let copy =
-  foreign "gtk_target_entry_copy" (ptr t_typ @-> returning (ptr t_typ))
+  foreign "gtk_target_entry_copy" (t_typ @-> returning (ptr t_typ))
 let free =
-  foreign "gtk_target_entry_free" (ptr t_typ @-> returning (void))
+  foreign "gtk_target_entry_free" (t_typ @-> returning (void))

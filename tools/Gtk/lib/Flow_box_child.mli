@@ -3,10 +3,11 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_flow_box_child_new return type object not handled*)
+val create:
+  unit -> Widget.t
 val changed:
-  t structure ptr -> unit
+  t -> unit
 val get_index:
-  t structure ptr -> int32
+  t -> int32
 val is_selected:
-  t structure ptr -> bool
+  t -> bool

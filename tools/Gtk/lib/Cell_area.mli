@@ -3,47 +3,75 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_cell_area_activate type object not implemented*)
-(*Not implemented gtk_cell_area_activate_cell type object not implemented*)
-(*Not implemented gtk_cell_area_add type object not implemented*)
-(*Not implemented gtk_cell_area_add_focus_sibling type object not implemented*)
+val activate:
+  t -> Cell_area_context.t -> Widget.t -> Rectangle.t structure ptr -> Cell_renderer_state.t_list -> bool -> bool
+(*Not implemented gtk_cell_area_activate_cell type union not implemented*)
+val add:
+  t -> Cell_renderer.t -> unit
+val add_focus_sibling:
+  t -> Cell_renderer.t -> Cell_renderer.t -> unit
 (*Not implemented gtk_cell_area_apply_attributes type interface not implemented*)
-(*Not implemented gtk_cell_area_attribute_connect type object not implemented*)
-(*Not implemented gtk_cell_area_attribute_disconnect type object not implemented*)
-(*Not implemented gtk_cell_area_attribute_get_column type object not implemented*)
-(*Not implemented gtk_cell_area_cell_get_property type object not implemented*)
-(*Not implemented gtk_cell_area_cell_set_property type object not implemented*)
-(*Not implemented gtk_cell_area_copy_context type object not implemented*)
-(*Not implemented gtk_cell_area_create_context return type object not handled*)
-(*Not implemented gtk_cell_area_event type object not implemented*)
+val attribute_connect:
+  t -> Cell_renderer.t -> string -> int32 -> unit
+val attribute_disconnect:
+  t -> Cell_renderer.t -> string -> unit
+val attribute_get_column:
+  t -> Cell_renderer.t -> string -> int32
+val cell_get_property:
+  t -> Cell_renderer.t -> string -> Value.t structure ptr -> unit
+val cell_set_property:
+  t -> Cell_renderer.t -> string -> Value.t structure ptr -> unit
+val copy_context:
+  t -> Cell_area_context.t -> Cell_area_context.t
+val create_context:
+  t -> Cell_area_context.t
+(*Not implemented gtk_cell_area_event type union not implemented*)
 val focus:
-  t structure ptr -> Direction_type.t -> bool
+  t -> Direction_type.t -> bool
 (*Not implemented gtk_cell_area_foreach type callback not implemented*)
-(*Not implemented gtk_cell_area_foreach_alloc type object not implemented*)
-(*Not implemented gtk_cell_area_get_cell_allocation type object not implemented*)
-(*Not implemented gtk_cell_area_get_cell_at_position type object not implemented*)
+(*Not implemented gtk_cell_area_foreach_alloc type callback not implemented*)
+val get_cell_allocation :
+  t -> Cell_area_context.t -> Widget.t -> Cell_renderer.t -> Rectangle.t structure ptr -> (Rectangle.t structure)
+val get_cell_at_position :
+  t -> Cell_area_context.t -> Widget.t -> Rectangle.t structure ptr -> int32 -> int32 -> (Cell_renderer.t * Rectangle.t structure)
 val get_current_path_string:
-  t structure ptr -> string option
+  t -> string option
 (*Not implemented gtk_cell_area_get_edit_widget return type interface not handled*)
-(*Not implemented gtk_cell_area_get_edited_cell return type object not handled*)
-(*Not implemented gtk_cell_area_get_focus_cell return type object not handled*)
-(*Not implemented gtk_cell_area_get_focus_from_sibling type object not implemented*)
-(*Not implemented gtk_cell_area_get_focus_siblings type object not implemented*)
-(*Not implemented gtk_cell_area_get_preferred_height type object not implemented*)
-(*Not implemented gtk_cell_area_get_preferred_height_for_width type object not implemented*)
-(*Not implemented gtk_cell_area_get_preferred_width type object not implemented*)
-(*Not implemented gtk_cell_area_get_preferred_width_for_height type object not implemented*)
+val get_edited_cell:
+  t -> Cell_renderer.t
+val get_focus_cell:
+  t -> Cell_renderer.t
+val get_focus_from_sibling:
+  t -> Cell_renderer.t -> Cell_renderer.t
+val get_focus_siblings:
+  t -> Cell_renderer.t -> List.t structure ptr
+val get_preferred_height :
+  t -> Cell_area_context.t -> Widget.t -> (int32 * int32)
+val get_preferred_height_for_width :
+  t -> Cell_area_context.t -> Widget.t -> int32 -> (int32 * int32)
+val get_preferred_width :
+  t -> Cell_area_context.t -> Widget.t -> (int32 * int32)
+val get_preferred_width_for_height :
+  t -> Cell_area_context.t -> Widget.t -> int32 -> (int32 * int32)
 val get_request_mode:
-  t structure ptr -> Size_request_mode.t
-(*Not implemented gtk_cell_area_has_renderer type object not implemented*)
-(*Not implemented gtk_cell_area_inner_cell_area type object not implemented*)
+  t -> Size_request_mode.t
+val has_renderer:
+  t -> Cell_renderer.t -> bool
+val inner_cell_area :
+  t -> Widget.t -> Rectangle.t structure ptr -> (Rectangle.t structure)
 val is_activatable:
-  t structure ptr -> bool
-(*Not implemented gtk_cell_area_is_focus_sibling type object not implemented*)
-(*Not implemented gtk_cell_area_remove type object not implemented*)
-(*Not implemented gtk_cell_area_remove_focus_sibling type object not implemented*)
-(*Not implemented gtk_cell_area_render type object not implemented*)
-(*Not implemented gtk_cell_area_request_renderer type object not implemented*)
-(*Not implemented gtk_cell_area_set_focus_cell type object not implemented*)
+  t -> bool
+val is_focus_sibling:
+  t -> Cell_renderer.t -> Cell_renderer.t -> bool
+val remove:
+  t -> Cell_renderer.t -> unit
+val remove_focus_sibling:
+  t -> Cell_renderer.t -> Cell_renderer.t -> unit
+val render:
+  t -> Cell_area_context.t -> Widget.t -> Context.t structure ptr -> Rectangle.t structure ptr -> Rectangle.t structure ptr -> Cell_renderer_state.t_list -> bool -> unit
+val request_renderer :
+  t -> Cell_renderer.t -> Orientation.t -> Widget.t -> int32 -> (int32 * int32)
+val set_focus_cell:
+  t -> Cell_renderer.t -> unit
 val stop_editing:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

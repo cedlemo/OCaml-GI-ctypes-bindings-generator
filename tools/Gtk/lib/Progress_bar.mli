@@ -3,30 +3,31 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_progress_bar_new return type object not handled*)
+val create:
+  unit -> Widget.t
 val get_ellipsize:
-  t structure ptr -> Ellipsize_mode.t
+  t -> Ellipsize_mode.t
 val get_fraction:
-  t structure ptr -> float
+  t -> float
 val get_inverted:
-  t structure ptr -> bool
+  t -> bool
 val get_pulse_step:
-  t structure ptr -> float
+  t -> float
 val get_show_text:
-  t structure ptr -> bool
+  t -> bool
 val get_text:
-  t structure ptr -> string option
+  t -> string option
 val pulse:
-  t structure ptr -> unit
+  t -> unit
 val set_ellipsize:
-  t structure ptr -> Ellipsize_mode.t -> unit
+  t -> Ellipsize_mode.t -> unit
 val set_fraction:
-  t structure ptr -> float -> unit
+  t -> float -> unit
 val set_inverted:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_pulse_step:
-  t structure ptr -> float -> unit
+  t -> float -> unit
 val set_show_text:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_text:
-  t structure ptr -> string option -> unit
+  t -> string option -> unit

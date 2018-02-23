@@ -16,9 +16,10 @@ val create_shade:
 val create_win32:
   string -> int32 -> t structure ptr
 val incr_ref:
-  t structure ptr -> t structure ptr
-(*Not implemented gtk_symbolic_color_resolve type object not implemented*)
+  t structure -> t structure ptr
+val resolve :
+  t structure -> Style_properties.t -> (bool * RGBA.t structure)
 val to_string:
-  t structure ptr -> string option
+  t structure -> string option
 val unref:
-  t structure ptr -> unit
+  t structure -> unit

@@ -3,13 +3,15 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_link_button_new return type object not handled*)
-(*Not implemented gtk_link_button_new_with_label return type object not handled*)
+val create:
+  string -> Widget.t
+val create_with_label:
+  string -> string option -> Widget.t
 val get_uri:
-  t structure ptr -> string option
+  t -> string option
 val get_visited:
-  t structure ptr -> bool
+  t -> bool
 val set_uri:
-  t structure ptr -> string -> unit
+  t -> string -> unit
 val set_visited:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

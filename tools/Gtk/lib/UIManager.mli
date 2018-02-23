@@ -3,33 +3,39 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_ui_manager_new return type object not handled*)
+val create:
+  unit -> t
 val add_ui:
-  t structure ptr -> Unsigned.uint32 -> string -> string -> string option -> UIManager_item_type.t_list -> bool -> unit
+  t -> Unsigned.uint32 -> string -> string -> string option -> UIManager_item_type.t_list -> bool -> unit
 val add_ui_from_file:
-  t structure ptr -> string -> (Unsigned.uint32, Error.t structure ptr option) result
+  t -> string -> (Unsigned.uint32, Error.t structure ptr option) result
 val add_ui_from_resource:
-  t structure ptr -> string -> (Unsigned.uint32, Error.t structure ptr option) result
+  t -> string -> (Unsigned.uint32, Error.t structure ptr option) result
 val add_ui_from_string:
-  t structure ptr -> string -> int64 -> (Unsigned.uint32, Error.t structure ptr option) result
+  t -> string -> int64 -> (Unsigned.uint32, Error.t structure ptr option) result
 val ensure_update:
-  t structure ptr -> unit
-(*Not implemented gtk_ui_manager_get_accel_group return type object not handled*)
-(*Not implemented gtk_ui_manager_get_action return type object not handled*)
+  t -> unit
+val get_accel_group:
+  t -> Accel_group.t
+val get_action:
+  t -> string -> Action.t
 val get_action_groups:
-  t structure ptr -> List.t structure ptr
+  t -> List.t structure ptr
 val get_add_tearoffs:
-  t structure ptr -> bool
+  t -> bool
 val get_toplevels:
-  t structure ptr -> UIManager_item_type.t_list -> SList.t structure ptr
+  t -> UIManager_item_type.t_list -> SList.t structure ptr
 val get_ui:
-  t structure ptr -> string option
-(*Not implemented gtk_ui_manager_get_widget return type object not handled*)
-(*Not implemented gtk_ui_manager_insert_action_group type object not implemented*)
+  t -> string option
+val get_widget:
+  t -> string -> Widget.t
+val insert_action_group:
+  t -> Action_group.t -> int32 -> unit
 val create_merge_id:
-  t structure ptr -> Unsigned.uint32
-(*Not implemented gtk_ui_manager_remove_action_group type object not implemented*)
+  t -> Unsigned.uint32
+val remove_action_group:
+  t -> Action_group.t -> unit
 val remove_ui:
-  t structure ptr -> Unsigned.uint32 -> unit
+  t -> Unsigned.uint32 -> unit
 val set_add_tearoffs:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

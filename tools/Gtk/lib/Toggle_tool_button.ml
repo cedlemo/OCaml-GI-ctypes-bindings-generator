@@ -4,9 +4,11 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_toggle_tool_button_new return type object not handled*)
-(*Not implemented gtk_toggle_tool_button_new_from_stock return type object not handled*)
+let create =
+  foreign "gtk_toggle_tool_button_new" (void @-> returning (Tool_item.t_typ))
+let create_from_stock =
+  foreign "gtk_toggle_tool_button_new_from_stock" (string @-> returning (Tool_item.t_typ))
 let get_active =
-  foreign "gtk_toggle_tool_button_get_active" (ptr t_typ @-> returning (bool))
+  foreign "gtk_toggle_tool_button_get_active" (t_typ @-> returning (bool))
 let set_active =
-  foreign "gtk_toggle_tool_button_set_active" (ptr t_typ @-> bool @-> returning (void))
+  foreign "gtk_toggle_tool_button_set_active" (t_typ @-> bool @-> returning (void))

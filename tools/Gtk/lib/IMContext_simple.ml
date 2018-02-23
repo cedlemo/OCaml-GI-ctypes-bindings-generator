@@ -4,6 +4,7 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_im_context_simple_new return type object not handled*)
+let create =
+  foreign "gtk_im_context_simple_new" (void @-> returning (IMContext.t_typ))
 let add_compose_file =
-  foreign "gtk_im_context_simple_add_compose_file" (ptr t_typ @-> string @-> returning (void))
+  foreign "gtk_im_context_simple_add_compose_file" (t_typ @-> string @-> returning (void))

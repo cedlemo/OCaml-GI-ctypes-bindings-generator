@@ -3,31 +3,33 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_level_bar_new return type object not handled*)
-(*Not implemented gtk_level_bar_new_for_interval return type object not handled*)
+val create:
+  unit -> Widget.t
+val create_for_interval:
+  float -> float -> Widget.t
 val add_offset_value:
-  t structure ptr -> string -> float -> unit
+  t -> string -> float -> unit
 val get_inverted:
-  t structure ptr -> bool
+  t -> bool
 val get_max_value:
-  t structure ptr -> float
+  t -> float
 val get_min_value:
-  t structure ptr -> float
+  t -> float
 val get_mode:
-  t structure ptr -> Level_bar_mode.t
+  t -> Level_bar_mode.t
 val get_offset_value :
-  t structure ptr -> string option -> (bool * float)
+  t -> string option -> (bool * float)
 val get_value:
-  t structure ptr -> float
+  t -> float
 val remove_offset_value:
-  t structure ptr -> string option -> unit
+  t -> string option -> unit
 val set_inverted:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_max_value:
-  t structure ptr -> float -> unit
+  t -> float -> unit
 val set_min_value:
-  t structure ptr -> float -> unit
+  t -> float -> unit
 val set_mode:
-  t structure ptr -> Level_bar_mode.t -> unit
+  t -> Level_bar_mode.t -> unit
 val set_value:
-  t structure ptr -> float -> unit
+  t -> float -> unit

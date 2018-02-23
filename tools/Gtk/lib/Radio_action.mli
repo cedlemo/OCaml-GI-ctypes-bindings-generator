@@ -3,13 +3,15 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_radio_action_new return type object not handled*)
+val create:
+  string -> string option -> string option -> string option -> int32 -> t
 val get_current_value:
-  t structure ptr -> int32
+  t -> int32
 val get_group:
-  t structure ptr -> SList.t structure ptr
-(*Not implemented gtk_radio_action_join_group type object not implemented*)
+  t -> SList.t structure ptr
+val join_group:
+  t -> t -> unit
 val set_current_value:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_group:
-  t structure ptr -> SList.t structure ptr option -> unit
+  t -> SList.t structure ptr option -> unit

@@ -4,4 +4,5 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_renderer_cell_accessible_new type object not implemented*)
+let create =
+  foreign "gtk_renderer_cell_accessible_new" (Cell_renderer.t_typ @-> returning (Object.t_typ))

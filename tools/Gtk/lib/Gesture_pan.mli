@@ -3,8 +3,9 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_gesture_pan_new type object not implemented*)
+val create:
+  Widget.t -> Orientation.t -> Gesture.t
 val get_orientation:
-  t structure ptr -> Orientation.t
+  t -> Orientation.t
 val set_orientation:
-  t structure ptr -> Orientation.t -> unit
+  t -> Orientation.t -> unit

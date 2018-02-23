@@ -3,12 +3,15 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_application_window_new type object not implemented*)
-(*Not implemented gtk_application_window_get_help_overlay return type object not handled*)
+val create:
+  Application.t -> Widget.t
+val get_help_overlay:
+  t -> Shortcuts_window.t
 val get_id:
-  t structure ptr -> Unsigned.uint32
+  t -> Unsigned.uint32
 val get_show_menubar:
-  t structure ptr -> bool
-(*Not implemented gtk_application_window_set_help_overlay type object not implemented*)
+  t -> bool
+val set_help_overlay:
+  t -> Shortcuts_window.t -> unit
 val set_show_menubar:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

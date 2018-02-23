@@ -3,6 +3,9 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_stack_switcher_new return type object not handled*)
-(*Not implemented gtk_stack_switcher_get_stack return type object not handled*)
-(*Not implemented gtk_stack_switcher_set_stack type object not implemented*)
+val create:
+  unit -> Widget.t
+val get_stack:
+  t -> Stack.t
+val set_stack:
+  t -> Stack.t -> unit

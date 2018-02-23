@@ -4,61 +4,69 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_button_new return type object not handled*)
-(*Not implemented gtk_button_new_from_icon_name return type object not handled*)
-(*Not implemented gtk_button_new_from_stock return type object not handled*)
-(*Not implemented gtk_button_new_with_label return type object not handled*)
-(*Not implemented gtk_button_new_with_mnemonic return type object not handled*)
+let create =
+  foreign "gtk_button_new" (void @-> returning (Widget.t_typ))
+let create_from_icon_name =
+  foreign "gtk_button_new_from_icon_name" (string_opt @-> int32_t @-> returning (Widget.t_typ))
+let create_from_stock =
+  foreign "gtk_button_new_from_stock" (string @-> returning (Widget.t_typ))
+let create_with_label =
+  foreign "gtk_button_new_with_label" (string @-> returning (Widget.t_typ))
+let create_with_mnemonic =
+  foreign "gtk_button_new_with_mnemonic" (string @-> returning (Widget.t_typ))
 let clicked =
-  foreign "gtk_button_clicked" (ptr t_typ @-> returning (void))
+  foreign "gtk_button_clicked" (t_typ @-> returning (void))
 let enter =
-  foreign "gtk_button_enter" (ptr t_typ @-> returning (void))
+  foreign "gtk_button_enter" (t_typ @-> returning (void))
 let get_alignment self =
   let xalign_ptr = allocate float 0.0 in
   let yalign_ptr = allocate float 0.0 in
   let get_alignment_raw =
-    foreign "gtk_button_get_alignment" (ptr t_typ @-> ptr (float) @-> ptr (float) @-> returning void)
+    foreign "gtk_button_get_alignment" (t_typ @-> ptr (float) @-> ptr (float) @-> returning void)
   in
   let ret = get_alignment_raw self xalign_ptr yalign_ptr in
   let xalign = !@ xalign_ptr in
   let yalign = !@ yalign_ptr in
   (xalign, yalign)
 let get_always_show_image =
-  foreign "gtk_button_get_always_show_image" (ptr t_typ @-> returning (bool))
-(*Not implemented gtk_button_get_event_window return type object not handled*)
+  foreign "gtk_button_get_always_show_image" (t_typ @-> returning (bool))
+let get_event_window =
+  foreign "gtk_button_get_event_window" (t_typ @-> returning (Window.t_typ))
 let get_focus_on_click =
-  foreign "gtk_button_get_focus_on_click" (ptr t_typ @-> returning (bool))
-(*Not implemented gtk_button_get_image return type object not handled*)
+  foreign "gtk_button_get_focus_on_click" (t_typ @-> returning (bool))
+let get_image =
+  foreign "gtk_button_get_image" (t_typ @-> returning (Widget.t_typ))
 let get_image_position =
-  foreign "gtk_button_get_image_position" (ptr t_typ @-> returning (Position_type.t_view))
+  foreign "gtk_button_get_image_position" (t_typ @-> returning (Position_type.t_view))
 let get_label =
-  foreign "gtk_button_get_label" (ptr t_typ @-> returning (string_opt))
+  foreign "gtk_button_get_label" (t_typ @-> returning (string_opt))
 let get_relief =
-  foreign "gtk_button_get_relief" (ptr t_typ @-> returning (Relief_style.t_view))
+  foreign "gtk_button_get_relief" (t_typ @-> returning (Relief_style.t_view))
 let get_use_stock =
-  foreign "gtk_button_get_use_stock" (ptr t_typ @-> returning (bool))
+  foreign "gtk_button_get_use_stock" (t_typ @-> returning (bool))
 let get_use_underline =
-  foreign "gtk_button_get_use_underline" (ptr t_typ @-> returning (bool))
+  foreign "gtk_button_get_use_underline" (t_typ @-> returning (bool))
 let leave =
-  foreign "gtk_button_leave" (ptr t_typ @-> returning (void))
+  foreign "gtk_button_leave" (t_typ @-> returning (void))
 let pressed =
-  foreign "gtk_button_pressed" (ptr t_typ @-> returning (void))
+  foreign "gtk_button_pressed" (t_typ @-> returning (void))
 let released =
-  foreign "gtk_button_released" (ptr t_typ @-> returning (void))
+  foreign "gtk_button_released" (t_typ @-> returning (void))
 let set_alignment =
-  foreign "gtk_button_set_alignment" (ptr t_typ @-> float @-> float @-> returning (void))
+  foreign "gtk_button_set_alignment" (t_typ @-> float @-> float @-> returning (void))
 let set_always_show_image =
-  foreign "gtk_button_set_always_show_image" (ptr t_typ @-> bool @-> returning (void))
+  foreign "gtk_button_set_always_show_image" (t_typ @-> bool @-> returning (void))
 let set_focus_on_click =
-  foreign "gtk_button_set_focus_on_click" (ptr t_typ @-> bool @-> returning (void))
-(*Not implemented gtk_button_set_image type object not implemented*)
+  foreign "gtk_button_set_focus_on_click" (t_typ @-> bool @-> returning (void))
+let set_image =
+  foreign "gtk_button_set_image" (t_typ @-> Widget.t_typ @-> returning (void))
 let set_image_position =
-  foreign "gtk_button_set_image_position" (ptr t_typ @-> Position_type.t_view @-> returning (void))
+  foreign "gtk_button_set_image_position" (t_typ @-> Position_type.t_view @-> returning (void))
 let set_label =
-  foreign "gtk_button_set_label" (ptr t_typ @-> string @-> returning (void))
+  foreign "gtk_button_set_label" (t_typ @-> string @-> returning (void))
 let set_relief =
-  foreign "gtk_button_set_relief" (ptr t_typ @-> Relief_style.t_view @-> returning (void))
+  foreign "gtk_button_set_relief" (t_typ @-> Relief_style.t_view @-> returning (void))
 let set_use_stock =
-  foreign "gtk_button_set_use_stock" (ptr t_typ @-> bool @-> returning (void))
+  foreign "gtk_button_set_use_stock" (t_typ @-> bool @-> returning (void))
 let set_use_underline =
-  foreign "gtk_button_set_use_underline" (ptr t_typ @-> bool @-> returning (void))
+  foreign "gtk_button_set_use_underline" (t_typ @-> bool @-> returning (void))

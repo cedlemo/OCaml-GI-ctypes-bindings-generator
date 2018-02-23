@@ -3,11 +3,15 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_menu_tool_button_new type object not implemented*)
-(*Not implemented gtk_menu_tool_button_new_from_stock return type object not handled*)
-(*Not implemented gtk_menu_tool_button_get_menu return type object not handled*)
+val create:
+  Widget.t -> string option -> Tool_item.t
+val create_from_stock:
+  string -> Tool_item.t
+val get_menu:
+  t -> Widget.t
 val set_arrow_tooltip_markup:
-  t structure ptr -> string -> unit
+  t -> string -> unit
 val set_arrow_tooltip_text:
-  t structure ptr -> string -> unit
-(*Not implemented gtk_menu_tool_button_set_menu type object not implemented*)
+  t -> string -> unit
+val set_menu:
+  t -> Widget.t -> unit

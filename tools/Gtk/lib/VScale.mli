@@ -3,5 +3,7 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_vscale_new type object not implemented*)
-(*Not implemented gtk_vscale_new_with_range return type object not handled*)
+val create:
+  Adjustment.t -> Widget.t
+val create_with_range:
+  float -> float -> float -> Widget.t

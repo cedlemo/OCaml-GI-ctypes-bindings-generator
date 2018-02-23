@@ -4,4 +4,5 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_separator_new return type object not handled*)
+let create =
+  foreign "gtk_separator_new" (Orientation.t_view @-> returning (Widget.t_typ))

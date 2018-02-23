@@ -3,46 +3,51 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_spin_button_new type object not implemented*)
-(*Not implemented gtk_spin_button_new_with_range return type object not handled*)
-(*Not implemented gtk_spin_button_configure type object not implemented*)
-(*Not implemented gtk_spin_button_get_adjustment return type object not handled*)
+val create:
+  Adjustment.t -> float -> Unsigned.uint32 -> Widget.t
+val create_with_range:
+  float -> float -> float -> Widget.t
+val configure:
+  t -> Adjustment.t -> float -> Unsigned.uint32 -> unit
+val get_adjustment:
+  t -> Adjustment.t
 val get_digits:
-  t structure ptr -> Unsigned.uint32
+  t -> Unsigned.uint32
 val get_increments :
-  t structure ptr -> (float * float)
+  t -> (float * float)
 val get_numeric:
-  t structure ptr -> bool
+  t -> bool
 val get_range :
-  t structure ptr -> (float * float)
+  t -> (float * float)
 val get_snap_to_ticks:
-  t structure ptr -> bool
+  t -> bool
 val get_update_policy:
-  t structure ptr -> Spin_button_update_policy.t
+  t -> Spin_button_update_policy.t
 val get_value:
-  t structure ptr -> float
+  t -> float
 val get_value_as_int:
-  t structure ptr -> int32
+  t -> int32
 val get_wrap:
-  t structure ptr -> bool
-(*Not implemented gtk_spin_button_set_adjustment type object not implemented*)
+  t -> bool
+val set_adjustment:
+  t -> Adjustment.t -> unit
 val set_digits:
-  t structure ptr -> Unsigned.uint32 -> unit
+  t -> Unsigned.uint32 -> unit
 val set_increments:
-  t structure ptr -> float -> float -> unit
+  t -> float -> float -> unit
 val set_numeric:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_range:
-  t structure ptr -> float -> float -> unit
+  t -> float -> float -> unit
 val set_snap_to_ticks:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_update_policy:
-  t structure ptr -> Spin_button_update_policy.t -> unit
+  t -> Spin_button_update_policy.t -> unit
 val set_value:
-  t structure ptr -> float -> unit
+  t -> float -> unit
 val set_wrap:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val spin:
-  t structure ptr -> Spin_type.t -> float -> unit
+  t -> Spin_type.t -> float -> unit
 val update:
-  t structure ptr -> unit
+  t -> unit

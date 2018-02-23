@@ -11,7 +11,8 @@ val change_entry:
   string -> Unsigned.uint32 -> Modifier_type.t_list -> bool -> bool
 (*Not implemented gtk_accel_map_foreach type callback not implemented*)
 (*Not implemented gtk_accel_map_foreach_unfiltered type callback not implemented*)
-(*Not implemented gtk_accel_map_get return type object not handled*)
+val get:
+  unit -> t
 val load:
   string -> unit
 val load_fd:

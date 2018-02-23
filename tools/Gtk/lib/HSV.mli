@@ -3,16 +3,17 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_hsv_new return type object not handled*)
+val create:
+  unit -> Widget.t
 val to_rgb :
   float -> float -> float -> (float * float * float)
 val get_color :
-  t structure ptr -> (float * float * float)
+  t -> (float * float * float)
 val get_metrics :
-  t structure ptr -> (int32 * int32)
+  t -> (int32 * int32)
 val is_adjusting:
-  t structure ptr -> bool
+  t -> bool
 val set_color:
-  t structure ptr -> float -> float -> float -> unit
+  t -> float -> float -> float -> unit
 val set_metrics:
-  t structure ptr -> int32 -> int32 -> unit
+  t -> int32 -> int32 -> unit

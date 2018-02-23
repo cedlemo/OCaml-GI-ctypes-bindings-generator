@@ -3,8 +3,11 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_container_cell_accessible_new return type object not handled*)
-(*Not implemented gtk_container_cell_accessible_add_child type object not implemented*)
+val create:
+  unit -> t
+val add_child:
+  t -> Cell_accessible.t -> unit
 val get_children:
-  t structure ptr -> List.t structure ptr
-(*Not implemented gtk_container_cell_accessible_remove_child type object not implemented*)
+  t -> List.t structure ptr
+val remove_child:
+  t -> Cell_accessible.t -> unit

@@ -3,12 +3,13 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_switch_new return type object not handled*)
+val create:
+  unit -> Widget.t
 val get_active:
-  t structure ptr -> bool
+  t -> bool
 val get_state:
-  t structure ptr -> bool
+  t -> bool
 val set_active:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_state:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

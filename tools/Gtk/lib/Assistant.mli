@@ -3,39 +3,58 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_assistant_new return type object not handled*)
-(*Not implemented gtk_assistant_add_action_widget type object not implemented*)
-(*Not implemented gtk_assistant_append_page type object not implemented*)
+val create:
+  unit -> Widget.t
+val add_action_widget:
+  t -> Widget.t -> unit
+val append_page:
+  t -> Widget.t -> int32
 val commit:
-  t structure ptr -> unit
+  t -> unit
 val get_current_page:
-  t structure ptr -> int32
+  t -> int32
 val get_n_pages:
-  t structure ptr -> int32
-(*Not implemented gtk_assistant_get_nth_page return type object not handled*)
-(*Not implemented gtk_assistant_get_page_complete type object not implemented*)
-(*Not implemented gtk_assistant_get_page_has_padding type object not implemented*)
-(*Not implemented gtk_assistant_get_page_header_image type object not implemented*)
-(*Not implemented gtk_assistant_get_page_side_image type object not implemented*)
-(*Not implemented gtk_assistant_get_page_title type object not implemented*)
-(*Not implemented gtk_assistant_get_page_type type object not implemented*)
-(*Not implemented gtk_assistant_insert_page type object not implemented*)
+  t -> int32
+val get_nth_page:
+  t -> int32 -> Widget.t
+val get_page_complete:
+  t -> Widget.t -> bool
+val get_page_has_padding:
+  t -> Widget.t -> bool
+val get_page_header_image:
+  t -> Widget.t -> Pixbuf.t
+val get_page_side_image:
+  t -> Widget.t -> Pixbuf.t
+val get_page_title:
+  t -> Widget.t -> string option
+val get_page_type:
+  t -> Widget.t -> Assistant_page_type.t
+val insert_page:
+  t -> Widget.t -> int32 -> int32
 val next_page:
-  t structure ptr -> unit
-(*Not implemented gtk_assistant_prepend_page type object not implemented*)
+  t -> unit
+val prepend_page:
+  t -> Widget.t -> int32
 val previous_page:
-  t structure ptr -> unit
-(*Not implemented gtk_assistant_remove_action_widget type object not implemented*)
+  t -> unit
+val remove_action_widget:
+  t -> Widget.t -> unit
 val remove_page:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_current_page:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 (*Not implemented gtk_assistant_set_forward_page_func type callback not implemented*)
-(*Not implemented gtk_assistant_set_page_complete type object not implemented*)
-(*Not implemented gtk_assistant_set_page_has_padding type object not implemented*)
-(*Not implemented gtk_assistant_set_page_header_image type object not implemented*)
-(*Not implemented gtk_assistant_set_page_side_image type object not implemented*)
-(*Not implemented gtk_assistant_set_page_title type object not implemented*)
-(*Not implemented gtk_assistant_set_page_type type object not implemented*)
+val set_page_complete:
+  t -> Widget.t -> bool -> unit
+val set_page_has_padding:
+  t -> Widget.t -> bool -> unit
+val set_page_header_image:
+  t -> Widget.t -> Pixbuf.t -> unit
+val set_page_side_image:
+  t -> Widget.t -> Pixbuf.t -> unit
+val set_page_title:
+  t -> Widget.t -> string -> unit
+val set_page_type:
+  t -> Widget.t -> Assistant_page_type.t -> unit
 val update_buttons_state:
-  t structure ptr -> unit
+  t -> unit

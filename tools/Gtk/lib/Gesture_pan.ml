@@ -4,8 +4,9 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_gesture_pan_new type object not implemented*)
+let create =
+  foreign "gtk_gesture_pan_new" (Widget.t_typ @-> Orientation.t_view @-> returning (Gesture.t_typ))
 let get_orientation =
-  foreign "gtk_gesture_pan_get_orientation" (ptr t_typ @-> returning (Orientation.t_view))
+  foreign "gtk_gesture_pan_get_orientation" (t_typ @-> returning (Orientation.t_view))
 let set_orientation =
-  foreign "gtk_gesture_pan_set_orientation" (ptr t_typ @-> Orientation.t_view @-> returning (void))
+  foreign "gtk_gesture_pan_set_orientation" (t_typ @-> Orientation.t_view @-> returning (void))

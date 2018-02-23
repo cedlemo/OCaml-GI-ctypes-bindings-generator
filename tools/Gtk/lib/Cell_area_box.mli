@@ -3,10 +3,13 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_cell_area_box_new return type object not handled*)
+val create:
+  unit -> Cell_area.t
 val get_spacing:
-  t structure ptr -> int32
-(*Not implemented gtk_cell_area_box_pack_end type object not implemented*)
-(*Not implemented gtk_cell_area_box_pack_start type object not implemented*)
+  t -> int32
+val pack_end:
+  t -> Cell_renderer.t -> bool -> bool -> bool -> unit
+val pack_start:
+  t -> Cell_renderer.t -> bool -> bool -> bool -> unit
 val set_spacing:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit

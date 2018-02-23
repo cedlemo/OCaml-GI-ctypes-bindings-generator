@@ -26,39 +26,39 @@ let create_from_key_file key_file group_name =
 let create_from_ppd =
   foreign "gtk_paper_size_new_from_ppd" (string @-> string @-> double @-> double @-> returning (ptr t_typ))
 let copy =
-  foreign "gtk_paper_size_copy" (ptr t_typ @-> returning (ptr t_typ))
+  foreign "gtk_paper_size_copy" (t_typ @-> returning (ptr t_typ))
 let free =
-  foreign "gtk_paper_size_free" (ptr t_typ @-> returning (void))
+  foreign "gtk_paper_size_free" (t_typ @-> returning (void))
 let get_default_bottom_margin =
-  foreign "gtk_paper_size_get_default_bottom_margin" (ptr t_typ @-> Unit.t_view @-> returning (double))
+  foreign "gtk_paper_size_get_default_bottom_margin" (t_typ @-> Unit.t_view @-> returning (double))
 let get_default_left_margin =
-  foreign "gtk_paper_size_get_default_left_margin" (ptr t_typ @-> Unit.t_view @-> returning (double))
+  foreign "gtk_paper_size_get_default_left_margin" (t_typ @-> Unit.t_view @-> returning (double))
 let get_default_right_margin =
-  foreign "gtk_paper_size_get_default_right_margin" (ptr t_typ @-> Unit.t_view @-> returning (double))
+  foreign "gtk_paper_size_get_default_right_margin" (t_typ @-> Unit.t_view @-> returning (double))
 let get_default_top_margin =
-  foreign "gtk_paper_size_get_default_top_margin" (ptr t_typ @-> Unit.t_view @-> returning (double))
+  foreign "gtk_paper_size_get_default_top_margin" (t_typ @-> Unit.t_view @-> returning (double))
 let get_display_name =
-  foreign "gtk_paper_size_get_display_name" (ptr t_typ @-> returning (string_opt))
+  foreign "gtk_paper_size_get_display_name" (t_typ @-> returning (string_opt))
 let get_height =
-  foreign "gtk_paper_size_get_height" (ptr t_typ @-> Unit.t_view @-> returning (double))
+  foreign "gtk_paper_size_get_height" (t_typ @-> Unit.t_view @-> returning (double))
 let get_name =
-  foreign "gtk_paper_size_get_name" (ptr t_typ @-> returning (string_opt))
+  foreign "gtk_paper_size_get_name" (t_typ @-> returning (string_opt))
 let get_ppd_name =
-  foreign "gtk_paper_size_get_ppd_name" (ptr t_typ @-> returning (string_opt))
+  foreign "gtk_paper_size_get_ppd_name" (t_typ @-> returning (string_opt))
 let get_width =
-  foreign "gtk_paper_size_get_width" (ptr t_typ @-> Unit.t_view @-> returning (double))
+  foreign "gtk_paper_size_get_width" (t_typ @-> Unit.t_view @-> returning (double))
 let is_custom =
-  foreign "gtk_paper_size_is_custom" (ptr t_typ @-> returning (bool))
+  foreign "gtk_paper_size_is_custom" (t_typ @-> returning (bool))
 let is_equal =
-  foreign "gtk_paper_size_is_equal" (ptr t_typ @-> ptr t_typ @-> returning (bool))
+  foreign "gtk_paper_size_is_equal" (t_typ @-> ptr t_typ @-> returning (bool))
 let is_ipp =
-  foreign "gtk_paper_size_is_ipp" (ptr t_typ @-> returning (bool))
+  foreign "gtk_paper_size_is_ipp" (t_typ @-> returning (bool))
 let set_size =
-  foreign "gtk_paper_size_set_size" (ptr t_typ @-> double @-> double @-> Unit.t_view @-> returning (void))
+  foreign "gtk_paper_size_set_size" (t_typ @-> double @-> double @-> Unit.t_view @-> returning (void))
 let to_gvariant =
-  foreign "gtk_paper_size_to_gvariant" (ptr t_typ @-> returning (ptr Variant.t_typ))
+  foreign "gtk_paper_size_to_gvariant" (t_typ @-> returning (ptr Variant.t_typ))
 let to_key_file =
-  foreign "gtk_paper_size_to_key_file" (ptr t_typ @-> ptr Key_file.t_typ @-> string @-> returning (void))
+  foreign "gtk_paper_size_to_key_file" (t_typ @-> ptr Key_file.t_typ @-> string @-> returning (void))
 let get_default =
   foreign "gtk_paper_size_get_default" (void @-> returning (string_opt))
 let get_paper_sizes =

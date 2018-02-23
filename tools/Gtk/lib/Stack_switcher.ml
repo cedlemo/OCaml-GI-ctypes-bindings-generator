@@ -4,6 +4,9 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_stack_switcher_new return type object not handled*)
-(*Not implemented gtk_stack_switcher_get_stack return type object not handled*)
-(*Not implemented gtk_stack_switcher_set_stack type object not implemented*)
+let create =
+  foreign "gtk_stack_switcher_new" (void @-> returning (Widget.t_typ))
+let get_stack =
+  foreign "gtk_stack_switcher_get_stack" (t_typ @-> returning (Stack.t_typ))
+let set_stack =
+  foreign "gtk_stack_switcher_set_stack" (t_typ @-> Stack.t_typ @-> returning (void))

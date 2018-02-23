@@ -4,14 +4,15 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_toggle_action_new return type object not handled*)
+let create =
+  foreign "gtk_toggle_action_new" (string @-> string_opt @-> string_opt @-> string_opt @-> returning (t_typ))
 let get_active =
-  foreign "gtk_toggle_action_get_active" (ptr t_typ @-> returning (bool))
+  foreign "gtk_toggle_action_get_active" (t_typ @-> returning (bool))
 let get_draw_as_radio =
-  foreign "gtk_toggle_action_get_draw_as_radio" (ptr t_typ @-> returning (bool))
+  foreign "gtk_toggle_action_get_draw_as_radio" (t_typ @-> returning (bool))
 let set_active =
-  foreign "gtk_toggle_action_set_active" (ptr t_typ @-> bool @-> returning (void))
+  foreign "gtk_toggle_action_set_active" (t_typ @-> bool @-> returning (void))
 let set_draw_as_radio =
-  foreign "gtk_toggle_action_set_draw_as_radio" (ptr t_typ @-> bool @-> returning (void))
+  foreign "gtk_toggle_action_set_draw_as_radio" (t_typ @-> bool @-> returning (void))
 let toggled =
-  foreign "gtk_toggle_action_toggled" (ptr t_typ @-> returning (void))
+  foreign "gtk_toggle_action_toggled" (t_typ @-> returning (void))

@@ -31,10 +31,10 @@ let _ = seal t_typ
 let create =
   foreign "gtk_text_attributes_new" (void @-> returning (ptr t_typ))
 let copy =
-  foreign "gtk_text_attributes_copy" (ptr t_typ @-> returning (ptr t_typ))
+  foreign "gtk_text_attributes_copy" (t_typ @-> returning (ptr t_typ))
 let copy_values =
-  foreign "gtk_text_attributes_copy_values" (ptr t_typ @-> ptr t_typ @-> returning (void))
+  foreign "gtk_text_attributes_copy_values" (t_typ @-> ptr t_typ @-> returning (void))
 let incr_ref =
-  foreign "gtk_text_attributes_ref" (ptr t_typ @-> returning (ptr t_typ))
+  foreign "gtk_text_attributes_ref" (t_typ @-> returning (ptr t_typ))
 let unref =
-  foreign "gtk_text_attributes_unref" (ptr t_typ @-> returning (void))
+  foreign "gtk_text_attributes_unref" (t_typ @-> returning (void))

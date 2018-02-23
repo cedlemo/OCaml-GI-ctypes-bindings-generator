@@ -3,23 +3,31 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_menu_shell_activate_item type object not implemented*)
-(*Not implemented gtk_menu_shell_append type object not implemented*)
-(*Not implemented gtk_menu_shell_bind_model type object not implemented*)
+val activate_item:
+  t -> Widget.t -> bool -> unit
+val append:
+  t -> Menu_item.t -> unit
+val bind_model:
+  t -> Menu_model.t -> string option -> bool -> unit
 val cancel:
-  t structure ptr -> unit
+  t -> unit
 val deactivate:
-  t structure ptr -> unit
+  t -> unit
 val deselect:
-  t structure ptr -> unit
-(*Not implemented gtk_menu_shell_get_parent_shell return type object not handled*)
-(*Not implemented gtk_menu_shell_get_selected_item return type object not handled*)
+  t -> unit
+val get_parent_shell:
+  t -> Widget.t
+val get_selected_item:
+  t -> Widget.t
 val get_take_focus:
-  t structure ptr -> bool
-(*Not implemented gtk_menu_shell_insert type object not implemented*)
-(*Not implemented gtk_menu_shell_prepend type object not implemented*)
+  t -> bool
+val insert:
+  t -> Widget.t -> int32 -> unit
+val prepend:
+  t -> Widget.t -> unit
 val select_first:
-  t structure ptr -> bool -> unit
-(*Not implemented gtk_menu_shell_select_item type object not implemented*)
+  t -> bool -> unit
+val select_item:
+  t -> Widget.t -> unit
 val set_take_focus:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

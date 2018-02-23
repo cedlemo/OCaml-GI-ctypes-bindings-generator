@@ -3,15 +3,23 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_layout_new type object not implemented*)
-(*Not implemented gtk_layout_get_bin_window return type object not handled*)
-(*Not implemented gtk_layout_get_hadjustment return type object not handled*)
+val create:
+  Adjustment.t -> Adjustment.t -> Widget.t
+val get_bin_window:
+  t -> Window.t
+val get_hadjustment:
+  t -> Adjustment.t
 val get_size :
-  t structure ptr -> (Unsigned.uint32 * Unsigned.uint32)
-(*Not implemented gtk_layout_get_vadjustment return type object not handled*)
-(*Not implemented gtk_layout_move type object not implemented*)
-(*Not implemented gtk_layout_put type object not implemented*)
-(*Not implemented gtk_layout_set_hadjustment type object not implemented*)
+  t -> (Unsigned.uint32 * Unsigned.uint32)
+val get_vadjustment:
+  t -> Adjustment.t
+val move:
+  t -> Widget.t -> int32 -> int32 -> unit
+val put:
+  t -> Widget.t -> int32 -> int32 -> unit
+val set_hadjustment:
+  t -> Adjustment.t -> unit
 val set_size:
-  t structure ptr -> Unsigned.uint32 -> Unsigned.uint32 -> unit
-(*Not implemented gtk_layout_set_vadjustment type object not implemented*)
+  t -> Unsigned.uint32 -> Unsigned.uint32 -> unit
+val set_vadjustment:
+  t -> Adjustment.t -> unit

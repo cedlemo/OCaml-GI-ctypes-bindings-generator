@@ -4,4 +4,5 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_tearoff_menu_item_new return type object not handled*)
+let create =
+  foreign "gtk_tearoff_menu_item_new" (void @-> returning (Widget.t_typ))

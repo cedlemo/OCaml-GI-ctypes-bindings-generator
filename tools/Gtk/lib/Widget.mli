@@ -5,7 +5,8 @@ val t_typ : t typ
 
 val get_default_direction:
   unit -> Text_direction.t
-(*Not implemented gtk_widget_get_default_style return type object not handled*)
+val get_default_style:
+  unit -> Style.t
 val pop_composite_child:
   unit -> unit
 val push_composite_child:
@@ -13,459 +14,509 @@ val push_composite_child:
 val set_default_direction:
   Text_direction.t -> unit
 val activate:
-  t structure ptr -> bool
-(*Not implemented gtk_widget_add_accelerator type object not implemented*)
-(*Not implemented gtk_widget_add_device_events type object not implemented*)
+  t -> bool
+val add_accelerator:
+  t -> string -> Accel_group.t -> Unsigned.uint32 -> Modifier_type.t_list -> Accel_flags.t_list -> unit
+val add_device_events:
+  t -> Device.t -> Event_mask.t_list -> unit
 val add_events:
-  t structure ptr -> int32 -> unit
-(*Not implemented gtk_widget_add_mnemonic_label type object not implemented*)
+  t -> int32 -> unit
+val add_mnemonic_label:
+  t -> t -> unit
 (*Not implemented gtk_widget_add_tick_callback type callback not implemented*)
 val can_activate_accel:
-  t structure ptr -> Unsigned.uint32 -> bool
+  t -> Unsigned.uint32 -> bool
 val child_focus:
-  t structure ptr -> Direction_type.t -> bool
+  t -> Direction_type.t -> bool
 val child_notify:
-  t structure ptr -> string -> unit
+  t -> string -> unit
 val class_path :
-  t structure ptr -> (Unsigned.uint32 * string * string)
+  t -> (Unsigned.uint32 * string * string)
 val compute_expand:
-  t structure ptr -> Orientation.t -> bool
-(*Not implemented gtk_widget_create_pango_context return type object not handled*)
-(*Not implemented gtk_widget_create_pango_layout return type object not handled*)
+  t -> Orientation.t -> bool
+val create_pango_context:
+  t -> Context.t
+val create_pango_layout:
+  t -> string option -> Layout.t
 val destroy:
-  t structure ptr -> unit
-(*Not implemented gtk_widget_destroyed type object not implemented*)
-(*Not implemented gtk_widget_device_is_shadowed type object not implemented*)
+  t -> unit
+(*Not implemented gtk_widget_destroyed - in out argument not handled*)
+val device_is_shadowed:
+  t -> Device.t -> bool
 (*Not implemented gtk_drag_begin type union not implemented*)
 (*Not implemented gtk_drag_begin_with_coordinates type union not implemented*)
 val drag_check_threshold:
-  t structure ptr -> int32 -> int32 -> int32 -> int32 -> bool
+  t -> int32 -> int32 -> int32 -> int32 -> bool
 val drag_dest_add_image_targets:
-  t structure ptr -> unit
+  t -> unit
 val drag_dest_add_text_targets:
-  t structure ptr -> unit
+  t -> unit
 val drag_dest_add_uri_targets:
-  t structure ptr -> unit
-(*Not implemented gtk_drag_dest_find_target type object not implemented*)
+  t -> unit
+val drag_dest_find_target:
+  t -> Drag_context.t -> Target_list.t structure ptr option -> Atom.t structure ptr
 val drag_dest_get_target_list:
-  t structure ptr -> Target_list.t structure ptr option
+  t -> Target_list.t structure ptr option
 val drag_dest_get_track_motion:
-  t structure ptr -> bool
+  t -> bool
 (*Not implemented gtk_drag_dest_set type C Array type for Types.Array tag not implemented*)
-(*Not implemented gtk_drag_dest_set_proxy type object not implemented*)
+val drag_dest_set_proxy:
+  t -> Window.t -> Drag_protocol.t -> bool -> unit
 val drag_dest_set_target_list:
-  t structure ptr -> Target_list.t structure ptr option -> unit
+  t -> Target_list.t structure ptr option -> unit
 val drag_dest_set_track_motion:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val drag_dest_unset:
-  t structure ptr -> unit
-(*Not implemented gtk_drag_get_data type object not implemented*)
+  t -> unit
+val drag_get_data:
+  t -> Drag_context.t -> Atom.t structure ptr -> Unsigned.uint32 -> unit
 val drag_highlight:
-  t structure ptr -> unit
+  t -> unit
 val drag_source_add_image_targets:
-  t structure ptr -> unit
+  t -> unit
 val drag_source_add_text_targets:
-  t structure ptr -> unit
+  t -> unit
 val drag_source_add_uri_targets:
-  t structure ptr -> unit
+  t -> unit
 val drag_source_get_target_list:
-  t structure ptr -> Target_list.t structure ptr option
+  t -> Target_list.t structure ptr option
 (*Not implemented gtk_drag_source_set type C Array type for Types.Array tag not implemented*)
 (*Not implemented gtk_drag_source_set_icon_gicon type interface not implemented*)
 val drag_source_set_icon_name:
-  t structure ptr -> string -> unit
-(*Not implemented gtk_drag_source_set_icon_pixbuf type object not implemented*)
+  t -> string -> unit
+val drag_source_set_icon_pixbuf:
+  t -> Pixbuf.t -> unit
 val drag_source_set_icon_stock:
-  t structure ptr -> string -> unit
+  t -> string -> unit
 val drag_source_set_target_list:
-  t structure ptr -> Target_list.t structure ptr option -> unit
+  t -> Target_list.t structure ptr option -> unit
 val drag_source_unset:
-  t structure ptr -> unit
+  t -> unit
 val drag_unhighlight:
-  t structure ptr -> unit
+  t -> unit
 val draw:
-  t structure ptr -> Context.t structure ptr -> unit
+  t -> Context.t structure ptr -> unit
 val ensure_style:
-  t structure ptr -> unit
+  t -> unit
 val error_bell:
-  t structure ptr -> unit
+  t -> unit
 (*Not implemented gtk_widget_event type union not implemented*)
 val freeze_child_notify:
-  t structure ptr -> unit
-(*Not implemented gtk_widget_get_accessible return type object not handled*)
+  t -> unit
+val get_accessible:
+  t -> Object.t
 (*Not implemented gtk_widget_get_action_group return type interface not handled*)
 val get_allocated_baseline:
-  t structure ptr -> int32
+  t -> int32
 val get_allocated_height:
-  t structure ptr -> int32
+  t -> int32
 val get_allocated_size :
-  t structure ptr -> (Rectangle.t structure * int32)
+  t -> (Rectangle.t structure * int32)
 val get_allocated_width:
-  t structure ptr -> int32
+  t -> int32
 val get_allocation :
-  t structure ptr -> (Rectangle.t structure)
+  t -> (Rectangle.t structure)
 (*Not implemented gtk_widget_get_ancestor type gType not implemented*)
 val get_app_paintable:
-  t structure ptr -> bool
+  t -> bool
 val get_can_default:
-  t structure ptr -> bool
+  t -> bool
 val get_can_focus:
-  t structure ptr -> bool
+  t -> bool
 val get_child_requisition :
-  t structure ptr -> (Requisition.t structure)
+  t -> (Requisition.t structure)
 val get_child_visible:
-  t structure ptr -> bool
+  t -> bool
 val get_clip :
-  t structure ptr -> (Rectangle.t structure)
-(*Not implemented gtk_widget_get_clipboard return type object not handled*)
+  t -> (Rectangle.t structure)
+val get_clipboard:
+  t -> Atom.t structure ptr -> Clipboard.t
 val get_composite_name:
-  t structure ptr -> string option
-(*Not implemented gtk_widget_get_device_enabled type object not implemented*)
-(*Not implemented gtk_widget_get_device_events type object not implemented*)
+  t -> string option
+val get_device_enabled:
+  t -> Device.t -> bool
+val get_device_events:
+  t -> Device.t -> Event_mask.t_list
 val get_direction:
-  t structure ptr -> Text_direction.t
-(*Not implemented gtk_widget_get_display return type object not handled*)
+  t -> Text_direction.t
+val get_display:
+  t -> Display.t
 val get_double_buffered:
-  t structure ptr -> bool
+  t -> bool
 val get_events:
-  t structure ptr -> int32
+  t -> int32
 val get_focus_on_click:
-  t structure ptr -> bool
-(*Not implemented gtk_widget_get_font_map return type object not handled*)
+  t -> bool
+val get_font_map:
+  t -> Font_map.t
 val get_font_options:
-  t structure ptr -> Font_options.t structure ptr option
-(*Not implemented gtk_widget_get_frame_clock return type object not handled*)
+  t -> Font_options.t structure ptr option
+val get_frame_clock:
+  t -> Frame_clock.t
 val get_halign:
-  t structure ptr -> Align.t
+  t -> Align.t
 val get_has_tooltip:
-  t structure ptr -> bool
+  t -> bool
 val get_has_window:
-  t structure ptr -> bool
+  t -> bool
 val get_hexpand:
-  t structure ptr -> bool
+  t -> bool
 val get_hexpand_set:
-  t structure ptr -> bool
+  t -> bool
 val get_mapped:
-  t structure ptr -> bool
+  t -> bool
 val get_margin_bottom:
-  t structure ptr -> int32
+  t -> int32
 val get_margin_end:
-  t structure ptr -> int32
+  t -> int32
 val get_margin_left:
-  t structure ptr -> int32
+  t -> int32
 val get_margin_right:
-  t structure ptr -> int32
+  t -> int32
 val get_margin_start:
-  t structure ptr -> int32
+  t -> int32
 val get_margin_top:
-  t structure ptr -> int32
+  t -> int32
 val get_modifier_mask:
-  t structure ptr -> Modifier_intent.t -> Modifier_type.t_list
-(*Not implemented gtk_widget_get_modifier_style return type object not handled*)
+  t -> Modifier_intent.t -> Modifier_type.t_list
+val get_modifier_style:
+  t -> Rc_style.t
 val get_name:
-  t structure ptr -> string option
+  t -> string option
 val get_no_show_all:
-  t structure ptr -> bool
+  t -> bool
 val get_opacity:
-  t structure ptr -> float
-(*Not implemented gtk_widget_get_pango_context return type object not handled*)
-(*Not implemented gtk_widget_get_parent return type object not handled*)
-(*Not implemented gtk_widget_get_parent_window return type object not handled*)
+  t -> float
+val get_pango_context:
+  t -> Context.t
+val get_parent:
+  t -> t
+val get_parent_window:
+  t -> Window.t
 val get_path:
-  t structure ptr -> Widget_path.t structure ptr
+  t -> Widget_path.t structure ptr
 val get_pointer :
-  t structure ptr -> (int32 * int32)
+  t -> (int32 * int32)
 val get_preferred_height :
-  t structure ptr -> (int32 * int32)
+  t -> (int32 * int32)
 val get_preferred_height_and_baseline_for_width :
-  t structure ptr -> int32 -> (int32 * int32 * int32 * int32)
+  t -> int32 -> (int32 * int32 * int32 * int32)
 val get_preferred_height_for_width :
-  t structure ptr -> int32 -> (int32 * int32)
+  t -> int32 -> (int32 * int32)
 val get_preferred_size :
-  t structure ptr -> (Requisition.t structure * Requisition.t structure)
+  t -> (Requisition.t structure * Requisition.t structure)
 val get_preferred_width :
-  t structure ptr -> (int32 * int32)
+  t -> (int32 * int32)
 val get_preferred_width_for_height :
-  t structure ptr -> int32 -> (int32 * int32)
+  t -> int32 -> (int32 * int32)
 val get_realized:
-  t structure ptr -> bool
+  t -> bool
 val get_receives_default:
-  t structure ptr -> bool
+  t -> bool
 val get_request_mode:
-  t structure ptr -> Size_request_mode.t
+  t -> Size_request_mode.t
 val get_requisition :
-  t structure ptr -> (Requisition.t structure)
-(*Not implemented gtk_widget_get_root_window return type object not handled*)
+  t -> (Requisition.t structure)
+val get_root_window:
+  t -> Window.t
 val get_scale_factor:
-  t structure ptr -> int32
-(*Not implemented gtk_widget_get_screen return type object not handled*)
+  t -> int32
+val get_screen:
+  t -> Screen.t
 val get_sensitive:
-  t structure ptr -> bool
-(*Not implemented gtk_widget_get_settings return type object not handled*)
+  t -> bool
+val get_settings:
+  t -> Settings.t
 val get_size_request :
-  t structure ptr -> (int32 * int32)
+  t -> (int32 * int32)
 val get_state:
-  t structure ptr -> State_type.t
+  t -> State_type.t
 val get_state_flags:
-  t structure ptr -> State_flags.t_list
-(*Not implemented gtk_widget_get_style return type object not handled*)
-(*Not implemented gtk_widget_get_style_context return type object not handled*)
+  t -> State_flags.t_list
+val get_style:
+  t -> Style.t
+val get_style_context:
+  t -> Style_context.t
 val get_support_multidevice:
-  t structure ptr -> bool
+  t -> bool
 (*Not implemented gtk_widget_get_template_child type gType not implemented*)
 val get_tooltip_markup:
-  t structure ptr -> string option
+  t -> string option
 val get_tooltip_text:
-  t structure ptr -> string option
-(*Not implemented gtk_widget_get_tooltip_window return type object not handled*)
-(*Not implemented gtk_widget_get_toplevel return type object not handled*)
+  t -> string option
+val get_tooltip_window:
+  t -> Window.t
+val get_toplevel:
+  t -> t
 val get_valign:
-  t structure ptr -> Align.t
+  t -> Align.t
 val get_valign_with_baseline:
-  t structure ptr -> Align.t
+  t -> Align.t
 val get_vexpand:
-  t structure ptr -> bool
+  t -> bool
 val get_vexpand_set:
-  t structure ptr -> bool
+  t -> bool
 val get_visible:
-  t structure ptr -> bool
-(*Not implemented gtk_widget_get_visual return type object not handled*)
-(*Not implemented gtk_widget_get_window return type object not handled*)
+  t -> bool
+val get_visual:
+  t -> Visual.t
+val get_window:
+  t -> Window.t
 val grab_add:
-  t structure ptr -> unit
+  t -> unit
 val grab_default:
-  t structure ptr -> unit
+  t -> unit
 val grab_focus:
-  t structure ptr -> unit
+  t -> unit
 val grab_remove:
-  t structure ptr -> unit
+  t -> unit
 val has_default:
-  t structure ptr -> bool
+  t -> bool
 val has_focus:
-  t structure ptr -> bool
+  t -> bool
 val has_grab:
-  t structure ptr -> bool
+  t -> bool
 val has_rc_style:
-  t structure ptr -> bool
+  t -> bool
 val has_screen:
-  t structure ptr -> bool
+  t -> bool
 val has_visible_focus:
-  t structure ptr -> bool
+  t -> bool
 val hide:
-  t structure ptr -> unit
+  t -> unit
 val hide_on_delete:
-  t structure ptr -> bool
+  t -> bool
 val in_destruction:
-  t structure ptr -> bool
+  t -> bool
 val init_template:
-  t structure ptr -> unit
+  t -> unit
 val input_shape_combine_region:
-  t structure ptr -> Region.t structure ptr option -> unit
+  t -> Region.t structure ptr option -> unit
 (*Not implemented gtk_widget_insert_action_group type interface not implemented*)
 val intersect :
-  t structure ptr -> Rectangle.t structure ptr -> (bool * Rectangle.t structure)
-(*Not implemented gtk_widget_is_ancestor type object not implemented*)
+  t -> Rectangle.t structure ptr -> (bool * Rectangle.t structure)
+val is_ancestor:
+  t -> t -> bool
 val is_composited:
-  t structure ptr -> bool
+  t -> bool
 val is_drawable:
-  t structure ptr -> bool
+  t -> bool
 val is_focus:
-  t structure ptr -> bool
+  t -> bool
 val is_sensitive:
-  t structure ptr -> bool
+  t -> bool
 val is_toplevel:
-  t structure ptr -> bool
+  t -> bool
 val is_visible:
-  t structure ptr -> bool
+  t -> bool
 val keynav_failed:
-  t structure ptr -> Direction_type.t -> bool
+  t -> Direction_type.t -> bool
 val list_accel_closures:
-  t structure ptr -> List.t structure ptr
+  t -> List.t structure ptr
 (*Not implemented gtk_widget_list_action_prefixes return type C Array type for Types.Array tag not handled*)
 val list_mnemonic_labels:
-  t structure ptr -> List.t structure ptr
+  t -> List.t structure ptr
 val map:
-  t structure ptr -> unit
+  t -> unit
 val mnemonic_activate:
-  t structure ptr -> bool -> bool
+  t -> bool -> bool
 val modify_base:
-  t structure ptr -> State_type.t -> Color.t structure ptr option -> unit
+  t -> State_type.t -> Color.t structure ptr option -> unit
 val modify_bg:
-  t structure ptr -> State_type.t -> Color.t structure ptr option -> unit
+  t -> State_type.t -> Color.t structure ptr option -> unit
 val modify_cursor:
-  t structure ptr -> Color.t structure ptr option -> Color.t structure ptr option -> unit
+  t -> Color.t structure ptr option -> Color.t structure ptr option -> unit
 val modify_fg:
-  t structure ptr -> State_type.t -> Color.t structure ptr option -> unit
+  t -> State_type.t -> Color.t structure ptr option -> unit
 val modify_font:
-  t structure ptr -> Font_description.t structure ptr option -> unit
-(*Not implemented gtk_widget_modify_style type object not implemented*)
+  t -> Font_description.t structure ptr option -> unit
+val modify_style:
+  t -> Rc_style.t -> unit
 val modify_text:
-  t structure ptr -> State_type.t -> Color.t structure ptr option -> unit
+  t -> State_type.t -> Color.t structure ptr option -> unit
 val override_background_color:
-  t structure ptr -> State_flags.t_list -> RGBA.t structure ptr option -> unit
+  t -> State_flags.t_list -> RGBA.t structure ptr option -> unit
 val override_color:
-  t structure ptr -> State_flags.t_list -> RGBA.t structure ptr option -> unit
+  t -> State_flags.t_list -> RGBA.t structure ptr option -> unit
 val override_cursor:
-  t structure ptr -> RGBA.t structure ptr option -> RGBA.t structure ptr option -> unit
+  t -> RGBA.t structure ptr option -> RGBA.t structure ptr option -> unit
 val override_font:
-  t structure ptr -> Font_description.t structure ptr option -> unit
+  t -> Font_description.t structure ptr option -> unit
 val override_symbolic_color:
-  t structure ptr -> string -> RGBA.t structure ptr option -> unit
+  t -> string -> RGBA.t structure ptr option -> unit
 val path :
-  t structure ptr -> (Unsigned.uint32 * string * string)
+  t -> (Unsigned.uint32 * string * string)
 val queue_allocate:
-  t structure ptr -> unit
+  t -> unit
 val queue_compute_expand:
-  t structure ptr -> unit
+  t -> unit
 val queue_draw:
-  t structure ptr -> unit
+  t -> unit
 val queue_draw_area:
-  t structure ptr -> int32 -> int32 -> int32 -> int32 -> unit
+  t -> int32 -> int32 -> int32 -> int32 -> unit
 val queue_draw_region:
-  t structure ptr -> Region.t structure ptr -> unit
+  t -> Region.t structure ptr -> unit
 val queue_resize:
-  t structure ptr -> unit
+  t -> unit
 val queue_resize_no_redraw:
-  t structure ptr -> unit
+  t -> unit
 val realize:
-  t structure ptr -> unit
+  t -> unit
 val region_intersect:
-  t structure ptr -> Region.t structure ptr -> Region.t structure ptr
-(*Not implemented gtk_widget_register_window type object not implemented*)
-(*Not implemented gtk_widget_remove_accelerator type object not implemented*)
-(*Not implemented gtk_widget_remove_mnemonic_label type object not implemented*)
+  t -> Region.t structure ptr -> Region.t structure ptr
+val register_window:
+  t -> Window.t -> unit
+val remove_accelerator:
+  t -> Accel_group.t -> Unsigned.uint32 -> Modifier_type.t_list -> bool
+val remove_mnemonic_label:
+  t -> t -> unit
 val remove_tick_callback:
-  t structure ptr -> Unsigned.uint32 -> unit
-(*Not implemented gtk_widget_render_icon return type object not handled*)
-(*Not implemented gtk_widget_render_icon_pixbuf return type object not handled*)
-(*Not implemented gtk_widget_reparent type object not implemented*)
+  t -> Unsigned.uint32 -> unit
+val render_icon:
+  t -> string -> int32 -> string option -> Pixbuf.t
+val render_icon_pixbuf:
+  t -> string -> int32 -> Pixbuf.t
+val reparent:
+  t -> t -> unit
 val reset_rc_styles:
-  t structure ptr -> unit
+  t -> unit
 val reset_style:
-  t structure ptr -> unit
+  t -> unit
 (*Not implemented gtk_widget_send_expose type union not implemented*)
 (*Not implemented gtk_widget_send_focus_change type union not implemented*)
-(*Not implemented gtk_widget_set_accel_path type object not implemented*)
+val set_accel_path:
+  t -> string option -> Accel_group.t -> unit
 val set_allocation:
-  t structure ptr -> Rectangle.t structure ptr -> unit
+  t -> Rectangle.t structure ptr -> unit
 val set_app_paintable:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_can_default:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_can_focus:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_child_visible:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_clip:
-  t structure ptr -> Rectangle.t structure ptr -> unit
+  t -> Rectangle.t structure ptr -> unit
 val set_composite_name:
-  t structure ptr -> string -> unit
-(*Not implemented gtk_widget_set_device_enabled type object not implemented*)
-(*Not implemented gtk_widget_set_device_events type object not implemented*)
+  t -> string -> unit
+val set_device_enabled:
+  t -> Device.t -> bool -> unit
+val set_device_events:
+  t -> Device.t -> Event_mask.t_list -> unit
 val set_direction:
-  t structure ptr -> Text_direction.t -> unit
+  t -> Text_direction.t -> unit
 val set_double_buffered:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_events:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_focus_on_click:
-  t structure ptr -> bool -> unit
-(*Not implemented gtk_widget_set_font_map type object not implemented*)
+  t -> bool -> unit
+val set_font_map:
+  t -> Font_map.t -> unit
 val set_font_options:
-  t structure ptr -> Font_options.t structure ptr option -> unit
+  t -> Font_options.t structure ptr option -> unit
 val set_halign:
-  t structure ptr -> Align.t -> unit
+  t -> Align.t -> unit
 val set_has_tooltip:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_has_window:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_hexpand:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_hexpand_set:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_mapped:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_margin_bottom:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_margin_end:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_margin_left:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_margin_right:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_margin_start:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_margin_top:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_name:
-  t structure ptr -> string -> unit
+  t -> string -> unit
 val set_no_show_all:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_opacity:
-  t structure ptr -> float -> unit
-(*Not implemented gtk_widget_set_parent type object not implemented*)
-(*Not implemented gtk_widget_set_parent_window type object not implemented*)
+  t -> float -> unit
+val set_parent:
+  t -> t -> unit
+val set_parent_window:
+  t -> Window.t -> unit
 val set_realized:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_receives_default:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_redraw_on_allocate:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_sensitive:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_size_request:
-  t structure ptr -> int32 -> int32 -> unit
+  t -> int32 -> int32 -> unit
 val set_state:
-  t structure ptr -> State_type.t -> unit
+  t -> State_type.t -> unit
 val set_state_flags:
-  t structure ptr -> State_flags.t_list -> bool -> unit
-(*Not implemented gtk_widget_set_style type object not implemented*)
+  t -> State_flags.t_list -> bool -> unit
+val set_style:
+  t -> Style.t -> unit
 val set_support_multidevice:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_tooltip_markup:
-  t structure ptr -> string option -> unit
+  t -> string option -> unit
 val set_tooltip_text:
-  t structure ptr -> string option -> unit
-(*Not implemented gtk_widget_set_tooltip_window type object not implemented*)
+  t -> string option -> unit
+val set_tooltip_window:
+  t -> Window.t -> unit
 val set_valign:
-  t structure ptr -> Align.t -> unit
+  t -> Align.t -> unit
 val set_vexpand:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_vexpand_set:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_visible:
-  t structure ptr -> bool -> unit
-(*Not implemented gtk_widget_set_visual type object not implemented*)
-(*Not implemented gtk_widget_set_window type object not implemented*)
+  t -> bool -> unit
+val set_visual:
+  t -> Visual.t -> unit
+val set_window:
+  t -> Window.t -> unit
 val shape_combine_region:
-  t structure ptr -> Region.t structure ptr option -> unit
+  t -> Region.t structure ptr option -> unit
 val show:
-  t structure ptr -> unit
+  t -> unit
 val show_all:
-  t structure ptr -> unit
+  t -> unit
 val show_now:
-  t structure ptr -> unit
+  t -> unit
 val size_allocate:
-  t structure ptr -> Rectangle.t structure ptr -> unit
+  t -> Rectangle.t structure ptr -> unit
 val size_allocate_with_baseline:
-  t structure ptr -> Rectangle.t structure ptr -> int32 -> unit
+  t -> Rectangle.t structure ptr -> int32 -> unit
 val size_request :
-  t structure ptr -> (Requisition.t structure)
+  t -> (Requisition.t structure)
 val style_attach:
-  t structure ptr -> unit
+  t -> unit
 val style_get_property:
-  t structure ptr -> string -> Value.t structure ptr -> unit
+  t -> string -> Value.t structure ptr -> unit
 val thaw_child_notify:
-  t structure ptr -> unit
-(*Not implemented gtk_widget_translate_coordinates type object not implemented*)
+  t -> unit
+val translate_coordinates :
+  t -> t -> int32 -> int32 -> (bool * int32 * int32)
 val trigger_tooltip_query:
-  t structure ptr -> unit
+  t -> unit
 val unmap:
-  t structure ptr -> unit
+  t -> unit
 val unparent:
-  t structure ptr -> unit
+  t -> unit
 val unrealize:
-  t structure ptr -> unit
-(*Not implemented gtk_widget_unregister_window type object not implemented*)
+  t -> unit
+val unregister_window:
+  t -> Window.t -> unit
 val unset_state_flags:
-  t structure ptr -> State_flags.t_list -> unit
+  t -> State_flags.t_list -> unit

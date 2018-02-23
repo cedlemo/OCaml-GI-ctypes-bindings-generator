@@ -4,8 +4,11 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_message_dialog_get_image return type object not handled*)
-(*Not implemented gtk_message_dialog_get_message_area return type object not handled*)
-(*Not implemented gtk_message_dialog_set_image type object not implemented*)
+let get_image =
+  foreign "gtk_message_dialog_get_image" (t_typ @-> returning (Widget.t_typ))
+let get_message_area =
+  foreign "gtk_message_dialog_get_message_area" (t_typ @-> returning (Widget.t_typ))
+let set_image =
+  foreign "gtk_message_dialog_set_image" (t_typ @-> Widget.t_typ @-> returning (void))
 let set_markup =
-  foreign "gtk_message_dialog_set_markup" (ptr t_typ @-> string @-> returning (void))
+  foreign "gtk_message_dialog_set_markup" (t_typ @-> string @-> returning (void))

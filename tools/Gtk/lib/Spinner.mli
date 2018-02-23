@@ -3,8 +3,9 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_spinner_new return type object not handled*)
+val create:
+  unit -> Widget.t
 val start:
-  t structure ptr -> unit
+  t -> unit
 val stop:
-  t structure ptr -> unit
+  t -> unit

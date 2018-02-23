@@ -4,22 +4,24 @@ type t
 val t_typ : t typ
 
 val destroy:
-  t structure ptr -> unit
+  t -> unit
 val get_modal:
-  t structure ptr -> bool
+  t -> bool
 val get_title:
-  t structure ptr -> string option
-(*Not implemented gtk_native_dialog_get_transient_for return type object not handled*)
+  t -> string option
+val get_transient_for:
+  t -> Window.t
 val get_visible:
-  t structure ptr -> bool
+  t -> bool
 val hide:
-  t structure ptr -> unit
+  t -> unit
 val run:
-  t structure ptr -> int32
+  t -> int32
 val set_modal:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_title:
-  t structure ptr -> string -> unit
-(*Not implemented gtk_native_dialog_set_transient_for type object not implemented*)
+  t -> string -> unit
+val set_transient_for:
+  t -> Window.t -> unit
 val show:
-  t structure ptr -> unit
+  t -> unit

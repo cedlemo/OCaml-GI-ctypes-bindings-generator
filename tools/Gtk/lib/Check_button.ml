@@ -4,6 +4,9 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_check_button_new return type object not handled*)
-(*Not implemented gtk_check_button_new_with_label return type object not handled*)
-(*Not implemented gtk_check_button_new_with_mnemonic return type object not handled*)
+let create =
+  foreign "gtk_check_button_new" (void @-> returning (Widget.t_typ))
+let create_with_label =
+  foreign "gtk_check_button_new_with_label" (string @-> returning (Widget.t_typ))
+let create_with_mnemonic =
+  foreign "gtk_check_button_new_with_mnemonic" (string @-> returning (Widget.t_typ))

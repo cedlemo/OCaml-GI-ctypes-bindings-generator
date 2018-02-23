@@ -3,14 +3,21 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_radio_menu_item_new return type object not handled*)
-(*Not implemented gtk_radio_menu_item_new_from_widget type object not implemented*)
-(*Not implemented gtk_radio_menu_item_new_with_label return type object not handled*)
-(*Not implemented gtk_radio_menu_item_new_with_label_from_widget type object not implemented*)
-(*Not implemented gtk_radio_menu_item_new_with_mnemonic return type object not handled*)
-(*Not implemented gtk_radio_menu_item_new_with_mnemonic_from_widget type object not implemented*)
+val create:
+  SList.t structure ptr option -> Widget.t
+val create_from_widget:
+  t -> Widget.t
+val create_with_label:
+  SList.t structure ptr option -> string -> Widget.t
+val create_with_label_from_widget:
+  t -> string option -> Widget.t
+val create_with_mnemonic:
+  SList.t structure ptr option -> string -> Widget.t
+val create_with_mnemonic_from_widget:
+  t -> string option -> Widget.t
 val get_group:
-  t structure ptr -> SList.t structure ptr
-(*Not implemented gtk_radio_menu_item_join_group type object not implemented*)
+  t -> SList.t structure ptr
+val join_group:
+  t -> t -> unit
 val set_group:
-  t structure ptr -> SList.t structure ptr option -> unit
+  t -> SList.t structure ptr option -> unit

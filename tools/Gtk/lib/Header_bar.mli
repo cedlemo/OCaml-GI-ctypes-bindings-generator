@@ -3,28 +3,33 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_header_bar_new return type object not handled*)
-(*Not implemented gtk_header_bar_get_custom_title return type object not handled*)
+val create:
+  unit -> Widget.t
+val get_custom_title:
+  t -> Widget.t
 val get_decoration_layout:
-  t structure ptr -> string option
+  t -> string option
 val get_has_subtitle:
-  t structure ptr -> bool
+  t -> bool
 val get_show_close_button:
-  t structure ptr -> bool
+  t -> bool
 val get_subtitle:
-  t structure ptr -> string option
+  t -> string option
 val get_title:
-  t structure ptr -> string option
-(*Not implemented gtk_header_bar_pack_end type object not implemented*)
-(*Not implemented gtk_header_bar_pack_start type object not implemented*)
-(*Not implemented gtk_header_bar_set_custom_title type object not implemented*)
+  t -> string option
+val pack_end:
+  t -> Widget.t -> unit
+val pack_start:
+  t -> Widget.t -> unit
+val set_custom_title:
+  t -> Widget.t -> unit
 val set_decoration_layout:
-  t structure ptr -> string option -> unit
+  t -> string option -> unit
 val set_has_subtitle:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_show_close_button:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_subtitle:
-  t structure ptr -> string option -> unit
+  t -> string option -> unit
 val set_title:
-  t structure ptr -> string option -> unit
+  t -> string option -> unit

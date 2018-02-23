@@ -3,27 +3,34 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_action_group_new return type object not handled*)
-(*Not implemented gtk_action_group_add_action type object not implemented*)
-(*Not implemented gtk_action_group_add_action_with_accel type object not implemented*)
-(*Not implemented gtk_action_group_get_accel_group return type object not handled*)
-(*Not implemented gtk_action_group_get_action return type object not handled*)
+val create:
+  string -> t
+val add_action:
+  t -> Action.t -> unit
+val add_action_with_accel:
+  t -> Action.t -> string option -> unit
+val get_accel_group:
+  t -> Accel_group.t
+val get_action:
+  t -> string -> Action.t
 val get_name:
-  t structure ptr -> string option
+  t -> string option
 val get_sensitive:
-  t structure ptr -> bool
+  t -> bool
 val get_visible:
-  t structure ptr -> bool
+  t -> bool
 val list_actions:
-  t structure ptr -> List.t structure ptr
-(*Not implemented gtk_action_group_remove_action type object not implemented*)
-(*Not implemented gtk_action_group_set_accel_group type object not implemented*)
+  t -> List.t structure ptr
+val remove_action:
+  t -> Action.t -> unit
+val set_accel_group:
+  t -> Accel_group.t -> unit
 val set_sensitive:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 (*Not implemented gtk_action_group_set_translate_func type callback not implemented*)
 val set_translation_domain:
-  t structure ptr -> string option -> unit
+  t -> string option -> unit
 val set_visible:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val translate_string:
-  t structure ptr -> string -> string option
+  t -> string -> string option

@@ -3,30 +3,41 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_application_new return type object not handled*)
+val create:
+  string option -> Application_flags.t_list -> t
 val add_accelerator:
-  t structure ptr -> string -> string -> Variant.t structure ptr option -> unit
-(*Not implemented gtk_application_add_window type object not implemented*)
+  t -> string -> string -> Variant.t structure ptr option -> unit
+val add_window:
+  t -> Window.t -> unit
 (*Not implemented gtk_application_get_accels_for_action return type C Array type for Types.Array tag not handled*)
 (*Not implemented gtk_application_get_actions_for_accel return type C Array type for Types.Array tag not handled*)
-(*Not implemented gtk_application_get_active_window return type object not handled*)
-(*Not implemented gtk_application_get_app_menu return type object not handled*)
-(*Not implemented gtk_application_get_menu_by_id return type object not handled*)
-(*Not implemented gtk_application_get_menubar return type object not handled*)
-(*Not implemented gtk_application_get_window_by_id return type object not handled*)
+val get_active_window:
+  t -> Window.t
+val get_app_menu:
+  t -> Menu_model.t
+val get_menu_by_id:
+  t -> string -> Menu.t
+val get_menubar:
+  t -> Menu_model.t
+val get_window_by_id:
+  t -> Unsigned.uint32 -> Window.t
 val get_windows:
-  t structure ptr -> List.t structure ptr
-(*Not implemented gtk_application_inhibit type object not implemented*)
+  t -> List.t structure ptr
+val inhibit:
+  t -> Window.t -> Application_inhibit_flags.t_list -> string option -> Unsigned.uint32
 val is_inhibited:
-  t structure ptr -> Application_inhibit_flags.t_list -> bool
+  t -> Application_inhibit_flags.t_list -> bool
 (*Not implemented gtk_application_list_action_descriptions return type C Array type for Types.Array tag not handled*)
 val prefers_app_menu:
-  t structure ptr -> bool
+  t -> bool
 val remove_accelerator:
-  t structure ptr -> string -> Variant.t structure ptr option -> unit
-(*Not implemented gtk_application_remove_window type object not implemented*)
+  t -> string -> Variant.t structure ptr option -> unit
+val remove_window:
+  t -> Window.t -> unit
 (*Not implemented gtk_application_set_accels_for_action type C Array type for Types.Array tag not implemented*)
-(*Not implemented gtk_application_set_app_menu type object not implemented*)
-(*Not implemented gtk_application_set_menubar type object not implemented*)
+val set_app_menu:
+  t -> Menu_model.t -> unit
+val set_menubar:
+  t -> Menu_model.t -> unit
 val uninhibit:
-  t structure ptr -> Unsigned.uint32 -> unit
+  t -> Unsigned.uint32 -> unit

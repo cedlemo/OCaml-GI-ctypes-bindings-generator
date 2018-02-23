@@ -4,23 +4,31 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_menu_shell_activate_item type object not implemented*)
-(*Not implemented gtk_menu_shell_append type object not implemented*)
-(*Not implemented gtk_menu_shell_bind_model type object not implemented*)
+let activate_item =
+  foreign "gtk_menu_shell_activate_item" (t_typ @-> Widget.t_typ @-> bool @-> returning (void))
+let append =
+  foreign "gtk_menu_shell_append" (t_typ @-> Menu_item.t_typ @-> returning (void))
+let bind_model =
+  foreign "gtk_menu_shell_bind_model" (t_typ @-> Menu_model.t_typ @-> string_opt @-> bool @-> returning (void))
 let cancel =
-  foreign "gtk_menu_shell_cancel" (ptr t_typ @-> returning (void))
+  foreign "gtk_menu_shell_cancel" (t_typ @-> returning (void))
 let deactivate =
-  foreign "gtk_menu_shell_deactivate" (ptr t_typ @-> returning (void))
+  foreign "gtk_menu_shell_deactivate" (t_typ @-> returning (void))
 let deselect =
-  foreign "gtk_menu_shell_deselect" (ptr t_typ @-> returning (void))
-(*Not implemented gtk_menu_shell_get_parent_shell return type object not handled*)
-(*Not implemented gtk_menu_shell_get_selected_item return type object not handled*)
+  foreign "gtk_menu_shell_deselect" (t_typ @-> returning (void))
+let get_parent_shell =
+  foreign "gtk_menu_shell_get_parent_shell" (t_typ @-> returning (Widget.t_typ))
+let get_selected_item =
+  foreign "gtk_menu_shell_get_selected_item" (t_typ @-> returning (Widget.t_typ))
 let get_take_focus =
-  foreign "gtk_menu_shell_get_take_focus" (ptr t_typ @-> returning (bool))
-(*Not implemented gtk_menu_shell_insert type object not implemented*)
-(*Not implemented gtk_menu_shell_prepend type object not implemented*)
+  foreign "gtk_menu_shell_get_take_focus" (t_typ @-> returning (bool))
+let insert =
+  foreign "gtk_menu_shell_insert" (t_typ @-> Widget.t_typ @-> int32_t @-> returning (void))
+let prepend =
+  foreign "gtk_menu_shell_prepend" (t_typ @-> Widget.t_typ @-> returning (void))
 let select_first =
-  foreign "gtk_menu_shell_select_first" (ptr t_typ @-> bool @-> returning (void))
-(*Not implemented gtk_menu_shell_select_item type object not implemented*)
+  foreign "gtk_menu_shell_select_first" (t_typ @-> bool @-> returning (void))
+let select_item =
+  foreign "gtk_menu_shell_select_item" (t_typ @-> Widget.t_typ @-> returning (void))
 let set_take_focus =
-  foreign "gtk_menu_shell_set_take_focus" (ptr t_typ @-> bool @-> returning (void))
+  foreign "gtk_menu_shell_set_take_focus" (t_typ @-> bool @-> returning (void))

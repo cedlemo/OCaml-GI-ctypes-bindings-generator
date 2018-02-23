@@ -3,8 +3,11 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_message_dialog_get_image return type object not handled*)
-(*Not implemented gtk_message_dialog_get_message_area return type object not handled*)
-(*Not implemented gtk_message_dialog_set_image type object not implemented*)
+val get_image:
+  t -> Widget.t
+val get_message_area:
+  t -> Widget.t
+val set_image:
+  t -> Widget.t -> unit
 val set_markup:
-  t structure ptr -> string -> unit
+  t -> string -> unit

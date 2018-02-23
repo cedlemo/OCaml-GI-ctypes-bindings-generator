@@ -4,4 +4,5 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented gtk_color_chooser_dialog_new type object not implemented*)
+let create =
+  foreign "gtk_color_chooser_dialog_new" (string_opt @-> Window.t_typ @-> returning (Widget.t_typ))

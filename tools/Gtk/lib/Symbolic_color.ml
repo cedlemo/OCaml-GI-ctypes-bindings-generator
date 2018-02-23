@@ -17,9 +17,16 @@ let create_shade =
 let create_win32 =
   foreign "gtk_symbolic_color_new_win32" (string @-> int32_t @-> returning (ptr t_typ))
 let incr_ref =
-  foreign "gtk_symbolic_color_ref" (ptr t_typ @-> returning (ptr t_typ))
-(*Not implemented gtk_symbolic_color_resolve type object not implemented*)
+  foreign "gtk_symbolic_color_ref" (t_typ @-> returning (ptr t_typ))
+let resolve self props =
+  let resolved_color_ptr = allocate RGBA.t_typ (make RGBA.t_typ) in
+  let resolve_raw =
+    foreign "gtk_symbolic_color_resolve" (t_typ @-> Style_properties.t_typ @-> ptr (RGBA.t_typ) @-> returning bool)
+  in
+  let ret = resolve_raw self props resolved_color_ptr in
+  let resolved_color = !@ resolved_color_ptr in
+  (ret, resolved_color)
 let to_string =
-  foreign "gtk_symbolic_color_to_string" (ptr t_typ @-> returning (string_opt))
+  foreign "gtk_symbolic_color_to_string" (t_typ @-> returning (string_opt))
 let unref =
-  foreign "gtk_symbolic_color_unref" (ptr t_typ @-> returning (void))
+  foreign "gtk_symbolic_color_unref" (t_typ @-> returning (void))

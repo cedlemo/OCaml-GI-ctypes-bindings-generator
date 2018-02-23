@@ -3,7 +3,7 @@ open Ctypes
 type t
 val t_typ : t structure typ
 
-(*Struct field Table_child : object tag not implemented*)
+val f_widget: (Widget.t, t structure) field
 val f_left_attach: (Unsigned.uint16, t structure) field
 val f_right_attach: (Unsigned.uint16, t structure) field
 val f_top_attach: (Unsigned.uint16, t structure) field

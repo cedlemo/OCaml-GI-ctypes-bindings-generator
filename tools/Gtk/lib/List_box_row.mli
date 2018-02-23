@@ -3,20 +3,23 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_list_box_row_new return type object not handled*)
+val create:
+  unit -> Widget.t
 val changed:
-  t structure ptr -> unit
+  t -> unit
 val get_activatable:
-  t structure ptr -> bool
-(*Not implemented gtk_list_box_row_get_header return type object not handled*)
+  t -> bool
+val get_header:
+  t -> Widget.t
 val get_index:
-  t structure ptr -> int32
+  t -> int32
 val get_selectable:
-  t structure ptr -> bool
+  t -> bool
 val is_selected:
-  t structure ptr -> bool
+  t -> bool
 val set_activatable:
-  t structure ptr -> bool -> unit
-(*Not implemented gtk_list_box_row_set_header type object not implemented*)
+  t -> bool -> unit
+val set_header:
+  t -> Widget.t -> unit
 val set_selectable:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit

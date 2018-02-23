@@ -3,68 +3,93 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_notebook_new return type object not handled*)
-(*Not implemented gtk_notebook_append_page type object not implemented*)
-(*Not implemented gtk_notebook_append_page_menu type object not implemented*)
-(*Not implemented gtk_notebook_detach_tab type object not implemented*)
-(*Not implemented gtk_notebook_get_action_widget return type object not handled*)
+val create:
+  unit -> Widget.t
+val append_page:
+  t -> Widget.t -> Widget.t -> int32
+val append_page_menu:
+  t -> Widget.t -> Widget.t -> Widget.t -> int32
+val detach_tab:
+  t -> Widget.t -> unit
+val get_action_widget:
+  t -> Pack_type.t -> Widget.t
 val get_current_page:
-  t structure ptr -> int32
+  t -> int32
 val get_group_name:
-  t structure ptr -> string option
-(*Not implemented gtk_notebook_get_menu_label type object not implemented*)
-(*Not implemented gtk_notebook_get_menu_label_text type object not implemented*)
+  t -> string option
+val get_menu_label:
+  t -> Widget.t -> Widget.t
+val get_menu_label_text:
+  t -> Widget.t -> string option
 val get_n_pages:
-  t structure ptr -> int32
-(*Not implemented gtk_notebook_get_nth_page return type object not handled*)
+  t -> int32
+val get_nth_page:
+  t -> int32 -> Widget.t
 val get_scrollable:
-  t structure ptr -> bool
+  t -> bool
 val get_show_border:
-  t structure ptr -> bool
+  t -> bool
 val get_show_tabs:
-  t structure ptr -> bool
-(*Not implemented gtk_notebook_get_tab_detachable type object not implemented*)
+  t -> bool
+val get_tab_detachable:
+  t -> Widget.t -> bool
 val get_tab_hborder:
-  t structure ptr -> Unsigned.uint16
-(*Not implemented gtk_notebook_get_tab_label type object not implemented*)
-(*Not implemented gtk_notebook_get_tab_label_text type object not implemented*)
+  t -> Unsigned.uint16
+val get_tab_label:
+  t -> Widget.t -> Widget.t
+val get_tab_label_text:
+  t -> Widget.t -> string option
 val get_tab_pos:
-  t structure ptr -> Position_type.t
-(*Not implemented gtk_notebook_get_tab_reorderable type object not implemented*)
+  t -> Position_type.t
+val get_tab_reorderable:
+  t -> Widget.t -> bool
 val get_tab_vborder:
-  t structure ptr -> Unsigned.uint16
-(*Not implemented gtk_notebook_insert_page type object not implemented*)
-(*Not implemented gtk_notebook_insert_page_menu type object not implemented*)
+  t -> Unsigned.uint16
+val insert_page:
+  t -> Widget.t -> Widget.t -> int32 -> int32
+val insert_page_menu:
+  t -> Widget.t -> Widget.t -> Widget.t -> int32 -> int32
 val next_page:
-  t structure ptr -> unit
-(*Not implemented gtk_notebook_page_num type object not implemented*)
+  t -> unit
+val page_num:
+  t -> Widget.t -> int32
 val popup_disable:
-  t structure ptr -> unit
+  t -> unit
 val popup_enable:
-  t structure ptr -> unit
-(*Not implemented gtk_notebook_prepend_page type object not implemented*)
-(*Not implemented gtk_notebook_prepend_page_menu type object not implemented*)
+  t -> unit
+val prepend_page:
+  t -> Widget.t -> Widget.t -> int32
+val prepend_page_menu:
+  t -> Widget.t -> Widget.t -> Widget.t -> int32
 val prev_page:
-  t structure ptr -> unit
+  t -> unit
 val remove_page:
-  t structure ptr -> int32 -> unit
-(*Not implemented gtk_notebook_reorder_child type object not implemented*)
-(*Not implemented gtk_notebook_set_action_widget type object not implemented*)
+  t -> int32 -> unit
+val reorder_child:
+  t -> Widget.t -> int32 -> unit
+val set_action_widget:
+  t -> Widget.t -> Pack_type.t -> unit
 val set_current_page:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_group_name:
-  t structure ptr -> string option -> unit
-(*Not implemented gtk_notebook_set_menu_label type object not implemented*)
-(*Not implemented gtk_notebook_set_menu_label_text type object not implemented*)
+  t -> string option -> unit
+val set_menu_label:
+  t -> Widget.t -> Widget.t -> unit
+val set_menu_label_text:
+  t -> Widget.t -> string -> unit
 val set_scrollable:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_show_border:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_show_tabs:
-  t structure ptr -> bool -> unit
-(*Not implemented gtk_notebook_set_tab_detachable type object not implemented*)
-(*Not implemented gtk_notebook_set_tab_label type object not implemented*)
-(*Not implemented gtk_notebook_set_tab_label_text type object not implemented*)
+  t -> bool -> unit
+val set_tab_detachable:
+  t -> Widget.t -> bool -> unit
+val set_tab_label:
+  t -> Widget.t -> Widget.t -> unit
+val set_tab_label_text:
+  t -> Widget.t -> string -> unit
 val set_tab_pos:
-  t structure ptr -> Position_type.t -> unit
-(*Not implemented gtk_notebook_set_tab_reorderable type object not implemented*)
+  t -> Position_type.t -> unit
+val set_tab_reorderable:
+  t -> Widget.t -> bool -> unit

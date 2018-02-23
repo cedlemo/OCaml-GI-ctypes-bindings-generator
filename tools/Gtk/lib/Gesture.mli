@@ -4,34 +4,39 @@ type t
 val t_typ : t typ
 
 val get_bounding_box :
-  t structure ptr -> (bool * Rectangle.t structure)
+  t -> (bool * Rectangle.t structure)
 val get_bounding_box_center :
-  t structure ptr -> (bool * float * float)
-(*Not implemented gtk_gesture_get_device return type object not handled*)
+  t -> (bool * float * float)
+val get_device:
+  t -> Device.t
 val get_group:
-  t structure ptr -> List.t structure ptr
+  t -> List.t structure ptr
 (*Not implemented gtk_gesture_get_last_event return type union not handled*)
 val get_last_updated_sequence:
-  t structure ptr -> Event_sequence.t structure ptr option
+  t -> Event_sequence.t structure ptr option
 val get_point :
-  t structure ptr -> Event_sequence.t structure ptr option -> (bool * float * float)
+  t -> Event_sequence.t structure ptr option -> (bool * float * float)
 val get_sequence_state:
-  t structure ptr -> Event_sequence.t structure ptr -> Event_sequence_state.t
+  t -> Event_sequence.t structure ptr -> Event_sequence_state.t
 val get_sequences:
-  t structure ptr -> List.t structure ptr
-(*Not implemented gtk_gesture_get_window return type object not handled*)
-(*Not implemented gtk_gesture_group type object not implemented*)
+  t -> List.t structure ptr
+val get_window:
+  t -> Window.t
+val group:
+  t -> t -> unit
 val handles_sequence:
-  t structure ptr -> Event_sequence.t structure ptr option -> bool
+  t -> Event_sequence.t structure ptr option -> bool
 val is_active:
-  t structure ptr -> bool
-(*Not implemented gtk_gesture_is_grouped_with type object not implemented*)
+  t -> bool
+val is_grouped_with:
+  t -> t -> bool
 val is_recognized:
-  t structure ptr -> bool
+  t -> bool
 val set_sequence_state:
-  t structure ptr -> Event_sequence.t structure ptr -> Event_sequence_state.t -> bool
+  t -> Event_sequence.t structure ptr -> Event_sequence_state.t -> bool
 val set_state:
-  t structure ptr -> Event_sequence_state.t -> bool
-(*Not implemented gtk_gesture_set_window type object not implemented*)
+  t -> Event_sequence_state.t -> bool
+val set_window:
+  t -> Window.t -> unit
 val ungroup:
-  t structure ptr -> unit
+  t -> unit

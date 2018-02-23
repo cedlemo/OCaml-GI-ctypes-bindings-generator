@@ -3,30 +3,33 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_table_new return type object not handled*)
-(*Not implemented gtk_table_attach type object not implemented*)
-(*Not implemented gtk_table_attach_defaults type object not implemented*)
+val create:
+  Unsigned.uint32 -> Unsigned.uint32 -> bool -> Widget.t
+val attach:
+  t -> Widget.t -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> Attach_options.t_list -> Attach_options.t_list -> Unsigned.uint32 -> Unsigned.uint32 -> unit
+val attach_defaults:
+  t -> Widget.t -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> unit
 val get_col_spacing:
-  t structure ptr -> Unsigned.uint32 -> Unsigned.uint32
+  t -> Unsigned.uint32 -> Unsigned.uint32
 val get_default_col_spacing:
-  t structure ptr -> Unsigned.uint32
+  t -> Unsigned.uint32
 val get_default_row_spacing:
-  t structure ptr -> Unsigned.uint32
+  t -> Unsigned.uint32
 val get_homogeneous:
-  t structure ptr -> bool
+  t -> bool
 val get_row_spacing:
-  t structure ptr -> Unsigned.uint32 -> Unsigned.uint32
+  t -> Unsigned.uint32 -> Unsigned.uint32
 val get_size :
-  t structure ptr -> (Unsigned.uint32 * Unsigned.uint32)
+  t -> (Unsigned.uint32 * Unsigned.uint32)
 val resize:
-  t structure ptr -> Unsigned.uint32 -> Unsigned.uint32 -> unit
+  t -> Unsigned.uint32 -> Unsigned.uint32 -> unit
 val set_col_spacing:
-  t structure ptr -> Unsigned.uint32 -> Unsigned.uint32 -> unit
+  t -> Unsigned.uint32 -> Unsigned.uint32 -> unit
 val set_col_spacings:
-  t structure ptr -> Unsigned.uint32 -> unit
+  t -> Unsigned.uint32 -> unit
 val set_homogeneous:
-  t structure ptr -> bool -> unit
+  t -> bool -> unit
 val set_row_spacing:
-  t structure ptr -> Unsigned.uint32 -> Unsigned.uint32 -> unit
+  t -> Unsigned.uint32 -> Unsigned.uint32 -> unit
 val set_row_spacings:
-  t structure ptr -> Unsigned.uint32 -> unit
+  t -> Unsigned.uint32 -> unit

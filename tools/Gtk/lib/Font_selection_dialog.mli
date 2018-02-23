@@ -3,15 +3,19 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_font_selection_dialog_new return type object not handled*)
-(*Not implemented gtk_font_selection_dialog_get_cancel_button return type object not handled*)
+val create:
+  string -> Widget.t
+val get_cancel_button:
+  t -> Widget.t
 val get_font_name:
-  t structure ptr -> string option
-(*Not implemented gtk_font_selection_dialog_get_font_selection return type object not handled*)
-(*Not implemented gtk_font_selection_dialog_get_ok_button return type object not handled*)
+  t -> string option
+val get_font_selection:
+  t -> Widget.t
+val get_ok_button:
+  t -> Widget.t
 val get_preview_text:
-  t structure ptr -> string option
+  t -> string option
 val set_font_name:
-  t structure ptr -> string -> bool
+  t -> string -> bool
 val set_preview_text:
-  t structure ptr -> string -> unit
+  t -> string -> unit

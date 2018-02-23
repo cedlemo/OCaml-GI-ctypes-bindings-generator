@@ -7,17 +7,19 @@ val t_typ : t typ
 (*Not implemented gtk_numerable_icon_new_with_style_context type interface not implemented*)
 (*Not implemented gtk_numerable_icon_get_background_gicon return type interface not handled*)
 val get_background_icon_name:
-  t structure ptr -> string option
+  t -> string option
 val get_count:
-  t structure ptr -> int32
+  t -> int32
 val get_label:
-  t structure ptr -> string option
-(*Not implemented gtk_numerable_icon_get_style_context return type object not handled*)
+  t -> string option
+val get_style_context:
+  t -> Style_context.t
 (*Not implemented gtk_numerable_icon_set_background_gicon type interface not implemented*)
 val set_background_icon_name:
-  t structure ptr -> string option -> unit
+  t -> string option -> unit
 val set_count:
-  t structure ptr -> int32 -> unit
+  t -> int32 -> unit
 val set_label:
-  t structure ptr -> string option -> unit
-(*Not implemented gtk_numerable_icon_set_style_context type object not implemented*)
+  t -> string option -> unit
+val set_style_context:
+  t -> Style_context.t -> unit

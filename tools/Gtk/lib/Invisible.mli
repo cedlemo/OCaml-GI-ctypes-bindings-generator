@@ -3,7 +3,11 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented gtk_invisible_new return type object not handled*)
-(*Not implemented gtk_invisible_new_for_screen type object not implemented*)
-(*Not implemented gtk_invisible_get_screen return type object not handled*)
-(*Not implemented gtk_invisible_set_screen type object not implemented*)
+val create:
+  unit -> Widget.t
+val create_for_screen:
+  Screen.t -> Widget.t
+val get_screen:
+  t -> Screen.t
+val set_screen:
+  t -> Screen.t -> unit
