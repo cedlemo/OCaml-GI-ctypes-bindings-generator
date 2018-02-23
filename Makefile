@@ -25,4 +25,4 @@ update_gtk3_raw :
 	jbuilder clean
 	jbuilder build tools/gtk3_raw_generator.exe
 	./_build/default/tools/gtk3_raw_generator.exe
-	cp -rf tools/GLib/lib/* ../OCaml-Gtk3/lib/
+	cp -rf tools/Gtk/lib/* ../OCaml-Gtk3/lib/
