@@ -74,7 +74,7 @@ let test_escape_bad_function_name test_ctxt =
   let ml_content = "let _double =\n  \
                     foreign \"g_rand_double\" (ptr t_typ @-> returning (double))" in
   let writer = fun name info sources ->
-    let _ = Bind_function.append_ctypes_function_bindings name info (container, "t structure", "t_typ") sources [] in
+    let _ = Bind_function.append_ctypes_function_bindings name info (container, "t structure ptr", "ptr t_typ") sources [] in
     Binding_utils.Sources.write_buffs sources
   in
   Test_utils.test_writing test_ctxt method_info "double" writer mli_content ml_content
@@ -146,7 +146,7 @@ let test_function_bindings_for_args_out_function test_ctxt =
                           let day = !@ day_ptr in\n  \
                           (year, month, day)" in
         let writer = fun name info sources ->
-          let _ = Bind_function.append_ctypes_function_bindings name info (container, "t structure", "t") sources [] in
+          let _ = Bind_function.append_ctypes_function_bindings name info (container, "t structure ptr", "ptr t_typ") sources [] in
           Binding_utils.Sources.write_buffs sources
         in
         Test_utils.test_writing test_ctxt method_info "get_ymd" writer mli_content ml_content
