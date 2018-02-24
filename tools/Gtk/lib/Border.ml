@@ -13,6 +13,6 @@ let _ = seal t_typ
 let create =
   foreign "gtk_border_new" (void @-> returning (ptr t_typ))
 let copy =
-  foreign "gtk_border_copy" (t_typ @-> returning (ptr t_typ))
+  foreign "gtk_border_copy" (ptr t_typ @-> returning (ptr t_typ))
 let free =
-  foreign "gtk_border_free" (t_typ @-> returning (void))
+  foreign "gtk_border_free" (ptr t_typ @-> returning (void))

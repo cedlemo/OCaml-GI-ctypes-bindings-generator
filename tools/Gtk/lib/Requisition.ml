@@ -11,6 +11,6 @@ let _ = seal t_typ
 let create =
   foreign "gtk_requisition_new" (void @-> returning (ptr t_typ))
 let copy =
-  foreign "gtk_requisition_copy" (t_typ @-> returning (ptr t_typ))
+  foreign "gtk_requisition_copy" (ptr t_typ @-> returning (ptr t_typ))
 let free =
-  foreign "gtk_requisition_free" (t_typ @-> returning (void))
+  foreign "gtk_requisition_free" (ptr t_typ @-> returning (void))

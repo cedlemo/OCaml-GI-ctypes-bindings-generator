@@ -10,6 +10,6 @@ val f_info: (Unsigned.uint32, t structure) field
 val create:
   string -> Unsigned.uint32 -> Unsigned.uint32 -> t structure ptr
 val copy:
-  t structure -> t structure ptr
+  t structure ptr -> t structure ptr
 val free:
-  t structure -> unit
+  t structure ptr -> unit

@@ -11,29 +11,29 @@ val create_first:
 val create_from_string:
   string -> t structure ptr
 val append_index:
-  t structure -> int32 -> unit
+  t structure ptr -> int32 -> unit
 val compare:
-  t structure -> t structure ptr -> int32
+  t structure ptr -> t structure ptr -> int32
 val copy:
-  t structure -> t structure ptr
+  t structure ptr -> t structure ptr
 val down:
-  t structure -> unit
+  t structure ptr -> unit
 val free:
-  t structure -> unit
+  t structure ptr -> unit
 val get_depth:
-  t structure -> int32
+  t structure ptr -> int32
 (*Not implemented gtk_tree_path_get_indices_with_depth return type C Array type for Types.Array tag not handled*)
 val is_ancestor:
-  t structure -> t structure ptr -> bool
+  t structure ptr -> t structure ptr -> bool
 val is_descendant:
-  t structure -> t structure ptr -> bool
+  t structure ptr -> t structure ptr -> bool
 val next:
-  t structure -> unit
+  t structure ptr -> unit
 val prepend_index:
-  t structure -> int32 -> unit
+  t structure ptr -> int32 -> unit
 val prev:
-  t structure -> bool
+  t structure ptr -> bool
 val to_string:
-  t structure -> string option
+  t structure ptr -> string option
 val up:
-  t structure -> bool
+  t structure ptr -> bool

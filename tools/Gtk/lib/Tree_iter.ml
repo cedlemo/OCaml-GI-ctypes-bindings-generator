@@ -11,6 +11,6 @@ let f_user_data3 = field t_typ "user_data3" (ptr void)
 let _ = seal t_typ
 
 let copy =
-  foreign "gtk_tree_iter_copy" (t_typ @-> returning (ptr t_typ))
+  foreign "gtk_tree_iter_copy" (ptr t_typ @-> returning (ptr t_typ))
 let free =
-  foreign "gtk_tree_iter_free" (t_typ @-> returning (void))
+  foreign "gtk_tree_iter_free" (ptr t_typ @-> returning (void))

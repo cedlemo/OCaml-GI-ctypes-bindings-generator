@@ -11,6 +11,6 @@ val f_bottom: (int, t structure) field
 val create:
   unit -> t structure ptr
 val copy:
-  t structure -> t structure ptr
+  t structure ptr -> t structure ptr
 val free:
-  t structure -> unit
+  t structure ptr -> unit

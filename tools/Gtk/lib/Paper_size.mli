@@ -16,39 +16,39 @@ val create_from_key_file:
 val create_from_ppd:
   string -> string -> float -> float -> t structure ptr
 val copy:
-  t structure -> t structure ptr
+  t structure ptr -> t structure ptr
 val free:
-  t structure -> unit
+  t structure ptr -> unit
 val get_default_bottom_margin:
-  t structure -> Unit.t -> float
+  t structure ptr -> Unit.t -> float
 val get_default_left_margin:
-  t structure -> Unit.t -> float
+  t structure ptr -> Unit.t -> float
 val get_default_right_margin:
-  t structure -> Unit.t -> float
+  t structure ptr -> Unit.t -> float
 val get_default_top_margin:
-  t structure -> Unit.t -> float
+  t structure ptr -> Unit.t -> float
 val get_display_name:
-  t structure -> string option
+  t structure ptr -> string option
 val get_height:
-  t structure -> Unit.t -> float
+  t structure ptr -> Unit.t -> float
 val get_name:
-  t structure -> string option
+  t structure ptr -> string option
 val get_ppd_name:
-  t structure -> string option
+  t structure ptr -> string option
 val get_width:
-  t structure -> Unit.t -> float
+  t structure ptr -> Unit.t -> float
 val is_custom:
-  t structure -> bool
+  t structure ptr -> bool
 val is_equal:
-  t structure -> t structure ptr -> bool
+  t structure ptr -> t structure ptr -> bool
 val is_ipp:
-  t structure -> bool
+  t structure ptr -> bool
 val set_size:
-  t structure -> float -> float -> Unit.t -> unit
+  t structure ptr -> float -> float -> Unit.t -> unit
 val to_gvariant:
-  t structure -> Variant.t structure ptr
+  t structure ptr -> Variant.t structure ptr
 val to_key_file:
-  t structure -> Key_file.t structure ptr -> string -> unit
+  t structure ptr -> Key_file.t structure ptr -> string -> unit
 val get_default:
   unit -> string option
 val get_paper_sizes:
