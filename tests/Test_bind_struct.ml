@@ -1,5 +1,5 @@
 (*
- * Copyright 2017 Cedric LE MOIGNE, cedlemo@gmx.com
+ * Copyright 2017-2018 Cedric LE MOIGNE, cedlemo@gmx.com
  * This file is part of OCaml-GObject-Introspection.
  *
  * OCaml-GObject-Introspection is free software: you can redistribute it and/or modify
@@ -26,10 +26,10 @@ let repo = Repository.get_default ()
 let get_struct_info namespace struct_name =
   match Repository.find_by_name repo namespace struct_name with
   | None -> None
-  | Some (base_info) ->
-    match Base_info.get_type base_info with
-    | Base_info.Struct -> let struct_info = Struct_info.from_baseinfo base_info in
-      Some struct_info
+  | Some bi ->
+    match Base_info.get_type bi with
+    | Base_info.Struct -> let si = Struct_info.from_baseinfo bi in
+      Some si
     | _ -> None
 
 let struct_test namespace struct_name fn =
@@ -45,29 +45,29 @@ let test_append_ctypes_struct_declaration test_ctxt =
     Binding_utils.Sources.write_buffs sources
   )
   in
-  let mli_content = "type t\n\
-                     val t_typ : t structure typ\n" in
-  let ml_content = "type t\n\
-                    let t_typ : t structure typ = structure \"Array\"\n" in
+  let mli = "type t\n\
+             val t_typ : t structure typ\n" in
+  let ml = "type t\n\
+            let t_typ : t structure typ = structure \"Array\"\n" in
   struct_test namespace name (fun info ->
-    test_writing test_ctxt info name writer mli_content ml_content
+    test_writing test_ctxt info name writer mli ml
     )
 
 let test_append_ctypes_struct_field_declarations test_ctxt =
   let namespace = "GLib" in
   let name = "SList" in
-  let writer = fun name info sources -> (
-    let _ = Bind_struct.append_ctypes_struct_field_declarations name info sources [] in
-    Binding_utils.Sources.write_buffs sources
+  let writer = fun n i srcs -> (
+    let _ = Bind_struct.append_ctypes_struct_field_declarations n i srcs [] in
+    Binding_utils.Sources.write_buffs srcs
   )
   in
-  let mli_content = "val f_data: (unit ptr, t structure) field\n\
-                     val f_next: (t structure ptr, t structure) field\n" in
-  let ml_content = "let f_data = field t_typ \"data\" (ptr void)\n\
-                    let f_next = field t_typ \"next\" (ptr t_typ)\n\
-                    let _ = seal t_typ\n" in
+  let mli = "val f_data: (unit ptr, t structure) field\n\
+             val f_next: (t structure ptr, t structure) field\n" in
+  let ml = "let f_data = field t_typ \"data\" (ptr void)\n\
+            let f_next = field t_typ \"next\" (ptr t_typ)\n\
+            let _ = seal t_typ\n" in
   struct_test namespace name (fun info ->
-      test_writing test_ctxt info name writer mli_content ml_content
+      test_writing test_ctxt info name writer mli ml
   )
 
 let tests =
