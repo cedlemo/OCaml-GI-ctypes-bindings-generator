@@ -105,7 +105,7 @@ let generate_bindings gi_info const_parser
             | None -> Bind_function.parse_function_info gi_info.info gi_info.sources skip
             | Some function_parser_alt -> function_parser_alt gi_info.info gi_info.sources skip
         end
-        | Base_info.Struct -> begin
+        | Base_info.Boxed | Base_info.Struct -> begin
             let info' = Struct_info.from_baseinfo gi_info.info in
             if Struct_info.is_gtype_struct info' then ()
             else (
@@ -164,7 +164,6 @@ let generate_bindings gi_info const_parser
 
         | Base_info.Invalid_0 -> ()
         | Base_info.Interface -> ()
-        | Base_info.Boxed -> ()
 
 let parse loader
     ?prepend_in_core
