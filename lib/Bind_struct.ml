@@ -78,12 +78,13 @@ let append_ctypes_struct_field_declarations struct_name info sources skip_types 
 let append_ctypes_struct_methods_bindings struct_name info sources skip_types =
   let n = Struct_info.get_n_methods info in
   for i = 0 to n - 1 do
-    let method_info = Struct_info.get_method info i in
-    let base_info = Function_info.to_baseinfo method_info in
-    match Base_info.get_name base_info with
+    let mi = Struct_info.get_method info i in
+    let bi = Function_info.to_baseinfo mi in
+    match Base_info.get_name bi with
     | None -> ()
-    | Some name ->
-        Bind_function.append_ctypes_function_bindings name method_info (struct_name, "t structure ptr", "ptr t_typ") sources skip_types
+    | Some n ->
+        let c = Some (struct_name, "t structure ptr", "ptr t_typ") in
+        Bind_function.append_ctypes_function_bindings n mi c sources skip_types
   done
 
 let parse_struct_info info sources skip_types =

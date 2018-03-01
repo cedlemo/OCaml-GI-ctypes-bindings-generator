@@ -52,12 +52,13 @@ let append_ctypes_object_property_declarations object_name info sources skip_typ
 let append_ctypes_object_methods_bindings object_name info sources skip_types =
   let n = Object_info.get_n_methods info in
   for i = 0 to n - 1 do
-    let method_info = Object_info.get_method info i in
-    let base_info = Function_info.to_baseinfo method_info in
-    match Base_info.get_name base_info with
+    let mi = Object_info.get_method info i in
+    let bi = Function_info.to_baseinfo mi in
+    match Base_info.get_name bi with
     | None -> ()
-    | Some name ->
-        Bind_function.append_ctypes_function_bindings name method_info (object_name, "t", "t_typ") sources skip_types
+    | Some n ->
+        let c = Some (object_name, "t", "t_typ") in
+        Bind_function.append_ctypes_function_bindings n mi c sources skip_types
   done
 
 let parse_object_info info sources skip_types =
