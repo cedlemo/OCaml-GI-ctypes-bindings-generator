@@ -444,6 +444,67 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
       write_build_return_value_instructions ();
     end
 
+let generate_callable_bindings_when_in_out_args callable name container symbol arguments ret_types sources =
+  let open Binding_utils in
+  let name = ensure_valid_variable_name name in
+  let (ocaml_ret, ctypes_ret) = List.hd ret_types in
+  let mli = Sources.mli sources in
+  let ml = Sources.ml sources in
+  let raise_failure message =
+    raise (Failure ("generate_callable_bindings_when_in_out_args: " ^ message))
+  in
+  match arguments with
+  | No_args -> raise_failure "with No_args"
+  | Args args -> begin
+      let can_throw_gerror = Callable_info.can_throw_gerror callable in
+      let write_function_name () =
+        let arg_in_names = get_escaped_arg_names args.in_list in
+        let arg_in_out_names = get_escaped_arg_names args.in_out_list in
+        let function_decl = name :: ( arg_in_names @ arg_int_out_names) in
+        File.bprintf ml "let %s =\n" (String.concat " " function_decl)
+      in
+      let build_types_for_signature args_list =
+        match get_ocaml_types args_list with
+        | [] ->
+            if ocaml_ret = "unit" then
+              None
+            else Some (Printf.sprintf "(%s)" ocaml_ret)
+        | args_types -> let all_elements =
+          if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
+          in Some (Printf.sprintf "%s" (String.concat " * " all_elements))
+      in
+      let ocaml_types_out =
+        match get_ocaml_types args.out_list with
+        | [] -> Printf.sprintf "(%s)" ocaml_ret
+        | args_types -> let all_elements =
+          if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
+          in Printf.sprintf "%s" (String.concat " * " all_elements)
+      in
+      let ocaml_types_in_out =
+        match get_ocaml_types args.in_out_list with
+        | [] -> Printf.sprintf "(%s)" ocaml_ret
+        | args_types -> let all_elements =
+          if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
+          in Printf.sprintf "%s" (String.concat " * " all_elements)
+      in
+      let write_mli_signature () =
+        let _ = File.bprintf mli "val %s :\n" name in
+        let _ = File.bprintf mli "  %s -> %s" (ocaml_types_to_mli_sig args.in_list) (ocaml_types_to_mli_sig args.in_out_list) in
+        if can_throw_gerror then begin
+          File.bprintf mli " -> (%s, %s, %s) result\n" ocaml_types_out ocaml_types_in_out error_ocaml_type
+        end
+        else begin
+          File.bprintf mli " -> (%s, %s)\n" ocaml_types_out ocaml_types_in_out
+        end
+      in
+      let _ = File.bprintf ml "(*" in
+      let _ = File.bprintf mli "(*" in
+      let _ = write_function_name () in
+      let _ = write_mli_signature () in
+      let _ = File.bprintf ml "*)\n" in
+      File.bprintf mli "*)\n"
+  end
+
 let should_be_implemented args sources symbol =
   let open Binding_utils in
   let get_info_for_non_usable_arg = function
@@ -488,9 +549,10 @@ let append_ctypes_function_bindings raw_name info container sources skip_types =
         if has_out_arg args then
           generate_callable_bindings_when_out_args ci n cn s args rt sources
         else if has_in_out_arg args then
-          let coms  =
+          generate_callable_bindings_when_in_out_args ci n cn s args rt sources
+          (*let coms  =
             Printf.sprintf "Not implemented %s - in out argument not handled" s in
-          Sources.buffs_add_comments sources coms
+          Sources.buffs_add_comments sources coms*)
         else generate_callable_bindings_when_only_in_arg ci n s args rt sources
   end
 
