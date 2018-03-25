@@ -460,7 +460,7 @@ let generate_callable_bindings_when_in_out_args callable name container symbol a
       let write_function_name () =
         let arg_in_names = get_escaped_arg_names args.in_list in
         let arg_in_out_names = get_escaped_arg_names args.in_out_list in
-        let function_decl = name :: ( arg_in_names @ arg_int_out_names) in
+        let function_decl = name :: (arg_in_names @ arg_in_out_names) in
         File.bprintf ml "let %s =\n" (String.concat " " function_decl)
       in
       let build_types_for_signature args_list =
@@ -474,28 +474,25 @@ let generate_callable_bindings_when_in_out_args callable name container symbol a
           in Some (Printf.sprintf "%s" (String.concat " * " all_elements))
       in
       let ocaml_types_out =
-        match get_ocaml_types args.out_list with
-        | [] -> Printf.sprintf "(%s)" ocaml_ret
-        | args_types -> let all_elements =
-          if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
-          in Printf.sprintf "%s" (String.concat " * " all_elements)
+        build_types_for_signature args.out_list
       in
       let ocaml_types_in_out =
-        match get_ocaml_types args.in_out_list with
-        | [] -> Printf.sprintf "(%s)" ocaml_ret
-        | args_types -> let all_elements =
-          if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
-          in Printf.sprintf "%s" (String.concat " * " all_elements)
+        build_types_for_signature args.in_out_list
       in
       let write_mli_signature () =
         let _ = File.bprintf mli "val %s :\n" name in
         let _ = File.bprintf mli "  %s -> %s" (ocaml_types_to_mli_sig args.in_list) (ocaml_types_to_mli_sig args.in_out_list) in
-        if can_throw_gerror then begin
-          File.bprintf mli " -> (%s, %s, %s) result\n" ocaml_types_out ocaml_types_in_out error_ocaml_type
-        end
-        else begin
-          File.bprintf mli " -> (%s, %s)\n" ocaml_types_out ocaml_types_in_out
-        end
+        match ocaml_types_out, ocaml_types_in_out, can_throw_gerror with
+        | _, None, _ ->
+            raise_failure "write_mli_signature : it should have in/out arguments"
+        | None, Some args_in_out, false ->
+            File.bprintf mli " -> (%s)\n" args_in_out
+        | None, Some args_in_out, true ->
+            File.bprintf mli " -> (%s, %s) result\n" args_in_out error_ocaml_type
+        | Some args_out, Some args_in_out, false ->
+            File.bprintf mli " -> (%s * %s)\n" args_out args_in_out
+        | Some args_out, Some args_in_out, true ->
+            File.bprintf mli " -> (%s * %s, %s) result\n" args_out args_in_out error_ocaml_type
       in
       let _ = File.bprintf ml "(*" in
       let _ = File.bprintf mli "(*" in
