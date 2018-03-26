@@ -258,7 +258,7 @@ let return_gerror_result ?(indent=1) ?(ret="value") () =
 
   let write_mli_signature mli name arguments ocaml_ret can_throw_gerror =
     let open Binding_utils in
-    let _ = File.bprintf mli "val %s :\n  " name in
+    let _ = File.bprintf mli "val %s:\n  " name in
     match arguments with
     | No_args ->
         if can_throw_gerror then
