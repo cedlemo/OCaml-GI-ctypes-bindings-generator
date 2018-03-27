@@ -69,7 +69,7 @@ let test_escape_bad_function_name test_ctxt =
   | None -> assert_equal_string name " should return an I info"
   | Some i -> let si = Struct_info.from_baseinfo i in
   let mi = Struct_info.get_method si 0 in
-  let mli = "val _double:\n  \
+  let mli = "val _double :\n  \
              t structure ptr -> float" in
   let ml = "let _double =\n  \
             foreign \"g_rand_double\" (ptr t_typ @-> returning (double))" in
@@ -86,7 +86,7 @@ let test_function_bindings_for_in_args_only_function test_ctxt =
   | None -> assert_equal_string name " has not been found"
   | Some info -> let fi = Function_info.from_baseinfo info in
      let mli =
-       "val date_get_sunday_weeks_in_year:\n  \
+       "val date_get_sunday_weeks_in_year :\n  \
         Unsigned.uint16 -> Unsigned.uint8" in
      let ml = "let date_get_sunday_weeks_in_year =\n  \
                        foreign \"g_date_get_sunday_weeks_in_year\" \
@@ -102,7 +102,7 @@ let test_function_bindings_for_in_args_only_function_gerror test_ctxt =
   match Repository.find_by_name repo namespace name with
   | None -> assert_equal_string name " has not been found"
   | Some info -> let fi = Function_info.from_baseinfo info in
-     let mli ="val dir_make_tmp:\n  \
+     let mli ="val dir_make_tmp :\n  \
   string option -> (string option, Error.t structure ptr option) result" in
      let ml =
 "let dir_make_tmp tmpl =\n  \
