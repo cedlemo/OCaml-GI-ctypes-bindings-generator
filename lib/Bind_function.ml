@@ -355,21 +355,6 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
     | No_args -> ""
     | Args args -> escaped_arg_names_space_sep args.in_list
   in
-  (* let write_mli_signature ocaml_ret =
-    let _ = File.bprintf mli "val %s:\n  " name in
-    if can_throw_gerror then begin
-      match arguments with
-      | No_args -> File.bprintf mli "unit -> (%s, %s) result\n" ocaml_ret error_ocaml_type
-      | Args args -> File.bprintf mli "%s -> (%s, %s) result\n" (ocaml_types_to_mli_sig args.in_list) ocaml_ret error_ocaml_type
-    end
-    else begin
-      match arguments with
-      | No_args -> File.bprintf mli "unit -> %s\n" ocaml_ret
-      | Args args ->
-          let _ = File.bprintf mli "%s" (ocaml_types_to_mli_sig args.in_list) in
-          File.bprintf mli " -> %s\n" ocaml_ret
-    end
-  in*)
   let write_function_name () =
     if can_throw_gerror then begin
       File.bprintf ml "let %s %s =\n" name (if no_args then "()" else arg_names)
@@ -432,16 +417,6 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
           if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
           in Printf.sprintf "%s" (String.concat " * " all_elements)
       in
-      (*let write_mli_signature () =
-        let _ = File.bprintf mli "val %s :\n" name in
-        let _ = File.bprintf mli "  %s" (if no_in_args then "unit" else ocaml_types_to_mli_sig args.in_list) in
-        if can_throw_gerror then begin
-          File.bprintf mli " -> (%s, %s) result\n" ocaml_types_out error_ocaml_type
-        end
-        else begin
-          File.bprintf mli " -> (%s)\n" ocaml_types_out
-        end
-      in*)
       let write_function_name () =
         let function_decl = name :: (if no_in_args then "()" :: [] else get_escaped_arg_names args.in_list) in
         File.bprintf ml "let %s =\n" (String.concat " " function_decl)
@@ -517,7 +492,6 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
         end
       in
       write_mli_signature mli name arguments ocaml_ret can_throw_gerror;
-      (* write_mli_signature (); *)
       write_function_name ();
       List.iter write_out_argument_allocation_instructions args.out_list;
       if can_throw_gerror then begin
@@ -567,21 +541,6 @@ let generate_callable_bindings_when_in_out_args callable name container symbol a
       let ocaml_types_in_out =
         build_types_for_signature args.in_out_list
       in
-      (*let write_mli_signature () =
-        let _ = File.bprintf mli "val %s :\n" name in
-        let _ = File.bprintf mli "  %s -> %s" (ocaml_types_to_mli_sig args.in_list) (ocaml_types_to_mli_sig args.in_out_list) in
-        match ocaml_types_out, ocaml_types_in_out, can_throw_gerror with
-        | _, None, _ ->
-            raise_failure "write_mli_signature : it should have in/out arguments"
-        | None, Some args_in_out, false ->
-            File.bprintf mli " -> (%s)\n" args_in_out
-        | None, Some args_in_out, true ->
-            File.bprintf mli " -> (%s, %s) result\n" args_in_out error_ocaml_type
-        | Some args_out, Some args_in_out, false ->
-            File.bprintf mli " -> (%s * %s)\n" args_out args_in_out
-        | Some args_out, Some args_in_out, true ->
-            File.bprintf mli " -> (%s * %s, %s) result\n" args_out args_in_out error_ocaml_type
-      in*)
       let _ = File.bprintf ml "(*" in
       let _ = File.bprintf mli "(*" in
       let _ = write_function_name () in
