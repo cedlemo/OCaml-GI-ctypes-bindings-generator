@@ -343,6 +343,34 @@ let return_gerror_result ?(indent=1) ?(ret="value") () =
       | Some args_in, Some args_out, Some args_in_out, true, Some ocaml_ret ->
           File.bprintf mli "%s -> %s -> (%s * %s * %s, %s) result\n" args_in args_in_out_sig ocaml_ret args_out args_in_out error_ocaml_type
 
+  (* TODO handle can_throw_gerror too *)
+  let write_function_name ml name arguments =
+    let open Binding_utils in
+    match arguments with
+    | No_args ->
+        File.bprintf ml "let %s =\n" name
+    | Args args ->
+        let args_names = function
+          | [] -> None
+          | l -> Some (escaped_arg_names_space_sep l)
+        in
+        let args_in_names = args_names args.in_list in
+        let args_out_names = args_names args.out_list in
+        let args_in_out_names = args_names args.in_out_list in
+        match args_in_names, args_out_names, args_in_out_names with
+        | None, None, None->
+            File.bprintf ml "let %s =\n" name
+        | None, Some out_params, None->
+            File.bprintf ml "let %s () =\n" name
+        | Some in_params, None, None->
+            File.bprintf ml "let %s =\n" name
+        | Some in_params, Some out_params, None->
+            File.bprintf ml "let %s %s =\n" name in_params
+        | None, _, Some in_out_params ->
+            File.bprintf ml "let %s %s =\n" name in_out_params
+        | Some in_params, _, Some in_out_params ->
+            File.bprintf ml "let %s %s %s =\n" name in_params in_out_params
+
 let generate_callable_bindings_when_only_in_arg callable name symbol arguments ret_types sources =
   let open Binding_utils in
   let name = ensure_valid_variable_name name in
@@ -355,14 +383,14 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
     | No_args -> ""
     | Args args -> escaped_arg_names_space_sep args.in_list
   in
-  let write_function_name () =
+  (*let write_function_name () =
     if can_throw_gerror then begin
       File.bprintf ml "let %s %s =\n" name (if no_args then "()" else arg_names)
     end
     else begin
       File.bprintf ml "let %s =\n" name
     end
-  in
+  in *)
   let write_foreign_declaration ctypes_ret =
     if can_throw_gerror then begin
       let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
@@ -392,7 +420,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
   let ocaml_ret' = if ocaml_ret = "string" then "string option" else ocaml_ret in
   let ctypes_ret' = if ctypes_ret = "string" then "string_opt" else ctypes_ret in
   write_mli_signature mli name arguments ocaml_ret' can_throw_gerror;
-  write_function_name ();
+  write_function_name ml name arguments;
   write_foreign_declaration ctypes_ret';
   if can_throw_gerror then write_compute_value_instructions_when_can_throw_error ()
 
@@ -417,10 +445,10 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
           if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
           in Printf.sprintf "%s" (String.concat " * " all_elements)
       in
-      let write_function_name () =
+      (*let write_function_name () =
         let function_decl = name :: (if no_in_args then "()" :: [] else get_escaped_arg_names args.in_list) in
         File.bprintf ml "let %s =\n" (String.concat " " function_decl)
-      in
+      in*)
       let write_out_argument_allocation_instructions a =
         let name' = get_escaped_arg_name a in
         match get_type_info a with
@@ -492,7 +520,7 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
         end
       in
       write_mli_signature mli name arguments ocaml_ret can_throw_gerror;
-      write_function_name ();
+      write_function_name ml name arguments;
       List.iter write_out_argument_allocation_instructions args.out_list;
       if can_throw_gerror then begin
         File.bprintf ml "  %s\n" allocate_gerror
@@ -519,12 +547,12 @@ let generate_callable_bindings_when_in_out_args callable name container symbol a
   | No_args -> raise_failure "with No_args"
   | Args args -> begin
       let can_throw_gerror = Callable_info.can_throw_gerror callable in
-      let write_function_name () =
+      (* let write_function_name () =
         let arg_in_names = get_escaped_arg_names args.in_list in
         let arg_in_out_names = get_escaped_arg_names args.in_out_list in
         let function_decl = name :: (arg_in_names @ arg_in_out_names) in
         File.bprintf ml "let %s =\n" (String.concat " " function_decl)
-      in
+      in*)
       let build_types_for_signature args_list =
         match get_ocaml_types args_list with
         | [] ->
@@ -543,7 +571,7 @@ let generate_callable_bindings_when_in_out_args callable name container symbol a
       in
       let _ = File.bprintf ml "(*" in
       let _ = File.bprintf mli "(*" in
-      let _ = write_function_name () in
+      let _ = write_function_name ml name arguments in
       let _ = write_mli_signature mli name arguments ocaml_ret can_throw_gerror in
       let _ = File.bprintf ml "*)\n" in
       File.bprintf mli "*)\n"
