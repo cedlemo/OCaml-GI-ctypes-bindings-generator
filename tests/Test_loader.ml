@@ -22,18 +22,18 @@ open GI_bindings_generator
 
 let test_loader_with_bad_namespace test_ctxt =
   match Loader.load "bad_namespace" () with
-  | None -> assert_equal true true
-  | Some _ -> assert_equal_string "It should not" "load anything"
+  | Error message -> assert_equal_string "Unable to get anything" message
+  | Ok _ -> assert_equal_string "It should not" "load anything"
 
 let test_loader_with_good_namespace test_ctxt =
   match Loader.load "Gtk" () with
-  | None -> assert_equal false true
-  | Some _ -> assert_equal true true
+  | Error message -> assert_equal false true
+  | Ok loader -> assert_equal true true
 
 let test_loader namespace fn =
   match Loader.load namespace () with
-  | None -> assert_equal_string "Please provide " "a good namespace"
-  | Some loader -> fn loader
+  | Error message -> assert_equal_string "Please provide  a good namespace" message
+  | Ok loader -> fn loader
 
 let test_loader_get_namespace test_ctxt =
   test_loader "Gtk" (fun loader ->
@@ -42,16 +42,16 @@ let test_loader_get_namespace test_ctxt =
 
 let test_loader_get_version_good test_ctxt =
   let version = "3.0" in
-  match Loader.load "Gtk" ?version:(Some version) () with
-  | None -> assert_equal_string "Please provide " "a good namespace"
-  | Some loader -> let v = Loader.get_version loader in
+  match Loader.load "Gtk" ~version () with
+  | Error message -> assert_equal_string "Unable to get anything" message
+  | Ok loader -> let v = Loader.get_version loader in
     assert_equal_string version v
 
 let test_loader_get_version_bad test_ctxt =
   let version = "123.0" in
   match Loader.load "Gtk" ?version:(Some version) () with
-  | None -> assert_equal true true
-  | Some loader -> let v = Loader.get_version loader in
+  | Error message -> assert_equal_string "Unable to get anything" message
+  | Ok loader -> let v = Loader.get_version loader in
     assert_equal_string "3.0" v
 
 let test_loader_generate_dir test_ctxt =

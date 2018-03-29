@@ -30,9 +30,9 @@ type t = {
 let load namespace ?version () =
   let repo = Repository.get_default () in
   match Repository.require repo namespace ?version:version () with
-  | None -> None
-  | Some typelib -> let version' = Repository.get_version repo namespace in
-    Some {repo; typelib; namespace; version = version'; build_path = "."}
+  | Error message -> Error message
+  | Ok typelib -> let version' = Repository.get_version repo namespace in
+    Ok {repo; typelib; namespace; version = version'; build_path = "."}
 
 let dir_exists path =
   if not (Sys.file_exists path) then

@@ -27,7 +27,7 @@ type t
 
 (** Load a namespace with an optional version. *)
 val load:
-  string -> ?version:string -> unit -> t option
+  string -> ?version:string -> unit -> (t, string) result
 
 (** Get the initial namespace of the loader. *)
 val get_namespace:
