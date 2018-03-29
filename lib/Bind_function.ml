@@ -344,7 +344,7 @@ let return_gerror_result ?(indent=1) ?(ret="value") () =
           File.bprintf mli "%s -> %s -> (%s * %s * %s, %s) result\n" args_in args_in_out_sig ocaml_ret args_out args_in_out error_ocaml_type
 
   (* TODO handle can_throw_gerror too *)
-  let write_function_name ml name arguments =
+  let write_function_name ml name arguments can_throw_gerror =
     let open Binding_utils in
     match arguments with
     | No_args ->
@@ -357,18 +357,20 @@ let return_gerror_result ?(indent=1) ?(ret="value") () =
         let args_in_names = args_names args.in_list in
         let args_out_names = args_names args.out_list in
         let args_in_out_names = args_names args.in_out_list in
-        match args_in_names, args_out_names, args_in_out_names with
-        | None, None, None->
+        match args_in_names, args_out_names, args_in_out_names, can_throw_gerror with
+        | None, None, None, false->
             File.bprintf ml "let %s =\n" name
-        | None, Some out_params, None->
+        | None, None, None, true->
             File.bprintf ml "let %s () =\n" name
-        | Some in_params, None, None->
+        | None, Some out_params, None, _->
+            File.bprintf ml "let %s () =\n" name
+        | Some in_params, None, None, false ->
             File.bprintf ml "let %s =\n" name
-        | Some in_params, Some out_params, None->
+        | Some in_params, _, None, _ ->
             File.bprintf ml "let %s %s =\n" name in_params
-        | None, _, Some in_out_params ->
+        | None, _, Some in_out_params, _ ->
             File.bprintf ml "let %s %s =\n" name in_out_params
-        | Some in_params, _, Some in_out_params ->
+        | Some in_params, _, Some in_out_params, _ ->
             File.bprintf ml "let %s %s %s =\n" name in_params in_out_params
 
 let generate_callable_bindings_when_only_in_arg callable name symbol arguments ret_types sources =
@@ -420,7 +422,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
   let ocaml_ret' = if ocaml_ret = "string" then "string option" else ocaml_ret in
   let ctypes_ret' = if ctypes_ret = "string" then "string_opt" else ctypes_ret in
   write_mli_signature mli name arguments ocaml_ret' can_throw_gerror;
-  write_function_name ml name arguments;
+  write_function_name ml name arguments can_throw_gerror;
   write_foreign_declaration ctypes_ret';
   if can_throw_gerror then write_compute_value_instructions_when_can_throw_error ()
 
@@ -520,7 +522,7 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
         end
       in
       write_mli_signature mli name arguments ocaml_ret can_throw_gerror;
-      write_function_name ml name arguments;
+      write_function_name ml name arguments can_throw_gerror;
       List.iter write_out_argument_allocation_instructions args.out_list;
       if can_throw_gerror then begin
         File.bprintf ml "  %s\n" allocate_gerror
@@ -571,7 +573,7 @@ let generate_callable_bindings_when_in_out_args callable name container symbol a
       in
       let _ = File.bprintf ml "(*" in
       let _ = File.bprintf mli "(*" in
-      let _ = write_function_name ml name arguments in
+      let _ = write_function_name ml name arguments can_throw_gerror in
       let _ = write_mli_signature mli name arguments ocaml_ret can_throw_gerror in
       let _ = File.bprintf ml "*)\n" in
       File.bprintf mli "*)\n"
