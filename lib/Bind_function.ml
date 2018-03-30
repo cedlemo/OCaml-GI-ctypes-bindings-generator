@@ -503,18 +503,6 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
                 Binding_utils.string_pattern_remove instructions pattern
                 |> File.bprintf ml "  %s"
       in
-      (* let write_foreign_declaration () =
-        let _ = File.bprintf ml "  let %s_raw =\n" name in
-        let _ = match args.in_list with
-        | [] -> File.bprintf ml "    foreign \"%s\" (" symbol
-        | _ -> File.bprintf ml  "    foreign \"%s\" (%s @-> " symbol (ctypes_types_to_foreign_sig args.in_list)
-        in
-        let _ = File.bprintf ml "%s" (String.concat " @-> " (List.map (fun a -> Printf.sprintf "ptr (%s)" (get_ctypes_type a)) args.out_list)) in
-        if can_throw_gerror then
-          File.bprintf ml " @-> ptr (%s) @-> returning (%s))\n  in\n" error_ctypes_type ctypes_ret
-        else
-          File.bprintf ml " @-> returning %s)\n  in\n" ctypes_ret
-      in*)
       let write_compute_result () =
         let in_arg_names = get_escaped_arg_names args.in_list in
         let out_arg_names =
@@ -604,6 +592,7 @@ let generate_callable_bindings_when_in_out_args callable name container symbol a
       let _ = File.bprintf mli "(*" in
       let _ = write_function_name ml name arguments can_throw_gerror in
       let _ = write_mli_signature mli name arguments ocaml_ret can_throw_gerror in
+      let _ = write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret in
       let _ = File.bprintf ml "*)\n" in
       File.bprintf mli "*)\n"
   end
