@@ -382,13 +382,17 @@ let write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_r
     else
       File.bprintf ml "  foreign \"%s\" (void @-> returning (%s))\n" symbol ctypes_ret
   | Args args ->
-    let args_to_foreign_sig = function
+    let args_by_value_to_foreign_sig = function
       | [] -> None
       | l -> Some (ctypes_types_to_foreign_sig l)
     in
-    let args_in_foreign_sig = args_to_foreign_sig args.in_list in
-    let args_out_foreign_sig = args_to_foreign_sig args.out_list in
-    let args_in_out_foreign_sig = args_to_foreign_sig args.in_out_list in
+    let args_by_ptr_to_foreign_sig = function
+      | [] -> None
+      | l -> Some (String.concat " @-> " (List.map (fun a -> Printf.sprintf "ptr (%s)" (get_ctypes_type a)) l))
+    in
+    let args_in_foreign_sig = args_by_value_to_foreign_sig args.in_list in
+    let args_out_foreign_sig =  args_by_ptr_to_foreign_sig args.out_list in
+    let args_in_out_foreign_sig = args_by_ptr_to_foreign_sig args.in_out_list in
     if can_throw_gerror then
       let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
       match args_in_foreign_sig, args_out_foreign_sig, args_in_out_foreign_sig with
@@ -415,17 +419,23 @@ let write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_r
       | Some args_in, None, None ->
           File.bprintf ml "  foreign \"%s\" (%s @-> returning (%s))\n" symbol args_in ctypes_ret
       | None, Some args_out, None ->
-          File.bprintf ml "  foreign \"%s\" (%s @-> returning (%s))\n" symbol args_out ctypes_ret
+          let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
+          File.bprintf ml "(%s @-> returning (%s))\n  in\n" args_out ctypes_ret
       | Some args_in, Some args_out, None ->
-          File.bprintf ml "  foreign \"%s\" (%s @-> %s @-> returning (%s))\n" symbol args_in args_out ctypes_ret
+          let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
+          File.bprintf ml "(%s @-> %s @-> returning (%s))\n  in\n" args_in args_out ctypes_ret
       | None, None, Some args_in_out ->
-          File.bprintf ml "  foreign \"%s\" (%s @-> returning (%s))\n" symbol args_in_out ctypes_ret
+          let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
+          File.bprintf ml "(%s @-> returning (%s))\n  in\n" args_in_out ctypes_ret
       | Some args_in, None, Some args_in_out ->
-          File.bprintf ml "  foreign \"%s\" (%s @-> %s @-> returning (%s))\n" symbol args_in args_in_out ctypes_ret
+          let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
+          File.bprintf ml "(%s @-> %s @-> returning (%s))\n  in\n" args_in args_in_out ctypes_ret
       | None, Some args_out, Some args_in_out ->
-          File.bprintf ml "  foreign \"%s\" (%s @-> %s @-> returning (%s))\n" symbol args_out args_in_out ctypes_ret
+          let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
+          File.bprintf ml "(%s @-> %s @-> returning (%s))\n  in\n" args_out args_in_out ctypes_ret
       | Some args_in, Some args_out, Some args_in_out ->
-          File.bprintf ml "  foreign \"%s\" (%s @-> %s @-> %s @-> returning (%s))\n" symbol args_in args_out args_in_out ctypes_ret
+          let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
+          File.bprintf ml "(%s @-> %s @-> %s @-> returning (%s))\n  in\n" args_in args_out args_in_out ctypes_ret
 
 let generate_callable_bindings_when_only_in_arg callable name symbol arguments ret_types sources =
   let open Binding_utils in
@@ -493,7 +503,7 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
                 Binding_utils.string_pattern_remove instructions pattern
                 |> File.bprintf ml "  %s"
       in
-      let write_foreign_declaration () =
+      (* let write_foreign_declaration () =
         let _ = File.bprintf ml "  let %s_raw =\n" name in
         let _ = match args.in_list with
         | [] -> File.bprintf ml "    foreign \"%s\" (" symbol
@@ -504,7 +514,7 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
           File.bprintf ml " @-> ptr (%s) @-> returning (%s))\n  in\n" error_ctypes_type ctypes_ret
         else
           File.bprintf ml " @-> returning %s)\n  in\n" ctypes_ret
-      in
+      in*)
       let write_compute_result () =
         let in_arg_names = get_escaped_arg_names args.in_list in
         let out_arg_names =
@@ -552,7 +562,7 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
       if can_throw_gerror then begin
         File.bprintf ml "  %s\n" allocate_gerror
       end;
-      write_foreign_declaration ();
+      write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret;
       write_compute_result ();
       if can_throw_gerror then begin
         File.bprintf ml "  let get_ret_value () =\n"
