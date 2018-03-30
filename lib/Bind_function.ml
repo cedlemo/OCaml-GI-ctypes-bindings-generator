@@ -439,26 +439,6 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
     | No_args -> ""
     | Args args -> escaped_arg_names_space_sep args.in_list
   in
-  (*let write_foreign_declaration ctypes_ret =
-    if can_throw_gerror then begin
-      let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
-      let _ = match arguments with
-        | No_args -> File.bprintf ml "(ptr (%s) @-> returning (%s))\n  in\n" error_ctypes_type ctypes_ret
-        | Args args ->
-          let _ = File.bprintf ml "(%s" (ctypes_types_to_foreign_sig args.in_list) in
-          File.bprintf ml "@-> ptr (%s) @-> returning (%s))\n  in\n" error_ctypes_type ctypes_ret
-      in
-      File.bprintf ml "  %s\n" allocate_gerror
-    end
-    else begin
-      let _ = File.bprintf ml "  foreign \"%s\" " symbol in
-      let _ = match arguments with
-      | No_args -> File.bprintf ml "(%s" "void"
-      | Args args -> File.bprintf ml "(%s" (ctypes_types_to_foreign_sig args.in_list)
-      in
-      File.bprintf ml " @-> returning (%s))\n" ctypes_ret
-    end
-  in*)
   let write_compute_value_instructions_when_can_throw_error () =
     let _ =
       File.bprintf ml "  let value = %s_raw %s err_ptr_ptr in\n" name arg_names
