@@ -387,8 +387,8 @@ let write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_r
       | l -> Some (ctypes_types_to_foreign_sig l)
     in
     let args_in_foreign_sig = args_to_foreign_sig args.in_list in
-    let args_out_foreign_sig = args_to_foreign_sig args.in_list in
-    let args_in_out_foreign_sig = args_to_foreign_sig args.in_list in
+    let args_out_foreign_sig = args_to_foreign_sig args.out_list in
+    let args_in_out_foreign_sig = args_to_foreign_sig args.in_out_list in
     if can_throw_gerror then
       let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
       match args_in_foreign_sig, args_out_foreign_sig, args_in_out_foreign_sig with
@@ -413,19 +413,19 @@ let write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_r
       | None, None, None -> (* Should not appear raise an exception ? *)
           File.bprintf ml "  foreign \"%s\" (void @-> returning (%s))\n" symbol ctypes_ret
       | Some args_in, None, None ->
-          File.bprintf ml "(%s @-> returning (%s))\n" args_in ctypes_ret
+          File.bprintf ml "  foreign \"%s\" (%s @-> returning (%s))\n" symbol args_in ctypes_ret
       | None, Some args_out, None ->
-          File.bprintf ml "(%s @-> returning (%s))\n" args_out ctypes_ret
+          File.bprintf ml "  foreign \"%s\" (%s @-> returning (%s))\n" symbol args_out ctypes_ret
       | Some args_in, Some args_out, None ->
-          File.bprintf ml "(%s @-> %s @-> returning (%s))\n" args_in args_out ctypes_ret
+          File.bprintf ml "  foreign \"%s\" (%s @-> %s @-> returning (%s))\n" symbol args_in args_out ctypes_ret
       | None, None, Some args_in_out ->
-          File.bprintf ml "(%s @-> returning (%s))\n" args_in_out ctypes_ret
+          File.bprintf ml "  foreign \"%s\" (%s @-> returning (%s))\n" symbol args_in_out ctypes_ret
       | Some args_in, None, Some args_in_out ->
-          File.bprintf ml "(%s @-> %s @-> returning (%s))\n" args_in args_in_out ctypes_ret
+          File.bprintf ml "  foreign \"%s\" (%s @-> %s @-> returning (%s))\n" symbol args_in args_in_out ctypes_ret
       | None, Some args_out, Some args_in_out ->
-          File.bprintf ml "(%s @-> %s @-> returning (%s))\n" args_out args_in_out ctypes_ret
+          File.bprintf ml "  foreign \"%s\" (%s @-> %s @-> returning (%s))\n" symbol args_out args_in_out ctypes_ret
       | Some args_in, Some args_out, Some args_in_out ->
-          File.bprintf ml "(%s @-> %s @-> %s @-> returning (%s))\n" args_in args_out args_in_out ctypes_ret
+          File.bprintf ml "  foreign \"%s\" (%s @-> %s @-> %s @-> returning (%s))\n" symbol args_in args_out args_in_out ctypes_ret
 
 let generate_callable_bindings_when_only_in_arg callable name symbol arguments ret_types sources =
   let open Binding_utils in
@@ -439,7 +439,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
     | No_args -> ""
     | Args args -> escaped_arg_names_space_sep args.in_list
   in
-  let write_foreign_declaration ctypes_ret =
+  (*let write_foreign_declaration ctypes_ret =
     if can_throw_gerror then begin
       let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
       let _ = match arguments with
@@ -458,7 +458,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
       in
       File.bprintf ml " @-> returning (%s))\n" ctypes_ret
     end
-  in
+  in*)
   let write_compute_value_instructions_when_can_throw_error () =
     let _ =
       File.bprintf ml "  let value = %s_raw %s err_ptr_ptr in\n" name arg_names
@@ -469,8 +469,11 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
   let ctypes_ret' = if ctypes_ret = "string" then "string_opt" else ctypes_ret in
   write_mli_signature mli name arguments ocaml_ret' can_throw_gerror;
   write_function_name ml name arguments can_throw_gerror;
-  write_foreign_declaration ctypes_ret';
-  if can_throw_gerror then write_compute_value_instructions_when_can_throw_error ()
+  write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret';
+  if can_throw_gerror then begin
+    File.bprintf ml "  %s\n" allocate_gerror;
+    write_compute_value_instructions_when_can_throw_error ()
+  end
 
 let generate_callable_bindings_when_out_args callable name container symbol arguments ret_types sources =
   let open Binding_utils in
