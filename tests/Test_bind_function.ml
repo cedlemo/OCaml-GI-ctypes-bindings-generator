@@ -107,7 +107,7 @@ let test_function_bindings_for_in_args_only_function_gerror test_ctxt =
      let ml =
 "let dir_make_tmp tmpl =\n  \
   let dir_make_tmp_raw =\n    \
-    foreign \"g_dir_make_tmp\" (string_opt@-> ptr (ptr_opt Error.t_typ) \
+    foreign \"g_dir_make_tmp\" (string_opt @-> ptr (ptr_opt Error.t_typ) \
     @-> returning (string_opt))\n  in\n  \
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in\n  \
   let value = dir_make_tmp_raw tmpl err_ptr_ptr in\n  \
