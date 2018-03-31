@@ -256,6 +256,7 @@ let return_gerror_result ?(indent=1) ?(ret="value") () =
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in\n  %s\
     Error (err_ptr)" sep sep ret sep sep sep
 
+  (** Write the signature of the bindings. *)
 let write_mli_signature mli name arguments ocaml_ret can_throw_gerror =
   let open Binding_utils in
   let _ = File.bprintf mli "val %s :\n  " name in
@@ -285,63 +286,67 @@ let write_mli_signature mli name arguments ocaml_ret can_throw_gerror =
       | l -> Some (ocaml_types_to_mli_sig l)
     in
     let ret_type = match ocaml_ret with "unit" -> None | _ -> Some ocaml_ret in
-    match args_in_mli_sig, ocaml_types_out, ocaml_types_in_out, can_throw_gerror, ret_type with
-    | None, None, None, false , _ ->
-        File.bprintf mli "unit -> %s\n" ocaml_ret
-    | None, None, None, true, _ ->
-        File.bprintf mli "unit -> (%s, %s) result\n" ocaml_ret error_ocaml_type
-    | Some args_in, None, None, false, _ ->
-        File.bprintf mli "%s -> %s\n" args_in ocaml_ret
-    | Some args_in, None, None, true , _ ->
-        File.bprintf mli "%s -> (%s, %s) result\n" args_in ocaml_ret error_ocaml_type
-    | None, Some args_out, None, false , None ->
-        File.bprintf mli "unit -> (%s)\n" args_out
-    | None, Some args_out, None, false , Some ocaml_ret ->
-        File.bprintf mli "unit -> (%s * %s)\n" ocaml_ret args_out
-    | None, Some args_out, None, true, None ->
-        File.bprintf mli "unit -> (%s, %s) result\n" args_out error_ocaml_type
-    | None, Some args_out, None, true, Some ocaml_ret ->
-        File.bprintf mli "unit -> (%s * %s, %s) result\n" ocaml_ret args_out error_ocaml_type
-    | Some args_in, Some args_out, None, false, None ->
-        File.bprintf mli "%s -> (%s)\n" args_in args_out
-    | Some args_in, Some args_out, None, false, Some ocaml_ret ->
-        File.bprintf mli "%s -> (%s * %s)\n" args_in ocaml_ret args_out
-    | Some args_in, Some args_out, None, true, None ->
-        File.bprintf mli "%s -> (%s, %s) result\n" args_in args_out error_ocaml_type
-    | Some args_in, Some args_out, None, true, Some ocaml_ret ->
-        File.bprintf mli "%s -> (%s * %s, %s) result\n" args_in ocaml_ret args_out error_ocaml_type
-    | None, None, Some args_in_out, false, None ->
-        File.bprintf mli "%s -> (%s)\n" args_in_out_sig args_in_out
-    | None, None, Some args_in_out, false, Some ocaml_ret ->
-        File.bprintf mli "%s -> (%s * %s)\n" args_in_out_sig ocaml_ret args_in_out
-    | None, None, Some args_in_out, true, None ->
-        File.bprintf mli "%s -> (%s, %s) result\n" args_in_out_sig args_in_out error_ocaml_type
-    | None, None, Some args_in_out, true, Some ocaml_ret ->
-        File.bprintf mli "%s -> (%s * %s, %s) result\n" args_in_out_sig ocaml_ret args_in_out error_ocaml_type
-    | Some args_in, None, Some args_in_out, false, None ->
-        File.bprintf mli "%s -> %s -> (%s)\n" args_in args_in_out_sig args_in_out
-    | Some args_in, None, Some args_in_out, false, Some ocaml_ret ->
-        File.bprintf mli "%s -> %s -> (%s * %s)\n" args_in args_in_out_sig ocaml_ret args_in_out
-    | Some args_in, None, Some args_in_out, true, None ->
-        File.bprintf mli "%s -> %s -> (%s, %s) result\n" args_in args_in_out_sig args_in_out error_ocaml_type
-    | Some args_in, None, Some args_in_out, true, Some ocaml_ret ->
-        File.bprintf mli "%s -> %s -> (%s * %s, %s) result\n" args_in args_in_out_sig ocaml_ret args_in_out error_ocaml_type
-    | None, Some args_out, Some args_in_out, false, None ->
-        File.bprintf mli "%s -> (%s * %s)\n" args_in_out_sig args_out args_in_out
-    | None, Some args_out, Some args_in_out, false, Some ocaml_ret ->
-        File.bprintf mli "%s -> (%s * %s * %s)\n" args_in_out_sig ocaml_ret args_out args_in_out
-    | None, Some args_out, Some args_in_out, true, None ->
-        File.bprintf mli "%s -> (%s * %s, %s) result\n" args_in_out_sig args_out args_in_out error_ocaml_type
-    | None, Some args_out, Some args_in_out, true, Some ocaml_ret ->
-        File.bprintf mli "%s -> (%s * %s * %s, %s) result\n" args_in_out_sig ocaml_ret args_out args_in_out error_ocaml_type
-    | Some args_in, Some args_out, Some args_in_out, false, None ->
-        File.bprintf mli "%s -> %s -> (%s * %s)\n" args_in args_in_out_sig args_out args_in_out
-    | Some args_in, Some args_out, Some args_in_out, false, Some ocaml_ret ->
-        File.bprintf mli "%s -> %s -> (%s * %s * %s)\n" args_in args_in_out_sig ocaml_ret args_out args_in_out
-    | Some args_in, Some args_out, Some args_in_out, true, None ->
-        File.bprintf mli "%s -> %s -> (%s * %s, %s) result\n" args_in args_in_out_sig args_out args_in_out error_ocaml_type
-    | Some args_in, Some args_out, Some args_in_out, true, Some ocaml_ret ->
-        File.bprintf mli "%s -> %s -> (%s * %s * %s, %s) result\n" args_in args_in_out_sig ocaml_ret args_out args_in_out error_ocaml_type
+    if can_throw_gerror then
+      match args_in_mli_sig, ocaml_types_out, ocaml_types_in_out, ret_type with
+      | None, None, None, _ ->
+          File.bprintf mli "unit -> (%s, %s) result\n" ocaml_ret error_ocaml_type
+      | Some args_in, None, None, _ ->
+          File.bprintf mli "%s -> (%s, %s) result\n" args_in ocaml_ret error_ocaml_type
+      | None, Some args_out, None, None ->
+          File.bprintf mli "unit -> (%s, %s) result\n" args_out error_ocaml_type
+      | None, Some args_out, None, Some ocaml_ret ->
+          File.bprintf mli "unit -> (%s * %s, %s) result\n" ocaml_ret args_out error_ocaml_type
+      | Some args_in, Some args_out, None, None ->
+          File.bprintf mli "%s -> (%s, %s) result\n" args_in args_out error_ocaml_type
+      | Some args_in, Some args_out, None, Some ocaml_ret ->
+          File.bprintf mli "%s -> (%s * %s, %s) result\n" args_in ocaml_ret args_out error_ocaml_type
+      | None, None, Some args_in_out, None ->
+          File.bprintf mli "%s -> (%s, %s) result\n" args_in_out_sig args_in_out error_ocaml_type
+      | None, None, Some args_in_out, Some ocaml_ret ->
+          File.bprintf mli "%s -> (%s * %s, %s) result\n" args_in_out_sig ocaml_ret args_in_out error_ocaml_type
+      | Some args_in, None, Some args_in_out, None ->
+          File.bprintf mli "%s -> %s -> (%s, %s) result\n" args_in args_in_out_sig args_in_out error_ocaml_type
+      | Some args_in, None, Some args_in_out, Some ocaml_ret ->
+          File.bprintf mli "%s -> %s -> (%s * %s, %s) result\n" args_in args_in_out_sig ocaml_ret args_in_out error_ocaml_type
+      | None, Some args_out, Some args_in_out, None ->
+          File.bprintf mli "%s -> (%s * %s, %s) result\n" args_in_out_sig args_out args_in_out error_ocaml_type
+      | None, Some args_out, Some args_in_out, Some ocaml_ret ->
+          File.bprintf mli "%s -> (%s * %s * %s, %s) result\n" args_in_out_sig ocaml_ret args_out args_in_out error_ocaml_type
+      | Some args_in, Some args_out, Some args_in_out, None ->
+          File.bprintf mli "%s -> %s -> (%s * %s, %s) result\n" args_in args_in_out_sig args_out args_in_out error_ocaml_type
+      | Some args_in, Some args_out, Some args_in_out, Some ocaml_ret ->
+          File.bprintf mli "%s -> %s -> (%s * %s * %s, %s) result\n" args_in args_in_out_sig ocaml_ret args_out args_in_out error_ocaml_type
+    else
+      match args_in_mli_sig, ocaml_types_out, ocaml_types_in_out, ret_type with
+      | None, None, None, _ ->
+          File.bprintf mli "unit -> %s\n" ocaml_ret
+      | Some args_in, None, None, _ ->
+          File.bprintf mli "%s -> %s\n" args_in ocaml_ret
+      | None, Some args_out, None, None ->
+          File.bprintf mli "unit -> (%s)\n" args_out
+      | None, Some args_out, None, Some ocaml_ret ->
+          File.bprintf mli "unit -> (%s * %s)\n" ocaml_ret args_out
+      | Some args_in, Some args_out, None, None ->
+          File.bprintf mli "%s -> (%s)\n" args_in args_out
+      | Some args_in, Some args_out, None, Some ocaml_ret ->
+          File.bprintf mli "%s -> (%s * %s)\n" args_in ocaml_ret args_out
+      | None, None, Some args_in_out, None ->
+          File.bprintf mli "%s -> (%s)\n" args_in_out_sig args_in_out
+      | None, None, Some args_in_out, Some ocaml_ret ->
+          File.bprintf mli "%s -> (%s * %s)\n" args_in_out_sig ocaml_ret args_in_out
+      | Some args_in, None, Some args_in_out, None ->
+          File.bprintf mli "%s -> %s -> (%s)\n" args_in args_in_out_sig args_in_out
+      | Some args_in, None, Some args_in_out, Some ocaml_ret ->
+          File.bprintf mli "%s -> %s -> (%s * %s)\n" args_in args_in_out_sig ocaml_ret args_in_out
+      | None, Some args_out, Some args_in_out, None ->
+          File.bprintf mli "%s -> (%s * %s)\n" args_in_out_sig args_out args_in_out
+      | None, Some args_out, Some args_in_out, Some ocaml_ret ->
+          File.bprintf mli "%s -> (%s * %s * %s)\n" args_in_out_sig ocaml_ret args_out args_in_out
+      | Some args_in, Some args_out, Some args_in_out, None ->
+          File.bprintf mli "%s -> %s -> (%s * %s)\n" args_in args_in_out_sig args_out args_in_out
+      | Some args_in, Some args_out, Some args_in_out, Some ocaml_ret ->
+          File.bprintf mli "%s -> %s -> (%s * %s * %s)\n" args_in args_in_out_sig ocaml_ret args_out args_in_out
+
 
 let write_function_name ml name arguments can_throw_gerror =
   let open Binding_utils in
@@ -572,7 +577,7 @@ let generate_callable_bindings_when_in_out_args callable name container symbol a
   | No_args -> raise_failure "with No_args"
   | Args args -> begin
       let can_throw_gerror = Callable_info.can_throw_gerror callable in
-      let build_types_for_signature args_list =
+      (* let build_types_for_signature args_list =
         match get_ocaml_types args_list with
         | [] ->
             if ocaml_ret = "unit" then
@@ -587,7 +592,7 @@ let generate_callable_bindings_when_in_out_args callable name container symbol a
       in
       let ocaml_types_in_out =
         build_types_for_signature args.in_out_list
-      in
+      in *)
       let _ = File.bprintf ml "(*" in
       let _ = File.bprintf mli "(*" in
       let _ = write_function_name ml name arguments can_throw_gerror in
