@@ -347,7 +347,6 @@ let write_mli_signature mli name arguments ocaml_ret can_throw_gerror =
       | Some args_in, Some args_out, Some args_in_out, Some ocaml_ret ->
           File.bprintf mli "%s -> %s -> (%s * %s * %s)\n" args_in args_in_out_sig ocaml_ret args_out args_in_out
 
-
 let write_function_name ml name arguments can_throw_gerror =
   let open Binding_utils in
   match arguments with
@@ -377,6 +376,8 @@ let write_function_name ml name arguments can_throw_gerror =
       | Some in_params, _, Some in_out_params, _ ->
           File.bprintf ml "let %s %s %s =\n" name in_params in_out_params
 
+(* Write the Ctypes foreign declaration directly or inside a function ("fn_name_raw")
+ * when there are out arguments *)
 let write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret =
   let open Binding_utils in
   match arguments with
@@ -442,6 +443,60 @@ let write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_r
           let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
           File.bprintf ml "(%s @-> %s @-> %s @-> returning (%s))\n  in\n" args_in args_out args_in_out ctypes_ret
 
+(** Write the instructions if needed (gerror and out arguments) that execute the
+ *  function_name_raw function. *)
+let write_compute_value_instructions ml name arguments can_throw_gerror =
+  let open Binding_utils in
+  match arguments with
+  | No_args ->
+    if can_throw_gerror then
+      File.bprintf ml "  let value = %s_raw err_ptr_ptr in\n" name
+  | Args args ->
+    let args_names = function
+      | [] -> None
+      | l -> Some (escaped_arg_names_space_sep l)
+    in
+    let args_ptr_names = function
+      | [] -> None
+      | l -> Some (List.map (fun a -> (get_escaped_arg_name a) ^ "_ptr") l |> String.concat " ")
+    in
+    let args_in_names = args_names args.in_list in
+    let args_out_names =  args_ptr_names args.out_list in
+    let args_in_out_names = args_ptr_names args.in_out_list in
+    if can_throw_gerror then
+      match args_in_names, args_out_names, args_in_out_names with
+      | None, None, None ->
+          File.bprintf ml "  let ret = %s_raw err_ptr_ptr in\n" name
+      | Some args_in, None, None ->
+          File.bprintf ml "  let ret = %s_raw %s err_ptr_ptr in\n" name args_in
+      | None, Some args_out, None ->
+          File.bprintf ml "  let ret = %s_raw %s err_ptr_ptr in\n" name args_out
+      | Some args_in, Some args_out, None ->
+          File.bprintf ml "  let ret = %s_raw %s %s err_ptr_ptr in\n" name args_in args_out
+      | None, None, Some args_in_out ->
+          File.bprintf ml "  let ret = %s_raw %s err_ptr_ptr in\n" args_in_out name
+      | Some args_in, None, Some args_in_out ->
+          File.bprintf ml "  let ret = %s_raw %s %s err_ptr_ptr in\n" name args_in args_in_out
+      | None, Some args_out, Some args_in_out ->
+          File.bprintf ml "  let ret = %s_raw %s %s err_ptr_ptr in\n" name args_out args_in_out
+      | Some args_in, Some args_out, Some args_in_out ->
+          File.bprintf ml "  let ret = %s_raw %s %s %s err_ptr_ptr in\n" name args_in args_out args_in_out
+    else
+      match args_in_names, args_out_names, args_in_out_names with
+      | _, None, None -> ()
+      | None, Some args_out, None ->
+          File.bprintf ml "  let ret = %s_raw %s in\n" name args_out
+      | Some args_in, Some args_out, None ->
+          File.bprintf ml "  let ret = %s_raw %s %s in\n" name args_in args_out
+      | None, None, Some args_in_out ->
+          File.bprintf ml "  let ret = %s_raw %s in\n" args_in_out name
+      | Some args_in, None, Some args_in_out ->
+          File.bprintf ml "  let ret = %s_raw %s %s in\n" name args_in args_in_out
+      | None, Some args_out, Some args_in_out ->
+          File.bprintf ml "  let ret = %s_raw %s %s in\n" name args_out args_in_out
+      | Some args_in, Some args_out, Some args_in_out ->
+          File.bprintf ml "  let ret = %s_raw %s %s %s in\n" name args_in args_out args_in_out
+
 let generate_callable_bindings_when_only_in_arg callable name symbol arguments ret_types sources =
   let open Binding_utils in
   let name = ensure_valid_variable_name name in
@@ -454,12 +509,6 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
     | No_args -> ""
     | Args args -> escaped_arg_names_space_sep args.in_list
   in
-  let write_compute_value_instructions_when_can_throw_error () =
-    let _ =
-      File.bprintf ml "  let value = %s_raw %s err_ptr_ptr in\n" name arg_names
-    in
-    File.buff_add_line ml (return_gerror_result ())
-  in
   let ocaml_ret' = if ocaml_ret = "string" then "string option" else ocaml_ret in
   let ctypes_ret' = if ctypes_ret = "string" then "string_opt" else ctypes_ret in
   write_mli_signature mli name arguments ocaml_ret' can_throw_gerror;
@@ -467,8 +516,12 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
   write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret';
   if can_throw_gerror then begin
     File.bprintf ml "  %s\n" allocate_gerror;
-    write_compute_value_instructions_when_can_throw_error ()
+  end;
+  write_compute_value_instructions ml name arguments can_throw_gerror;
+  if can_throw_gerror then begin
+    File.buff_add_line ml (return_gerror_result ())
   end
+
 
 let generate_callable_bindings_when_out_args callable name container symbol arguments ret_types sources =
   let open Binding_utils in
@@ -508,17 +561,6 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
                 Binding_utils.string_pattern_remove instructions pattern
                 |> File.bprintf ml "  %s"
       in
-      let write_compute_result () =
-        let in_arg_names = get_escaped_arg_names args.in_list in
-        let out_arg_names =
-          List.map (fun a -> (get_escaped_arg_name a) ^ "_ptr") args.out_list
-        in
-        let arg_names = String.concat " " (in_arg_names @ out_arg_names) in
-        if can_throw_gerror then
-          File.bprintf ml "  let ret = %s_raw %s err_ptr_ptr in\n" name arg_names
-        else
-          File.bprintf ml "  let ret = %s_raw %s in\n" name arg_names
-      in
       let write_get_value_from_pointer_instructions a =
         let name' = get_escaped_arg_name a in
         match get_type_info a with
@@ -556,7 +598,7 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
         File.bprintf ml "  %s\n" allocate_gerror
       end;
       write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret;
-      write_compute_result ();
+      write_compute_value_instructions ml name arguments can_throw_gerror;
       if can_throw_gerror then begin
         File.bprintf ml "  let get_ret_value () =\n"
       end;
@@ -577,27 +619,12 @@ let generate_callable_bindings_when_in_out_args callable name container symbol a
   | No_args -> raise_failure "with No_args"
   | Args args -> begin
       let can_throw_gerror = Callable_info.can_throw_gerror callable in
-      (* let build_types_for_signature args_list =
-        match get_ocaml_types args_list with
-        | [] ->
-            if ocaml_ret = "unit" then
-              None
-            else Some (Printf.sprintf "(%s)" ocaml_ret)
-        | args_types -> let all_elements =
-          if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
-          in Some (Printf.sprintf "%s" (String.concat " * " all_elements))
-      in
-      let ocaml_types_out =
-        build_types_for_signature args.out_list
-      in
-      let ocaml_types_in_out =
-        build_types_for_signature args.in_out_list
-      in *)
       let _ = File.bprintf ml "(*" in
       let _ = File.bprintf mli "(*" in
       let _ = write_function_name ml name arguments can_throw_gerror in
       let _ = write_mli_signature mli name arguments ocaml_ret can_throw_gerror in
       let _ = write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret in
+      let _  = write_compute_value_instructions ml name arguments can_throw_gerror in
       let _ = File.bprintf ml "*)\n" in
       File.bprintf mli "*)\n"
   end
