@@ -524,6 +524,8 @@ let write_allocation_instructions ml name arguments container can_throw_gerror =
                 Binding_utils.string_pattern_remove instructions pattern
       in
       let get_in_out_arg_alloc_instructions a =
+        (* TODO : use the argument passed by the user as the default value with
+         * the allocate function of Ctypes. The argument is referenced by its name. *)
         let name' = get_escaped_arg_name a in
         match get_type_info a with
         | None ->
@@ -562,6 +564,8 @@ let write_allocation_instructions ml name arguments container can_throw_gerror =
       | Some args_out, Some args_in_out ->
           File.bprintf ml "  %s  %s" args_out args_in_out
 
+(* TODO: function write_build_return_value_instructions *)
+
 let generate_callable_bindings_when_only_in_arg callable name container symbol arguments ret_types sources =
   let open Binding_utils in
   let name = ensure_valid_variable_name name in
@@ -584,7 +588,6 @@ let generate_callable_bindings_when_only_in_arg callable name container symbol a
   if can_throw_gerror then begin
     File.buff_add_line ml (return_gerror_result ())
   end
-
 
 let generate_callable_bindings_when_out_args callable name container symbol arguments ret_types sources =
   let open Binding_utils in
