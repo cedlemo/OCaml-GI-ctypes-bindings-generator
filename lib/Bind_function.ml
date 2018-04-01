@@ -48,21 +48,21 @@ let get_return_types callable container skip_types =
     match Binding_utils.type_info_to_bindings_types ret (may_be_null || can_throw_gerror) with
     | Binding_utils.Not_implemented tag_name -> Not_handled tag_name
     | Types {ocaml = ocaml_type; ctypes = ctypes_typ} ->
-        if Binding_utils.match_one_of ocaml_type skip_types then Skipped ocaml_type
-        else begin
-          if ocaml_type = "string" then
-            Type_names [("string option", "string_opt")]
-          else
-            let types =
-              filter_same_argument_type_as_container container (ocaml_type, ctypes_typ)
-            in Type_names [types]
-        end
-      (* TODO : how to free the returned data
-      match Callable_info.get_caller_owns callable with
-      | Arg_info.Nothing -> ()
-      | Arg_info.Container -> ()
-      | Arg_info.Everything -> ()
-      *)
+      if Binding_utils.match_one_of ocaml_type skip_types then Skipped ocaml_type
+      else begin
+        if ocaml_type = "string" then
+          Type_names [("string option", "string_opt")]
+        else
+          let types =
+            filter_same_argument_type_as_container container (ocaml_type, ctypes_typ)
+          in Type_names [types]
+      end
+(* TODO : how to free the returned data
+   match Callable_info.get_caller_owns callable with
+   | Arg_info.Nothing -> ()
+   | Arg_info.Container -> ()
+   | Arg_info.Everything -> ()
+*)
 
 type arg = Not_implemented of string
          | Skipped of string
@@ -89,28 +89,28 @@ let has_not_implemented_arg = function
   | Args args ->
     let search =
       List.find_opt (fun a -> match a with
-                              | Not_implemented _ -> true
-                              | _ -> false)
+          | Not_implemented _ -> true
+          | _ -> false)
     in
     match search args.in_list with
     | Some a -> Some a
     | None -> match search args.out_list with
-              | Some a -> Some a
-              | None -> search args.in_out_list
+      | Some a -> Some a
+      | None -> search args.in_out_list
 
 let has_skipped_arg = function
   | No_args -> None
   | Args args ->
     let search l =
       List.find_opt (fun a -> match a with
-                              | Skipped _ -> true
-                              | _ -> false) l
+          | Skipped _ -> true
+          | _ -> false) l
     in
     match search args.in_list with
     | Some a -> Some a
     | None -> match search args.out_list with
-              | Some a -> Some a
-              | None -> search args.in_out_list
+      | Some a -> Some a
+      | None -> search args.in_out_list
 
 let arg_may_be_null = function
   | Not_implemented message -> raise (Failure (Printf.sprintf "arg_may_be_null : Not_implemented -> %s" message))
@@ -186,35 +186,35 @@ let get_args_information callable container skip_types =
       match Binding_utils.type_info_to_bindings_types t_info may_be_null with
       | Binding_utils.Not_implemented tag_name -> Not_implemented tag_name
       | Types {ocaml = ot; ctypes = ct} ->
-          let (ocaml_type, ctypes_type) =
-            filter_same_argument_type_as_container cont_n (ot, ct) in
-          if Binding_utils.match_one_of ocaml_type skip_types then
-            Skipped ocaml_type
-          else begin
-            let name = (
-              let info' = Arg_info.to_baseinfo arg in
-              match Base_info.get_name info' with
-              | None ->
-                  let msg = "It should have a name :Bind_function Arg_info.in"
-                  in raise (Failure msg)
-              | Some s -> s ) in
-            let type_info = Some t_info in
-            Arg {name; ocaml_type; ctypes_type; may_be_null; type_info }
-          end
+        let (ocaml_type, ctypes_type) =
+          filter_same_argument_type_as_container cont_n (ot, ct) in
+        if Binding_utils.match_one_of ocaml_type skip_types then
+          Skipped ocaml_type
+        else begin
+          let name = (
+            let info' = Arg_info.to_baseinfo arg in
+            match Base_info.get_name info' with
+            | None ->
+              let msg = "It should have a name :Bind_function Arg_info.in"
+              in raise (Failure msg)
+            | Some s -> s ) in
+          let type_info = Some t_info in
+          Arg {name; ocaml_type; ctypes_type; may_be_null; type_info }
+        end
     in
     let append_self_if_needed l =
       if is_method then
         let ocaml_type, ctypes_type = begin match container with
-        | None -> let msg = "The container can not be None, this is a Method"
+          | None -> let msg = "The container can not be None, this is a Method"
             in raise (Failure msg)
-        | Some (_, ot, ct) -> (ot, ct)
+          | Some (_, ot, ct) -> (ot, ct)
         end in
         let arg = Arg { name = "self";
                         ocaml_type;
                         ctypes_type;
                         type_info = None ;
                         may_be_null = false } in
-         arg :: l
+        arg :: l
       else l
     in
     let rec _each_arg i {in_list; out_list; in_out_list} =
@@ -224,16 +224,16 @@ let get_args_information callable container skip_types =
                      }
       else (
         let arg = Callable_info.get_arg callable i in
-           match Arg_info.get_direction arg with
-           | Arg_info.In ->
-               let in_list = (fetch_arg_info arg) :: in_list in
-               _each_arg (i + 1) {in_list; out_list; in_out_list}
-           | Arg_info.Out ->
-               let out_list = (fetch_arg_info arg) :: out_list in
-               _each_arg (i + 1 ) {in_list; out_list; in_out_list}
-           | Arg_info.InOut ->
-               let in_out_list = (fetch_arg_info arg) :: in_out_list in
-               _each_arg (i + 1) {in_list; out_list; in_out_list}
+        match Arg_info.get_direction arg with
+        | Arg_info.In ->
+          let in_list = (fetch_arg_info arg) :: in_list in
+          _each_arg (i + 1) {in_list; out_list; in_out_list}
+        | Arg_info.Out ->
+          let out_list = (fetch_arg_info arg) :: out_list in
+          _each_arg (i + 1 ) {in_list; out_list; in_out_list}
+        | Arg_info.InOut ->
+          let in_out_list = (fetch_arg_info arg) :: in_out_list in
+          _each_arg (i + 1) {in_list; out_list; in_out_list}
       )
     in
     let empty_args = {in_list = []; out_list = []; in_out_list = []} in
@@ -250,29 +250,29 @@ let allocate_gerror = "let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in"
 let return_gerror_result ?(indent=1) ?(ret="value") () =
   let sep = String.make (indent * 2) ' ' in
   Printf.sprintf
-  "%smatch (!@ err_ptr_ptr) with\n%s\
-  | None -> Ok %s\n%s\
-  | Some _ -> let err_ptr = !@ err_ptr_ptr in\n  %s\
-    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in\n  %s\
-    Error (err_ptr)" sep sep ret sep sep sep
+    "%smatch (!@ err_ptr_ptr) with\n%s\
+     | None -> Ok %s\n%s\
+     | Some _ -> let err_ptr = !@ err_ptr_ptr in\n  %s\
+     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in\n  %s\
+     Error (err_ptr)" sep sep ret sep sep sep
 
-  (** Write the signature of the bindings. *)
+(** Write the signature of the bindings. *)
 let write_mli_signature mli name arguments ocaml_ret can_throw_gerror =
   let open Binding_utils in
   let _ = File.bprintf mli "val %s :\n  " name in
   match arguments with
   | No_args ->
-      if can_throw_gerror then
-        File.bprintf mli "unit -> (%s, %s) result\n" ocaml_ret error_ocaml_type
-      else
-        File.bprintf mli "unit -> %s\n" ocaml_ret
+    if can_throw_gerror then
+      File.bprintf mli "unit -> (%s, %s) result\n" ocaml_ret error_ocaml_type
+    else
+      File.bprintf mli "unit -> %s\n" ocaml_ret
   | Args args ->
     let build_return_type_for_signature args_list =
       match get_ocaml_types args_list with
       | [] ->
-          None
+        None
       | args_types ->
-          Some (Printf.sprintf "%s" (String.concat " * " args_types))
+        Some (Printf.sprintf "%s" (String.concat " * " args_types))
     in
     let ocaml_types_out =
       build_return_type_for_signature args.out_list
@@ -289,92 +289,92 @@ let write_mli_signature mli name arguments ocaml_ret can_throw_gerror =
     if can_throw_gerror then
       match args_in_mli_sig, ocaml_types_out, ocaml_types_in_out, ret_type with
       | None, None, None, _ ->
-          File.bprintf mli "unit -> (%s, %s) result\n" ocaml_ret error_ocaml_type
+        File.bprintf mli "unit -> (%s, %s) result\n" ocaml_ret error_ocaml_type
       | Some args_in, None, None, _ ->
-          File.bprintf mli "%s -> (%s, %s) result\n" args_in ocaml_ret error_ocaml_type
+        File.bprintf mli "%s -> (%s, %s) result\n" args_in ocaml_ret error_ocaml_type
       | None, Some args_out, None, None ->
-          File.bprintf mli "unit -> (%s, %s) result\n" args_out error_ocaml_type
+        File.bprintf mli "unit -> (%s, %s) result\n" args_out error_ocaml_type
       | None, Some args_out, None, Some ocaml_ret ->
-          File.bprintf mli "unit -> (%s * %s, %s) result\n" ocaml_ret args_out error_ocaml_type
+        File.bprintf mli "unit -> (%s * %s, %s) result\n" ocaml_ret args_out error_ocaml_type
       | Some args_in, Some args_out, None, None ->
-          File.bprintf mli "%s -> (%s, %s) result\n" args_in args_out error_ocaml_type
+        File.bprintf mli "%s -> (%s, %s) result\n" args_in args_out error_ocaml_type
       | Some args_in, Some args_out, None, Some ocaml_ret ->
-          File.bprintf mli "%s -> (%s * %s, %s) result\n" args_in ocaml_ret args_out error_ocaml_type
+        File.bprintf mli "%s -> (%s * %s, %s) result\n" args_in ocaml_ret args_out error_ocaml_type
       | None, None, Some args_in_out, None ->
-          File.bprintf mli "%s -> (%s, %s) result\n" args_in_out_sig args_in_out error_ocaml_type
+        File.bprintf mli "%s -> (%s, %s) result\n" args_in_out_sig args_in_out error_ocaml_type
       | None, None, Some args_in_out, Some ocaml_ret ->
-          File.bprintf mli "%s -> (%s * %s, %s) result\n" args_in_out_sig ocaml_ret args_in_out error_ocaml_type
+        File.bprintf mli "%s -> (%s * %s, %s) result\n" args_in_out_sig ocaml_ret args_in_out error_ocaml_type
       | Some args_in, None, Some args_in_out, None ->
-          File.bprintf mli "%s -> %s -> (%s, %s) result\n" args_in args_in_out_sig args_in_out error_ocaml_type
+        File.bprintf mli "%s -> %s -> (%s, %s) result\n" args_in args_in_out_sig args_in_out error_ocaml_type
       | Some args_in, None, Some args_in_out, Some ocaml_ret ->
-          File.bprintf mli "%s -> %s -> (%s * %s, %s) result\n" args_in args_in_out_sig ocaml_ret args_in_out error_ocaml_type
+        File.bprintf mli "%s -> %s -> (%s * %s, %s) result\n" args_in args_in_out_sig ocaml_ret args_in_out error_ocaml_type
       | None, Some args_out, Some args_in_out, None ->
-          File.bprintf mli "%s -> (%s * %s, %s) result\n" args_in_out_sig args_out args_in_out error_ocaml_type
+        File.bprintf mli "%s -> (%s * %s, %s) result\n" args_in_out_sig args_out args_in_out error_ocaml_type
       | None, Some args_out, Some args_in_out, Some ocaml_ret ->
-          File.bprintf mli "%s -> (%s * %s * %s, %s) result\n" args_in_out_sig ocaml_ret args_out args_in_out error_ocaml_type
+        File.bprintf mli "%s -> (%s * %s * %s, %s) result\n" args_in_out_sig ocaml_ret args_out args_in_out error_ocaml_type
       | Some args_in, Some args_out, Some args_in_out, None ->
-          File.bprintf mli "%s -> %s -> (%s * %s, %s) result\n" args_in args_in_out_sig args_out args_in_out error_ocaml_type
+        File.bprintf mli "%s -> %s -> (%s * %s, %s) result\n" args_in args_in_out_sig args_out args_in_out error_ocaml_type
       | Some args_in, Some args_out, Some args_in_out, Some ocaml_ret ->
-          File.bprintf mli "%s -> %s -> (%s * %s * %s, %s) result\n" args_in args_in_out_sig ocaml_ret args_out args_in_out error_ocaml_type
+        File.bprintf mli "%s -> %s -> (%s * %s * %s, %s) result\n" args_in args_in_out_sig ocaml_ret args_out args_in_out error_ocaml_type
     else
       match args_in_mli_sig, ocaml_types_out, ocaml_types_in_out, ret_type with
       | None, None, None, _ ->
-          File.bprintf mli "unit -> %s\n" ocaml_ret
+        File.bprintf mli "unit -> %s\n" ocaml_ret
       | Some args_in, None, None, _ ->
-          File.bprintf mli "%s -> %s\n" args_in ocaml_ret
+        File.bprintf mli "%s -> %s\n" args_in ocaml_ret
       | None, Some args_out, None, None ->
-          File.bprintf mli "unit -> (%s)\n" args_out
+        File.bprintf mli "unit -> (%s)\n" args_out
       | None, Some args_out, None, Some ocaml_ret ->
-          File.bprintf mli "unit -> (%s * %s)\n" ocaml_ret args_out
+        File.bprintf mli "unit -> (%s * %s)\n" ocaml_ret args_out
       | Some args_in, Some args_out, None, None ->
-          File.bprintf mli "%s -> (%s)\n" args_in args_out
+        File.bprintf mli "%s -> (%s)\n" args_in args_out
       | Some args_in, Some args_out, None, Some ocaml_ret ->
-          File.bprintf mli "%s -> (%s * %s)\n" args_in ocaml_ret args_out
+        File.bprintf mli "%s -> (%s * %s)\n" args_in ocaml_ret args_out
       | None, None, Some args_in_out, None ->
-          File.bprintf mli "%s -> (%s)\n" args_in_out_sig args_in_out
+        File.bprintf mli "%s -> (%s)\n" args_in_out_sig args_in_out
       | None, None, Some args_in_out, Some ocaml_ret ->
-          File.bprintf mli "%s -> (%s * %s)\n" args_in_out_sig ocaml_ret args_in_out
+        File.bprintf mli "%s -> (%s * %s)\n" args_in_out_sig ocaml_ret args_in_out
       | Some args_in, None, Some args_in_out, None ->
-          File.bprintf mli "%s -> %s -> (%s)\n" args_in args_in_out_sig args_in_out
+        File.bprintf mli "%s -> %s -> (%s)\n" args_in args_in_out_sig args_in_out
       | Some args_in, None, Some args_in_out, Some ocaml_ret ->
-          File.bprintf mli "%s -> %s -> (%s * %s)\n" args_in args_in_out_sig ocaml_ret args_in_out
+        File.bprintf mli "%s -> %s -> (%s * %s)\n" args_in args_in_out_sig ocaml_ret args_in_out
       | None, Some args_out, Some args_in_out, None ->
-          File.bprintf mli "%s -> (%s * %s)\n" args_in_out_sig args_out args_in_out
+        File.bprintf mli "%s -> (%s * %s)\n" args_in_out_sig args_out args_in_out
       | None, Some args_out, Some args_in_out, Some ocaml_ret ->
-          File.bprintf mli "%s -> (%s * %s * %s)\n" args_in_out_sig ocaml_ret args_out args_in_out
+        File.bprintf mli "%s -> (%s * %s * %s)\n" args_in_out_sig ocaml_ret args_out args_in_out
       | Some args_in, Some args_out, Some args_in_out, None ->
-          File.bprintf mli "%s -> %s -> (%s * %s)\n" args_in args_in_out_sig args_out args_in_out
+        File.bprintf mli "%s -> %s -> (%s * %s)\n" args_in args_in_out_sig args_out args_in_out
       | Some args_in, Some args_out, Some args_in_out, Some ocaml_ret ->
-          File.bprintf mli "%s -> %s -> (%s * %s * %s)\n" args_in args_in_out_sig ocaml_ret args_out args_in_out
+        File.bprintf mli "%s -> %s -> (%s * %s * %s)\n" args_in args_in_out_sig ocaml_ret args_out args_in_out
 
 let write_function_name ml name arguments can_throw_gerror =
   let open Binding_utils in
   match arguments with
   | No_args ->
-      File.bprintf ml "let %s =\n" name
+    File.bprintf ml "let %s =\n" name
   | Args args ->
-      let args_names = function
-        | [] -> None
-        | l -> Some (escaped_arg_names_space_sep l)
-      in
-      let args_in_names = args_names args.in_list in
-      let args_out_names = args_names args.out_list in
-      let args_in_out_names = args_names args.in_out_list in
-      match args_in_names, args_out_names, args_in_out_names, can_throw_gerror with
-      | None, None, None, false->
-          File.bprintf ml "let %s =\n" name
-      | None, None, None, true->
-          File.bprintf ml "let %s () =\n" name
-      | None, Some out_params, None, _->
-          File.bprintf ml "let %s () =\n" name
-      | Some in_params, None, None, false ->
-          File.bprintf ml "let %s =\n" name
-      | Some in_params, _, None, _ ->
-          File.bprintf ml "let %s %s =\n" name in_params
-      | None, _, Some in_out_params, _ ->
-          File.bprintf ml "let %s %s =\n" name in_out_params
-      | Some in_params, _, Some in_out_params, _ ->
-          File.bprintf ml "let %s %s %s =\n" name in_params in_out_params
+    let args_names = function
+      | [] -> None
+      | l -> Some (escaped_arg_names_space_sep l)
+    in
+    let args_in_names = args_names args.in_list in
+    let args_out_names = args_names args.out_list in
+    let args_in_out_names = args_names args.in_out_list in
+    match args_in_names, args_out_names, args_in_out_names, can_throw_gerror with
+    | None, None, None, false->
+      File.bprintf ml "let %s =\n" name
+    | None, None, None, true->
+      File.bprintf ml "let %s () =\n" name
+    | None, Some out_params, None, _->
+      File.bprintf ml "let %s () =\n" name
+    | Some in_params, None, None, false ->
+      File.bprintf ml "let %s =\n" name
+    | Some in_params, _, None, _ ->
+      File.bprintf ml "let %s %s =\n" name in_params
+    | None, _, Some in_out_params, _ ->
+      File.bprintf ml "let %s %s =\n" name in_out_params
+    | Some in_params, _, Some in_out_params, _ ->
+      File.bprintf ml "let %s %s %s =\n" name in_params in_out_params
 
 (* Write the Ctypes foreign declaration directly or inside a function ("fn_name_raw")
  * when there are out arguments *)
@@ -403,45 +403,45 @@ let write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_r
       let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
       match args_in_foreign_sig, args_out_foreign_sig, args_in_out_foreign_sig with
       | None, None, None -> (* Should not appear raise an exception ? *)
-          File.bprintf ml "(ptr (%s) @-> returning (%s))\n  in\n" error_ctypes_type ctypes_ret
+        File.bprintf ml "(ptr (%s) @-> returning (%s))\n  in\n" error_ctypes_type ctypes_ret
       | Some args_in, None, None ->
-          File.bprintf ml "(%s @-> ptr (%s) @-> returning (%s))\n  in\n" args_in error_ctypes_type ctypes_ret
+        File.bprintf ml "(%s @-> ptr (%s) @-> returning (%s))\n  in\n" args_in error_ctypes_type ctypes_ret
       | None, Some args_out, None ->
-          File.bprintf ml "(%s @-> ptr (%s) @-> returning (%s))\n  in\n" args_out error_ctypes_type ctypes_ret
+        File.bprintf ml "(%s @-> ptr (%s) @-> returning (%s))\n  in\n" args_out error_ctypes_type ctypes_ret
       | Some args_in, Some args_out, None ->
-          File.bprintf ml "(%s @-> %s @-> ptr (%s) @-> returning (%s))\n  in\n" args_in args_out error_ctypes_type ctypes_ret
+        File.bprintf ml "(%s @-> %s @-> ptr (%s) @-> returning (%s))\n  in\n" args_in args_out error_ctypes_type ctypes_ret
       | None, None, Some args_in_out ->
-          File.bprintf ml "(%s @-> ptr (%s) @-> returning (%s))\n  in\n" args_in_out error_ctypes_type ctypes_ret
+        File.bprintf ml "(%s @-> ptr (%s) @-> returning (%s))\n  in\n" args_in_out error_ctypes_type ctypes_ret
       | Some args_in, None, Some args_in_out ->
-          File.bprintf ml "(%s @-> %s @-> ptr (%s) @-> returning (%s))\n  in\n" args_in args_in_out error_ctypes_type ctypes_ret
+        File.bprintf ml "(%s @-> %s @-> ptr (%s) @-> returning (%s))\n  in\n" args_in args_in_out error_ctypes_type ctypes_ret
       | None, Some args_out, Some args_in_out ->
-          File.bprintf ml "(%s @-> %s @-> ptr (%s) @-> returning (%s))\n  in\n" args_out args_in_out error_ctypes_type ctypes_ret
+        File.bprintf ml "(%s @-> %s @-> ptr (%s) @-> returning (%s))\n  in\n" args_out args_in_out error_ctypes_type ctypes_ret
       | Some args_in, Some args_out, Some args_in_out ->
-          File.bprintf ml "(%s @-> %s @-> %s @-> ptr (%s) @-> returning (%s))\n  in\n" args_in args_out args_in_out error_ctypes_type ctypes_ret
+        File.bprintf ml "(%s @-> %s @-> %s @-> ptr (%s) @-> returning (%s))\n  in\n" args_in args_out args_in_out error_ctypes_type ctypes_ret
     else
       match args_in_foreign_sig, args_out_foreign_sig, args_in_out_foreign_sig with
       | None, None, None -> (* Should not appear raise an exception ? *)
-          File.bprintf ml "  foreign \"%s\" (void @-> returning (%s))\n" symbol ctypes_ret
+        File.bprintf ml "  foreign \"%s\" (void @-> returning (%s))\n" symbol ctypes_ret
       | Some args_in, None, None ->
-          File.bprintf ml "  foreign \"%s\" (%s @-> returning (%s))\n" symbol args_in ctypes_ret
+        File.bprintf ml "  foreign \"%s\" (%s @-> returning (%s))\n" symbol args_in ctypes_ret
       | None, Some args_out, None ->
-          let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
-          File.bprintf ml "(%s @-> returning (%s))\n  in\n" args_out ctypes_ret
+        let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
+        File.bprintf ml "(%s @-> returning (%s))\n  in\n" args_out ctypes_ret
       | Some args_in, Some args_out, None ->
-          let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
-          File.bprintf ml "(%s @-> %s @-> returning (%s))\n  in\n" args_in args_out ctypes_ret
+        let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
+        File.bprintf ml "(%s @-> %s @-> returning (%s))\n  in\n" args_in args_out ctypes_ret
       | None, None, Some args_in_out ->
-          let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
-          File.bprintf ml "(%s @-> returning (%s))\n  in\n" args_in_out ctypes_ret
+        let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
+        File.bprintf ml "(%s @-> returning (%s))\n  in\n" args_in_out ctypes_ret
       | Some args_in, None, Some args_in_out ->
-          let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
-          File.bprintf ml "(%s @-> %s @-> returning (%s))\n  in\n" args_in args_in_out ctypes_ret
+        let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
+        File.bprintf ml "(%s @-> %s @-> returning (%s))\n  in\n" args_in args_in_out ctypes_ret
       | None, Some args_out, Some args_in_out ->
-          let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
-          File.bprintf ml "(%s @-> %s @-> returning (%s))\n  in\n" args_out args_in_out ctypes_ret
+        let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
+        File.bprintf ml "(%s @-> %s @-> returning (%s))\n  in\n" args_out args_in_out ctypes_ret
       | Some args_in, Some args_out, Some args_in_out ->
-          let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
-          File.bprintf ml "(%s @-> %s @-> %s @-> returning (%s))\n  in\n" args_in args_out args_in_out ctypes_ret
+        let _ = File.bprintf ml "  let %s_raw =\n    foreign \"%s\" " name symbol in
+        File.bprintf ml "(%s @-> %s @-> %s @-> returning (%s))\n  in\n" args_in args_out args_in_out ctypes_ret
 
 (** Write the instructions if needed (gerror and out arguments) that execute the
  *  function_name_raw function. *)
@@ -466,36 +466,36 @@ let write_compute_value_instructions ml name arguments can_throw_gerror =
     if can_throw_gerror then
       match args_in_names, args_out_names, args_in_out_names with
       | None, None, None ->
-          File.bprintf ml "  let ret = %s_raw err_ptr_ptr in\n" name
+        File.bprintf ml "  let ret = %s_raw err_ptr_ptr in\n" name
       | Some args_in, None, None ->
-          File.bprintf ml "  let ret = %s_raw %s err_ptr_ptr in\n" name args_in
+        File.bprintf ml "  let ret = %s_raw %s err_ptr_ptr in\n" name args_in
       | None, Some args_out, None ->
-          File.bprintf ml "  let ret = %s_raw %s err_ptr_ptr in\n" name args_out
+        File.bprintf ml "  let ret = %s_raw %s err_ptr_ptr in\n" name args_out
       | Some args_in, Some args_out, None ->
-          File.bprintf ml "  let ret = %s_raw %s %s err_ptr_ptr in\n" name args_in args_out
+        File.bprintf ml "  let ret = %s_raw %s %s err_ptr_ptr in\n" name args_in args_out
       | None, None, Some args_in_out ->
-          File.bprintf ml "  let ret = %s_raw %s err_ptr_ptr in\n" args_in_out name
+        File.bprintf ml "  let ret = %s_raw %s err_ptr_ptr in\n" args_in_out name
       | Some args_in, None, Some args_in_out ->
-          File.bprintf ml "  let ret = %s_raw %s %s err_ptr_ptr in\n" name args_in args_in_out
+        File.bprintf ml "  let ret = %s_raw %s %s err_ptr_ptr in\n" name args_in args_in_out
       | None, Some args_out, Some args_in_out ->
-          File.bprintf ml "  let ret = %s_raw %s %s err_ptr_ptr in\n" name args_out args_in_out
+        File.bprintf ml "  let ret = %s_raw %s %s err_ptr_ptr in\n" name args_out args_in_out
       | Some args_in, Some args_out, Some args_in_out ->
-          File.bprintf ml "  let ret = %s_raw %s %s %s err_ptr_ptr in\n" name args_in args_out args_in_out
+        File.bprintf ml "  let ret = %s_raw %s %s %s err_ptr_ptr in\n" name args_in args_out args_in_out
     else
       match args_in_names, args_out_names, args_in_out_names with
       | _, None, None -> ()
       | None, Some args_out, None ->
-          File.bprintf ml "  let ret = %s_raw %s in\n" name args_out
+        File.bprintf ml "  let ret = %s_raw %s in\n" name args_out
       | Some args_in, Some args_out, None ->
-          File.bprintf ml "  let ret = %s_raw %s %s in\n" name args_in args_out
+        File.bprintf ml "  let ret = %s_raw %s %s in\n" name args_in args_out
       | None, None, Some args_in_out ->
-          File.bprintf ml "  let ret = %s_raw %s in\n" args_in_out name
+        File.bprintf ml "  let ret = %s_raw %s in\n" args_in_out name
       | Some args_in, None, Some args_in_out ->
-          File.bprintf ml "  let ret = %s_raw %s %s in\n" name args_in args_in_out
+        File.bprintf ml "  let ret = %s_raw %s %s in\n" name args_in args_in_out
       | None, Some args_out, Some args_in_out ->
-          File.bprintf ml "  let ret = %s_raw %s %s in\n" name args_out args_in_out
+        File.bprintf ml "  let ret = %s_raw %s %s in\n" name args_out args_in_out
       | Some args_in, Some args_out, Some args_in_out ->
-          File.bprintf ml "  let ret = %s_raw %s %s %s in\n" name args_in args_out args_in_out
+        File.bprintf ml "  let ret = %s_raw %s %s %s in\n" name args_in args_out args_in_out
 
 (* This function create all the instructions needed to allocate gerror structure
  * or out arguments or in/out arguments when needed. *)
@@ -505,64 +505,64 @@ let write_allocation_instructions ml name arguments container can_throw_gerror =
   match arguments with
   | No_args -> ()
   | Args args ->
-      let get_out_arg_alloc_instructions a =
-        let name' = get_escaped_arg_name a in
-        match get_type_info a with
-        | None ->
-            let message = "get_out_argument_allocation_intructions: no typeinfo for arg" ^ name' in
-            let f = Failure message in raise f
-        | Some type_info ->
-            let may_be_null = arg_may_be_null a in
-            match allocate_out_argument type_info name' may_be_null with
-            | Error message ->
-                let message' = Printf.sprintf
-                               "unable to get type to allocate for \
-                                argument named %s of type '%s' in function %s"
-                                name' message name  in
-                let f = Failure message in raise f
-            | Ok instructions -> let pattern = container ^ "." in
-                Binding_utils.string_pattern_remove instructions pattern
-      in
-      let get_in_out_arg_alloc_instructions a =
-        (* TODO : use the argument passed by the user as the default value with
-         * the allocate function of Ctypes. The argument is referenced by its name. *)
-        let name' = get_escaped_arg_name a in
-        match get_type_info a with
-        | None ->
-            let message = "get_in_out_argument_allocation_intructions: no typeinfo for arg" ^ name' in
-            let f = Failure message in raise f
-        | Some type_info ->
-            let may_be_null = arg_may_be_null a in
-            match allocate_out_argument type_info name' may_be_null with
-            | Error message ->
-                let message' = Printf.sprintf
-                               "unable to get type to allocate for \
-                                argument named %s of type '%s' in function %s"
-                                name' message name  in
-                let f = Failure message in raise f
-            | Ok instructions -> let pattern = container ^ "." in
-                Binding_utils.string_pattern_remove instructions pattern
-      in
-      let args_out_alloc = function
-        | [] -> None
-        | l ->
-            let instructions = List.map (fun a -> get_out_arg_alloc_instructions a) l in
-            Some ( String.concat "  " instructions)
-      in
-      let args_in_out_alloc = function
-        | [] -> None
-        | l ->
-            let instructions = List.map (fun a -> get_in_out_arg_alloc_instructions a) l in
-            Some ( String.concat "  " instructions)
-      in
-      match args_out_alloc args.out_list, args_in_out_alloc args.in_out_list with
-      | None, None -> ()
-      | Some args_out, None ->
-          File.bprintf ml "  %s" args_out
-      | None, Some args_in_out ->
-          File.bprintf ml "  %s" args_in_out
-      | Some args_out, Some args_in_out ->
-          File.bprintf ml "  %s  %s" args_out args_in_out
+    let get_out_arg_alloc_instructions a =
+      let name' = get_escaped_arg_name a in
+      match get_type_info a with
+      | None ->
+        let message = "get_out_argument_allocation_intructions: no typeinfo for arg" ^ name' in
+        let f = Failure message in raise f
+      | Some type_info ->
+        let may_be_null = arg_may_be_null a in
+        match allocate_out_argument type_info name' may_be_null with
+        | Error message ->
+          let message' = Printf.sprintf
+              "unable to get type to allocate for \
+               argument named %s of type '%s' in function %s"
+              name' message name  in
+          let f = Failure message in raise f
+        | Ok instructions -> let pattern = container ^ "." in
+          Binding_utils.string_pattern_remove instructions pattern
+    in
+    let get_in_out_arg_alloc_instructions a =
+      (* TODO : use the argument passed by the user as the default value with
+       * the allocate function of Ctypes. The argument is referenced by its name. *)
+      let name' = get_escaped_arg_name a in
+      match get_type_info a with
+      | None ->
+        let message = "get_in_out_argument_allocation_intructions: no typeinfo for arg" ^ name' in
+        let f = Failure message in raise f
+      | Some type_info ->
+        let may_be_null = arg_may_be_null a in
+        match allocate_out_argument type_info name' may_be_null with
+        | Error message ->
+          let message' = Printf.sprintf
+              "unable to get type to allocate for \
+               argument named %s of type '%s' in function %s"
+              name' message name  in
+          let f = Failure message in raise f
+        | Ok instructions -> let pattern = container ^ "." in
+          Binding_utils.string_pattern_remove instructions pattern
+    in
+    let args_out_alloc = function
+      | [] -> None
+      | l ->
+        let instructions = List.map (fun a -> get_out_arg_alloc_instructions a) l in
+        Some ( String.concat "  " instructions)
+    in
+    let args_in_out_alloc = function
+      | [] -> None
+      | l ->
+        let instructions = List.map (fun a -> get_in_out_arg_alloc_instructions a) l in
+        Some ( String.concat "  " instructions)
+    in
+    match args_out_alloc args.out_list, args_in_out_alloc args.in_out_list with
+    | None, None -> ()
+    | Some args_out, None ->
+      File.bprintf ml "  %s" args_out
+    | None, Some args_in_out ->
+      File.bprintf ml "  %s" args_in_out
+    | Some args_out, Some args_in_out ->
+      File.bprintf ml "  %s  %s" args_out args_in_out
 
 (* TODO: function write_build_return_value_instructions *)
 
@@ -607,7 +607,7 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
         match get_ocaml_types args.out_list with
         | [] -> Printf.sprintf "(%s)" ocaml_ret
         | args_types -> let all_elements =
-          if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
+                          if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
           in Printf.sprintf "%s" (String.concat " * " all_elements)
       in
       let write_get_value_from_pointer_instructions a =
@@ -615,16 +615,16 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
         match get_type_info a with
         | None -> raise_failure "no typeinfo for arg"
         | Some type_info ->
-            let may_be_null = arg_may_be_null a in
-            match get_out_argument_value type_info name' may_be_null with
-            | Error message -> let message' =
-                Printf.sprintf "unable to get instructions to get value \
-                                for argument named %s of type '%s' in function %s"
-                                name' message name in
-                raise_failure message'
-            | Ok instructions ->
-                let indent = if can_throw_gerror then "    " else "  " in
-                File.bprintf ml "%s%s" indent instructions
+          let may_be_null = arg_may_be_null a in
+          match get_out_argument_value type_info name' may_be_null with
+          | Error message -> let message' =
+                               Printf.sprintf "unable to get instructions to get value \
+                                               for argument named %s of type '%s' in function %s"
+                                 name' message name in
+            raise_failure message'
+          | Ok instructions ->
+            let indent = if can_throw_gerror then "    " else "  " in
+            File.bprintf ml "%s%s" indent instructions
       in
       let write_build_return_value_instructions () =
         let indent = if can_throw_gerror then "    " else "  " in
@@ -632,9 +632,9 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
           match args.out_list with
           | [] -> File.bprintf ml "%s(ret)" indent
           | _ -> escaped_arg_names_to_tuple_form args.out_list
-              |> File.bprintf ml "%s(%s)\n" indent
+                 |> File.bprintf ml "%s(%s)\n" indent
         else escaped_arg_names_to_tuple_form args.out_list
-          |> File.bprintf ml "%s(ret, %s)\n" indent;
+             |> File.bprintf ml "%s(ret, %s)\n" indent;
         if can_throw_gerror then begin
           File.buff_add_line ml "  in";
           File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
@@ -674,30 +674,30 @@ let generate_callable_bindings_when_in_out_args callable name container symbol a
       let _  = write_compute_value_instructions ml name arguments can_throw_gerror in
       let _ = File.bprintf ml "*)\n" in
       File.bprintf mli "*)\n"
-  end
+    end
 
 let should_be_implemented args sources symbol =
   let open Binding_utils in
   let get_info_for_non_usable_arg = function
-      | Arg _ ->
-          let msg = "get_info_for_non_usable_arg: \
-            this should never has been reached" in raise (Failure msg)
-      | Not_implemented msg -> msg
-      | Skipped msg -> msg
+    | Arg _ ->
+      let msg = "get_info_for_non_usable_arg: \
+                 this should never has been reached" in raise (Failure msg)
+    | Not_implemented msg -> msg
+    | Skipped msg -> msg
   in
   (** TODO: mix the pattern match. *)
   match has_not_implemented_arg args with
   | Some arg ->
-      let i =  get_info_for_non_usable_arg arg in
-      let coms =
-        Printf.sprintf "Not implemented %s type %s not implemented" symbol i in
-      let _ = Sources.buffs_add_comments sources coms in false
+    let i =  get_info_for_non_usable_arg arg in
+    let coms =
+      Printf.sprintf "Not implemented %s type %s not implemented" symbol i in
+    let _ = Sources.buffs_add_comments sources coms in false
   | None ->
-      match has_skipped_arg args with
-      | Some arg ->
-          let i =  get_info_for_non_usable_arg arg in
-          let coms = Printf.sprintf " %s type %s skipped" symbol i in
-          let _ = Sources.buffs_add_skipped sources coms in false
+    match has_skipped_arg args with
+    | Some arg ->
+      let i =  get_info_for_non_usable_arg arg in
+      let coms = Printf.sprintf " %s type %s skipped" symbol i in
+      let _ = Sources.buffs_add_skipped sources coms in false
     | None -> true
 
 let append_ctypes_function_bindings raw_name info container sources skip_types =
@@ -710,21 +710,21 @@ let append_ctypes_function_bindings raw_name info container sources skip_types =
   if should_be_implemented args sources s then begin
     match get_return_types ci cn skip_types with
     | Not_handled t ->
-        let coms = Printf.sprintf
-        "Not implemented %s return type %s not handled" s t in
-        Sources.buffs_add_comments sources coms
+      let coms = Printf.sprintf
+          "Not implemented %s return type %s not handled" s t in
+      Sources.buffs_add_comments sources coms
     | Skipped t ->
-        let coms = Printf.sprintf "%s return type %s" s t in
-        Sources.buffs_add_skipped sources coms
+      let coms = Printf.sprintf "%s return type %s" s t in
+      Sources.buffs_add_skipped sources coms
     | Type_names rt ->
-        if has_out_arg args then
-          generate_callable_bindings_when_out_args ci n cn s args rt sources
-        else if has_in_out_arg args then
-          generate_callable_bindings_when_in_out_args ci n cn s args rt sources
-          (*let coms  =
-            Printf.sprintf "Not implemented %s - in out argument not handled" s in
+      if has_out_arg args then
+        generate_callable_bindings_when_out_args ci n cn s args rt sources
+      else if has_in_out_arg args then
+        generate_callable_bindings_when_in_out_args ci n cn s args rt sources
+        (*let coms  =
+          Printf.sprintf "Not implemented %s - in out argument not handled" s in
           Sources.buffs_add_comments sources coms*)
-        else generate_callable_bindings_when_only_in_arg ci n cn s args rt sources
+      else generate_callable_bindings_when_only_in_arg ci n cn s args rt sources
   end
 
 let parse_function_info info sources skip_types =
@@ -732,7 +732,7 @@ let parse_function_info info sources skip_types =
   match Base_info.get_name info with
   | None -> ()
   | Some n ->
-     let i' = Function_info.from_baseinfo info in
-     let _ = append_ctypes_function_bindings n i' None sources skip_types in
-     let _ = Sources.buffs_add_eol sources in
-     Sources.write_buffs sources
+    let i' = Function_info.from_baseinfo info in
+    let _ = append_ctypes_function_bindings n i' None sources skip_types in
+    let _ = Sources.buffs_add_eol sources in
+    Sources.write_buffs sources
