@@ -497,7 +497,72 @@ let write_compute_value_instructions ml name arguments can_throw_gerror =
       | Some args_in, Some args_out, Some args_in_out ->
           File.bprintf ml "  let ret = %s_raw %s %s %s in\n" name args_in args_out args_in_out
 
-let generate_callable_bindings_when_only_in_arg callable name symbol arguments ret_types sources =
+(* This function create all the instructions needed to allocate gerror structure
+ * or out arguments or in/out arguments when needed. *)
+let write_allocation_instructions ml name arguments container can_throw_gerror =
+  let open Binding_utils in
+  let _ = if can_throw_gerror then File.bprintf ml "  %s\n" allocate_gerror in
+  match arguments with
+  | No_args -> ()
+  | Args args ->
+      let get_out_arg_alloc_instructions a =
+        let name' = get_escaped_arg_name a in
+        match get_type_info a with
+        | None ->
+            let message = "get_out_argument_allocation_intructions: no typeinfo for arg" ^ name' in
+            let f = Failure message in raise f
+        | Some type_info ->
+            let may_be_null = arg_may_be_null a in
+            match allocate_out_argument type_info name' may_be_null with
+            | Error message ->
+                let message' = Printf.sprintf
+                               "unable to get type to allocate for \
+                                argument named %s of type '%s' in function %s"
+                                name' message name  in
+                let f = Failure message in raise f
+            | Ok instructions -> let pattern = container ^ "." in
+                Binding_utils.string_pattern_remove instructions pattern
+      in
+      let get_in_out_arg_alloc_instructions a =
+        let name' = get_escaped_arg_name a in
+        match get_type_info a with
+        | None ->
+            let message = "get_in_out_argument_allocation_intructions: no typeinfo for arg" ^ name' in
+            let f = Failure message in raise f
+        | Some type_info ->
+            let may_be_null = arg_may_be_null a in
+            match allocate_out_argument type_info name' may_be_null with
+            | Error message ->
+                let message' = Printf.sprintf
+                               "unable to get type to allocate for \
+                                argument named %s of type '%s' in function %s"
+                                name' message name  in
+                let f = Failure message in raise f
+            | Ok instructions -> let pattern = container ^ "." in
+                Binding_utils.string_pattern_remove instructions pattern
+      in
+      let args_out_alloc = function
+        | [] -> None
+        | l ->
+            let instructions = List.map (fun a -> get_out_arg_alloc_instructions a) l in
+            Some ( String.concat "  " instructions)
+      in
+      let args_in_out_alloc = function
+        | [] -> None
+        | l ->
+            let instructions = List.map (fun a -> get_in_out_arg_alloc_instructions a) l in
+            Some ( String.concat "  " instructions)
+      in
+      match args_out_alloc args.out_list, args_in_out_alloc args.in_out_list with
+      | None, None -> ()
+      | Some args_out, None ->
+          File.bprintf ml "  %s" args_out
+      | None, Some args_in_out ->
+          File.bprintf ml "  %s" args_in_out
+      | Some args_out, Some args_in_out ->
+          File.bprintf ml "  %s  %s" args_out args_in_out
+
+let generate_callable_bindings_when_only_in_arg callable name container symbol arguments ret_types sources =
   let open Binding_utils in
   let name = ensure_valid_variable_name name in
   let mli = Sources.mli sources in
@@ -514,9 +579,7 @@ let generate_callable_bindings_when_only_in_arg callable name symbol arguments r
   write_mli_signature mli name arguments ocaml_ret' can_throw_gerror;
   write_function_name ml name arguments can_throw_gerror;
   write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret';
-  if can_throw_gerror then begin
-    File.bprintf ml "  %s\n" allocate_gerror;
-  end;
+  write_allocation_instructions ml name arguments container can_throw_gerror;
   write_compute_value_instructions ml name arguments can_throw_gerror;
   if can_throw_gerror then begin
     File.buff_add_line ml (return_gerror_result ())
@@ -543,23 +606,6 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
         | args_types -> let all_elements =
           if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
           in Printf.sprintf "%s" (String.concat " * " all_elements)
-      in
-      let write_out_argument_allocation_instructions a =
-        let name' = get_escaped_arg_name a in
-        match get_type_info a with
-        | None -> raise_failure "no typeinfo for arg"
-        | Some type_info ->
-            let may_be_null = arg_may_be_null a in
-            match allocate_out_argument type_info name' may_be_null with
-            | Error message ->
-                let message' = Printf.sprintf
-                               "unable to get type to allocate for \
-                                argument named %s of type '%s' in function %s"
-                                name' message name  in
-                raise_failure message'
-            | Ok instructions -> let pattern = container ^ "." in
-                Binding_utils.string_pattern_remove instructions pattern
-                |> File.bprintf ml "  %s"
       in
       let write_get_value_from_pointer_instructions a =
         let name' = get_escaped_arg_name a in
@@ -593,10 +639,7 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
       in
       write_mli_signature mli name arguments ocaml_ret can_throw_gerror;
       write_function_name ml name arguments can_throw_gerror;
-      List.iter write_out_argument_allocation_instructions args.out_list;
-      if can_throw_gerror then begin
-        File.bprintf ml "  %s\n" allocate_gerror
-      end;
+      write_allocation_instructions ml name arguments container can_throw_gerror;
       write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret;
       write_compute_value_instructions ml name arguments can_throw_gerror;
       if can_throw_gerror then begin
@@ -623,6 +666,7 @@ let generate_callable_bindings_when_in_out_args callable name container symbol a
       let _ = File.bprintf mli "(*" in
       let _ = write_function_name ml name arguments can_throw_gerror in
       let _ = write_mli_signature mli name arguments ocaml_ret can_throw_gerror in
+      let _ = write_allocation_instructions ml name arguments container can_throw_gerror in
       let _ = write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret in
       let _  = write_compute_value_instructions ml name arguments can_throw_gerror in
       let _ = File.bprintf ml "*)\n" in
@@ -677,7 +721,7 @@ let append_ctypes_function_bindings raw_name info container sources skip_types =
           (*let coms  =
             Printf.sprintf "Not implemented %s - in out argument not handled" s in
           Sources.buffs_add_comments sources coms*)
-        else generate_callable_bindings_when_only_in_arg ci n s args rt sources
+        else generate_callable_bindings_when_only_in_arg ci n cn s args rt sources
   end
 
 let parse_function_info info sources skip_types =
