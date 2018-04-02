@@ -562,7 +562,6 @@ let write_allocation_instructions ml name arguments container can_throw_gerror =
     | Some args_out, Some args_in_out ->
       File.bprintf ml "  %s  %s" args_out args_in_out
 
-(* TODO: function write_build_return_value_instructions *)
 let write_build_return_value_instructions ml name arguments can_throw_gerror ocaml_ret =
   let open Binding_utils in
   match arguments with
@@ -599,23 +598,24 @@ let write_build_return_value_instructions ml name arguments can_throw_gerror oca
         end
       in*)
       let ret = match ocaml_ret with "unit" -> None | _ -> Some ocaml_ret in
-      let get_args_out_values = match args.in_list with
+      let get_args_out_values = match args.out_list with
         | [] -> None
         | l -> let f a =
             write_get_value_from_pointer_instructions a
           in
           let l' = List.map f l in
-          Some (String.concat "\n" l')
+          Some (String.concat "  " l')
       in
-      let get_args_in_out_values = match args.in_list with
+      let get_args_in_out_values = match args.in_out_list with
         | [] -> None
         | l -> let f a =
             write_get_value_from_pointer_instructions a
           in
           let l' = List.map f l in
-          Some (String.concat "\n" l')
+          Some (String.concat "  " l')
         in
-
+      let args_out_tuple = escaped_arg_names_to_tuple_form args.out_list in
+      let args_in_out_tuple = escaped_arg_names_to_tuple_form args.in_out_list in
       if can_throw_gerror then
         match ret, get_args_out_values, get_args_in_out_values with
         | _, None, None ->
@@ -624,49 +624,65 @@ let write_build_return_value_instructions ml name arguments can_throw_gerror oca
             File.buff_add_line ml (return_gerror_result ())
         | None, Some args_out, None->
           let _ = File.bprintf ml "  let get_ret_value () =\n" in
-          let _ = File.bprintf ml "    (%s)" args_out in
+          let _ = File.bprintf ml "    %s" args_out in
+          let _ = File.bprintf ml "    (%s)\n" args_out_tuple in
           let _ = File.buff_add_line ml "  in" in
           File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
         | Some ret, Some args_out, None ->
           let _ = File.bprintf ml "  let get_ret_value () =\n" in
-          let _ = File.bprintf ml "    (ret, %s)" args_out in
+          let _ = File.bprintf ml "    %s" args_out in
+          let _ = File.bprintf ml "    (ret, %s)\n" args_out_tuple in
           let _ = File.buff_add_line ml "  in" in
           File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
         | None, None, Some args_in_out ->
           let _ = File.bprintf ml "  let get_ret_value () =\n" in
-          let _ = File.bprintf ml "    (%s)" args_in_out in
+          let _ = File.bprintf ml "    %s" args_in_out in
+          let _ = File.bprintf ml "    (%s)\n" args_in_out_tuple in
           let _ = File.buff_add_line ml "  in" in
           File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
         | Some ret, None, Some args_in_out ->
           let _ = File.bprintf ml "  let get_ret_value () =\n" in
-          let _ = File.bprintf ml "    (ret, %s)" args_in_out in
+          let _ = File.bprintf ml "    %s" args_in_out in
+          let _ = File.bprintf ml "    (ret, %s)\n" args_in_out_tuple in
           let _ = File.buff_add_line ml "  in" in
           File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
         | None, Some args_out, Some args_in_out ->
           let _ = File.bprintf ml "  let get_ret_value () =\n" in
-          let _ = File.bprintf ml "    (%s, %s)" args_out args_in_out in
+          let _ = File.bprintf ml "    %s" args_out in
+          let _ = File.bprintf ml "    %s" args_in_out in
+          let _ = File.bprintf ml "    (%s, %s)\n" args_out_tuple args_in_out_tuple in
           let _ = File.buff_add_line ml "  in" in
           File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
         | Some ret, Some args_out, Some args_in_out ->
           let _ = File.bprintf ml "  let get_ret_value () =\n" in
-          let _ = File.bprintf ml "    (ret, %s, %s)" args_out args_in_out in
+          let _ = File.bprintf ml "    %s" args_out in
+          let _ = File.bprintf ml "    %s" args_in_out in
+          let _ = File.bprintf ml "    (ret, %s, %s)\n" args_out_tuple args_in_out_tuple in
           let _ = File.buff_add_line ml "  in" in
           File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
       else
         match ret, get_args_out_values, get_args_in_out_values with
         | _, None, None -> ()
         | None, Some args_out, None->
-          File.bprintf ml "    (%s)" args_out
+          let _ = File.bprintf ml "  %s" args_out in
+          File.bprintf ml "  (%s)" args_out_tuple
         | Some ret, Some args_out, None ->
-          File.bprintf ml "    (ret, %s)" args_out
+          let _ = File.bprintf ml "  %s" args_out in
+          File.bprintf ml "  (ret, %s)" args_out_tuple
         | None, None, Some args_in_out ->
-          File.bprintf ml "    (%s)" args_in_out
+          let _ = File.bprintf ml "  %s" args_in_out in
+          File.bprintf ml "  (%s)" args_in_out_tuple
         | Some ret, None, Some args_in_out ->
-          File.bprintf ml "    (ret, %s)" args_in_out
+          let _ = File.bprintf ml "  %s" args_in_out in
+          File.bprintf ml "  (ret, %s)" args_in_out_tuple
         | None, Some args_out, Some args_in_out ->
-          File.bprintf ml "    (%s, %s)" args_out args_in_out
+          let _ = File.bprintf ml "  %s" args_out in
+          let _ = File.bprintf ml "  %s" args_in_out in
+          File.bprintf ml "  (%s, %s)" args_out_tuple args_in_out_tuple
         | Some ret, Some args_out, Some args_in_out ->
-          File.bprintf ml "    (ret, %s, %s)" args_out args_in_out
+          let _ = File.bprintf ml "  %s" args_out in
+          let _ = File.bprintf ml "  %s" args_in_out in
+          File.bprintf ml "  (ret, %s, %s)" args_out_tuple args_in_out_tuple
 
 let generate_callable_bindings_when_only_in_arg callable name container symbol arguments ret_types sources =
   let open Binding_utils in
@@ -682,9 +698,10 @@ let generate_callable_bindings_when_only_in_arg callable name container symbol a
   write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret';
   write_allocation_instructions ml name arguments container can_throw_gerror;
   write_compute_value_instructions ml name arguments can_throw_gerror;
-  if can_throw_gerror then begin
+  write_build_return_value_instructions ml name arguments can_throw_gerror ocaml_ret
+  (*if can_throw_gerror then begin
     File.buff_add_line ml (return_gerror_result ())
-  end
+  end *)
 
 let generate_callable_bindings_when_out_args callable name container symbol arguments ret_types sources =
   let open Binding_utils in
@@ -699,7 +716,7 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
   | No_args -> raise_failure "with No_args"
   | Args args -> begin
       let can_throw_gerror = Callable_info.can_throw_gerror callable in
-      let write_get_value_from_pointer_instructions a =
+      (* let write_get_value_from_pointer_instructions a =
         let name' = get_escaped_arg_name a in
         match get_type_info a with
         | None -> raise_failure "no typeinfo for arg"
@@ -714,8 +731,8 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
           | Ok instructions ->
             let indent = if can_throw_gerror then "    " else "  " in
             File.bprintf ml "%s%s" indent instructions
-      in
-      let write_build_return_value_instructions () =
+in*)
+      (* let write_build_return_value_instructions () =
         let indent = if can_throw_gerror then "    " else "  " in
         if ocaml_ret = "unit" then
           match args.out_list with
@@ -728,17 +745,18 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
           File.buff_add_line ml "  in";
           File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
         end
-      in
+in *)
       write_mli_signature mli name arguments ocaml_ret can_throw_gerror;
       write_function_name ml name arguments can_throw_gerror;
       write_allocation_instructions ml name arguments container can_throw_gerror;
       write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret;
       write_compute_value_instructions ml name arguments can_throw_gerror;
-      if can_throw_gerror then begin
+      write_build_return_value_instructions ml name arguments can_throw_gerror ocaml_ret
+      (* if can_throw_gerror then begin
         File.bprintf ml "  let get_ret_value () =\n"
       end;
       List.iter write_get_value_from_pointer_instructions args.out_list;
-      write_build_return_value_instructions ();
+      write_build_return_value_instructions (); *)
     end
 
 let generate_callable_bindings_when_in_out_args callable name container symbol arguments ret_types sources =
@@ -761,6 +779,7 @@ let generate_callable_bindings_when_in_out_args callable name container symbol a
       let _ = write_allocation_instructions ml name arguments container can_throw_gerror in
       let _ = write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret in
       let _  = write_compute_value_instructions ml name arguments can_throw_gerror in
+      let _ = write_build_return_value_instructions ml name arguments can_throw_gerror ocaml_ret in
       let _ = File.bprintf ml "*)\n" in
       File.bprintf mli "*)\n"
     end
