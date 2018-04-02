@@ -519,7 +519,7 @@ let write_allocation_instructions ml name arguments container can_throw_gerror =
               "unable to get type to allocate for \
                argument named %s of type '%s' in function %s"
               name' message name  in
-          let f = Failure message in raise f
+          let f = Failure message' in raise f
         | Ok instructions -> let pattern = container ^ "." in
           Binding_utils.string_pattern_remove instructions pattern
     in
@@ -539,7 +539,7 @@ let write_allocation_instructions ml name arguments container can_throw_gerror =
               "unable to get type to allocate for \
                argument named %s of type '%s' in function %s"
               name' message name  in
-          let f = Failure message in raise f
+          let f = Failure message' in raise f
         | Ok instructions -> let pattern = container ^ "." in
           Binding_utils.string_pattern_remove instructions pattern
     in
@@ -573,11 +573,6 @@ let generate_callable_bindings_when_only_in_arg callable name container symbol a
   let ml = Sources.ml sources in
   let (ocaml_ret, ctypes_ret) = List.hd ret_types in
   let can_throw_gerror = Callable_info.can_throw_gerror callable in
-  let no_args = match arguments with No_args -> true | _ -> false in
-  let arg_names = match arguments with
-    | No_args -> ""
-    | Args args -> escaped_arg_names_space_sep args.in_list
-  in
   let ocaml_ret' = if ocaml_ret = "string" then "string option" else ocaml_ret in
   let ctypes_ret' = if ctypes_ret = "string" then "string_opt" else ctypes_ret in
   write_mli_signature mli name arguments ocaml_ret' can_throw_gerror;
@@ -602,14 +597,6 @@ let generate_callable_bindings_when_out_args callable name container symbol argu
   | No_args -> raise_failure "with No_args"
   | Args args -> begin
       let can_throw_gerror = Callable_info.can_throw_gerror callable in
-      let no_in_args = not (has_in_arg arguments) in
-      let ocaml_types_out =
-        match get_ocaml_types args.out_list with
-        | [] -> Printf.sprintf "(%s)" ocaml_ret
-        | args_types -> let all_elements =
-                          if ocaml_ret = "unit" then args_types else ocaml_ret :: args_types
-          in Printf.sprintf "%s" (String.concat " * " all_elements)
-      in
       let write_get_value_from_pointer_instructions a =
         let name' = get_escaped_arg_name a in
         match get_type_info a with
