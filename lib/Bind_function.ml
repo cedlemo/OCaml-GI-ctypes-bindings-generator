@@ -583,20 +583,6 @@ let write_build_return_value_instructions ml name arguments can_throw_gerror oca
             raise (Failure message')
           | Ok instructions -> instructions
       in
-      (* let write_build_return_value_instructions () =
-        let indent = if can_throw_gerror then "    " else "  " in
-        if ocaml_ret = "unit" then
-          match args.out_list with
-          | [] -> File.bprintf ml "%s(ret)" indent
-          | _ -> escaped_arg_names_to_tuple_form args.out_list
-                 |> File.bprintf ml "%s(%s)\n" indent
-        else escaped_arg_names_to_tuple_form args.out_list
-             |> File.bprintf ml "%s(ret, %s)\n" indent;
-        if can_throw_gerror then begin
-          File.buff_add_line ml "  in";
-          File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
-        end
-      in*)
       let ret = match ocaml_ret with "unit" -> None | _ -> Some ocaml_ret in
       let get_args_out_values = match args.out_list with
         | [] -> None
@@ -684,7 +670,7 @@ let write_build_return_value_instructions ml name arguments can_throw_gerror oca
           let _ = File.bprintf ml "  %s" args_in_out in
           File.bprintf ml "  (ret, %s, %s)" args_out_tuple args_in_out_tuple
 
-let generate_callable_bindings_when_only_in_arg callable name container symbol arguments ret_types sources =
+let generate_callable_bindings callable name container symbol arguments ret_types sources =
   let open Binding_utils in
   let name = ensure_valid_variable_name name in
   let mli = Sources.mli sources in
@@ -699,90 +685,6 @@ let generate_callable_bindings_when_only_in_arg callable name container symbol a
   write_allocation_instructions ml name arguments container can_throw_gerror;
   write_compute_value_instructions ml name arguments can_throw_gerror;
   write_build_return_value_instructions ml name arguments can_throw_gerror ocaml_ret
-  (*if can_throw_gerror then begin
-    File.buff_add_line ml (return_gerror_result ())
-  end *)
-
-let generate_callable_bindings_when_out_args callable name container symbol arguments ret_types sources =
-  let open Binding_utils in
-  let name = ensure_valid_variable_name name in
-  let (ocaml_ret, ctypes_ret) = List.hd ret_types in
-  let mli = Sources.mli sources in
-  let ml = Sources.ml sources in
-  let raise_failure message =
-    raise (Failure ("generate_callable_bindings_when_out_args: " ^ message))
-  in
-  match arguments with
-  | No_args -> raise_failure "with No_args"
-  | Args args -> begin
-      let can_throw_gerror = Callable_info.can_throw_gerror callable in
-      (* let write_get_value_from_pointer_instructions a =
-        let name' = get_escaped_arg_name a in
-        match get_type_info a with
-        | None -> raise_failure "no typeinfo for arg"
-        | Some type_info ->
-          let may_be_null = arg_may_be_null a in
-          match get_out_argument_value type_info name' may_be_null with
-          | Error message -> let message' =
-                               Printf.sprintf "unable to get instructions to get value \
-                                               for argument named %s of type '%s' in function %s"
-                                 name' message name in
-            raise_failure message'
-          | Ok instructions ->
-            let indent = if can_throw_gerror then "    " else "  " in
-            File.bprintf ml "%s%s" indent instructions
-in*)
-      (* let write_build_return_value_instructions () =
-        let indent = if can_throw_gerror then "    " else "  " in
-        if ocaml_ret = "unit" then
-          match args.out_list with
-          | [] -> File.bprintf ml "%s(ret)" indent
-          | _ -> escaped_arg_names_to_tuple_form args.out_list
-                 |> File.bprintf ml "%s(%s)\n" indent
-        else escaped_arg_names_to_tuple_form args.out_list
-             |> File.bprintf ml "%s(ret, %s)\n" indent;
-        if can_throw_gerror then begin
-          File.buff_add_line ml "  in";
-          File.bprintf ml "%s" (return_gerror_result ~ret:"(get_ret_value ())" ())
-        end
-in *)
-      write_mli_signature mli name arguments ocaml_ret can_throw_gerror;
-      write_function_name ml name arguments can_throw_gerror;
-      write_allocation_instructions ml name arguments container can_throw_gerror;
-      write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret;
-      write_compute_value_instructions ml name arguments can_throw_gerror;
-      write_build_return_value_instructions ml name arguments can_throw_gerror ocaml_ret
-      (* if can_throw_gerror then begin
-        File.bprintf ml "  let get_ret_value () =\n"
-      end;
-      List.iter write_get_value_from_pointer_instructions args.out_list;
-      write_build_return_value_instructions (); *)
-    end
-
-let generate_callable_bindings_when_in_out_args callable name container symbol arguments ret_types sources =
-  let open Binding_utils in
-  let name = ensure_valid_variable_name name in
-  let (ocaml_ret, ctypes_ret) = List.hd ret_types in
-  let mli = Sources.mli sources in
-  let ml = Sources.ml sources in
-  let raise_failure message =
-    raise (Failure ("generate_callable_bindings_when_in_out_args: " ^ message))
-  in
-  match arguments with
-  | No_args -> raise_failure "with No_args"
-  | Args args -> begin
-      let can_throw_gerror = Callable_info.can_throw_gerror callable in
-      let _ = File.bprintf ml "(*" in
-      let _ = File.bprintf mli "(*" in
-      let _ = write_function_name ml name arguments can_throw_gerror in
-      let _ = write_mli_signature mli name arguments ocaml_ret can_throw_gerror in
-      let _ = write_allocation_instructions ml name arguments container can_throw_gerror in
-      let _ = write_foreign_declaration ml name symbol arguments can_throw_gerror ctypes_ret in
-      let _  = write_compute_value_instructions ml name arguments can_throw_gerror in
-      let _ = write_build_return_value_instructions ml name arguments can_throw_gerror ocaml_ret in
-      let _ = File.bprintf ml "*)\n" in
-      File.bprintf mli "*)\n"
-    end
 
 let should_be_implemented args sources symbol =
   let open Binding_utils in
@@ -793,20 +695,17 @@ let should_be_implemented args sources symbol =
     | Not_implemented msg -> msg
     | Skipped msg -> msg
   in
-  (** TODO: mix the pattern match. *)
-  match has_not_implemented_arg args with
-  | Some arg ->
+  match has_not_implemented_arg args, has_skipped_arg args with
+  | Some arg, _ ->
     let i =  get_info_for_non_usable_arg arg in
     let coms =
       Printf.sprintf "Not implemented %s type %s not implemented" symbol i in
     let _ = Sources.buffs_add_comments sources coms in false
-  | None ->
-    match has_skipped_arg args with
-    | Some arg ->
+  | None, None -> true
+  | None, Some arg ->
       let i =  get_info_for_non_usable_arg arg in
       let coms = Printf.sprintf " %s type %s skipped" symbol i in
       let _ = Sources.buffs_add_skipped sources coms in false
-    | None -> true
 
 let append_ctypes_function_bindings raw_name info container sources skip_types =
   let open Binding_utils in
@@ -825,14 +724,7 @@ let append_ctypes_function_bindings raw_name info container sources skip_types =
       let coms = Printf.sprintf "%s return type %s" s t in
       Sources.buffs_add_skipped sources coms
     | Type_names rt ->
-      if has_out_arg args then
-        generate_callable_bindings_when_out_args ci n cn s args rt sources
-      else if has_in_out_arg args then
-        generate_callable_bindings_when_in_out_args ci n cn s args rt sources
-        (*let coms  =
-          Printf.sprintf "Not implemented %s - in out argument not handled" s in
-          Sources.buffs_add_comments sources coms*)
-      else generate_callable_bindings_when_only_in_arg ci n cn s args rt sources
+      generate_callable_bindings ci n cn s args rt sources
   end
 
 let parse_function_info info sources skip_types =
