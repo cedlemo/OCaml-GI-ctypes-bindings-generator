@@ -136,13 +136,13 @@ let test_function_bindings_for_args_out_function test_ctxt =
           "val get_ymd :\n  \
            t structure ptr -> (int32 * int32 * int32)" in
         let ml = "let get_ymd self =\n  \
-                  let year_ptr = allocate int32_t Int32.zero in\n  \
-                  let month_ptr = allocate int32_t Int32.zero in\n  \
-                  let day_ptr = allocate int32_t Int32.zero in\n  \
                   let get_ymd_raw =\n    \
                   foreign \"g_date_time_get_ymd\" (ptr t_typ @-> ptr (int32_t) \
                   @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))\n  \
                   in\n  \
+                  let year_ptr = allocate int32_t Int32.zero in\n  \
+                  let month_ptr = allocate int32_t Int32.zero in\n  \
+                  let day_ptr = allocate int32_t Int32.zero in\n  \
                   let ret = get_ymd_raw self year_ptr month_ptr day_ptr in\n  \
                   let year = !@ year_ptr in\n  \
                   let month = !@ month_ptr in\n  \
@@ -210,12 +210,12 @@ let test_function_bindings_for_args_out_with_gerror_function test_ctxt =
                  string -> (string option * string option, Error.t structure \
                  ptr option) result" in
     let ml = "let filename_from_uri uri =\n  \
-              let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in\n  \
-              let hostname_ptr = allocate string_opt None in\n  \
               let filename_from_uri_raw =\n    \
               foreign \"g_filename_from_uri\" (string @-> ptr (string_opt) \
               @-> ptr (ptr_opt Error.t_typ) @-> returning (string_opt))\n  \
               in\n  \
+              let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in\n  \
+              let hostname_ptr = allocate string_opt None in\n  \
               let ret = filename_from_uri_raw uri hostname_ptr err_ptr_ptr in\n  \
               let get_ret_value () =\n    \
                 let hostname = !@ hostname_ptr in\n    \
