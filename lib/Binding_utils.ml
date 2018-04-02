@@ -540,6 +540,111 @@ let allocate_out_argument type_info var_name maybe_null =
       | Arg as t -> Error (Base_info.string_of_baseinfo_type t)
       | Unresolved as t -> Error (Base_info.string_of_baseinfo_type t)
 
+let allocate_out_argument_with_default_value type_info var_name maybe_null default =
+  let check_if_pointer (ctypes_t, default_value) =
+    (* Consider that a pointer can always be null no need to check for maybe_null. *)
+    if Type_info.is_pointer type_info then
+      (Printf.sprintf "(ptr_opt %s)" ctypes_t,
+       "None")
+    else (ctypes_t, default_value)
+  in
+  let _allocate_simple_instructions (ctypes_type, default_value) =
+    let s = Printf.sprintf
+            "let %s_ptr = allocate %s %s in\n"
+            var_name ctypes_type default_value
+    in Ok s
+  in
+  match Type_info.get_interface type_info with
+  | None -> (
+    match Type_info.get_tag type_info with
+    | Types.Void -> check_if_pointer ("void", default)
+                    |> _allocate_simple_instructions
+    | Types.Boolean -> check_if_pointer ("bool", default)
+                    |> _allocate_simple_instructions
+    | Types.Int8 -> check_if_pointer ("int8_t", default)
+                    |> _allocate_simple_instructions
+    | Types.Uint8 -> check_if_pointer ("uint8_t", default)
+                    |> _allocate_simple_instructions
+    | Types.Int16 -> check_if_pointer ("int16_t", default)
+                    |> _allocate_simple_instructions
+    | Types.Uint16 -> check_if_pointer ("uint16_t", default)
+                    |> _allocate_simple_instructions
+    | Types.Int32 -> check_if_pointer ("int32_t", default)
+                    |> _allocate_simple_instructions
+    | Types.Uint32 -> check_if_pointer ("uint32_t", default)
+                    |> _allocate_simple_instructions
+    | Types.Int64 -> check_if_pointer ("int64_t", default)
+                    |> _allocate_simple_instructions
+    | Types.Uint64 -> check_if_pointer ("uint64_t", default)
+                    |> _allocate_simple_instructions
+    | Types.Float -> check_if_pointer ("float", default)
+                    |> _allocate_simple_instructions
+    | Types.Double -> check_if_pointer ("double", default)
+                    |> _allocate_simple_instructions
+    | Types.GType -> check_if_pointer ("int64_t", default)
+                    |> _allocate_simple_instructions
+    | Types.Utf8 | Types.Filename -> begin
+        (if maybe_null then ("string_opt", default) else ("string", default))
+        |> _allocate_simple_instructions
+    end
+    | Types.Array as t -> Error (Types.string_of_tag t)
+    | Types.Interface as t -> Error (Types.string_of_tag t)
+    | Types.GList -> check_if_pointer ("List.t_typ", default)
+                    |> _allocate_simple_instructions
+    | Types.GSList -> check_if_pointer ("SList.t_typ", default)
+                    |> _allocate_simple_instructions
+    | Types.GHash -> check_if_pointer ("Hash_table.t_typ", default)
+                    |> _allocate_simple_instructions
+    | Types.Error -> check_if_pointer ("Error.t_typ", default)
+                    |> _allocate_simple_instructions
+    | Types.Unichar as t -> Error (Types.string_of_tag t)
+    )
+  | Some interface ->
+      match Base_info.get_type interface with
+      | Struct -> begin match get_binding_name interface with
+        | None -> Error (Printf.sprintf "%s interface struct without name" var_name)
+        | Some name -> check_if_pointer (Printf.sprintf "%s.t_typ" name,
+                                         default)
+                    |> _allocate_simple_instructions
+      end
+      | Type -> check_if_pointer ("int64_t", default)
+                |> _allocate_simple_instructions
+      | Enum | Flags -> begin match get_binding_name interface with
+        | None -> Error (Printf.sprintf "%s interface enum without name" var_name)
+        | Some name -> let enum_info = Enum_info.from_baseinfo interface in
+            let view_name = Printf.sprintf "%s.t_view" name in
+            let def_val_constructor deflt =
+              Printf.sprintf "(%s.of_value (%s))" view_name deflt
+            in
+            match Enum_info.get_storage_type enum_info with
+            | Types.Int32 -> _allocate_simple_instructions (view_name, default)
+            | Types.Uint32 -> _allocate_simple_instructions (view_name, default)
+            | _ -> Error (Printf.sprintf "%s interface enum %s with a bad storage type" var_name name)
+      end
+      | Object as t -> begin match get_binding_name interface with
+        | None -> Error (Printf.sprintf "%s interface object without name" var_name)
+        | Some name -> check_if_pointer (Printf.sprintf "%s.t_typ" name,
+                                         default)
+                    |> _allocate_simple_instructions
+      end
+      | Invalid as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Function as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Callback as t  -> Error (Base_info.string_of_baseinfo_type t)
+      | Boxed as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Interface as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Constant as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Invalid_0 as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Union as t  -> Error (Base_info.string_of_baseinfo_type t)
+      | Value as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Signal as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Vfunc as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Property as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Field as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Arg as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Unresolved as t -> Error (Base_info.string_of_baseinfo_type t)
+
+
+
 let get_out_argument_value type_info var_name maybe_null =
   let _get_value_simple_instructions () =
     let s = Printf.sprintf "let %s = !@ %s_ptr in\n" var_name var_name

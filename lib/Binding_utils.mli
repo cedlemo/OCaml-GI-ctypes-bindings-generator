@@ -99,6 +99,13 @@ val type_info_to_bindings_types:
 val allocate_out_argument:
   Type_info.t structure ptr -> string -> bool -> (string, string) result
 
+(** Create from a Type_info.t the allocation instructions for out argument
+ *  in function bindings with a variable name that will hold the default
+ *  value used for the allocation. This is used for the in / out function
+ *  parameters. *)
+val allocate_out_argument_with_default_value:
+  Type_info.t structure ptr -> string -> bool -> string -> (string, string) result
+
 (** Create from a Type_info.t the instructions in order to get the value
  *  from an out argument in function bindings. *)
 val get_out_argument_value:
