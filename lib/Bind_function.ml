@@ -497,7 +497,7 @@ let write_compute_value_instructions ml name arguments can_throw_gerror =
       | Some args_in, Some args_out, Some args_in_out ->
         File.bprintf ml "  let ret = %s_raw %s %s %s in\n" name args_in args_out args_in_out
 
-(* This function create all the instructions needed to allocate gerror structure
+(* This function creates all the instructions needed to allocate gerror structure
  * or out arguments or in/out arguments when needed. *)
 let write_allocation_instructions ml name arguments container can_throw_gerror =
   let open Binding_utils in
@@ -524,8 +524,6 @@ let write_allocation_instructions ml name arguments container can_throw_gerror =
           Binding_utils.string_pattern_remove instructions pattern
     in
     let get_in_out_arg_alloc_instructions a =
-      (* TODO : use the argument passed by the user as the default value with
-       * the allocate function of Ctypes. The argument is referenced by its name. *)
       let name' = get_escaped_arg_name a in
       match get_type_info a with
       | None ->
@@ -533,7 +531,7 @@ let write_allocation_instructions ml name arguments container can_throw_gerror =
         let f = Failure message in raise f
       | Some type_info ->
         let may_be_null = arg_may_be_null a in
-        match allocate_out_argument type_info name' may_be_null with
+        match allocate_out_argument_with_default_value type_info name' may_be_null name' with
         | Error message ->
           let message' = Printf.sprintf
               "unable to get type to allocate for \
