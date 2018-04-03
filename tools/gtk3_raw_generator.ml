@@ -12,7 +12,7 @@ let skip = [ ]
 let () =
   let version = "3.0" in
   match Loader.load "Gtk" ~version () with
-  | None -> print_endline "Please check the namespace, something is wrong"
-  | Some loader -> print_infos loader;
+  | Error message -> print_endline "Please check the namespace, something is wrong"
+  | Ok loader -> print_infos loader;
     let loader = Loader.set_build_path loader "tools/" in
     Loader.parse loader ~skip ()
