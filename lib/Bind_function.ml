@@ -651,24 +651,24 @@ let write_build_return_value_instructions ml name arguments can_throw_gerror oca
         | _, None, None -> ()
         | None, Some args_out, None->
           let _ = File.bprintf ml "  %s" args_out in
-          File.bprintf ml "  (%s)" args_out_tuple
+          File.bprintf ml "  (%s)\n" args_out_tuple
         | Some ret, Some args_out, None ->
           let _ = File.bprintf ml "  %s" args_out in
-          File.bprintf ml "  (ret, %s)" args_out_tuple
+          File.bprintf ml "  (ret, %s)\n" args_out_tuple
         | None, None, Some args_in_out ->
           let _ = File.bprintf ml "  %s" args_in_out in
-          File.bprintf ml "  (%s)" args_in_out_tuple
+          File.bprintf ml "  (%s)\n" args_in_out_tuple
         | Some ret, None, Some args_in_out ->
           let _ = File.bprintf ml "  %s" args_in_out in
-          File.bprintf ml "  (ret, %s)" args_in_out_tuple
+          File.bprintf ml "  (ret, %s)\n" args_in_out_tuple
         | None, Some args_out, Some args_in_out ->
           let _ = File.bprintf ml "  %s" args_out in
           let _ = File.bprintf ml "  %s" args_in_out in
-          File.bprintf ml "  (%s, %s)" args_out_tuple args_in_out_tuple
+          File.bprintf ml "  (%s, %s)\n" args_out_tuple args_in_out_tuple
         | Some ret, Some args_out, Some args_in_out ->
           let _ = File.bprintf ml "  %s" args_out in
           let _ = File.bprintf ml "  %s" args_in_out in
-          File.bprintf ml "  (ret, %s, %s)" args_out_tuple args_in_out_tuple
+          File.bprintf ml "  (ret, %s, %s)\n" args_out_tuple args_in_out_tuple
 
 let generate_callable_bindings callable name container symbol arguments ret_types sources =
   let open Binding_utils in
