@@ -14,10 +14,10 @@ let create_from_ipp =
   foreign "gtk_paper_size_new_from_ipp" (string @-> double @-> double @-> returning (ptr t_typ))
 let create_from_key_file key_file group_name =
   let create_from_key_file_raw =
-    foreign "gtk_paper_size_new_from_key_file" (ptr Key_file.t_typ @-> string@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
+    foreign "gtk_paper_size_new_from_key_file" (ptr Key_file.t_typ @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = create_from_key_file_raw key_file group_name err_ptr_ptr in
+  let ret = create_from_key_file_raw key_file group_name err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in

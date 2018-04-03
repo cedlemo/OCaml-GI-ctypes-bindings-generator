@@ -3,17 +3,17 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val get:
+val get :
   Atom.t structure ptr -> t
-val get_default:
+val get_default :
   Display.t -> t
-val get_for_display:
+val get_for_display :
   Display.t -> Atom.t structure ptr -> t
-val clear:
+val clear :
   t -> unit
-val get_display:
+val get_display :
   t -> Display.t
-val get_owner:
+val get_owner :
   t -> Object.t
 (*Not implemented gtk_clipboard_request_contents type callback not implemented*)
 (*Not implemented gtk_clipboard_request_image type callback not implemented*)
@@ -22,28 +22,28 @@ val get_owner:
 (*Not implemented gtk_clipboard_request_text type callback not implemented*)
 (*Not implemented gtk_clipboard_request_uris type callback not implemented*)
 (*Not implemented gtk_clipboard_set_can_store type C Array type for Types.Array tag not implemented*)
-val set_image:
+val set_image :
   t -> Pixbuf.t -> unit
-val set_text:
+val set_text :
   t -> string -> int32 -> unit
-val store:
+val store :
   t -> unit
-val wait_for_contents:
+val wait_for_contents :
   t -> Atom.t structure ptr -> Selection_data.t structure ptr option
-val wait_for_image:
+val wait_for_image :
   t -> Pixbuf.t
 (*Not implemented gtk_clipboard_wait_for_rich_text return type C Array type for Types.Array tag not handled*)
 (*Not implemented gtk_clipboard_wait_for_targets type C Array type for Types.Array tag not implemented*)
-val wait_for_text:
+val wait_for_text :
   t -> string option
 (*Not implemented gtk_clipboard_wait_for_uris return type C Array type for Types.Array tag not handled*)
-val wait_is_image_available:
+val wait_is_image_available :
   t -> bool
-val wait_is_rich_text_available:
+val wait_is_rich_text_available :
   t -> Text_buffer.t -> bool
-val wait_is_target_available:
+val wait_is_target_available :
   t -> Atom.t structure ptr -> bool
-val wait_is_text_available:
+val wait_is_text_available :
   t -> bool
-val wait_is_uris_available:
+val wait_is_uris_available :
   t -> bool

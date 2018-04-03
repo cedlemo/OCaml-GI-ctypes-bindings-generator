@@ -23,16 +23,15 @@ let get_label =
 let get_layout =
   foreign "gtk_label_get_layout" (t_typ @-> returning (Layout.t_typ))
 let get_layout_offsets self =
+  let get_layout_offsets_raw =
+    foreign "gtk_label_get_layout_offsets" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+  in
   let x_ptr = allocate int32_t Int32.zero in
   let y_ptr = allocate int32_t Int32.zero in
-  let get_layout_offsets_raw =
-    foreign "gtk_label_get_layout_offsets" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_layout_offsets_raw self x_ptr y_ptr in
   let x = !@ x_ptr in
   let y = !@ y_ptr in
-  (x, y)
-let get_line_wrap =
+  (x, y)let get_line_wrap =
   foreign "gtk_label_get_line_wrap" (t_typ @-> returning (bool))
 let get_line_wrap_mode =
   foreign "gtk_label_get_line_wrap_mode" (t_typ @-> returning (Wrap_mode.t_view))
@@ -47,16 +46,15 @@ let get_mnemonic_widget =
 let get_selectable =
   foreign "gtk_label_get_selectable" (t_typ @-> returning (bool))
 let get_selection_bounds self =
+  let get_selection_bounds_raw =
+    foreign "gtk_label_get_selection_bounds" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (bool))
+  in
   let start_ptr = allocate int32_t Int32.zero in
   let _end_ptr = allocate int32_t Int32.zero in
-  let get_selection_bounds_raw =
-    foreign "gtk_label_get_selection_bounds" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning bool)
-  in
   let ret = get_selection_bounds_raw self start_ptr _end_ptr in
   let start = !@ start_ptr in
   let _end = !@ _end_ptr in
-  (ret, start, _end)
-let get_single_line_mode =
+  (ret, start, _end)let get_single_line_mode =
   foreign "gtk_label_get_single_line_mode" (t_typ @-> returning (bool))
 let get_text =
   foreign "gtk_label_get_text" (t_typ @-> returning (string_opt))

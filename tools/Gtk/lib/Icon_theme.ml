@@ -30,10 +30,10 @@ let list_icons =
   foreign "gtk_icon_theme_list_icons" (t_typ @-> string_opt @-> returning (ptr List.t_typ))
 let load_icon self icon_name size flags =
   let load_icon_raw =
-    foreign "gtk_icon_theme_load_icon" (t_typ @-> string @-> int32_t @-> Icon_lookup_flags.t_list_view@-> ptr (ptr_opt Error.t_typ) @-> returning (Pixbuf.t_typ))
+    foreign "gtk_icon_theme_load_icon" (t_typ @-> string @-> int32_t @-> Icon_lookup_flags.t_list_view @-> ptr (ptr_opt Error.t_typ) @-> returning (Pixbuf.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = load_icon_raw self icon_name size flags err_ptr_ptr in
+  let ret = load_icon_raw self icon_name size flags err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -41,10 +41,10 @@ let load_icon self icon_name size flags =
     Error (err_ptr)
 let load_icon_for_scale self icon_name size scale flags =
   let load_icon_for_scale_raw =
-    foreign "gtk_icon_theme_load_icon_for_scale" (t_typ @-> string @-> int32_t @-> int32_t @-> Icon_lookup_flags.t_list_view@-> ptr (ptr_opt Error.t_typ) @-> returning (Pixbuf.t_typ))
+    foreign "gtk_icon_theme_load_icon_for_scale" (t_typ @-> string @-> int32_t @-> int32_t @-> Icon_lookup_flags.t_list_view @-> ptr (ptr_opt Error.t_typ) @-> returning (Pixbuf.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = load_icon_for_scale_raw self icon_name size scale flags err_ptr_ptr in
+  let ret = load_icon_for_scale_raw self icon_name size scale flags err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -52,10 +52,10 @@ let load_icon_for_scale self icon_name size scale flags =
     Error (err_ptr)
 let load_surface self icon_name size scale for_window flags =
   let load_surface_raw =
-    foreign "gtk_icon_theme_load_surface" (t_typ @-> string @-> int32_t @-> int32_t @-> Window.t_typ @-> Icon_lookup_flags.t_list_view@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Surface.t_typ))
+    foreign "gtk_icon_theme_load_surface" (t_typ @-> string @-> int32_t @-> int32_t @-> Window.t_typ @-> Icon_lookup_flags.t_list_view @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Surface.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = load_surface_raw self icon_name size scale for_window flags err_ptr_ptr in
+  let ret = load_surface_raw self icon_name size scale for_window flags err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in

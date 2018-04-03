@@ -18,184 +18,184 @@ val f_dummy12: (int32, t structure) field
 val f_dummy13: (int32, t structure) field
 val f_dummy14: (unit ptr, t structure) field
 
-val assign:
+val assign :
   t structure ptr -> t structure ptr -> unit
-val backward_char:
+val backward_char :
   t structure ptr -> bool
-val backward_chars:
+val backward_chars :
   t structure ptr -> int32 -> bool
-val backward_cursor_position:
+val backward_cursor_position :
   t structure ptr -> bool
-val backward_cursor_positions:
+val backward_cursor_positions :
   t structure ptr -> int32 -> bool
 (*Not implemented gtk_text_iter_backward_find_char type callback not implemented*)
-val backward_line:
+val backward_line :
   t structure ptr -> bool
-val backward_lines:
+val backward_lines :
   t structure ptr -> int32 -> bool
 val backward_search :
   t structure ptr -> string -> Text_search_flags.t_list -> t structure ptr option -> (bool * t structure * t structure)
-val backward_sentence_start:
+val backward_sentence_start :
   t structure ptr -> bool
-val backward_sentence_starts:
+val backward_sentence_starts :
   t structure ptr -> int32 -> bool
-val backward_to_tag_toggle:
+val backward_to_tag_toggle :
   t structure ptr -> Text_tag.t -> bool
-val backward_visible_cursor_position:
+val backward_visible_cursor_position :
   t structure ptr -> bool
-val backward_visible_cursor_positions:
+val backward_visible_cursor_positions :
   t structure ptr -> int32 -> bool
-val backward_visible_line:
+val backward_visible_line :
   t structure ptr -> bool
-val backward_visible_lines:
+val backward_visible_lines :
   t structure ptr -> int32 -> bool
-val backward_visible_word_start:
+val backward_visible_word_start :
   t structure ptr -> bool
-val backward_visible_word_starts:
+val backward_visible_word_starts :
   t structure ptr -> int32 -> bool
-val backward_word_start:
+val backward_word_start :
   t structure ptr -> bool
-val backward_word_starts:
+val backward_word_starts :
   t structure ptr -> int32 -> bool
-val begins_tag:
+val begins_tag :
   t structure ptr -> Text_tag.t -> bool
-val can_insert:
+val can_insert :
   t structure ptr -> bool -> bool
-val compare:
+val compare :
   t structure ptr -> t structure ptr -> int32
-val copy:
+val copy :
   t structure ptr -> t structure ptr
-val editable:
+val editable :
   t structure ptr -> bool -> bool
-val ends_line:
+val ends_line :
   t structure ptr -> bool
-val ends_sentence:
+val ends_sentence :
   t structure ptr -> bool
-val ends_tag:
+val ends_tag :
   t structure ptr -> Text_tag.t -> bool
-val ends_word:
+val ends_word :
   t structure ptr -> bool
-val equal:
+val equal :
   t structure ptr -> t structure ptr -> bool
-val forward_char:
+val forward_char :
   t structure ptr -> bool
-val forward_chars:
+val forward_chars :
   t structure ptr -> int32 -> bool
-val forward_cursor_position:
+val forward_cursor_position :
   t structure ptr -> bool
-val forward_cursor_positions:
+val forward_cursor_positions :
   t structure ptr -> int32 -> bool
 (*Not implemented gtk_text_iter_forward_find_char type callback not implemented*)
-val forward_line:
+val forward_line :
   t structure ptr -> bool
-val forward_lines:
+val forward_lines :
   t structure ptr -> int32 -> bool
 val forward_search :
   t structure ptr -> string -> Text_search_flags.t_list -> t structure ptr option -> (bool * t structure * t structure)
-val forward_sentence_end:
+val forward_sentence_end :
   t structure ptr -> bool
-val forward_sentence_ends:
+val forward_sentence_ends :
   t structure ptr -> int32 -> bool
-val forward_to_end:
+val forward_to_end :
   t structure ptr -> unit
-val forward_to_line_end:
+val forward_to_line_end :
   t structure ptr -> bool
-val forward_to_tag_toggle:
+val forward_to_tag_toggle :
   t structure ptr -> Text_tag.t -> bool
-val forward_visible_cursor_position:
+val forward_visible_cursor_position :
   t structure ptr -> bool
-val forward_visible_cursor_positions:
+val forward_visible_cursor_positions :
   t structure ptr -> int32 -> bool
-val forward_visible_line:
+val forward_visible_line :
   t structure ptr -> bool
-val forward_visible_lines:
+val forward_visible_lines :
   t structure ptr -> int32 -> bool
-val forward_visible_word_end:
+val forward_visible_word_end :
   t structure ptr -> bool
-val forward_visible_word_ends:
+val forward_visible_word_ends :
   t structure ptr -> int32 -> bool
-val forward_word_end:
+val forward_word_end :
   t structure ptr -> bool
-val forward_word_ends:
+val forward_word_ends :
   t structure ptr -> int32 -> bool
-val free:
+val free :
   t structure ptr -> unit
 val get_attributes :
   t structure ptr -> (bool * Text_attributes.t structure)
-val get_buffer:
+val get_buffer :
   t structure ptr -> Text_buffer.t
-val get_bytes_in_line:
+val get_bytes_in_line :
   t structure ptr -> int32
 (*Not implemented gtk_text_iter_get_char return type unichar not handled*)
-val get_chars_in_line:
+val get_chars_in_line :
   t structure ptr -> int32
-val get_child_anchor:
+val get_child_anchor :
   t structure ptr -> Text_child_anchor.t
-val get_language:
+val get_language :
   t structure ptr -> Language.t structure ptr
-val get_line:
+val get_line :
   t structure ptr -> int32
-val get_line_index:
+val get_line_index :
   t structure ptr -> int32
-val get_line_offset:
+val get_line_offset :
   t structure ptr -> int32
-val get_marks:
+val get_marks :
   t structure ptr -> SList.t structure ptr
-val get_offset:
+val get_offset :
   t structure ptr -> int32
-val get_pixbuf:
+val get_pixbuf :
   t structure ptr -> Pixbuf.t
-val get_slice:
+val get_slice :
   t structure ptr -> t structure ptr -> string option
-val get_tags:
+val get_tags :
   t structure ptr -> SList.t structure ptr
-val get_text:
+val get_text :
   t structure ptr -> t structure ptr -> string option
-val get_toggled_tags:
+val get_toggled_tags :
   t structure ptr -> bool -> SList.t structure ptr
-val get_visible_line_index:
+val get_visible_line_index :
   t structure ptr -> int32
-val get_visible_line_offset:
+val get_visible_line_offset :
   t structure ptr -> int32
-val get_visible_slice:
+val get_visible_slice :
   t structure ptr -> t structure ptr -> string option
-val get_visible_text:
+val get_visible_text :
   t structure ptr -> t structure ptr -> string option
-val has_tag:
+val has_tag :
   t structure ptr -> Text_tag.t -> bool
-val in_range:
+val in_range :
   t structure ptr -> t structure ptr -> t structure ptr -> bool
-val inside_sentence:
+val inside_sentence :
   t structure ptr -> bool
-val inside_word:
+val inside_word :
   t structure ptr -> bool
-val is_cursor_position:
+val is_cursor_position :
   t structure ptr -> bool
-val is_end:
+val is_end :
   t structure ptr -> bool
-val is_start:
+val is_start :
   t structure ptr -> bool
-val order:
+val order :
   t structure ptr -> t structure ptr -> unit
-val set_line:
+val set_line :
   t structure ptr -> int32 -> unit
-val set_line_index:
+val set_line_index :
   t structure ptr -> int32 -> unit
-val set_line_offset:
+val set_line_offset :
   t structure ptr -> int32 -> unit
-val set_offset:
+val set_offset :
   t structure ptr -> int32 -> unit
-val set_visible_line_index:
+val set_visible_line_index :
   t structure ptr -> int32 -> unit
-val set_visible_line_offset:
+val set_visible_line_offset :
   t structure ptr -> int32 -> unit
-val starts_line:
+val starts_line :
   t structure ptr -> bool
-val starts_sentence:
+val starts_sentence :
   t structure ptr -> bool
-val starts_tag:
+val starts_tag :
   t structure ptr -> Text_tag.t -> bool
-val starts_word:
+val starts_word :
   t structure ptr -> bool
-val toggles_tag:
+val toggles_tag :
   t structure ptr -> Text_tag.t -> bool

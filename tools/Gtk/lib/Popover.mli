@@ -3,41 +3,41 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   Widget.t -> Widget.t
-val create_from_model:
+val create_from_model :
   Widget.t -> Menu_model.t -> Widget.t
-val bind_model:
+val bind_model :
   t -> Menu_model.t -> string option -> unit
-val get_constrain_to:
+val get_constrain_to :
   t -> Popover_constraint.t
-val get_default_widget:
+val get_default_widget :
   t -> Widget.t
-val get_modal:
+val get_modal :
   t -> bool
 val get_pointing_to :
   t -> (bool * Rectangle.t structure)
-val get_position:
+val get_position :
   t -> Position_type.t
-val get_relative_to:
+val get_relative_to :
   t -> Widget.t
-val get_transitions_enabled:
+val get_transitions_enabled :
   t -> bool
-val popdown:
+val popdown :
   t -> unit
-val popup:
+val popup :
   t -> unit
-val set_constrain_to:
+val set_constrain_to :
   t -> Popover_constraint.t -> unit
-val set_default_widget:
+val set_default_widget :
   t -> Widget.t -> unit
-val set_modal:
+val set_modal :
   t -> bool -> unit
-val set_pointing_to:
+val set_pointing_to :
   t -> Rectangle.t structure ptr -> unit
-val set_position:
+val set_position :
   t -> Position_type.t -> unit
-val set_relative_to:
+val set_relative_to :
   t -> Widget.t -> unit
-val set_transitions_enabled:
+val set_transitions_enabled :
   t -> bool -> unit

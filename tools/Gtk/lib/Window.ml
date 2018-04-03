@@ -18,10 +18,10 @@ let set_default_icon =
   foreign "gtk_window_set_default_icon" (Pixbuf.t_typ @-> returning (void))
 let set_default_icon_from_file filename =
   let set_default_icon_from_file_raw =
-    foreign "gtk_window_set_default_icon_from_file" (string@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "gtk_window_set_default_icon_from_file" (string @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = set_default_icon_from_file_raw filename err_ptr_ptr in
+  let ret = set_default_icon_from_file_raw filename err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -64,16 +64,15 @@ let get_attached_to =
 let get_decorated =
   foreign "gtk_window_get_decorated" (t_typ @-> returning (bool))
 let get_default_size self =
+  let get_default_size_raw =
+    foreign "gtk_window_get_default_size" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+  in
   let width_ptr = allocate int32_t Int32.zero in
   let height_ptr = allocate int32_t Int32.zero in
-  let get_default_size_raw =
-    foreign "gtk_window_get_default_size" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_default_size_raw self width_ptr height_ptr in
   let width = !@ width_ptr in
   let height = !@ height_ptr in
-  (width, height)
-let get_default_widget =
+  (width, height)let get_default_widget =
   foreign "gtk_window_get_default_widget" (t_typ @-> returning (Widget.t_typ))
 let get_deletable =
   foreign "gtk_window_get_deletable" (t_typ @-> returning (bool))
@@ -108,40 +107,37 @@ let get_modal =
 let get_opacity =
   foreign "gtk_window_get_opacity" (t_typ @-> returning (double))
 let get_position self =
+  let get_position_raw =
+    foreign "gtk_window_get_position" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+  in
   let root_x_ptr = allocate int32_t Int32.zero in
   let root_y_ptr = allocate int32_t Int32.zero in
-  let get_position_raw =
-    foreign "gtk_window_get_position" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_position_raw self root_x_ptr root_y_ptr in
   let root_x = !@ root_x_ptr in
   let root_y = !@ root_y_ptr in
-  (root_x, root_y)
-let get_resizable =
+  (root_x, root_y)let get_resizable =
   foreign "gtk_window_get_resizable" (t_typ @-> returning (bool))
 let get_resize_grip_area self =
-  let rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let get_resize_grip_area_raw =
-    foreign "gtk_window_get_resize_grip_area" (t_typ @-> ptr (Rectangle.t_typ) @-> returning bool)
+    foreign "gtk_window_get_resize_grip_area" (t_typ @-> ptr (Rectangle.t_typ) @-> returning (bool))
   in
+  let rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_resize_grip_area_raw self rect_ptr in
   let rect = !@ rect_ptr in
-  (ret, rect)
-let get_role =
+  (ret, rect)let get_role =
   foreign "gtk_window_get_role" (t_typ @-> returning (string_opt))
 let get_screen =
   foreign "gtk_window_get_screen" (t_typ @-> returning (Screen.t_typ))
 let get_size self =
+  let get_size_raw =
+    foreign "gtk_window_get_size" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+  in
   let width_ptr = allocate int32_t Int32.zero in
   let height_ptr = allocate int32_t Int32.zero in
-  let get_size_raw =
-    foreign "gtk_window_get_size" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_size_raw self width_ptr height_ptr in
   let width = !@ width_ptr in
   let height = !@ height_ptr in
-  (width, height)
-let get_skip_pager_hint =
+  (width, height)let get_skip_pager_hint =
   foreign "gtk_window_get_skip_pager_hint" (t_typ @-> returning (bool))
 let get_skip_taskbar_hint =
   foreign "gtk_window_get_skip_taskbar_hint" (t_typ @-> returning (bool))
@@ -231,10 +227,10 @@ let set_icon =
   foreign "gtk_window_set_icon" (t_typ @-> Pixbuf.t_typ @-> returning (void))
 let set_icon_from_file self filename =
   let set_icon_from_file_raw =
-    foreign "gtk_window_set_icon_from_file" (t_typ @-> string@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "gtk_window_set_icon_from_file" (t_typ @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = set_icon_from_file_raw self filename err_ptr_ptr in
+  let ret = set_icon_from_file_raw self filename err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in

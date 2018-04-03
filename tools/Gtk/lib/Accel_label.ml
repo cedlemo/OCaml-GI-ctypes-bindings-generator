@@ -7,16 +7,15 @@ let t_typ : t typ = ptr void
 let create =
   foreign "gtk_accel_label_new" (string @-> returning (Widget.t_typ))
 let get_accel self =
+  let get_accel_raw =
+    foreign "gtk_accel_label_get_accel" (t_typ @-> ptr (uint32_t) @-> ptr (Modifier_type.t_list_view) @-> returning (void))
+  in
   let accelerator_key_ptr = allocate uint32_t Unsigned.UInt32.zero in
   let accelerator_mods_ptr = allocate Modifier_type.t_view (Modifier_type.t_view.of_value (Unsigned.UInt32.zero)) in
-  let get_accel_raw =
-    foreign "gtk_accel_label_get_accel" (t_typ @-> ptr (uint32_t) @-> ptr (Modifier_type.t_list_view) @-> returning void)
-  in
   let ret = get_accel_raw self accelerator_key_ptr accelerator_mods_ptr in
   let accelerator_key = !@ accelerator_key_ptr in
   let accelerator_mods = (!@ accelerator_mods_ptr) in
-  (accelerator_key, accelerator_mods)
-let get_accel_widget =
+  (accelerator_key, accelerator_mods)let get_accel_widget =
   foreign "gtk_accel_label_get_accel_widget" (t_typ @-> returning (Widget.t_typ))
 let get_accel_width =
   foreign "gtk_accel_label_get_accel_width" (t_typ @-> returning (uint32_t))

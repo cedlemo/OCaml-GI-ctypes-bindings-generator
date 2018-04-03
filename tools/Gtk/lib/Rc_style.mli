@@ -3,7 +3,7 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> t
-val copy:
+val copy :
   t -> t

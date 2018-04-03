@@ -1,7 +1,7 @@
 open Ctypes
 open Foreign
 
-type t = Unknown | Custom | Gpl_2_0 | Gpl_3_0 | Lgpl_2_1 | Lgpl_3_0 | Bsd | Mit_x11 | Artistic | Gpl_2_0_only | Gpl_3_0_only | Lgpl_2_1_only | Lgpl_3_0_only | Agpl_3_0 | Agpl_3_0_only
+type t = Unknown | Custom | Gpl_2_0 | Gpl_3_0 | Lgpl_2_1 | Lgpl_3_0 | Bsd | Mit_x11 | Artistic | Gpl_2_0_only | Gpl_3_0_only | Lgpl_2_1_only | Lgpl_3_0_only | Agpl_3_0
 
 let of_value v =
   if v = Unsigned.UInt32.of_int 0 then Unknown
@@ -18,7 +18,6 @@ let of_value v =
   else if v = Unsigned.UInt32.of_int 11 then Lgpl_2_1_only
   else if v = Unsigned.UInt32.of_int 12 then Lgpl_3_0_only
   else if v = Unsigned.UInt32.of_int 13 then Agpl_3_0
-  else if v = Unsigned.UInt32.of_int 14 then Agpl_3_0_only
   else raise (Invalid_argument "Unexpected License value")
 
 let to_value = function
@@ -36,7 +35,6 @@ let to_value = function
   | Lgpl_2_1_only -> Unsigned.UInt32.of_int 11
   | Lgpl_3_0_only -> Unsigned.UInt32.of_int 12
   | Agpl_3_0 -> Unsigned.UInt32.of_int 13
-  | Agpl_3_0_only -> Unsigned.UInt32.of_int 14
 
 let t_view = view ~read:of_value ~write:to_value uint32_t
 

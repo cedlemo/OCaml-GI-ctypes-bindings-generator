@@ -15,20 +15,19 @@ let get_dpi_x =
 let get_dpi_y =
   foreign "gtk_print_context_get_dpi_y" (t_typ @-> returning (double))
 let get_hard_margins self =
+  let get_hard_margins_raw =
+    foreign "gtk_print_context_get_hard_margins" (t_typ @-> ptr (double) @-> ptr (double) @-> ptr (double) @-> ptr (double) @-> returning (bool))
+  in
   let top_ptr = allocate double 0.0 in
   let bottom_ptr = allocate double 0.0 in
   let left_ptr = allocate double 0.0 in
   let right_ptr = allocate double 0.0 in
-  let get_hard_margins_raw =
-    foreign "gtk_print_context_get_hard_margins" (t_typ @-> ptr (double) @-> ptr (double) @-> ptr (double) @-> ptr (double) @-> returning bool)
-  in
   let ret = get_hard_margins_raw self top_ptr bottom_ptr left_ptr right_ptr in
   let top = !@ top_ptr in
   let bottom = !@ bottom_ptr in
   let left = !@ left_ptr in
   let right = !@ right_ptr in
-  (ret, top, bottom, left, right)
-let get_height =
+  (ret, top, bottom, left, right)let get_height =
   foreign "gtk_print_context_get_height" (t_typ @-> returning (double))
 let get_page_setup =
   foreign "gtk_print_context_get_page_setup" (t_typ @-> returning (Page_setup.t_typ))

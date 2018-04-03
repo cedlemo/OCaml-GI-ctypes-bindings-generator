@@ -3,103 +3,103 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   string option -> Widget.t
-val create_with_mnemonic:
+val create_with_mnemonic :
   string option -> Widget.t
-val get_angle:
+val get_angle :
   t -> float
-val get_attributes:
+val get_attributes :
   t -> Attr_list.t structure ptr option
-val get_current_uri:
+val get_current_uri :
   t -> string option
-val get_ellipsize:
+val get_ellipsize :
   t -> Ellipsize_mode.t
-val get_justify:
+val get_justify :
   t -> Justification.t
-val get_label:
+val get_label :
   t -> string option
-val get_layout:
+val get_layout :
   t -> Layout.t
 val get_layout_offsets :
   t -> (int32 * int32)
-val get_line_wrap:
+val get_line_wrap :
   t -> bool
-val get_line_wrap_mode:
+val get_line_wrap_mode :
   t -> Wrap_mode.t
-val get_lines:
+val get_lines :
   t -> int32
-val get_max_width_chars:
+val get_max_width_chars :
   t -> int32
-val get_mnemonic_keyval:
+val get_mnemonic_keyval :
   t -> Unsigned.uint32
-val get_mnemonic_widget:
+val get_mnemonic_widget :
   t -> Widget.t
-val get_selectable:
+val get_selectable :
   t -> bool
 val get_selection_bounds :
   t -> (bool * int32 * int32)
-val get_single_line_mode:
+val get_single_line_mode :
   t -> bool
-val get_text:
+val get_text :
   t -> string option
-val get_track_visited_links:
+val get_track_visited_links :
   t -> bool
-val get_use_markup:
+val get_use_markup :
   t -> bool
-val get_use_underline:
+val get_use_underline :
   t -> bool
-val get_width_chars:
+val get_width_chars :
   t -> int32
-val get_xalign:
+val get_xalign :
   t -> float
-val get_yalign:
+val get_yalign :
   t -> float
-val select_region:
+val select_region :
   t -> int32 -> int32 -> unit
-val set_angle:
+val set_angle :
   t -> float -> unit
-val set_attributes:
+val set_attributes :
   t -> Attr_list.t structure ptr option -> unit
-val set_ellipsize:
+val set_ellipsize :
   t -> Ellipsize_mode.t -> unit
-val set_justify:
+val set_justify :
   t -> Justification.t -> unit
-val set_label:
+val set_label :
   t -> string -> unit
-val set_line_wrap:
+val set_line_wrap :
   t -> bool -> unit
-val set_line_wrap_mode:
+val set_line_wrap_mode :
   t -> Wrap_mode.t -> unit
-val set_lines:
+val set_lines :
   t -> int32 -> unit
-val set_markup:
+val set_markup :
   t -> string -> unit
-val set_markup_with_mnemonic:
+val set_markup_with_mnemonic :
   t -> string -> unit
-val set_max_width_chars:
+val set_max_width_chars :
   t -> int32 -> unit
-val set_mnemonic_widget:
+val set_mnemonic_widget :
   t -> Widget.t -> unit
-val set_pattern:
+val set_pattern :
   t -> string -> unit
-val set_selectable:
+val set_selectable :
   t -> bool -> unit
-val set_single_line_mode:
+val set_single_line_mode :
   t -> bool -> unit
-val set_text:
+val set_text :
   t -> string -> unit
-val set_text_with_mnemonic:
+val set_text_with_mnemonic :
   t -> string -> unit
-val set_track_visited_links:
+val set_track_visited_links :
   t -> bool -> unit
-val set_use_markup:
+val set_use_markup :
   t -> bool -> unit
-val set_use_underline:
+val set_use_underline :
   t -> bool -> unit
-val set_width_chars:
+val set_width_chars :
   t -> int32 -> unit
-val set_xalign:
+val set_xalign :
   t -> float -> unit
-val set_yalign:
+val set_yalign :
   t -> float -> unit

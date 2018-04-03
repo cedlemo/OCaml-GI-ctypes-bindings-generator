@@ -11,16 +11,15 @@ let get_bin_window =
 let get_hadjustment =
   foreign "gtk_layout_get_hadjustment" (t_typ @-> returning (Adjustment.t_typ))
 let get_size self =
+  let get_size_raw =
+    foreign "gtk_layout_get_size" (t_typ @-> ptr (uint32_t) @-> ptr (uint32_t) @-> returning (void))
+  in
   let width_ptr = allocate uint32_t Unsigned.UInt32.zero in
   let height_ptr = allocate uint32_t Unsigned.UInt32.zero in
-  let get_size_raw =
-    foreign "gtk_layout_get_size" (t_typ @-> ptr (uint32_t) @-> ptr (uint32_t) @-> returning void)
-  in
   let ret = get_size_raw self width_ptr height_ptr in
   let width = !@ width_ptr in
   let height = !@ height_ptr in
-  (width, height)
-let get_vadjustment =
+  (width, height)let get_vadjustment =
   foreign "gtk_layout_get_vadjustment" (t_typ @-> returning (Adjustment.t_typ))
 let move =
   foreign "gtk_layout_move" (t_typ @-> Widget.t_typ @-> int32_t @-> int32_t @-> returning (void))

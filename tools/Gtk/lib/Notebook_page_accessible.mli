@@ -3,7 +3,7 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   Notebook_accessible.t -> Widget.t -> Object.t
-val invalidate:
+val invalidate :
   t -> unit

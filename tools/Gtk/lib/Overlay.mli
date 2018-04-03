@@ -3,13 +3,13 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Widget.t
-val add_overlay:
+val add_overlay :
   t -> Widget.t -> unit
-val get_overlay_pass_through:
+val get_overlay_pass_through :
   t -> Widget.t -> bool
-val reorder_overlay:
+val reorder_overlay :
   t -> Widget.t -> int32 -> unit
-val set_overlay_pass_through:
+val set_overlay_pass_through :
   t -> Widget.t -> bool -> unit

@@ -17,14 +17,13 @@ let add_text_targets =
 let add_uri_targets =
   foreign "gtk_target_list_add_uri_targets" (ptr t_typ @-> uint32_t @-> returning (void))
 let find self target =
-  let info_ptr = allocate uint32_t Unsigned.UInt32.zero in
   let find_raw =
-    foreign "gtk_target_list_find" (ptr t_typ @-> ptr Atom.t_typ @-> ptr (uint32_t) @-> returning bool)
+    foreign "gtk_target_list_find" (ptr t_typ @-> ptr Atom.t_typ @-> ptr (uint32_t) @-> returning (bool))
   in
+  let info_ptr = allocate uint32_t Unsigned.UInt32.zero in
   let ret = find_raw self target info_ptr in
   let info = !@ info_ptr in
-  (ret, info)
-let incr_ref =
+  (ret, info)let incr_ref =
   foreign "gtk_target_list_ref" (ptr t_typ @-> returning (ptr t_typ))
 let remove =
   foreign "gtk_target_list_remove" (ptr t_typ @-> ptr Atom.t_typ @-> returning (void))

@@ -12,18 +12,17 @@ let get_added =
 let get_age =
   foreign "gtk_recent_info_get_age" (ptr t_typ @-> returning (int32_t))
 let get_application_info self app_name =
+  let get_application_info_raw =
+    foreign "gtk_recent_info_get_application_info" (ptr t_typ @-> string @-> ptr (string) @-> ptr (uint32_t) @-> ptr (int64_t) @-> returning (bool))
+  in
   let app_exec_ptr = allocate string " " in
   let count_ptr = allocate uint32_t Unsigned.UInt32.zero in
   let time__ptr = allocate int64_t Int64.zero in
-  let get_application_info_raw =
-    foreign "gtk_recent_info_get_application_info" (ptr t_typ @-> string @-> ptr (string) @-> ptr (uint32_t) @-> ptr (int64_t) @-> returning bool)
-  in
   let ret = get_application_info_raw self app_name app_exec_ptr count_ptr time__ptr in
   let app_exec = !@ app_exec_ptr in
   let count = !@ count_ptr in
   let time_ = !@ time__ptr in
-  (ret, app_exec, count, time_)
-(*Not implemented gtk_recent_info_get_applications return type C Array type for Types.Array tag not handled*)
+  (ret, app_exec, count, time_)(*Not implemented gtk_recent_info_get_applications return type C Array type for Types.Array tag not handled*)
 let get_description =
   foreign "gtk_recent_info_get_description" (ptr t_typ @-> returning (string_opt))
 let get_display_name =

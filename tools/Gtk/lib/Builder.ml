@@ -15,10 +15,10 @@ let create_from_string =
 (*Not implemented gtk_builder_add_callback_symbol type callback not implemented*)
 let add_from_file self filename =
   let add_from_file_raw =
-    foreign "gtk_builder_add_from_file" (t_typ @-> string@-> ptr (ptr_opt Error.t_typ) @-> returning (uint32_t))
+    foreign "gtk_builder_add_from_file" (t_typ @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (uint32_t))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = add_from_file_raw self filename err_ptr_ptr in
+  let ret = add_from_file_raw self filename err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -26,10 +26,10 @@ let add_from_file self filename =
     Error (err_ptr)
 let add_from_resource self resource_path =
   let add_from_resource_raw =
-    foreign "gtk_builder_add_from_resource" (t_typ @-> string@-> ptr (ptr_opt Error.t_typ) @-> returning (uint32_t))
+    foreign "gtk_builder_add_from_resource" (t_typ @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (uint32_t))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = add_from_resource_raw self resource_path err_ptr_ptr in
+  let ret = add_from_resource_raw self resource_path err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -37,10 +37,10 @@ let add_from_resource self resource_path =
     Error (err_ptr)
 let add_from_string self buffer length =
   let add_from_string_raw =
-    foreign "gtk_builder_add_from_string" (t_typ @-> string @-> uint64_t@-> ptr (ptr_opt Error.t_typ) @-> returning (uint32_t))
+    foreign "gtk_builder_add_from_string" (t_typ @-> string @-> uint64_t @-> ptr (ptr_opt Error.t_typ) @-> returning (uint32_t))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = add_from_string_raw self buffer length err_ptr_ptr in
+  let ret = add_from_string_raw self buffer length err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -69,11 +69,11 @@ let set_application =
 let set_translation_domain =
   foreign "gtk_builder_set_translation_domain" (t_typ @-> string_opt @-> returning (void))
 let value_from_string self pspec _string =
-  let value_ptr = allocate Value.t_typ (make Value.t_typ) in
-  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let value_from_string_raw =
     foreign "gtk_builder_value_from_string" (t_typ @-> Param_spec.t_typ @-> string @-> ptr (Value.t_typ) @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let value_ptr = allocate Value.t_typ (make Value.t_typ) in
   let ret = value_from_string_raw self pspec _string value_ptr err_ptr_ptr in
   let get_ret_value () =
     let value = !@ value_ptr in

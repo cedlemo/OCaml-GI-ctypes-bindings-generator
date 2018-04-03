@@ -19,20 +19,19 @@ let pack_end =
 let pack_start =
   foreign "gtk_box_pack_start" (t_typ @-> Widget.t_typ @-> bool @-> bool @-> uint32_t @-> returning (void))
 let query_child_packing self child =
+  let query_child_packing_raw =
+    foreign "gtk_box_query_child_packing" (t_typ @-> Widget.t_typ @-> ptr (bool) @-> ptr (bool) @-> ptr (uint32_t) @-> ptr (Pack_type.t_view) @-> returning (void))
+  in
   let expand_ptr = allocate bool false in
   let fill_ptr = allocate bool false in
   let padding_ptr = allocate uint32_t Unsigned.UInt32.zero in
   let pack_type_ptr = allocate Pack_type.t_view (Pack_type.t_view.of_value (Unsigned.UInt32.zero)) in
-  let query_child_packing_raw =
-    foreign "gtk_box_query_child_packing" (t_typ @-> Widget.t_typ @-> ptr (bool) @-> ptr (bool) @-> ptr (uint32_t) @-> ptr (Pack_type.t_view) @-> returning void)
-  in
   let ret = query_child_packing_raw self child expand_ptr fill_ptr padding_ptr pack_type_ptr in
   let expand = !@ expand_ptr in
   let fill = !@ fill_ptr in
   let padding = !@ padding_ptr in
   let pack_type = (!@ pack_type_ptr) in
-  (expand, fill, padding, pack_type)
-let reorder_child =
+  (expand, fill, padding, pack_type)let reorder_child =
   foreign "gtk_box_reorder_child" (t_typ @-> Widget.t_typ @-> int32_t @-> returning (void))
 let set_baseline_position =
   foreign "gtk_box_set_baseline_position" (t_typ @-> Baseline_position.t_view @-> returning (void))

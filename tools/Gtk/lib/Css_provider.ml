@@ -14,10 +14,10 @@ let get_named =
 (*Not implemented gtk_css_provider_load_from_file type interface not implemented*)
 let load_from_path self path =
   let load_from_path_raw =
-    foreign "gtk_css_provider_load_from_path" (t_typ @-> string@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "gtk_css_provider_load_from_path" (t_typ @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = load_from_path_raw self path err_ptr_ptr in
+  let ret = load_from_path_raw self path err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in

@@ -42,4 +42,11 @@ let set_use_underline =
   foreign "gtk_menu_item_set_use_underline" (t_typ @-> bool @-> returning (void))
 let toggle_size_allocate =
   foreign "gtk_menu_item_toggle_size_allocate" (t_typ @-> int32_t @-> returning (void))
-(*Not implemented gtk_menu_item_toggle_size_request - in out argument not handled*)
+let toggle_size_request self requisition =
+  let toggle_size_request_raw =
+    foreign "gtk_menu_item_toggle_size_request" (t_typ @-> ptr (int32_t) @-> returning (void))
+  in
+  let requisition_ptr = allocate int32_t requisition in
+  let ret = toggle_size_request_raw self requisition_ptr in
+  let requisition = !@ requisition_ptr in
+  (requisition)

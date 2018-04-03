@@ -13,14 +13,13 @@ let add_color_stop =
 let incr_ref =
   foreign "gtk_gradient_ref" (ptr t_typ @-> returning (ptr t_typ))
 let resolve self props =
-  let resolved_gradient_ptr = allocate (ptr_opt Pattern.t_typ) None in
   let resolve_raw =
-    foreign "gtk_gradient_resolve" (ptr t_typ @-> Style_properties.t_typ @-> ptr (ptr Pattern.t_typ) @-> returning bool)
+    foreign "gtk_gradient_resolve" (ptr t_typ @-> Style_properties.t_typ @-> ptr (ptr Pattern.t_typ) @-> returning (bool))
   in
+  let resolved_gradient_ptr = allocate (ptr_opt Pattern.t_typ) None in
   let ret = resolve_raw self props resolved_gradient_ptr in
   let resolved_gradient = !@ resolved_gradient_ptr in
-  (ret, resolved_gradient)
-let resolve_for_context =
+  (ret, resolved_gradient)let resolve_for_context =
   foreign "gtk_gradient_resolve_for_context" (ptr t_typ @-> Style_context.t_typ @-> returning (ptr Pattern.t_typ))
 let to_string =
   foreign "gtk_gradient_to_string" (ptr t_typ @-> returning (string_opt))

@@ -3,27 +3,27 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> t
-val from_accel_closure:
+val from_accel_closure :
   Closure.t structure ptr -> t
-val activate:
+val activate :
   t -> Unsigned.uint32 -> Object.t -> Unsigned.uint32 -> Modifier_type.t_list -> bool
-val connect:
+val connect :
   t -> Unsigned.uint32 -> Modifier_type.t_list -> Accel_flags.t_list -> Closure.t structure ptr -> unit
-val connect_by_path:
+val connect_by_path :
   t -> string -> Closure.t structure ptr -> unit
-val disconnect:
+val disconnect :
   t -> Closure.t structure ptr option -> bool
-val disconnect_key:
+val disconnect_key :
   t -> Unsigned.uint32 -> Modifier_type.t_list -> bool
 (*Not implemented gtk_accel_group_find type callback not implemented*)
-val get_is_locked:
+val get_is_locked :
   t -> bool
-val get_modifier_mask:
+val get_modifier_mask :
   t -> Modifier_type.t_list
-val lock:
+val lock :
   t -> unit
 (*Not implemented gtk_accel_group_query return type C Array type for Types.Array tag not handled*)
-val unlock:
+val unlock :
   t -> unit

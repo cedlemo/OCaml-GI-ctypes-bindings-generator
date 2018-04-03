@@ -15,28 +15,26 @@ let get_adjustment =
 let get_digits =
   foreign "gtk_spin_button_get_digits" (t_typ @-> returning (uint32_t))
 let get_increments self =
+  let get_increments_raw =
+    foreign "gtk_spin_button_get_increments" (t_typ @-> ptr (double) @-> ptr (double) @-> returning (void))
+  in
   let step_ptr = allocate double 0.0 in
   let page_ptr = allocate double 0.0 in
-  let get_increments_raw =
-    foreign "gtk_spin_button_get_increments" (t_typ @-> ptr (double) @-> ptr (double) @-> returning void)
-  in
   let ret = get_increments_raw self step_ptr page_ptr in
   let step = !@ step_ptr in
   let page = !@ page_ptr in
-  (step, page)
-let get_numeric =
+  (step, page)let get_numeric =
   foreign "gtk_spin_button_get_numeric" (t_typ @-> returning (bool))
 let get_range self =
+  let get_range_raw =
+    foreign "gtk_spin_button_get_range" (t_typ @-> ptr (double) @-> ptr (double) @-> returning (void))
+  in
   let min_ptr = allocate double 0.0 in
   let max_ptr = allocate double 0.0 in
-  let get_range_raw =
-    foreign "gtk_spin_button_get_range" (t_typ @-> ptr (double) @-> ptr (double) @-> returning void)
-  in
   let ret = get_range_raw self min_ptr max_ptr in
   let min = !@ min_ptr in
   let max = !@ max_ptr in
-  (min, max)
-let get_snap_to_ticks =
+  (min, max)let get_snap_to_ticks =
   foreign "gtk_spin_button_get_snap_to_ticks" (t_typ @-> returning (bool))
 let get_update_policy =
   foreign "gtk_spin_button_get_update_policy" (t_typ @-> returning (Spin_button_update_policy.t_view))

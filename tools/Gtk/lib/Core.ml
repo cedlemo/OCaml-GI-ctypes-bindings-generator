@@ -3,19 +3,19 @@ open Foreign
 
 (*DEPRECATED : ActionEntry*)
 (*DEPRECATED : ActivatableIface*)
-let c_BINARY_AGE = Int32.of_string "2228"
+let c_BINARY_AGE = Int32.of_string "2226"
 (*DEPRECATED : ColorSelectionChangePaletteFunc*)
 (*DEPRECATED : ColorSelectionChangePaletteWithScreenFunc*)
 (*DEPRECATED : IMPreeditStyle*)
 (*DEPRECATED : IMStatusStyle*)
 let c_INPUT_ERROR = Int32.of_string "-1"
-let c_INTERFACE_AGE = Int32.of_string "28"
+let c_INTERFACE_AGE = Int32.of_string "26"
 let c_LEVEL_BAR_OFFSET_FULL = "full"
 let c_LEVEL_BAR_OFFSET_HIGH = "high"
 let c_LEVEL_BAR_OFFSET_LOW = "low"
 let c_MAJOR_VERSION = Int32.of_string "3"
 let c_MAX_COMPOSE_LEN = Int32.of_string "7"
-let c_MICRO_VERSION = Int32.of_string "28"
+let c_MICRO_VERSION = Int32.of_string "26"
 let c_MINOR_VERSION = Int32.of_string "22"
 let c_PAPER_NAME_A3 = "iso_a3"
 let c_PAPER_NAME_A4 = "iso_a4"
@@ -301,16 +301,15 @@ let accelerator_name_with_keycode =
   foreign "gtk_accelerator_name_with_keycode" (Display.t_typ @-> uint32_t @-> uint32_t @-> Modifier_type.t_list_view @-> returning (string_opt))
 
 let accelerator_parse accelerator =
+  let accelerator_parse_raw =
+    foreign "gtk_accelerator_parse" (string @-> ptr (uint32_t) @-> ptr (Modifier_type.t_list_view) @-> returning (void))
+  in
   let accelerator_key_ptr = allocate uint32_t Unsigned.UInt32.zero in
   let accelerator_mods_ptr = allocate Modifier_type.t_view (Modifier_type.t_view.of_value (Unsigned.UInt32.zero)) in
-  let accelerator_parse_raw =
-    foreign "gtk_accelerator_parse" (string @-> ptr (uint32_t) @-> ptr (Modifier_type.t_list_view) @-> returning void)
-  in
   let ret = accelerator_parse_raw accelerator accelerator_key_ptr accelerator_mods_ptr in
   let accelerator_key = !@ accelerator_key_ptr in
   let accelerator_mods = (!@ accelerator_mods_ptr) in
   (accelerator_key, accelerator_mods)
-
 (*Not implemented gtk_accelerator_parse_with_keycode type C Array type for Types.Array tag not implemented*)
 
 let accelerator_set_default_mod_mask =
@@ -414,14 +413,13 @@ let get_current_event_device =
   foreign "gtk_get_current_event_device" (void @-> returning (Device.t_typ))
 
 let get_current_event_state () =
-  let state_ptr = allocate Modifier_type.t_view (Modifier_type.t_view.of_value (Unsigned.UInt32.zero)) in
   let get_current_event_state_raw =
-    foreign "gtk_get_current_event_state" (ptr (Modifier_type.t_list_view) @-> returning bool)
+    foreign "gtk_get_current_event_state" (ptr (Modifier_type.t_list_view) @-> returning (bool))
   in
+  let state_ptr = allocate Modifier_type.t_view (Modifier_type.t_view.of_value (Unsigned.UInt32.zero)) in
   let ret = get_current_event_state_raw state_ptr in
   let state = (!@ state_ptr) in
   (ret, state)
-
 let get_current_event_time =
   foreign "gtk_get_current_event_time" (void @-> returning (uint32_t))
 
@@ -457,16 +455,15 @@ let grab_get_current =
 (*DEPRECATED : icon_size_from_name*)
 (*DEPRECATED : icon_size_get_name*)
 let icon_size_lookup size =
+  let icon_size_lookup_raw =
+    foreign "gtk_icon_size_lookup" (int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (bool))
+  in
   let width_ptr = allocate int32_t Int32.zero in
   let height_ptr = allocate int32_t Int32.zero in
-  let icon_size_lookup_raw =
-    foreign "gtk_icon_size_lookup" (int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning bool)
-  in
   let ret = icon_size_lookup_raw size width_ptr height_ptr in
   let width = !@ width_ptr in
   let height = !@ height_ptr in
   (ret, width, height)
-
 (*DEPRECATED : icon_size_lookup_for_settings*)
 (*DEPRECATED : icon_size_register*)
 (*DEPRECATED : icon_size_register_alias*)
@@ -586,14 +583,13 @@ let render_background =
   foreign "gtk_render_background" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
 
 let render_background_get_clip context x y width height =
-  let out_clip_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let render_background_get_clip_raw =
-    foreign "gtk_render_background_get_clip" (Style_context.t_typ @-> double @-> double @-> double @-> double @-> ptr (Rectangle.t_typ) @-> returning void)
+    foreign "gtk_render_background_get_clip" (Style_context.t_typ @-> double @-> double @-> double @-> double @-> ptr (Rectangle.t_typ) @-> returning (void))
   in
+  let out_clip_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = render_background_get_clip_raw context x y width height out_clip_ptr in
   let out_clip = !@ out_clip_ptr in
   (out_clip)
-
 let render_check =
   foreign "gtk_render_check" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
 
@@ -638,18 +634,17 @@ let render_slider =
   foreign "gtk_render_slider" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> Orientation.t_view @-> returning (void))
 
 let rgb_to_hsv r g b =
+  let rgb_to_hsv_raw =
+    foreign "gtk_rgb_to_hsv" (double @-> double @-> double @-> ptr (double) @-> ptr (double) @-> ptr (double) @-> returning (void))
+  in
   let h_ptr = allocate double 0.0 in
   let s_ptr = allocate double 0.0 in
   let v_ptr = allocate double 0.0 in
-  let rgb_to_hsv_raw =
-    foreign "gtk_rgb_to_hsv" (double @-> double @-> double @-> ptr (double) @-> ptr (double) @-> ptr (double) @-> returning void)
-  in
   let ret = rgb_to_hsv_raw r g b h_ptr s_ptr v_ptr in
   let h = !@ h_ptr in
   let s = !@ s_ptr in
   let v = !@ v_ptr in
   (h, s, v)
-
 let selection_add_target =
   foreign "gtk_selection_add_target" (Widget.t_typ @-> ptr Atom.t_typ @-> ptr Atom.t_typ @-> uint32_t @-> returning (void))
 
@@ -675,10 +670,10 @@ let set_debug_flags =
 
 let show_uri screen uri timestamp =
   let show_uri_raw =
-    foreign "gtk_show_uri" (Screen.t_typ @-> string @-> uint32_t@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "gtk_show_uri" (Screen.t_typ @-> string @-> uint32_t @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = show_uri_raw screen uri timestamp err_ptr_ptr in
+  let ret = show_uri_raw screen uri timestamp err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -687,10 +682,10 @@ let show_uri screen uri timestamp =
 
 let show_uri_on_window parent uri timestamp =
   let show_uri_on_window_raw =
-    foreign "gtk_show_uri_on_window" (Window.t_typ @-> string @-> uint32_t@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "gtk_show_uri_on_window" (Window.t_typ @-> string @-> uint32_t @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = show_uri_on_window_raw parent uri timestamp err_ptr_ptr in
+  let ret = show_uri_on_window_raw parent uri timestamp err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in

@@ -32,18 +32,17 @@ let child_focus =
 let child_notify =
   foreign "gtk_widget_child_notify" (t_typ @-> string @-> returning (void))
 let class_path self =
+  let class_path_raw =
+    foreign "gtk_widget_class_path" (t_typ @-> ptr (uint32_t) @-> ptr (string) @-> ptr (string) @-> returning (void))
+  in
   let path_length_ptr = allocate uint32_t Unsigned.UInt32.zero in
   let path_ptr = allocate string " " in
   let path_reversed_ptr = allocate string " " in
-  let class_path_raw =
-    foreign "gtk_widget_class_path" (t_typ @-> ptr (uint32_t) @-> ptr (string) @-> ptr (string) @-> returning void)
-  in
   let ret = class_path_raw self path_length_ptr path_ptr path_reversed_ptr in
   let path_length = !@ path_length_ptr in
   let path = !@ path_ptr in
   let path_reversed = !@ path_reversed_ptr in
-  (path_length, path, path_reversed)
-let compute_expand =
+  (path_length, path, path_reversed)let compute_expand =
   foreign "gtk_widget_compute_expand" (t_typ @-> Orientation.t_view @-> returning (bool))
 let create_pango_context =
   foreign "gtk_widget_create_pango_context" (t_typ @-> returning (Context.t_typ))
@@ -51,8 +50,14 @@ let create_pango_layout =
   foreign "gtk_widget_create_pango_layout" (t_typ @-> string_opt @-> returning (Layout.t_typ))
 let destroy =
   foreign "gtk_widget_destroy" (t_typ @-> returning (void))
-(*Not implemented gtk_widget_destroyed - in out argument not handled*)
-let device_is_shadowed =
+let destroyed self widget_pointer =
+  let destroyed_raw =
+    foreign "gtk_widget_destroyed" (t_typ @-> ptr (t_typ) @-> returning (void))
+  in
+  let widget_pointer_ptr = allocate (ptr_opt t_typ) None in
+  let ret = destroyed_raw self widget_pointer_ptr in
+  let widget_pointer = !@ widget_pointer_ptr in
+  (widget_pointer)let device_is_shadowed =
   foreign "gtk_widget_device_is_shadowed" (t_typ @-> Device.t_typ @-> returning (bool))
 (*Not implemented gtk_drag_begin type union not implemented*)
 (*Not implemented gtk_drag_begin_with_coordinates type union not implemented*)
@@ -122,26 +127,24 @@ let get_allocated_baseline =
 let get_allocated_height =
   foreign "gtk_widget_get_allocated_height" (t_typ @-> returning (int32_t))
 let get_allocated_size self =
+  let get_allocated_size_raw =
+    foreign "gtk_widget_get_allocated_size" (t_typ @-> ptr (Rectangle.t_typ) @-> ptr (int32_t) @-> returning (void))
+  in
   let allocation_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let baseline_ptr = allocate int32_t Int32.zero in
-  let get_allocated_size_raw =
-    foreign "gtk_widget_get_allocated_size" (t_typ @-> ptr (Rectangle.t_typ) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_allocated_size_raw self allocation_ptr baseline_ptr in
   let allocation = !@ allocation_ptr in
   let baseline = !@ baseline_ptr in
-  (allocation, baseline)
-let get_allocated_width =
+  (allocation, baseline)let get_allocated_width =
   foreign "gtk_widget_get_allocated_width" (t_typ @-> returning (int32_t))
 let get_allocation self =
-  let allocation_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let get_allocation_raw =
-    foreign "gtk_widget_get_allocation" (t_typ @-> ptr (Rectangle.t_typ) @-> returning void)
+    foreign "gtk_widget_get_allocation" (t_typ @-> ptr (Rectangle.t_typ) @-> returning (void))
   in
+  let allocation_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_allocation_raw self allocation_ptr in
   let allocation = !@ allocation_ptr in
-  (allocation)
-(*Not implemented gtk_widget_get_ancestor type gType not implemented*)
+  (allocation)(*Not implemented gtk_widget_get_ancestor type gType not implemented*)
 let get_app_paintable =
   foreign "gtk_widget_get_app_paintable" (t_typ @-> returning (bool))
 let get_can_default =
@@ -149,24 +152,22 @@ let get_can_default =
 let get_can_focus =
   foreign "gtk_widget_get_can_focus" (t_typ @-> returning (bool))
 let get_child_requisition self =
-  let requisition_ptr = allocate Requisition.t_typ (make Requisition.t_typ) in
   let get_child_requisition_raw =
-    foreign "gtk_widget_get_child_requisition" (t_typ @-> ptr (Requisition.t_typ) @-> returning void)
+    foreign "gtk_widget_get_child_requisition" (t_typ @-> ptr (Requisition.t_typ) @-> returning (void))
   in
+  let requisition_ptr = allocate Requisition.t_typ (make Requisition.t_typ) in
   let ret = get_child_requisition_raw self requisition_ptr in
   let requisition = !@ requisition_ptr in
-  (requisition)
-let get_child_visible =
+  (requisition)let get_child_visible =
   foreign "gtk_widget_get_child_visible" (t_typ @-> returning (bool))
 let get_clip self =
-  let clip_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let get_clip_raw =
-    foreign "gtk_widget_get_clip" (t_typ @-> ptr (Rectangle.t_typ) @-> returning void)
+    foreign "gtk_widget_get_clip" (t_typ @-> ptr (Rectangle.t_typ) @-> returning (void))
   in
+  let clip_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_clip_raw self clip_ptr in
   let clip = !@ clip_ptr in
-  (clip)
-let get_clipboard =
+  (clip)let get_clipboard =
   foreign "gtk_widget_get_clipboard" (t_typ @-> ptr Atom.t_typ @-> returning (Clipboard.t_typ))
 let get_composite_name =
   foreign "gtk_widget_get_composite_name" (t_typ @-> returning (string_opt))
@@ -233,94 +234,86 @@ let get_parent_window =
 let get_path =
   foreign "gtk_widget_get_path" (t_typ @-> returning (ptr Widget_path.t_typ))
 let get_pointer self =
+  let get_pointer_raw =
+    foreign "gtk_widget_get_pointer" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+  in
   let x_ptr = allocate int32_t Int32.zero in
   let y_ptr = allocate int32_t Int32.zero in
-  let get_pointer_raw =
-    foreign "gtk_widget_get_pointer" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_pointer_raw self x_ptr y_ptr in
   let x = !@ x_ptr in
   let y = !@ y_ptr in
-  (x, y)
-let get_preferred_height self =
+  (x, y)let get_preferred_height self =
+  let get_preferred_height_raw =
+    foreign "gtk_widget_get_preferred_height" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+  in
   let minimum_height_ptr = allocate int32_t Int32.zero in
   let natural_height_ptr = allocate int32_t Int32.zero in
-  let get_preferred_height_raw =
-    foreign "gtk_widget_get_preferred_height" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_preferred_height_raw self minimum_height_ptr natural_height_ptr in
   let minimum_height = !@ minimum_height_ptr in
   let natural_height = !@ natural_height_ptr in
-  (minimum_height, natural_height)
-let get_preferred_height_and_baseline_for_width self width =
+  (minimum_height, natural_height)let get_preferred_height_and_baseline_for_width self width =
+  let get_preferred_height_and_baseline_for_width_raw =
+    foreign "gtk_widget_get_preferred_height_and_baseline_for_width" (t_typ @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+  in
   let minimum_height_ptr = allocate int32_t Int32.zero in
   let natural_height_ptr = allocate int32_t Int32.zero in
   let minimum_baseline_ptr = allocate int32_t Int32.zero in
   let natural_baseline_ptr = allocate int32_t Int32.zero in
-  let get_preferred_height_and_baseline_for_width_raw =
-    foreign "gtk_widget_get_preferred_height_and_baseline_for_width" (t_typ @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_preferred_height_and_baseline_for_width_raw self width minimum_height_ptr natural_height_ptr minimum_baseline_ptr natural_baseline_ptr in
   let minimum_height = !@ minimum_height_ptr in
   let natural_height = !@ natural_height_ptr in
   let minimum_baseline = !@ minimum_baseline_ptr in
   let natural_baseline = !@ natural_baseline_ptr in
-  (minimum_height, natural_height, minimum_baseline, natural_baseline)
-let get_preferred_height_for_width self width =
+  (minimum_height, natural_height, minimum_baseline, natural_baseline)let get_preferred_height_for_width self width =
+  let get_preferred_height_for_width_raw =
+    foreign "gtk_widget_get_preferred_height_for_width" (t_typ @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+  in
   let minimum_height_ptr = allocate int32_t Int32.zero in
   let natural_height_ptr = allocate int32_t Int32.zero in
-  let get_preferred_height_for_width_raw =
-    foreign "gtk_widget_get_preferred_height_for_width" (t_typ @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_preferred_height_for_width_raw self width minimum_height_ptr natural_height_ptr in
   let minimum_height = !@ minimum_height_ptr in
   let natural_height = !@ natural_height_ptr in
-  (minimum_height, natural_height)
-let get_preferred_size self =
+  (minimum_height, natural_height)let get_preferred_size self =
+  let get_preferred_size_raw =
+    foreign "gtk_widget_get_preferred_size" (t_typ @-> ptr (Requisition.t_typ) @-> ptr (Requisition.t_typ) @-> returning (void))
+  in
   let minimum_size_ptr = allocate Requisition.t_typ (make Requisition.t_typ) in
   let natural_size_ptr = allocate Requisition.t_typ (make Requisition.t_typ) in
-  let get_preferred_size_raw =
-    foreign "gtk_widget_get_preferred_size" (t_typ @-> ptr (Requisition.t_typ) @-> ptr (Requisition.t_typ) @-> returning void)
-  in
   let ret = get_preferred_size_raw self minimum_size_ptr natural_size_ptr in
   let minimum_size = !@ minimum_size_ptr in
   let natural_size = !@ natural_size_ptr in
-  (minimum_size, natural_size)
-let get_preferred_width self =
+  (minimum_size, natural_size)let get_preferred_width self =
+  let get_preferred_width_raw =
+    foreign "gtk_widget_get_preferred_width" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+  in
   let minimum_width_ptr = allocate int32_t Int32.zero in
   let natural_width_ptr = allocate int32_t Int32.zero in
-  let get_preferred_width_raw =
-    foreign "gtk_widget_get_preferred_width" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_preferred_width_raw self minimum_width_ptr natural_width_ptr in
   let minimum_width = !@ minimum_width_ptr in
   let natural_width = !@ natural_width_ptr in
-  (minimum_width, natural_width)
-let get_preferred_width_for_height self height =
+  (minimum_width, natural_width)let get_preferred_width_for_height self height =
+  let get_preferred_width_for_height_raw =
+    foreign "gtk_widget_get_preferred_width_for_height" (t_typ @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+  in
   let minimum_width_ptr = allocate int32_t Int32.zero in
   let natural_width_ptr = allocate int32_t Int32.zero in
-  let get_preferred_width_for_height_raw =
-    foreign "gtk_widget_get_preferred_width_for_height" (t_typ @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_preferred_width_for_height_raw self height minimum_width_ptr natural_width_ptr in
   let minimum_width = !@ minimum_width_ptr in
   let natural_width = !@ natural_width_ptr in
-  (minimum_width, natural_width)
-let get_realized =
+  (minimum_width, natural_width)let get_realized =
   foreign "gtk_widget_get_realized" (t_typ @-> returning (bool))
 let get_receives_default =
   foreign "gtk_widget_get_receives_default" (t_typ @-> returning (bool))
 let get_request_mode =
   foreign "gtk_widget_get_request_mode" (t_typ @-> returning (Size_request_mode.t_view))
 let get_requisition self =
-  let requisition_ptr = allocate Requisition.t_typ (make Requisition.t_typ) in
   let get_requisition_raw =
-    foreign "gtk_widget_get_requisition" (t_typ @-> ptr (Requisition.t_typ) @-> returning void)
+    foreign "gtk_widget_get_requisition" (t_typ @-> ptr (Requisition.t_typ) @-> returning (void))
   in
+  let requisition_ptr = allocate Requisition.t_typ (make Requisition.t_typ) in
   let ret = get_requisition_raw self requisition_ptr in
   let requisition = !@ requisition_ptr in
-  (requisition)
-let get_root_window =
+  (requisition)let get_root_window =
   foreign "gtk_widget_get_root_window" (t_typ @-> returning (Window.t_typ))
 let get_scale_factor =
   foreign "gtk_widget_get_scale_factor" (t_typ @-> returning (int32_t))
@@ -331,16 +324,15 @@ let get_sensitive =
 let get_settings =
   foreign "gtk_widget_get_settings" (t_typ @-> returning (Settings.t_typ))
 let get_size_request self =
+  let get_size_request_raw =
+    foreign "gtk_widget_get_size_request" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+  in
   let width_ptr = allocate int32_t Int32.zero in
   let height_ptr = allocate int32_t Int32.zero in
-  let get_size_request_raw =
-    foreign "gtk_widget_get_size_request" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_size_request_raw self width_ptr height_ptr in
   let width = !@ width_ptr in
   let height = !@ height_ptr in
-  (width, height)
-let get_state =
+  (width, height)let get_state =
   foreign "gtk_widget_get_state" (t_typ @-> returning (State_type.t_view))
 let get_state_flags =
   foreign "gtk_widget_get_state_flags" (t_typ @-> returning (State_flags.t_list_view))
@@ -405,14 +397,13 @@ let input_shape_combine_region =
   foreign "gtk_widget_input_shape_combine_region" (t_typ @-> ptr_opt Region.t_typ @-> returning (void))
 (*Not implemented gtk_widget_insert_action_group type interface not implemented*)
 let intersect self area =
-  let intersection_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let intersect_raw =
-    foreign "gtk_widget_intersect" (t_typ @-> ptr Rectangle.t_typ @-> ptr (Rectangle.t_typ) @-> returning bool)
+    foreign "gtk_widget_intersect" (t_typ @-> ptr Rectangle.t_typ @-> ptr (Rectangle.t_typ) @-> returning (bool))
   in
+  let intersection_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = intersect_raw self area intersection_ptr in
   let intersection = !@ intersection_ptr in
-  (ret, intersection)
-let is_ancestor =
+  (ret, intersection)let is_ancestor =
   foreign "gtk_widget_is_ancestor" (t_typ @-> t_typ @-> returning (bool))
 let is_composited =
   foreign "gtk_widget_is_composited" (t_typ @-> returning (bool))
@@ -462,18 +453,17 @@ let override_font =
 let override_symbolic_color =
   foreign "gtk_widget_override_symbolic_color" (t_typ @-> string @-> ptr_opt RGBA.t_typ @-> returning (void))
 let path self =
+  let path_raw =
+    foreign "gtk_widget_path" (t_typ @-> ptr (uint32_t) @-> ptr (string) @-> ptr (string) @-> returning (void))
+  in
   let path_length_ptr = allocate uint32_t Unsigned.UInt32.zero in
   let path_ptr = allocate string " " in
   let path_reversed_ptr = allocate string " " in
-  let path_raw =
-    foreign "gtk_widget_path" (t_typ @-> ptr (uint32_t) @-> ptr (string) @-> ptr (string) @-> returning void)
-  in
   let ret = path_raw self path_length_ptr path_ptr path_reversed_ptr in
   let path_length = !@ path_length_ptr in
   let path = !@ path_ptr in
   let path_reversed = !@ path_reversed_ptr in
-  (path_length, path, path_reversed)
-let queue_allocate =
+  (path_length, path, path_reversed)let queue_allocate =
   foreign "gtk_widget_queue_allocate" (t_typ @-> returning (void))
 let queue_compute_expand =
   foreign "gtk_widget_queue_compute_expand" (t_typ @-> returning (void))
@@ -626,30 +616,28 @@ let size_allocate =
 let size_allocate_with_baseline =
   foreign "gtk_widget_size_allocate_with_baseline" (t_typ @-> ptr Rectangle.t_typ @-> int32_t @-> returning (void))
 let size_request self =
-  let requisition_ptr = allocate Requisition.t_typ (make Requisition.t_typ) in
   let size_request_raw =
-    foreign "gtk_widget_size_request" (t_typ @-> ptr (Requisition.t_typ) @-> returning void)
+    foreign "gtk_widget_size_request" (t_typ @-> ptr (Requisition.t_typ) @-> returning (void))
   in
+  let requisition_ptr = allocate Requisition.t_typ (make Requisition.t_typ) in
   let ret = size_request_raw self requisition_ptr in
   let requisition = !@ requisition_ptr in
-  (requisition)
-let style_attach =
+  (requisition)let style_attach =
   foreign "gtk_widget_style_attach" (t_typ @-> returning (void))
 let style_get_property =
   foreign "gtk_widget_style_get_property" (t_typ @-> string @-> ptr Value.t_typ @-> returning (void))
 let thaw_child_notify =
   foreign "gtk_widget_thaw_child_notify" (t_typ @-> returning (void))
 let translate_coordinates self dest_widget src_x src_y =
+  let translate_coordinates_raw =
+    foreign "gtk_widget_translate_coordinates" (t_typ @-> t_typ @-> int32_t @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (bool))
+  in
   let dest_x_ptr = allocate int32_t Int32.zero in
   let dest_y_ptr = allocate int32_t Int32.zero in
-  let translate_coordinates_raw =
-    foreign "gtk_widget_translate_coordinates" (t_typ @-> t_typ @-> int32_t @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning bool)
-  in
   let ret = translate_coordinates_raw self dest_widget src_x src_y dest_x_ptr dest_y_ptr in
   let dest_x = !@ dest_x_ptr in
   let dest_y = !@ dest_y_ptr in
-  (ret, dest_x, dest_y)
-let trigger_tooltip_query =
+  (ret, dest_x, dest_y)let trigger_tooltip_query =
   foreign "gtk_widget_trigger_tooltip_query" (t_typ @-> returning (void))
 let unmap =
   foreign "gtk_widget_unmap" (t_typ @-> returning (void))

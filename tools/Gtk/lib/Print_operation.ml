@@ -16,10 +16,10 @@ let get_embed_page_setup =
   foreign "gtk_print_operation_get_embed_page_setup" (t_typ @-> returning (bool))
 let get_error self =
   let get_error_raw =
-    foreign "gtk_print_operation_get_error" (t_typ@-> ptr (ptr_opt Error.t_typ) @-> returning (void))
+    foreign "gtk_print_operation_get_error" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (void))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = get_error_raw self err_ptr_ptr in
+  let ret = get_error_raw self err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -41,10 +41,10 @@ let is_finished =
   foreign "gtk_print_operation_is_finished" (t_typ @-> returning (bool))
 let run self action parent =
   let run_raw =
-    foreign "gtk_print_operation_run" (t_typ @-> Print_operation_action.t_view @-> Window.t_typ@-> ptr (ptr_opt Error.t_typ) @-> returning (Print_operation_result.t_view))
+    foreign "gtk_print_operation_run" (t_typ @-> Print_operation_action.t_view @-> Window.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (Print_operation_result.t_view))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = run_raw self action parent err_ptr_ptr in
+  let ret = run_raw self action parent err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in

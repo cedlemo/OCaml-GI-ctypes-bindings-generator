@@ -21,16 +21,15 @@ let get_homogeneous =
 let get_row_spacing =
   foreign "gtk_table_get_row_spacing" (t_typ @-> uint32_t @-> returning (uint32_t))
 let get_size self =
+  let get_size_raw =
+    foreign "gtk_table_get_size" (t_typ @-> ptr (uint32_t) @-> ptr (uint32_t) @-> returning (void))
+  in
   let rows_ptr = allocate uint32_t Unsigned.UInt32.zero in
   let columns_ptr = allocate uint32_t Unsigned.UInt32.zero in
-  let get_size_raw =
-    foreign "gtk_table_get_size" (t_typ @-> ptr (uint32_t) @-> ptr (uint32_t) @-> returning void)
-  in
   let ret = get_size_raw self rows_ptr columns_ptr in
   let rows = !@ rows_ptr in
   let columns = !@ columns_ptr in
-  (rows, columns)
-let resize =
+  (rows, columns)let resize =
   foreign "gtk_table_resize" (t_typ @-> uint32_t @-> uint32_t @-> returning (void))
 let set_col_spacing =
   foreign "gtk_table_set_col_spacing" (t_typ @-> uint32_t @-> uint32_t @-> returning (void))

@@ -3,9 +3,9 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val connect_widget_destroyed:
+val connect_widget_destroyed :
   t -> unit
-val get_widget:
+val get_widget :
   t -> Widget.t
-val set_widget:
+val set_widget :
   t -> Widget.t -> unit

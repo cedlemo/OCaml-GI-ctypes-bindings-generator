@@ -13,14 +13,13 @@ let create_with_rgba =
 let get_alpha =
   foreign "gtk_color_button_get_alpha" (t_typ @-> returning (uint16_t))
 let get_color self =
-  let color_ptr = allocate Color.t_typ (make Color.t_typ) in
   let get_color_raw =
-    foreign "gtk_color_button_get_color" (t_typ @-> ptr (Color.t_typ) @-> returning void)
+    foreign "gtk_color_button_get_color" (t_typ @-> ptr (Color.t_typ) @-> returning (void))
   in
+  let color_ptr = allocate Color.t_typ (make Color.t_typ) in
   let ret = get_color_raw self color_ptr in
   let color = !@ color_ptr in
-  (color)
-let get_title =
+  (color)let get_title =
   foreign "gtk_color_button_get_title" (t_typ @-> returning (string_opt))
 let get_use_alpha =
   foreign "gtk_color_button_get_use_alpha" (t_typ @-> returning (bool))

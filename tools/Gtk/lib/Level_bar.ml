@@ -19,14 +19,13 @@ let get_min_value =
 let get_mode =
   foreign "gtk_level_bar_get_mode" (t_typ @-> returning (Level_bar_mode.t_view))
 let get_offset_value self name =
-  let value_ptr = allocate double 0.0 in
   let get_offset_value_raw =
-    foreign "gtk_level_bar_get_offset_value" (t_typ @-> string_opt @-> ptr (double) @-> returning bool)
+    foreign "gtk_level_bar_get_offset_value" (t_typ @-> string_opt @-> ptr (double) @-> returning (bool))
   in
+  let value_ptr = allocate double 0.0 in
   let ret = get_offset_value_raw self name value_ptr in
   let value = !@ value_ptr in
-  (ret, value)
-let get_value =
+  (ret, value)let get_value =
   foreign "gtk_level_bar_get_value" (t_typ @-> returning (double))
 let remove_offset_value =
   foreign "gtk_level_bar_remove_offset_value" (t_typ @-> string_opt @-> returning (void))

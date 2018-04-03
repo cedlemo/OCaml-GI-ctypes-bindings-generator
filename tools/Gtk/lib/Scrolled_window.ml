@@ -29,16 +29,15 @@ let get_overlay_scrolling =
 let get_placement =
   foreign "gtk_scrolled_window_get_placement" (t_typ @-> returning (Corner_type.t_view))
 let get_policy self =
+  let get_policy_raw =
+    foreign "gtk_scrolled_window_get_policy" (t_typ @-> ptr (Policy_type.t_view) @-> ptr (Policy_type.t_view) @-> returning (void))
+  in
   let hscrollbar_policy_ptr = allocate Policy_type.t_view (Policy_type.t_view.of_value (Unsigned.UInt32.zero)) in
   let vscrollbar_policy_ptr = allocate Policy_type.t_view (Policy_type.t_view.of_value (Unsigned.UInt32.zero)) in
-  let get_policy_raw =
-    foreign "gtk_scrolled_window_get_policy" (t_typ @-> ptr (Policy_type.t_view) @-> ptr (Policy_type.t_view) @-> returning void)
-  in
   let ret = get_policy_raw self hscrollbar_policy_ptr vscrollbar_policy_ptr in
   let hscrollbar_policy = (!@ hscrollbar_policy_ptr) in
   let vscrollbar_policy = (!@ vscrollbar_policy_ptr) in
-  (hscrollbar_policy, vscrollbar_policy)
-let get_propagate_natural_height =
+  (hscrollbar_policy, vscrollbar_policy)let get_propagate_natural_height =
   foreign "gtk_scrolled_window_get_propagate_natural_height" (t_typ @-> returning (bool))
 let get_propagate_natural_width =
   foreign "gtk_scrolled_window_get_propagate_natural_width" (t_typ @-> returning (bool))

@@ -3,39 +3,39 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   string option -> Widget.t
-val create_with_mnemonic:
+val create_with_mnemonic :
   string option -> Widget.t
-val get_expanded:
+val get_expanded :
   t -> bool
-val get_label:
+val get_label :
   t -> string option
-val get_label_fill:
+val get_label_fill :
   t -> bool
-val get_label_widget:
+val get_label_widget :
   t -> Widget.t
-val get_resize_toplevel:
+val get_resize_toplevel :
   t -> bool
-val get_spacing:
+val get_spacing :
   t -> int32
-val get_use_markup:
+val get_use_markup :
   t -> bool
-val get_use_underline:
+val get_use_underline :
   t -> bool
-val set_expanded:
+val set_expanded :
   t -> bool -> unit
-val set_label:
+val set_label :
   t -> string option -> unit
-val set_label_fill:
+val set_label_fill :
   t -> bool -> unit
-val set_label_widget:
+val set_label_widget :
   t -> Widget.t -> unit
-val set_resize_toplevel:
+val set_resize_toplevel :
   t -> bool -> unit
-val set_spacing:
+val set_spacing :
   t -> int32 -> unit
-val set_use_markup:
+val set_use_markup :
   t -> bool -> unit
-val set_use_underline:
+val set_use_underline :
   t -> bool -> unit

@@ -3,7 +3,7 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> IMContext.t
-val add_compose_file:
+val add_compose_file :
   t -> string -> unit

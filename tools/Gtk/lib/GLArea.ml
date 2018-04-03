@@ -21,16 +21,15 @@ let get_has_depth_buffer =
 let get_has_stencil_buffer =
   foreign "gtk_gl_area_get_has_stencil_buffer" (t_typ @-> returning (bool))
 let get_required_version self =
+  let get_required_version_raw =
+    foreign "gtk_gl_area_get_required_version" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+  in
   let major_ptr = allocate int32_t Int32.zero in
   let minor_ptr = allocate int32_t Int32.zero in
-  let get_required_version_raw =
-    foreign "gtk_gl_area_get_required_version" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_required_version_raw self major_ptr minor_ptr in
   let major = !@ major_ptr in
   let minor = !@ minor_ptr in
-  (major, minor)
-let get_use_es =
+  (major, minor)let get_use_es =
   foreign "gtk_gl_area_get_use_es" (t_typ @-> returning (bool))
 let make_current =
   foreign "gtk_gl_area_make_current" (t_typ @-> returning (void))

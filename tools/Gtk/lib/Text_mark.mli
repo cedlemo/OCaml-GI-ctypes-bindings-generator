@@ -3,17 +3,17 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   string option -> bool -> t
-val get_buffer:
+val get_buffer :
   t -> Text_buffer.t
-val get_deleted:
+val get_deleted :
   t -> bool
-val get_left_gravity:
+val get_left_gravity :
   t -> bool
-val get_name:
+val get_name :
   t -> string option
-val get_visible:
+val get_visible :
   t -> bool
-val set_visible:
+val set_visible :
   t -> bool -> unit

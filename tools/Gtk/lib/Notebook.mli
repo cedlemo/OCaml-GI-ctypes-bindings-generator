@@ -3,93 +3,93 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Widget.t
-val append_page:
+val append_page :
   t -> Widget.t -> Widget.t -> int32
-val append_page_menu:
+val append_page_menu :
   t -> Widget.t -> Widget.t -> Widget.t -> int32
-val detach_tab:
+val detach_tab :
   t -> Widget.t -> unit
-val get_action_widget:
+val get_action_widget :
   t -> Pack_type.t -> Widget.t
-val get_current_page:
+val get_current_page :
   t -> int32
-val get_group_name:
+val get_group_name :
   t -> string option
-val get_menu_label:
+val get_menu_label :
   t -> Widget.t -> Widget.t
-val get_menu_label_text:
+val get_menu_label_text :
   t -> Widget.t -> string option
-val get_n_pages:
+val get_n_pages :
   t -> int32
-val get_nth_page:
+val get_nth_page :
   t -> int32 -> Widget.t
-val get_scrollable:
+val get_scrollable :
   t -> bool
-val get_show_border:
+val get_show_border :
   t -> bool
-val get_show_tabs:
+val get_show_tabs :
   t -> bool
-val get_tab_detachable:
+val get_tab_detachable :
   t -> Widget.t -> bool
-val get_tab_hborder:
+val get_tab_hborder :
   t -> Unsigned.uint16
-val get_tab_label:
+val get_tab_label :
   t -> Widget.t -> Widget.t
-val get_tab_label_text:
+val get_tab_label_text :
   t -> Widget.t -> string option
-val get_tab_pos:
+val get_tab_pos :
   t -> Position_type.t
-val get_tab_reorderable:
+val get_tab_reorderable :
   t -> Widget.t -> bool
-val get_tab_vborder:
+val get_tab_vborder :
   t -> Unsigned.uint16
-val insert_page:
+val insert_page :
   t -> Widget.t -> Widget.t -> int32 -> int32
-val insert_page_menu:
+val insert_page_menu :
   t -> Widget.t -> Widget.t -> Widget.t -> int32 -> int32
-val next_page:
+val next_page :
   t -> unit
-val page_num:
+val page_num :
   t -> Widget.t -> int32
-val popup_disable:
+val popup_disable :
   t -> unit
-val popup_enable:
+val popup_enable :
   t -> unit
-val prepend_page:
+val prepend_page :
   t -> Widget.t -> Widget.t -> int32
-val prepend_page_menu:
+val prepend_page_menu :
   t -> Widget.t -> Widget.t -> Widget.t -> int32
-val prev_page:
+val prev_page :
   t -> unit
-val remove_page:
+val remove_page :
   t -> int32 -> unit
-val reorder_child:
+val reorder_child :
   t -> Widget.t -> int32 -> unit
-val set_action_widget:
+val set_action_widget :
   t -> Widget.t -> Pack_type.t -> unit
-val set_current_page:
+val set_current_page :
   t -> int32 -> unit
-val set_group_name:
+val set_group_name :
   t -> string option -> unit
-val set_menu_label:
+val set_menu_label :
   t -> Widget.t -> Widget.t -> unit
-val set_menu_label_text:
+val set_menu_label_text :
   t -> Widget.t -> string -> unit
-val set_scrollable:
+val set_scrollable :
   t -> bool -> unit
-val set_show_border:
+val set_show_border :
   t -> bool -> unit
-val set_show_tabs:
+val set_show_tabs :
   t -> bool -> unit
-val set_tab_detachable:
+val set_tab_detachable :
   t -> Widget.t -> bool -> unit
-val set_tab_label:
+val set_tab_label :
   t -> Widget.t -> Widget.t -> unit
-val set_tab_label_text:
+val set_tab_label_text :
   t -> Widget.t -> string -> unit
-val set_tab_pos:
+val set_tab_pos :
   t -> Position_type.t -> unit
-val set_tab_reorderable:
+val set_tab_reorderable :
   t -> Widget.t -> bool -> unit

@@ -16,23 +16,22 @@ let get_builtin_pixbuf =
 let get_display_name =
   foreign "gtk_icon_info_get_display_name" (t_typ @-> returning (string_opt))
 let get_embedded_rect self =
-  let rectangle_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let get_embedded_rect_raw =
-    foreign "gtk_icon_info_get_embedded_rect" (t_typ @-> ptr (Rectangle.t_typ) @-> returning bool)
+    foreign "gtk_icon_info_get_embedded_rect" (t_typ @-> ptr (Rectangle.t_typ) @-> returning (bool))
   in
+  let rectangle_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_embedded_rect_raw self rectangle_ptr in
   let rectangle = !@ rectangle_ptr in
-  (ret, rectangle)
-let get_filename =
+  (ret, rectangle)let get_filename =
   foreign "gtk_icon_info_get_filename" (t_typ @-> returning (string_opt))
 let is_symbolic =
   foreign "gtk_icon_info_is_symbolic" (t_typ @-> returning (bool))
 let load_icon self =
   let load_icon_raw =
-    foreign "gtk_icon_info_load_icon" (t_typ@-> ptr (ptr_opt Error.t_typ) @-> returning (Pixbuf.t_typ))
+    foreign "gtk_icon_info_load_icon" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (Pixbuf.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = load_icon_raw self err_ptr_ptr in
+  let ret = load_icon_raw self err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -42,21 +41,21 @@ let load_icon self =
 (*Not implemented gtk_icon_info_load_icon_finish type interface not implemented*)
 let load_surface self for_window =
   let load_surface_raw =
-    foreign "gtk_icon_info_load_surface" (t_typ @-> Window.t_typ@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Surface.t_typ))
+    foreign "gtk_icon_info_load_surface" (t_typ @-> Window.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Surface.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = load_surface_raw self for_window err_ptr_ptr in
+  let ret = load_surface_raw self for_window err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
 let load_symbolic self fg success_color warning_color error_color =
-  let was_symbolic_ptr = allocate bool false in
-  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let load_symbolic_raw =
     foreign "gtk_icon_info_load_symbolic" (t_typ @-> ptr RGBA.t_typ @-> ptr_opt RGBA.t_typ @-> ptr_opt RGBA.t_typ @-> ptr_opt RGBA.t_typ @-> ptr (bool) @-> ptr (ptr_opt Error.t_typ) @-> returning (Pixbuf.t_typ))
   in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let was_symbolic_ptr = allocate bool false in
   let ret = load_symbolic_raw self fg success_color warning_color error_color was_symbolic_ptr err_ptr_ptr in
   let get_ret_value () =
     let was_symbolic = !@ was_symbolic_ptr in
@@ -69,11 +68,11 @@ let load_symbolic self fg success_color warning_color error_color =
     Error (err_ptr)(*Not implemented gtk_icon_info_load_symbolic_async type callback not implemented*)
 (*Not implemented gtk_icon_info_load_symbolic_finish type interface not implemented*)
 let load_symbolic_for_context self context =
-  let was_symbolic_ptr = allocate bool false in
-  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let load_symbolic_for_context_raw =
     foreign "gtk_icon_info_load_symbolic_for_context" (t_typ @-> Style_context.t_typ @-> ptr (bool) @-> ptr (ptr_opt Error.t_typ) @-> returning (Pixbuf.t_typ))
   in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let was_symbolic_ptr = allocate bool false in
   let ret = load_symbolic_for_context_raw self context was_symbolic_ptr err_ptr_ptr in
   let get_ret_value () =
     let was_symbolic = !@ was_symbolic_ptr in
@@ -86,11 +85,11 @@ let load_symbolic_for_context self context =
     Error (err_ptr)(*Not implemented gtk_icon_info_load_symbolic_for_context_async type callback not implemented*)
 (*Not implemented gtk_icon_info_load_symbolic_for_context_finish type interface not implemented*)
 let load_symbolic_for_style self style state =
-  let was_symbolic_ptr = allocate bool false in
-  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let load_symbolic_for_style_raw =
     foreign "gtk_icon_info_load_symbolic_for_style" (t_typ @-> Style.t_typ @-> State_type.t_view @-> ptr (bool) @-> ptr (ptr_opt Error.t_typ) @-> returning (Pixbuf.t_typ))
   in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let was_symbolic_ptr = allocate bool false in
   let ret = load_symbolic_for_style_raw self style state was_symbolic_ptr err_ptr_ptr in
   let get_ret_value () =
     let was_symbolic = !@ was_symbolic_ptr in

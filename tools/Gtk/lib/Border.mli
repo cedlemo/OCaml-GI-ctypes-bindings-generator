@@ -8,9 +8,9 @@ val f_right: (int, t structure) field
 val f_top: (int, t structure) field
 val f_bottom: (int, t structure) field
 
-val create:
+val create :
   unit -> t structure ptr
-val copy:
+val copy :
   t structure ptr -> t structure ptr
-val free:
+val free :
   t structure ptr -> unit

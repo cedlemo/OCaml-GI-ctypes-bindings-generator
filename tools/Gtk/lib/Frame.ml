@@ -9,16 +9,15 @@ let create =
 let get_label =
   foreign "gtk_frame_get_label" (t_typ @-> returning (string_opt))
 let get_label_align self =
+  let get_label_align_raw =
+    foreign "gtk_frame_get_label_align" (t_typ @-> ptr (float) @-> ptr (float) @-> returning (void))
+  in
   let xalign_ptr = allocate float 0.0 in
   let yalign_ptr = allocate float 0.0 in
-  let get_label_align_raw =
-    foreign "gtk_frame_get_label_align" (t_typ @-> ptr (float) @-> ptr (float) @-> returning void)
-  in
   let ret = get_label_align_raw self xalign_ptr yalign_ptr in
   let xalign = !@ xalign_ptr in
   let yalign = !@ yalign_ptr in
-  (xalign, yalign)
-let get_label_widget =
+  (xalign, yalign)let get_label_widget =
   foreign "gtk_frame_get_label_widget" (t_typ @-> returning (Widget.t_typ))
 let get_shadow_type =
   foreign "gtk_frame_get_shadow_type" (t_typ @-> returning (Shadow_type.t_view))

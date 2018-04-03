@@ -13,11 +13,11 @@ val f_set_next: (t structure ptr, t structure) field
 val f_hash_next: (t structure ptr, t structure) field
 val f_signals: (Binding_signal.t structure ptr, t structure) field
 
-val add_signal_from_string:
+val add_signal_from_string :
   Binding_set.t structure ptr -> string -> Token_type.t
-val add_signall:
+val add_signall :
   Binding_set.t structure ptr -> Unsigned.uint32 -> Modifier_type.t_list -> string -> SList.t structure ptr -> unit
-val remove:
+val remove :
   Binding_set.t structure ptr -> Unsigned.uint32 -> Modifier_type.t_list -> unit
-val skip:
+val skip :
   Binding_set.t structure ptr -> Unsigned.uint32 -> Modifier_type.t_list -> unit

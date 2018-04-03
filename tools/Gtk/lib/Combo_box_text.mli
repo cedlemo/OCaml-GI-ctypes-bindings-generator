@@ -3,25 +3,25 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Widget.t
-val create_with_entry:
+val create_with_entry :
   unit -> Widget.t
-val append:
+val append :
   t -> string option -> string -> unit
-val append_text:
+val append_text :
   t -> string -> unit
-val get_active_text:
+val get_active_text :
   t -> string option
-val insert:
+val insert :
   t -> int32 -> string option -> string -> unit
-val insert_text:
+val insert_text :
   t -> int32 -> string -> unit
-val prepend:
+val prepend :
   t -> string option -> string -> unit
-val prepend_text:
+val prepend_text :
   t -> string -> unit
-val remove:
+val remove :
   t -> int32 -> unit
-val remove_all:
+val remove_all :
   t -> unit

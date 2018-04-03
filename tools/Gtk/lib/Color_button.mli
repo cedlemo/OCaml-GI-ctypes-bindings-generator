@@ -3,25 +3,25 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Widget.t
-val create_with_color:
+val create_with_color :
   Color.t structure ptr -> Widget.t
-val create_with_rgba:
+val create_with_rgba :
   RGBA.t structure ptr -> Widget.t
-val get_alpha:
+val get_alpha :
   t -> Unsigned.uint16
 val get_color :
   t -> (Color.t structure)
-val get_title:
+val get_title :
   t -> string option
-val get_use_alpha:
+val get_use_alpha :
   t -> bool
-val set_alpha:
+val set_alpha :
   t -> Unsigned.uint16 -> unit
-val set_color:
+val set_color :
   t -> Color.t structure ptr -> unit
-val set_title:
+val set_title :
   t -> string -> unit
-val set_use_alpha:
+val set_use_alpha :
   t -> bool -> unit

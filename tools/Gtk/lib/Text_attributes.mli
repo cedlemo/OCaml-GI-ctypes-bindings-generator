@@ -26,13 +26,13 @@ val f_no_fallback: (Unsigned.uint32, t structure) field
 val f_pg_bg_rgba: (RGBA.t structure ptr, t structure) field
 val f_letter_spacing: (int32, t structure) field
 
-val create:
+val create :
   unit -> t structure ptr
-val copy:
+val copy :
   t structure ptr -> t structure ptr
-val copy_values:
+val copy_values :
   t structure ptr -> t structure ptr -> unit
-val incr_ref:
+val incr_ref :
   t structure ptr -> t structure ptr
-val unref:
+val unref :
   t structure ptr -> unit

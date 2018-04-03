@@ -3,11 +3,11 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Widget.t
-val changed:
+val changed :
   t -> unit
-val get_index:
+val get_index :
   t -> int32
-val is_selected:
+val is_selected :
   t -> bool

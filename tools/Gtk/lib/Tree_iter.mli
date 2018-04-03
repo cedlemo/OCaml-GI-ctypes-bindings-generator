@@ -8,7 +8,7 @@ val f_user_data: (unit ptr, t structure) field
 val f_user_data2: (unit ptr, t structure) field
 val f_user_data3: (unit ptr, t structure) field
 
-val copy:
+val copy :
   t structure ptr -> t structure ptr
-val free:
+val free :
   t structure ptr -> unit

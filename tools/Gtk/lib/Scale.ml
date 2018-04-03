@@ -21,16 +21,15 @@ let get_has_origin =
 let get_layout =
   foreign "gtk_scale_get_layout" (t_typ @-> returning (Layout.t_typ))
 let get_layout_offsets self =
+  let get_layout_offsets_raw =
+    foreign "gtk_scale_get_layout_offsets" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+  in
   let x_ptr = allocate int32_t Int32.zero in
   let y_ptr = allocate int32_t Int32.zero in
-  let get_layout_offsets_raw =
-    foreign "gtk_scale_get_layout_offsets" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning void)
-  in
   let ret = get_layout_offsets_raw self x_ptr y_ptr in
   let x = !@ x_ptr in
   let y = !@ y_ptr in
-  (x, y)
-let get_value_pos =
+  (x, y)let get_value_pos =
   foreign "gtk_scale_get_value_pos" (t_typ @-> returning (Position_type.t_view))
 let set_digits =
   foreign "gtk_scale_set_digits" (t_typ @-> int32_t @-> returning (void))

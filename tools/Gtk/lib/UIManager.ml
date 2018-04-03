@@ -10,10 +10,10 @@ let add_ui =
   foreign "gtk_ui_manager_add_ui" (t_typ @-> uint32_t @-> string @-> string @-> string_opt @-> UIManager_item_type.t_list_view @-> bool @-> returning (void))
 let add_ui_from_file self filename =
   let add_ui_from_file_raw =
-    foreign "gtk_ui_manager_add_ui_from_file" (t_typ @-> string@-> ptr (ptr_opt Error.t_typ) @-> returning (uint32_t))
+    foreign "gtk_ui_manager_add_ui_from_file" (t_typ @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (uint32_t))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = add_ui_from_file_raw self filename err_ptr_ptr in
+  let ret = add_ui_from_file_raw self filename err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -21,10 +21,10 @@ let add_ui_from_file self filename =
     Error (err_ptr)
 let add_ui_from_resource self resource_path =
   let add_ui_from_resource_raw =
-    foreign "gtk_ui_manager_add_ui_from_resource" (t_typ @-> string@-> ptr (ptr_opt Error.t_typ) @-> returning (uint32_t))
+    foreign "gtk_ui_manager_add_ui_from_resource" (t_typ @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (uint32_t))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = add_ui_from_resource_raw self resource_path err_ptr_ptr in
+  let ret = add_ui_from_resource_raw self resource_path err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -32,10 +32,10 @@ let add_ui_from_resource self resource_path =
     Error (err_ptr)
 let add_ui_from_string self buffer length =
   let add_ui_from_string_raw =
-    foreign "gtk_ui_manager_add_ui_from_string" (t_typ @-> string @-> int64_t@-> ptr (ptr_opt Error.t_typ) @-> returning (uint32_t))
+    foreign "gtk_ui_manager_add_ui_from_string" (t_typ @-> string @-> int64_t @-> ptr (ptr_opt Error.t_typ) @-> returning (uint32_t))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = add_ui_from_string_raw self buffer length err_ptr_ptr in
+  let ret = add_ui_from_string_raw self buffer length err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in

@@ -19,14 +19,13 @@ let get_active =
 let get_active_id =
   foreign "gtk_combo_box_get_active_id" (t_typ @-> returning (string_opt))
 let get_active_iter self =
-  let iter_ptr = allocate Tree_iter.t_typ (make Tree_iter.t_typ) in
   let get_active_iter_raw =
-    foreign "gtk_combo_box_get_active_iter" (t_typ @-> ptr (Tree_iter.t_typ) @-> returning bool)
+    foreign "gtk_combo_box_get_active_iter" (t_typ @-> ptr (Tree_iter.t_typ) @-> returning (bool))
   in
+  let iter_ptr = allocate Tree_iter.t_typ (make Tree_iter.t_typ) in
   let ret = get_active_iter_raw self iter_ptr in
   let iter = !@ iter_ptr in
-  (ret, iter)
-let get_add_tearoffs =
+  (ret, iter)let get_add_tearoffs =
   foreign "gtk_combo_box_get_add_tearoffs" (t_typ @-> returning (bool))
 let get_button_sensitivity =
   foreign "gtk_combo_box_get_button_sensitivity" (t_typ @-> returning (Sensitivity_type.t_view))

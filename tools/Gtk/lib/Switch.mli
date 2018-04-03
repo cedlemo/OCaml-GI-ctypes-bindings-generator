@@ -3,13 +3,13 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Widget.t
-val get_active:
+val get_active :
   t -> bool
-val get_state:
+val get_state :
   t -> bool
-val set_active:
+val set_active :
   t -> bool -> unit
-val set_state:
+val set_state :
   t -> bool -> unit

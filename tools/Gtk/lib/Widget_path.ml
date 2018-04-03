@@ -46,22 +46,20 @@ let iter_has_qclass =
 let iter_has_qname =
   foreign "gtk_widget_path_iter_has_qname" (ptr t_typ @-> int32_t @-> uint32_t @-> returning (bool))
 let iter_has_qregion self pos qname =
-  let flags_ptr = allocate Region_flags.t_view (Region_flags.t_view.of_value (Unsigned.UInt32.zero)) in
   let iter_has_qregion_raw =
-    foreign "gtk_widget_path_iter_has_qregion" (ptr t_typ @-> int32_t @-> uint32_t @-> ptr (Region_flags.t_list_view) @-> returning bool)
+    foreign "gtk_widget_path_iter_has_qregion" (ptr t_typ @-> int32_t @-> uint32_t @-> ptr (Region_flags.t_list_view) @-> returning (bool))
   in
+  let flags_ptr = allocate Region_flags.t_view (Region_flags.t_view.of_value (Unsigned.UInt32.zero)) in
   let ret = iter_has_qregion_raw self pos qname flags_ptr in
   let flags = (!@ flags_ptr) in
-  (ret, flags)
-let iter_has_region self pos name =
-  let flags_ptr = allocate Region_flags.t_view (Region_flags.t_view.of_value (Unsigned.UInt32.zero)) in
+  (ret, flags)let iter_has_region self pos name =
   let iter_has_region_raw =
-    foreign "gtk_widget_path_iter_has_region" (ptr t_typ @-> int32_t @-> string @-> ptr (Region_flags.t_list_view) @-> returning bool)
+    foreign "gtk_widget_path_iter_has_region" (ptr t_typ @-> int32_t @-> string @-> ptr (Region_flags.t_list_view) @-> returning (bool))
   in
+  let flags_ptr = allocate Region_flags.t_view (Region_flags.t_view.of_value (Unsigned.UInt32.zero)) in
   let ret = iter_has_region_raw self pos name flags_ptr in
   let flags = (!@ flags_ptr) in
-  (ret, flags)
-let iter_list_classes =
+  (ret, flags)let iter_list_classes =
   foreign "gtk_widget_path_iter_list_classes" (ptr t_typ @-> int32_t @-> returning (ptr SList.t_typ))
 let iter_list_regions =
   foreign "gtk_widget_path_iter_list_regions" (ptr t_typ @-> int32_t @-> returning (ptr SList.t_typ))

@@ -3,151 +3,151 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Widget.t
-val create_with_buffer:
+val create_with_buffer :
   Entry_buffer.t -> Widget.t
-val get_activates_default:
+val get_activates_default :
   t -> bool
-val get_alignment:
+val get_alignment :
   t -> float
-val get_attributes:
+val get_attributes :
   t -> Attr_list.t structure ptr option
-val get_buffer:
+val get_buffer :
   t -> Entry_buffer.t
-val get_completion:
+val get_completion :
   t -> Entry_completion.t
-val get_current_icon_drag_source:
+val get_current_icon_drag_source :
   t -> int32
-val get_cursor_hadjustment:
+val get_cursor_hadjustment :
   t -> Adjustment.t
-val get_has_frame:
+val get_has_frame :
   t -> bool
-val get_icon_activatable:
+val get_icon_activatable :
   t -> Entry_icon_position.t -> bool
 val get_icon_area :
   t -> Entry_icon_position.t -> (Rectangle.t structure)
-val get_icon_at_pos:
+val get_icon_at_pos :
   t -> int32 -> int32 -> int32
 (*Not implemented gtk_entry_get_icon_gicon return type interface not handled*)
-val get_icon_name:
+val get_icon_name :
   t -> Entry_icon_position.t -> string option
-val get_icon_pixbuf:
+val get_icon_pixbuf :
   t -> Entry_icon_position.t -> Pixbuf.t
-val get_icon_sensitive:
+val get_icon_sensitive :
   t -> Entry_icon_position.t -> bool
-val get_icon_stock:
+val get_icon_stock :
   t -> Entry_icon_position.t -> string option
-val get_icon_storage_type:
+val get_icon_storage_type :
   t -> Entry_icon_position.t -> Image_type.t
-val get_icon_tooltip_markup:
+val get_icon_tooltip_markup :
   t -> Entry_icon_position.t -> string option
-val get_icon_tooltip_text:
+val get_icon_tooltip_text :
   t -> Entry_icon_position.t -> string option
-val get_inner_border:
+val get_inner_border :
   t -> Border.t structure ptr option
-val get_input_hints:
+val get_input_hints :
   t -> Input_hints.t_list
-val get_input_purpose:
+val get_input_purpose :
   t -> Input_purpose.t
 (*Not implemented gtk_entry_get_invisible_char return type unichar not handled*)
-val get_layout:
+val get_layout :
   t -> Layout.t
 val get_layout_offsets :
   t -> (int32 * int32)
-val get_max_length:
+val get_max_length :
   t -> int32
-val get_max_width_chars:
+val get_max_width_chars :
   t -> int32
-val get_overwrite_mode:
+val get_overwrite_mode :
   t -> bool
-val get_placeholder_text:
+val get_placeholder_text :
   t -> string option
-val get_progress_fraction:
+val get_progress_fraction :
   t -> float
-val get_progress_pulse_step:
+val get_progress_pulse_step :
   t -> float
-val get_tabs:
+val get_tabs :
   t -> Tab_array.t structure ptr option
-val get_text:
+val get_text :
   t -> string option
 val get_text_area :
   t -> (Rectangle.t structure)
-val get_text_length:
+val get_text_length :
   t -> Unsigned.uint16
-val get_visibility:
+val get_visibility :
   t -> bool
-val get_width_chars:
+val get_width_chars :
   t -> int32
-val grab_focus_without_selecting:
+val grab_focus_without_selecting :
   t -> unit
-val im_context_filter_keypress:
+val im_context_filter_keypress :
   t -> Event_key.t structure ptr -> bool
-val layout_index_to_text_index:
+val layout_index_to_text_index :
   t -> int32 -> int32
-val progress_pulse:
+val progress_pulse :
   t -> unit
-val reset_im_context:
+val reset_im_context :
   t -> unit
-val set_activates_default:
+val set_activates_default :
   t -> bool -> unit
-val set_alignment:
+val set_alignment :
   t -> float -> unit
-val set_attributes:
+val set_attributes :
   t -> Attr_list.t structure ptr -> unit
-val set_buffer:
+val set_buffer :
   t -> Entry_buffer.t -> unit
-val set_completion:
+val set_completion :
   t -> Entry_completion.t -> unit
-val set_cursor_hadjustment:
+val set_cursor_hadjustment :
   t -> Adjustment.t -> unit
-val set_has_frame:
+val set_has_frame :
   t -> bool -> unit
-val set_icon_activatable:
+val set_icon_activatable :
   t -> Entry_icon_position.t -> bool -> unit
-val set_icon_drag_source:
+val set_icon_drag_source :
   t -> Entry_icon_position.t -> Target_list.t structure ptr -> Drag_action.t_list -> unit
 (*Not implemented gtk_entry_set_icon_from_gicon type interface not implemented*)
-val set_icon_from_icon_name:
+val set_icon_from_icon_name :
   t -> Entry_icon_position.t -> string option -> unit
-val set_icon_from_pixbuf:
+val set_icon_from_pixbuf :
   t -> Entry_icon_position.t -> Pixbuf.t -> unit
-val set_icon_from_stock:
+val set_icon_from_stock :
   t -> Entry_icon_position.t -> string option -> unit
-val set_icon_sensitive:
+val set_icon_sensitive :
   t -> Entry_icon_position.t -> bool -> unit
-val set_icon_tooltip_markup:
+val set_icon_tooltip_markup :
   t -> Entry_icon_position.t -> string option -> unit
-val set_icon_tooltip_text:
+val set_icon_tooltip_text :
   t -> Entry_icon_position.t -> string option -> unit
-val set_inner_border:
+val set_inner_border :
   t -> Border.t structure ptr option -> unit
-val set_input_hints:
+val set_input_hints :
   t -> Input_hints.t_list -> unit
-val set_input_purpose:
+val set_input_purpose :
   t -> Input_purpose.t -> unit
 (*Not implemented gtk_entry_set_invisible_char type unichar not implemented*)
-val set_max_length:
+val set_max_length :
   t -> int32 -> unit
-val set_max_width_chars:
+val set_max_width_chars :
   t -> int32 -> unit
-val set_overwrite_mode:
+val set_overwrite_mode :
   t -> bool -> unit
-val set_placeholder_text:
+val set_placeholder_text :
   t -> string option -> unit
-val set_progress_fraction:
+val set_progress_fraction :
   t -> float -> unit
-val set_progress_pulse_step:
+val set_progress_pulse_step :
   t -> float -> unit
-val set_tabs:
+val set_tabs :
   t -> Tab_array.t structure ptr -> unit
-val set_text:
+val set_text :
   t -> string -> unit
-val set_visibility:
+val set_visibility :
   t -> bool -> unit
-val set_width_chars:
+val set_width_chars :
   t -> int32 -> unit
-val text_index_to_layout_index:
+val text_index_to_layout_index :
   t -> int32 -> int32
-val unset_invisible_char:
+val unset_invisible_char :
   t -> unit

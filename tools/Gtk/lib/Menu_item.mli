@@ -3,42 +3,43 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Widget.t
-val create_with_label:
+val create_with_label :
   string -> Widget.t
-val create_with_mnemonic:
+val create_with_mnemonic :
   string -> Widget.t
-val activate:
+val activate :
   t -> unit
-val deselect:
+val deselect :
   t -> unit
-val get_accel_path:
+val get_accel_path :
   t -> string option
-val get_label:
+val get_label :
   t -> string option
-val get_reserve_indicator:
+val get_reserve_indicator :
   t -> bool
-val get_right_justified:
+val get_right_justified :
   t -> bool
-val get_submenu:
+val get_submenu :
   t -> Widget.t
-val get_use_underline:
+val get_use_underline :
   t -> bool
-val select:
+val select :
   t -> unit
-val set_accel_path:
+val set_accel_path :
   t -> string option -> unit
-val set_label:
+val set_label :
   t -> string -> unit
-val set_reserve_indicator:
+val set_reserve_indicator :
   t -> bool -> unit
-val set_right_justified:
+val set_right_justified :
   t -> bool -> unit
-val set_submenu:
+val set_submenu :
   t -> Menu.t -> unit
-val set_use_underline:
+val set_use_underline :
   t -> bool -> unit
-val toggle_size_allocate:
+val toggle_size_allocate :
   t -> int32 -> unit
-(*Not implemented gtk_menu_item_toggle_size_request - in out argument not handled*)
+val toggle_size_request :
+  t -> int32 -> (int32)

@@ -3,9 +3,9 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Widget.t
-val move:
+val move :
   t -> Widget.t -> int32 -> int32 -> unit
-val put:
+val put :
   t -> Widget.t -> int32 -> int32 -> unit

@@ -15,27 +15,29 @@ let create_from_pixbuf =
   foreign "gtk_status_icon_new_from_pixbuf" (Pixbuf.t_typ @-> returning (t_typ))
 let create_from_stock =
   foreign "gtk_status_icon_new_from_stock" (string @-> returning (t_typ))
-let position_menu menu user_data =
-  let push_in_ptr = allocate bool false in
+let position_menu menu user_data x y =
   let position_menu_raw =
-    foreign "gtk_status_icon_position_menu" (Menu.t_typ @-> t_typ @-> ptr (bool) @-> returning void)
+    foreign "gtk_status_icon_position_menu" (Menu.t_typ @-> t_typ @-> ptr (bool) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
-  let ret = position_menu_raw menu user_data push_in_ptr in
+  let push_in_ptr = allocate bool false in
+  let x_ptr = allocate int32_t x in
+  let y_ptr = allocate int32_t y in
+  let ret = position_menu_raw menu user_data push_in_ptr x_ptr y_ptr in
   let push_in = !@ push_in_ptr in
-  (push_in)
-let get_geometry self =
+  let x = !@ x_ptr in
+  let y = !@ y_ptr in
+  (push_in, x, y)let get_geometry self =
+  let get_geometry_raw =
+    foreign "gtk_status_icon_get_geometry" (t_typ @-> ptr (Screen.t_typ) @-> ptr (Rectangle.t_typ) @-> ptr (Orientation.t_view) @-> returning (bool))
+  in
   let screen_ptr = allocate (ptr_opt Screen.t_typ) None in
   let area_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let orientation_ptr = allocate Orientation.t_view (Orientation.t_view.of_value (Unsigned.UInt32.zero)) in
-  let get_geometry_raw =
-    foreign "gtk_status_icon_get_geometry" (t_typ @-> ptr (Screen.t_typ) @-> ptr (Rectangle.t_typ) @-> ptr (Orientation.t_view) @-> returning bool)
-  in
   let ret = get_geometry_raw self screen_ptr area_ptr orientation_ptr in
   let screen = !@ screen_ptr in
   let area = !@ area_ptr in
   let orientation = (!@ orientation_ptr) in
-  (ret, screen, area, orientation)
-(*Not implemented gtk_status_icon_get_gicon return type interface not handled*)
+  (ret, screen, area, orientation)(*Not implemented gtk_status_icon_get_gicon return type interface not handled*)
 let get_has_tooltip =
   foreign "gtk_status_icon_get_has_tooltip" (t_typ @-> returning (bool))
 let get_icon_name =

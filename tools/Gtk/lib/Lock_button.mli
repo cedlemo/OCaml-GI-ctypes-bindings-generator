@@ -3,9 +3,9 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   Permission.t -> Widget.t
-val get_permission:
+val get_permission :
   t -> Permission.t
-val set_permission:
+val set_permission :
   t -> Permission.t -> unit

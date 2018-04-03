@@ -3,9 +3,9 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Widget.t
-val start:
+val start :
   t -> unit
-val stop:
+val stop :
   t -> unit

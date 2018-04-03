@@ -3,13 +3,13 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Widget.t
-val get_center_widget:
+val get_center_widget :
   t -> Widget.t
-val pack_end:
+val pack_end :
   t -> Widget.t -> unit
-val pack_start:
+val pack_start :
   t -> Widget.t -> unit
-val set_center_widget:
+val set_center_widget :
   t -> Widget.t -> unit

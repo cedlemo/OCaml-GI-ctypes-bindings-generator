@@ -3,9 +3,9 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Tool_item.t
-val get_draw:
+val get_draw :
   t -> bool
-val set_draw:
+val set_draw :
   t -> bool -> unit

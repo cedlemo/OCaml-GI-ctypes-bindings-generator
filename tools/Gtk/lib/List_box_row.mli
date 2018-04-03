@@ -3,23 +3,23 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Widget.t
-val changed:
+val changed :
   t -> unit
-val get_activatable:
+val get_activatable :
   t -> bool
-val get_header:
+val get_header :
   t -> Widget.t
-val get_index:
+val get_index :
   t -> int32
-val get_selectable:
+val get_selectable :
   t -> bool
-val is_selected:
+val is_selected :
   t -> bool
-val set_activatable:
+val set_activatable :
   t -> bool -> unit
-val set_header:
+val set_header :
   t -> Widget.t -> unit
-val set_selectable:
+val set_selectable :
   t -> bool -> unit

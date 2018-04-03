@@ -3,7 +3,7 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   Widget.t -> Gesture.t
-val get_angle_delta:
+val get_angle_delta :
   t -> float

@@ -3,56 +3,56 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val add:
+val add :
   t -> Widget.t -> unit
-val check_resize:
+val check_resize :
   t -> unit
-val child_get_property:
+val child_get_property :
   t -> Widget.t -> string -> Value.t structure ptr -> unit
-val child_notify:
+val child_notify :
   t -> Widget.t -> string -> unit
-val child_notify_by_pspec:
+val child_notify_by_pspec :
   t -> Widget.t -> Param_spec.t -> unit
-val child_set_property:
+val child_set_property :
   t -> Widget.t -> string -> Value.t structure ptr -> unit
 (*Not implemented gtk_container_child_type return type gType not handled*)
 (*Not implemented gtk_container_forall type callback not implemented*)
 (*Not implemented gtk_container_foreach type callback not implemented*)
-val get_border_width:
+val get_border_width :
   t -> Unsigned.uint32
-val get_children:
+val get_children :
   t -> List.t structure ptr
 val get_focus_chain :
   t -> (bool * List.t structure ptr)
-val get_focus_child:
+val get_focus_child :
   t -> Widget.t
-val get_focus_hadjustment:
+val get_focus_hadjustment :
   t -> Adjustment.t
-val get_focus_vadjustment:
+val get_focus_vadjustment :
   t -> Adjustment.t
-val get_path_for_child:
+val get_path_for_child :
   t -> Widget.t -> Widget_path.t structure ptr
-val get_resize_mode:
+val get_resize_mode :
   t -> Resize_mode.t
-val propagate_draw:
+val propagate_draw :
   t -> Widget.t -> Context.t structure ptr -> unit
-val remove:
+val remove :
   t -> Widget.t -> unit
-val resize_children:
+val resize_children :
   t -> unit
-val set_border_width:
+val set_border_width :
   t -> Unsigned.uint32 -> unit
-val set_focus_chain:
+val set_focus_chain :
   t -> List.t structure ptr -> unit
-val set_focus_child:
+val set_focus_child :
   t -> Widget.t -> unit
-val set_focus_hadjustment:
+val set_focus_hadjustment :
   t -> Adjustment.t -> unit
-val set_focus_vadjustment:
+val set_focus_vadjustment :
   t -> Adjustment.t -> unit
-val set_reallocate_redraws:
+val set_reallocate_redraws :
   t -> bool -> unit
-val set_resize_mode:
+val set_resize_mode :
   t -> Resize_mode.t -> unit
-val unset_focus_chain:
+val unset_focus_chain :
   t -> unit

@@ -3,23 +3,23 @@ open Ctypes
 type t
 val t_typ : t typ
 
-val create:
+val create :
   unit -> Widget.t
-val create_with_label:
+val create_with_label :
   string -> Widget.t
-val create_with_mnemonic:
+val create_with_mnemonic :
   string -> Widget.t
-val get_active:
+val get_active :
   t -> bool
-val get_draw_as_radio:
+val get_draw_as_radio :
   t -> bool
-val get_inconsistent:
+val get_inconsistent :
   t -> bool
-val set_active:
+val set_active :
   t -> bool -> unit
-val set_draw_as_radio:
+val set_draw_as_radio :
   t -> bool -> unit
-val set_inconsistent:
+val set_inconsistent :
   t -> bool -> unit
-val toggled:
+val toggled :
   t -> unit

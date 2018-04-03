@@ -8,10 +8,10 @@ let create =
   foreign "gtk_page_setup_new" (void @-> returning (t_typ))
 let create_from_file file_name =
   let create_from_file_raw =
-    foreign "gtk_page_setup_new_from_file" (string@-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+    foreign "gtk_page_setup_new_from_file" (string @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = create_from_file_raw file_name err_ptr_ptr in
+  let ret = create_from_file_raw file_name err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -21,10 +21,10 @@ let create_from_gvariant =
   foreign "gtk_page_setup_new_from_gvariant" (ptr Variant.t_typ @-> returning (t_typ))
 let create_from_key_file key_file group_name =
   let create_from_key_file_raw =
-    foreign "gtk_page_setup_new_from_key_file" (ptr Key_file.t_typ @-> string_opt@-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+    foreign "gtk_page_setup_new_from_key_file" (ptr Key_file.t_typ @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = create_from_key_file_raw key_file group_name err_ptr_ptr in
+  let ret = create_from_key_file_raw key_file group_name err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -54,10 +54,10 @@ let get_top_margin =
   foreign "gtk_page_setup_get_top_margin" (t_typ @-> Unit.t_view @-> returning (double))
 let load_file self file_name =
   let load_file_raw =
-    foreign "gtk_page_setup_load_file" (t_typ @-> string@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "gtk_page_setup_load_file" (t_typ @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = load_file_raw self file_name err_ptr_ptr in
+  let ret = load_file_raw self file_name err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -65,10 +65,10 @@ let load_file self file_name =
     Error (err_ptr)
 let load_key_file self key_file group_name =
   let load_key_file_raw =
-    foreign "gtk_page_setup_load_key_file" (t_typ @-> ptr Key_file.t_typ @-> string_opt@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "gtk_page_setup_load_key_file" (t_typ @-> ptr Key_file.t_typ @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = load_key_file_raw self key_file group_name err_ptr_ptr in
+  let ret = load_key_file_raw self key_file group_name err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
@@ -90,10 +90,10 @@ let set_top_margin =
   foreign "gtk_page_setup_set_top_margin" (t_typ @-> double @-> Unit.t_view @-> returning (void))
 let to_file self file_name =
   let to_file_raw =
-    foreign "gtk_page_setup_to_file" (t_typ @-> string@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "gtk_page_setup_to_file" (t_typ @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = to_file_raw self file_name err_ptr_ptr in
+  let ret = to_file_raw self file_name err_ptr_ptr in
   match (!@ err_ptr_ptr) with
   | None -> Ok value
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
