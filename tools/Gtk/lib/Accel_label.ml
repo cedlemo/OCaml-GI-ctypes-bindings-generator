@@ -15,7 +15,8 @@ let get_accel self =
   let ret = get_accel_raw self accelerator_key_ptr accelerator_mods_ptr in
   let accelerator_key = !@ accelerator_key_ptr in
   let accelerator_mods = (!@ accelerator_mods_ptr) in
-  (accelerator_key, accelerator_mods)let get_accel_widget =
+  (accelerator_key, accelerator_mods)
+let get_accel_widget =
   foreign "gtk_accel_label_get_accel_widget" (t_typ @-> returning (Widget.t_typ))
 let get_accel_width =
   foreign "gtk_accel_label_get_accel_width" (t_typ @-> returning (uint32_t))

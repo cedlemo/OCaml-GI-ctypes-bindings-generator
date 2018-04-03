@@ -23,7 +23,8 @@ let get_preedit_string self =
   let str = !@ str_ptr in
   let attrs = !@ attrs_ptr in
   let cursor_pos = !@ cursor_pos_ptr in
-  (str, attrs, cursor_pos)let get_surrounding self =
+  (str, attrs, cursor_pos)
+let get_surrounding self =
   let get_surrounding_raw =
     foreign "gtk_im_context_get_surrounding" (t_typ @-> ptr (string) @-> ptr (int32_t) @-> returning (bool))
   in
@@ -32,7 +33,8 @@ let get_preedit_string self =
   let ret = get_surrounding_raw self text_ptr cursor_index_ptr in
   let text = !@ text_ptr in
   let cursor_index = !@ cursor_index_ptr in
-  (ret, text, cursor_index)let reset =
+  (ret, text, cursor_index)
+let reset =
   foreign "gtk_im_context_reset" (t_typ @-> returning (void))
 let set_client_window =
   foreign "gtk_im_context_set_client_window" (t_typ @-> Window.t_typ @-> returning (void))

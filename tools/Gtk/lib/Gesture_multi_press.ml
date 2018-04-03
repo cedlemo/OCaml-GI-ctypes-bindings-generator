@@ -13,5 +13,6 @@ let get_area self =
   let rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_area_raw self rect_ptr in
   let rect = !@ rect_ptr in
-  (ret, rect)let set_area =
+  (ret, rect)
+let set_area =
   foreign "gtk_gesture_multi_press_set_area" (t_typ @-> ptr_opt Rectangle.t_typ @-> returning (void))

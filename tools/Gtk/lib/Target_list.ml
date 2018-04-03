@@ -23,7 +23,8 @@ let find self target =
   let info_ptr = allocate uint32_t Unsigned.UInt32.zero in
   let ret = find_raw self target info_ptr in
   let info = !@ info_ptr in
-  (ret, info)let incr_ref =
+  (ret, info)
+let incr_ref =
   foreign "gtk_target_list_ref" (ptr t_typ @-> returning (ptr t_typ))
 let remove =
   foreign "gtk_target_list_remove" (ptr t_typ @-> ptr Atom.t_typ @-> returning (void))

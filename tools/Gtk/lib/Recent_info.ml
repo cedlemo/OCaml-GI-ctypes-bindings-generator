@@ -22,7 +22,8 @@ let get_application_info self app_name =
   let app_exec = !@ app_exec_ptr in
   let count = !@ count_ptr in
   let time_ = !@ time__ptr in
-  (ret, app_exec, count, time_)(*Not implemented gtk_recent_info_get_applications return type C Array type for Types.Array tag not handled*)
+  (ret, app_exec, count, time_)
+(*Not implemented gtk_recent_info_get_applications return type C Array type for Types.Array tag not handled*)
 let get_description =
   foreign "gtk_recent_info_get_description" (ptr t_typ @-> returning (string_opt))
 let get_display_name =

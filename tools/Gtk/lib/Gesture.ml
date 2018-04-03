@@ -11,7 +11,8 @@ let get_bounding_box self =
   let rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_bounding_box_raw self rect_ptr in
   let rect = !@ rect_ptr in
-  (ret, rect)let get_bounding_box_center self =
+  (ret, rect)
+let get_bounding_box_center self =
   let get_bounding_box_center_raw =
     foreign "gtk_gesture_get_bounding_box_center" (t_typ @-> ptr (double) @-> ptr (double) @-> returning (bool))
   in
@@ -20,7 +21,8 @@ let get_bounding_box self =
   let ret = get_bounding_box_center_raw self x_ptr y_ptr in
   let x = !@ x_ptr in
   let y = !@ y_ptr in
-  (ret, x, y)let get_device =
+  (ret, x, y)
+let get_device =
   foreign "gtk_gesture_get_device" (t_typ @-> returning (Device.t_typ))
 let get_group =
   foreign "gtk_gesture_get_group" (t_typ @-> returning (ptr List.t_typ))
@@ -36,7 +38,8 @@ let get_point self sequence =
   let ret = get_point_raw self sequence x_ptr y_ptr in
   let x = !@ x_ptr in
   let y = !@ y_ptr in
-  (ret, x, y)let get_sequence_state =
+  (ret, x, y)
+let get_sequence_state =
   foreign "gtk_gesture_get_sequence_state" (t_typ @-> ptr Event_sequence.t_typ @-> returning (Event_sequence_state.t_view))
 let get_sequences =
   foreign "gtk_gesture_get_sequences" (t_typ @-> returning (ptr List.t_typ))

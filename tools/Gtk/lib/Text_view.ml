@@ -25,7 +25,8 @@ let buffer_to_window_coords self win buffer_x buffer_y =
   let ret = buffer_to_window_coords_raw self win buffer_x buffer_y window_x_ptr window_y_ptr in
   let window_x = !@ window_x_ptr in
   let window_y = !@ window_y_ptr in
-  (window_x, window_y)let forward_display_line =
+  (window_x, window_y)
+let forward_display_line =
   foreign "gtk_text_view_forward_display_line" (t_typ @-> ptr Text_iter.t_typ @-> returning (bool))
 let forward_display_line_end =
   foreign "gtk_text_view_forward_display_line_end" (t_typ @-> ptr Text_iter.t_typ @-> returning (bool))
@@ -46,7 +47,8 @@ let get_cursor_locations self iter =
   let ret = get_cursor_locations_raw self iter strong_ptr weak_ptr in
   let strong = !@ strong_ptr in
   let weak = !@ weak_ptr in
-  (strong, weak)let get_cursor_visible =
+  (strong, weak)
+let get_cursor_visible =
   foreign "gtk_text_view_get_cursor_visible" (t_typ @-> returning (bool))
 let get_default_attributes =
   foreign "gtk_text_view_get_default_attributes" (t_typ @-> returning (ptr Text_attributes.t_typ))
@@ -67,7 +69,8 @@ let get_iter_at_location self x y =
   let iter_ptr = allocate Text_iter.t_typ (make Text_iter.t_typ) in
   let ret = get_iter_at_location_raw self x y iter_ptr in
   let iter = !@ iter_ptr in
-  (ret, iter)let get_iter_at_position self x y =
+  (ret, iter)
+let get_iter_at_position self x y =
   let get_iter_at_position_raw =
     foreign "gtk_text_view_get_iter_at_position" (t_typ @-> int32_t @-> int32_t @-> ptr (Text_iter.t_typ) @-> ptr (int32_t) @-> returning (bool))
   in
@@ -76,14 +79,16 @@ let get_iter_at_location self x y =
   let ret = get_iter_at_position_raw self x y iter_ptr trailing_ptr in
   let iter = !@ iter_ptr in
   let trailing = !@ trailing_ptr in
-  (ret, iter, trailing)let get_iter_location self iter =
+  (ret, iter, trailing)
+let get_iter_location self iter =
   let get_iter_location_raw =
     foreign "gtk_text_view_get_iter_location" (t_typ @-> ptr Text_iter.t_typ @-> ptr (Rectangle.t_typ) @-> returning (void))
   in
   let location_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_iter_location_raw self iter location_ptr in
   let location = !@ location_ptr in
-  (location)let get_justification =
+  (location)
+let get_justification =
   foreign "gtk_text_view_get_justification" (t_typ @-> returning (Justification.t_view))
 let get_left_margin =
   foreign "gtk_text_view_get_left_margin" (t_typ @-> returning (int32_t))
@@ -96,7 +101,8 @@ let get_line_at_y self y =
   let ret = get_line_at_y_raw self y target_iter_ptr line_top_ptr in
   let target_iter = !@ target_iter_ptr in
   let line_top = !@ line_top_ptr in
-  (target_iter, line_top)let get_line_yrange self iter =
+  (target_iter, line_top)
+let get_line_yrange self iter =
   let get_line_yrange_raw =
     foreign "gtk_text_view_get_line_yrange" (t_typ @-> ptr Text_iter.t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
@@ -105,7 +111,8 @@ let get_line_at_y self y =
   let ret = get_line_yrange_raw self iter y_ptr height_ptr in
   let y = !@ y_ptr in
   let height = !@ height_ptr in
-  (y, height)let get_monospace =
+  (y, height)
+let get_monospace =
   foreign "gtk_text_view_get_monospace" (t_typ @-> returning (bool))
 let get_overwrite =
   foreign "gtk_text_view_get_overwrite" (t_typ @-> returning (bool))
@@ -130,7 +137,8 @@ let get_visible_rect self =
   let visible_rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_visible_rect_raw self visible_rect_ptr in
   let visible_rect = !@ visible_rect_ptr in
-  (visible_rect)let get_window =
+  (visible_rect)
+let get_window =
   foreign "gtk_text_view_get_window" (t_typ @-> Text_window_type.t_view @-> returning (Window.t_typ))
 let get_window_type =
   foreign "gtk_text_view_get_window_type" (t_typ @-> Window.t_typ @-> returning (Text_window_type.t_view))

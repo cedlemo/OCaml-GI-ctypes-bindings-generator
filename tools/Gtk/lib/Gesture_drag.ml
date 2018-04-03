@@ -15,7 +15,8 @@ let get_offset self =
   let ret = get_offset_raw self x_ptr y_ptr in
   let x = !@ x_ptr in
   let y = !@ y_ptr in
-  (ret, x, y)let get_start_point self =
+  (ret, x, y)
+let get_start_point self =
   let get_start_point_raw =
     foreign "gtk_gesture_drag_get_start_point" (t_typ @-> ptr (double) @-> ptr (double) @-> returning (bool))
   in

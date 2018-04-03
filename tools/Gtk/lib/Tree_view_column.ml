@@ -19,7 +19,8 @@ let cell_get_position self cell_renderer =
   let ret = cell_get_position_raw self cell_renderer x_offset_ptr width_ptr in
   let x_offset = !@ x_offset_ptr in
   let width = !@ width_ptr in
-  (ret, x_offset, width)let cell_get_size self cell_area =
+  (ret, x_offset, width)
+let cell_get_size self cell_area =
   let cell_get_size_raw =
     foreign "gtk_tree_view_column_cell_get_size" (t_typ @-> ptr_opt Rectangle.t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
@@ -32,7 +33,8 @@ let cell_get_position self cell_renderer =
   let y_offset = !@ y_offset_ptr in
   let width = !@ width_ptr in
   let height = !@ height_ptr in
-  (x_offset, y_offset, width, height)let cell_is_visible =
+  (x_offset, y_offset, width, height)
+let cell_is_visible =
   foreign "gtk_tree_view_column_cell_is_visible" (t_typ @-> returning (bool))
 (*Not implemented gtk_tree_view_column_cell_set_cell_data type interface not implemented*)
 let clear =

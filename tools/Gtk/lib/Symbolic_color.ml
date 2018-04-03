@@ -25,7 +25,8 @@ let resolve self props =
   let resolved_color_ptr = allocate RGBA.t_typ (make RGBA.t_typ) in
   let ret = resolve_raw self props resolved_color_ptr in
   let resolved_color = !@ resolved_color_ptr in
-  (ret, resolved_color)let to_string =
+  (ret, resolved_color)
+let to_string =
   foreign "gtk_symbolic_color_to_string" (ptr t_typ @-> returning (string_opt))
 let unref =
   foreign "gtk_symbolic_color_unref" (ptr t_typ @-> returning (void))

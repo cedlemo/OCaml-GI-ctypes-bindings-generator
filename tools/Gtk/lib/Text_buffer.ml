@@ -52,7 +52,8 @@ let get_bounds self =
   let ret = get_bounds_raw self start_ptr _end_ptr in
   let start = !@ start_ptr in
   let _end = !@ _end_ptr in
-  (start, _end)let get_char_count =
+  (start, _end)
+let get_char_count =
   foreign "gtk_text_buffer_get_char_count" (t_typ @-> returning (int32_t))
 let get_copy_target_list =
   foreign "gtk_text_buffer_get_copy_target_list" (t_typ @-> returning (ptr Target_list.t_typ))
@@ -64,7 +65,8 @@ let get_end_iter self =
   let iter_ptr = allocate Text_iter.t_typ (make Text_iter.t_typ) in
   let ret = get_end_iter_raw self iter_ptr in
   let iter = !@ iter_ptr in
-  (iter)let get_has_selection =
+  (iter)
+let get_has_selection =
   foreign "gtk_text_buffer_get_has_selection" (t_typ @-> returning (bool))
 let get_insert =
   foreign "gtk_text_buffer_get_insert" (t_typ @-> returning (Text_mark.t_typ))
@@ -75,42 +77,48 @@ let get_iter_at_child_anchor self anchor =
   let iter_ptr = allocate Text_iter.t_typ (make Text_iter.t_typ) in
   let ret = get_iter_at_child_anchor_raw self anchor iter_ptr in
   let iter = !@ iter_ptr in
-  (iter)let get_iter_at_line self line_number =
+  (iter)
+let get_iter_at_line self line_number =
   let get_iter_at_line_raw =
     foreign "gtk_text_buffer_get_iter_at_line" (t_typ @-> int32_t @-> ptr (Text_iter.t_typ) @-> returning (void))
   in
   let iter_ptr = allocate Text_iter.t_typ (make Text_iter.t_typ) in
   let ret = get_iter_at_line_raw self line_number iter_ptr in
   let iter = !@ iter_ptr in
-  (iter)let get_iter_at_line_index self line_number byte_index =
+  (iter)
+let get_iter_at_line_index self line_number byte_index =
   let get_iter_at_line_index_raw =
     foreign "gtk_text_buffer_get_iter_at_line_index" (t_typ @-> int32_t @-> int32_t @-> ptr (Text_iter.t_typ) @-> returning (void))
   in
   let iter_ptr = allocate Text_iter.t_typ (make Text_iter.t_typ) in
   let ret = get_iter_at_line_index_raw self line_number byte_index iter_ptr in
   let iter = !@ iter_ptr in
-  (iter)let get_iter_at_line_offset self line_number char_offset =
+  (iter)
+let get_iter_at_line_offset self line_number char_offset =
   let get_iter_at_line_offset_raw =
     foreign "gtk_text_buffer_get_iter_at_line_offset" (t_typ @-> int32_t @-> int32_t @-> ptr (Text_iter.t_typ) @-> returning (void))
   in
   let iter_ptr = allocate Text_iter.t_typ (make Text_iter.t_typ) in
   let ret = get_iter_at_line_offset_raw self line_number char_offset iter_ptr in
   let iter = !@ iter_ptr in
-  (iter)let get_iter_at_mark self mark =
+  (iter)
+let get_iter_at_mark self mark =
   let get_iter_at_mark_raw =
     foreign "gtk_text_buffer_get_iter_at_mark" (t_typ @-> Text_mark.t_typ @-> ptr (Text_iter.t_typ) @-> returning (void))
   in
   let iter_ptr = allocate Text_iter.t_typ (make Text_iter.t_typ) in
   let ret = get_iter_at_mark_raw self mark iter_ptr in
   let iter = !@ iter_ptr in
-  (iter)let get_iter_at_offset self char_offset =
+  (iter)
+let get_iter_at_offset self char_offset =
   let get_iter_at_offset_raw =
     foreign "gtk_text_buffer_get_iter_at_offset" (t_typ @-> int32_t @-> ptr (Text_iter.t_typ) @-> returning (void))
   in
   let iter_ptr = allocate Text_iter.t_typ (make Text_iter.t_typ) in
   let ret = get_iter_at_offset_raw self char_offset iter_ptr in
   let iter = !@ iter_ptr in
-  (iter)let get_line_count =
+  (iter)
+let get_line_count =
   foreign "gtk_text_buffer_get_line_count" (t_typ @-> returning (int32_t))
 let get_mark =
   foreign "gtk_text_buffer_get_mark" (t_typ @-> string @-> returning (Text_mark.t_typ))
@@ -129,7 +137,8 @@ let get_selection_bounds self =
   let ret = get_selection_bounds_raw self start_ptr _end_ptr in
   let start = !@ start_ptr in
   let _end = !@ _end_ptr in
-  (ret, start, _end)(*Not implemented gtk_text_buffer_get_serialize_formats return type C Array type for Types.Array tag not handled*)
+  (ret, start, _end)
+(*Not implemented gtk_text_buffer_get_serialize_formats return type C Array type for Types.Array tag not handled*)
 let get_slice =
   foreign "gtk_text_buffer_get_slice" (t_typ @-> ptr Text_iter.t_typ @-> ptr Text_iter.t_typ @-> bool @-> returning (string_opt))
 let get_start_iter self =
@@ -139,7 +148,8 @@ let get_start_iter self =
   let iter_ptr = allocate Text_iter.t_typ (make Text_iter.t_typ) in
   let ret = get_start_iter_raw self iter_ptr in
   let iter = !@ iter_ptr in
-  (iter)let get_tag_table =
+  (iter)
+let get_tag_table =
   foreign "gtk_text_buffer_get_tag_table" (t_typ @-> returning (Text_tag_table.t_typ))
 let get_text =
   foreign "gtk_text_buffer_get_text" (t_typ @-> ptr Text_iter.t_typ @-> ptr Text_iter.t_typ @-> bool @-> returning (string_opt))

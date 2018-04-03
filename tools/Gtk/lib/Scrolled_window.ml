@@ -37,7 +37,8 @@ let get_policy self =
   let ret = get_policy_raw self hscrollbar_policy_ptr vscrollbar_policy_ptr in
   let hscrollbar_policy = (!@ hscrollbar_policy_ptr) in
   let vscrollbar_policy = (!@ vscrollbar_policy_ptr) in
-  (hscrollbar_policy, vscrollbar_policy)let get_propagate_natural_height =
+  (hscrollbar_policy, vscrollbar_policy)
+let get_propagate_natural_height =
   foreign "gtk_scrolled_window_get_propagate_natural_height" (t_typ @-> returning (bool))
 let get_propagate_natural_width =
   foreign "gtk_scrolled_window_get_propagate_natural_width" (t_typ @-> returning (bool))

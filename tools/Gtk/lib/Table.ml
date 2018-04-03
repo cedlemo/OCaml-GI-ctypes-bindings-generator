@@ -29,7 +29,8 @@ let get_size self =
   let ret = get_size_raw self rows_ptr columns_ptr in
   let rows = !@ rows_ptr in
   let columns = !@ columns_ptr in
-  (rows, columns)let resize =
+  (rows, columns)
+let resize =
   foreign "gtk_table_resize" (t_typ @-> uint32_t @-> uint32_t @-> returning (void))
 let set_col_spacing =
   foreign "gtk_table_set_col_spacing" (t_typ @-> uint32_t @-> uint32_t @-> returning (void))

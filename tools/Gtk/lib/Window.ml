@@ -72,7 +72,8 @@ let get_default_size self =
   let ret = get_default_size_raw self width_ptr height_ptr in
   let width = !@ width_ptr in
   let height = !@ height_ptr in
-  (width, height)let get_default_widget =
+  (width, height)
+let get_default_widget =
   foreign "gtk_window_get_default_widget" (t_typ @-> returning (Widget.t_typ))
 let get_deletable =
   foreign "gtk_window_get_deletable" (t_typ @-> returning (bool))
@@ -115,7 +116,8 @@ let get_position self =
   let ret = get_position_raw self root_x_ptr root_y_ptr in
   let root_x = !@ root_x_ptr in
   let root_y = !@ root_y_ptr in
-  (root_x, root_y)let get_resizable =
+  (root_x, root_y)
+let get_resizable =
   foreign "gtk_window_get_resizable" (t_typ @-> returning (bool))
 let get_resize_grip_area self =
   let get_resize_grip_area_raw =
@@ -124,7 +126,8 @@ let get_resize_grip_area self =
   let rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_resize_grip_area_raw self rect_ptr in
   let rect = !@ rect_ptr in
-  (ret, rect)let get_role =
+  (ret, rect)
+let get_role =
   foreign "gtk_window_get_role" (t_typ @-> returning (string_opt))
 let get_screen =
   foreign "gtk_window_get_screen" (t_typ @-> returning (Screen.t_typ))
@@ -137,7 +140,8 @@ let get_size self =
   let ret = get_size_raw self width_ptr height_ptr in
   let width = !@ width_ptr in
   let height = !@ height_ptr in
-  (width, height)let get_skip_pager_hint =
+  (width, height)
+let get_skip_pager_hint =
   foreign "gtk_window_get_skip_pager_hint" (t_typ @-> returning (bool))
 let get_skip_taskbar_hint =
   foreign "gtk_window_get_skip_taskbar_hint" (t_typ @-> returning (bool))

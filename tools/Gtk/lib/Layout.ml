@@ -19,7 +19,8 @@ let get_size self =
   let ret = get_size_raw self width_ptr height_ptr in
   let width = !@ width_ptr in
   let height = !@ height_ptr in
-  (width, height)let get_vadjustment =
+  (width, height)
+let get_vadjustment =
   foreign "gtk_layout_get_vadjustment" (t_typ @-> returning (Adjustment.t_typ))
 let move =
   foreign "gtk_layout_move" (t_typ @-> Widget.t_typ @-> int32_t @-> int32_t @-> returning (void))

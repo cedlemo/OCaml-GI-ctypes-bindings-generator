@@ -31,7 +31,8 @@ let query_child_packing self child =
   let fill = !@ fill_ptr in
   let padding = !@ padding_ptr in
   let pack_type = (!@ pack_type_ptr) in
-  (expand, fill, padding, pack_type)let reorder_child =
+  (expand, fill, padding, pack_type)
+let reorder_child =
   foreign "gtk_box_reorder_child" (t_typ @-> Widget.t_typ @-> int32_t @-> returning (void))
 let set_baseline_position =
   foreign "gtk_box_set_baseline_position" (t_typ @-> Baseline_position.t_view @-> returning (void))

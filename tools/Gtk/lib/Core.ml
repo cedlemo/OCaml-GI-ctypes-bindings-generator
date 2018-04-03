@@ -310,6 +310,7 @@ let accelerator_parse accelerator =
   let accelerator_key = !@ accelerator_key_ptr in
   let accelerator_mods = (!@ accelerator_mods_ptr) in
   (accelerator_key, accelerator_mods)
+
 (*Not implemented gtk_accelerator_parse_with_keycode type C Array type for Types.Array tag not implemented*)
 
 let accelerator_set_default_mod_mask =
@@ -420,6 +421,7 @@ let get_current_event_state () =
   let ret = get_current_event_state_raw state_ptr in
   let state = (!@ state_ptr) in
   (ret, state)
+
 let get_current_event_time =
   foreign "gtk_get_current_event_time" (void @-> returning (uint32_t))
 
@@ -464,6 +466,7 @@ let icon_size_lookup size =
   let width = !@ width_ptr in
   let height = !@ height_ptr in
   (ret, width, height)
+
 (*DEPRECATED : icon_size_lookup_for_settings*)
 (*DEPRECATED : icon_size_register*)
 (*DEPRECATED : icon_size_register_alias*)
@@ -590,6 +593,7 @@ let render_background_get_clip context x y width height =
   let ret = render_background_get_clip_raw context x y width height out_clip_ptr in
   let out_clip = !@ out_clip_ptr in
   (out_clip)
+
 let render_check =
   foreign "gtk_render_check" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
 
@@ -645,6 +649,7 @@ let rgb_to_hsv r g b =
   let s = !@ s_ptr in
   let v = !@ v_ptr in
   (h, s, v)
+
 let selection_add_target =
   foreign "gtk_selection_add_target" (Widget.t_typ @-> ptr Atom.t_typ @-> ptr Atom.t_typ @-> uint32_t @-> returning (void))
 

@@ -27,7 +27,8 @@ let get_hard_margins self =
   let bottom = !@ bottom_ptr in
   let left = !@ left_ptr in
   let right = !@ right_ptr in
-  (ret, top, bottom, left, right)let get_height =
+  (ret, top, bottom, left, right)
+let get_height =
   foreign "gtk_print_context_get_height" (t_typ @-> returning (double))
 let get_page_setup =
   foreign "gtk_print_context_get_page_setup" (t_typ @-> returning (Page_setup.t_typ))

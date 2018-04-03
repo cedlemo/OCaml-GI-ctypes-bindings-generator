@@ -19,7 +19,8 @@ let resolve self props =
   let resolved_gradient_ptr = allocate (ptr_opt Pattern.t_typ) None in
   let ret = resolve_raw self props resolved_gradient_ptr in
   let resolved_gradient = !@ resolved_gradient_ptr in
-  (ret, resolved_gradient)let resolve_for_context =
+  (ret, resolved_gradient)
+let resolve_for_context =
   foreign "gtk_gradient_resolve_for_context" (ptr t_typ @-> Style_context.t_typ @-> returning (ptr Pattern.t_typ))
 let to_string =
   foreign "gtk_gradient_to_string" (ptr t_typ @-> returning (string_opt))

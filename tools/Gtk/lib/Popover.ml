@@ -23,7 +23,8 @@ let get_pointing_to self =
   let rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_pointing_to_raw self rect_ptr in
   let rect = !@ rect_ptr in
-  (ret, rect)let get_position =
+  (ret, rect)
+let get_position =
   foreign "gtk_popover_get_position" (t_typ @-> returning (Position_type.t_view))
 let get_relative_to =
   foreign "gtk_popover_get_relative_to" (t_typ @-> returning (Widget.t_typ))

@@ -30,7 +30,8 @@ let get_focus_chain self =
   let focusable_widgets_ptr = allocate (ptr_opt List.t_typ) None in
   let ret = get_focus_chain_raw self focusable_widgets_ptr in
   let focusable_widgets = !@ focusable_widgets_ptr in
-  (ret, focusable_widgets)let get_focus_child =
+  (ret, focusable_widgets)
+let get_focus_child =
   foreign "gtk_container_get_focus_child" (t_typ @-> returning (Widget.t_typ))
 let get_focus_hadjustment =
   foreign "gtk_container_get_focus_hadjustment" (t_typ @-> returning (Adjustment.t_typ))

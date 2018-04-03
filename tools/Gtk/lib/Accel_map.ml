@@ -29,7 +29,8 @@ let lookup_entry accel_path =
   let key_ptr = allocate Accel_key.t_typ (make Accel_key.t_typ) in
   let ret = lookup_entry_raw accel_path key_ptr in
   let key = !@ key_ptr in
-  (ret, key)let save =
+  (ret, key)
+let save =
   foreign "gtk_accel_map_save" (string @-> returning (void))
 let save_fd =
   foreign "gtk_accel_map_save_fd" (int32_t @-> returning (void))

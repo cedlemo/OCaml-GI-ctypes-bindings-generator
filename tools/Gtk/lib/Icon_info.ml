@@ -22,7 +22,8 @@ let get_embedded_rect self =
   let rectangle_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_embedded_rect_raw self rectangle_ptr in
   let rectangle = !@ rectangle_ptr in
-  (ret, rectangle)let get_filename =
+  (ret, rectangle)
+let get_filename =
   foreign "gtk_icon_info_get_filename" (t_typ @-> returning (string_opt))
 let is_symbolic =
   foreign "gtk_icon_info_is_symbolic" (t_typ @-> returning (bool))

@@ -19,7 +19,8 @@ let get_date self =
   let year = !@ year_ptr in
   let month = !@ month_ptr in
   let day = !@ day_ptr in
-  (year, month, day)let get_day_is_marked =
+  (year, month, day)
+let get_day_is_marked =
   foreign "gtk_calendar_get_day_is_marked" (t_typ @-> uint32_t @-> returning (bool))
 let get_detail_height_rows =
   foreign "gtk_calendar_get_detail_height_rows" (t_typ @-> returning (int32_t))

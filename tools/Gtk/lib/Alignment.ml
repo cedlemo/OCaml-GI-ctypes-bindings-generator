@@ -19,7 +19,8 @@ let get_padding self =
   let padding_bottom = !@ padding_bottom_ptr in
   let padding_left = !@ padding_left_ptr in
   let padding_right = !@ padding_right_ptr in
-  (padding_top, padding_bottom, padding_left, padding_right)let set =
+  (padding_top, padding_bottom, padding_left, padding_right)
+let set =
   foreign "gtk_alignment_set" (t_typ @-> float @-> float @-> float @-> float @-> returning (void))
 let set_padding =
   foreign "gtk_alignment_set_padding" (t_typ @-> uint32_t @-> uint32_t @-> uint32_t @-> uint32_t @-> returning (void))

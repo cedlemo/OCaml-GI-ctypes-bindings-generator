@@ -17,7 +17,8 @@ let get_label_align self =
   let ret = get_label_align_raw self xalign_ptr yalign_ptr in
   let xalign = !@ xalign_ptr in
   let yalign = !@ yalign_ptr in
-  (xalign, yalign)let get_label_widget =
+  (xalign, yalign)
+let get_label_widget =
   foreign "gtk_frame_get_label_widget" (t_typ @-> returning (Widget.t_typ))
 let get_shadow_type =
   foreign "gtk_frame_get_shadow_type" (t_typ @-> returning (Shadow_type.t_view))

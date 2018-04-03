@@ -12,7 +12,8 @@ let append self =
   let iter_ptr = allocate Tree_iter.t_typ (make Tree_iter.t_typ) in
   let ret = append_raw self iter_ptr in
   let iter = !@ iter_ptr in
-  (iter)let clear =
+  (iter)
+let clear =
   foreign "gtk_list_store_clear" (t_typ @-> returning (void))
 let insert self position =
   let insert_raw =
@@ -21,21 +22,24 @@ let insert self position =
   let iter_ptr = allocate Tree_iter.t_typ (make Tree_iter.t_typ) in
   let ret = insert_raw self position iter_ptr in
   let iter = !@ iter_ptr in
-  (iter)let insert_after self sibling =
+  (iter)
+let insert_after self sibling =
   let insert_after_raw =
     foreign "gtk_list_store_insert_after" (t_typ @-> ptr_opt Tree_iter.t_typ @-> ptr (Tree_iter.t_typ) @-> returning (void))
   in
   let iter_ptr = allocate Tree_iter.t_typ (make Tree_iter.t_typ) in
   let ret = insert_after_raw self sibling iter_ptr in
   let iter = !@ iter_ptr in
-  (iter)let insert_before self sibling =
+  (iter)
+let insert_before self sibling =
   let insert_before_raw =
     foreign "gtk_list_store_insert_before" (t_typ @-> ptr_opt Tree_iter.t_typ @-> ptr (Tree_iter.t_typ) @-> returning (void))
   in
   let iter_ptr = allocate Tree_iter.t_typ (make Tree_iter.t_typ) in
   let ret = insert_before_raw self sibling iter_ptr in
   let iter = !@ iter_ptr in
-  (iter)(*Not implemented gtk_list_store_insert_with_valuesv type C Array type for Types.Array tag not implemented*)
+  (iter)
+(*Not implemented gtk_list_store_insert_with_valuesv type C Array type for Types.Array tag not implemented*)
 let iter_is_valid =
   foreign "gtk_list_store_iter_is_valid" (t_typ @-> ptr Tree_iter.t_typ @-> returning (bool))
 let move_after =
@@ -49,7 +53,8 @@ let prepend self =
   let iter_ptr = allocate Tree_iter.t_typ (make Tree_iter.t_typ) in
   let ret = prepend_raw self iter_ptr in
   let iter = !@ iter_ptr in
-  (iter)let remove =
+  (iter)
+let remove =
   foreign "gtk_list_store_remove" (t_typ @-> ptr Tree_iter.t_typ @-> returning (bool))
 (*Not implemented gtk_list_store_reorder type C Array type for Types.Array tag not implemented*)
 (*Not implemented gtk_list_store_set_column_types type C Array type for Types.Array tag not implemented*)

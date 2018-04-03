@@ -29,7 +29,8 @@ let get_required_version self =
   let ret = get_required_version_raw self major_ptr minor_ptr in
   let major = !@ major_ptr in
   let minor = !@ minor_ptr in
-  (major, minor)let get_use_es =
+  (major, minor)
+let get_use_es =
   foreign "gtk_gl_area_get_use_es" (t_typ @-> returning (bool))
 let make_current =
   foreign "gtk_gl_area_make_current" (t_typ @-> returning (void))

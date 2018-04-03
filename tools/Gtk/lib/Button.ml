@@ -27,7 +27,8 @@ let get_alignment self =
   let ret = get_alignment_raw self xalign_ptr yalign_ptr in
   let xalign = !@ xalign_ptr in
   let yalign = !@ yalign_ptr in
-  (xalign, yalign)let get_always_show_image =
+  (xalign, yalign)
+let get_always_show_image =
   foreign "gtk_button_get_always_show_image" (t_typ @-> returning (bool))
 let get_event_window =
   foreign "gtk_button_get_event_window" (t_typ @-> returning (Window.t_typ))

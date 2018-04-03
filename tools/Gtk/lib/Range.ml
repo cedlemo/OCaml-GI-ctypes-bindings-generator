@@ -23,7 +23,8 @@ let get_range_rect self =
   let range_rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_range_rect_raw self range_rect_ptr in
   let range_rect = !@ range_rect_ptr in
-  (range_rect)let get_restrict_to_fill_level =
+  (range_rect)
+let get_restrict_to_fill_level =
   foreign "gtk_range_get_restrict_to_fill_level" (t_typ @-> returning (bool))
 let get_round_digits =
   foreign "gtk_range_get_round_digits" (t_typ @-> returning (int32_t))
@@ -38,7 +39,8 @@ let get_slider_range self =
   let ret = get_slider_range_raw self slider_start_ptr slider_end_ptr in
   let slider_start = !@ slider_start_ptr in
   let slider_end = !@ slider_end_ptr in
-  (slider_start, slider_end)let get_slider_size_fixed =
+  (slider_start, slider_end)
+let get_slider_size_fixed =
   foreign "gtk_range_get_slider_size_fixed" (t_typ @-> returning (bool))
 let get_upper_stepper_sensitivity =
   foreign "gtk_range_get_upper_stepper_sensitivity" (t_typ @-> returning (Sensitivity_type.t_view))

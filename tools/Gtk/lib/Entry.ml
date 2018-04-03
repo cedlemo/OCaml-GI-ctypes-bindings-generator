@@ -33,7 +33,8 @@ let get_icon_area self icon_pos =
   let icon_area_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_icon_area_raw self icon_pos icon_area_ptr in
   let icon_area = !@ icon_area_ptr in
-  (icon_area)let get_icon_at_pos =
+  (icon_area)
+let get_icon_at_pos =
   foreign "gtk_entry_get_icon_at_pos" (t_typ @-> int32_t @-> int32_t @-> returning (int32_t))
 (*Not implemented gtk_entry_get_icon_gicon return type interface not handled*)
 let get_icon_name =
@@ -68,7 +69,8 @@ let get_layout_offsets self =
   let ret = get_layout_offsets_raw self x_ptr y_ptr in
   let x = !@ x_ptr in
   let y = !@ y_ptr in
-  (x, y)let get_max_length =
+  (x, y)
+let get_max_length =
   foreign "gtk_entry_get_max_length" (t_typ @-> returning (int32_t))
 let get_max_width_chars =
   foreign "gtk_entry_get_max_width_chars" (t_typ @-> returning (int32_t))
@@ -91,7 +93,8 @@ let get_text_area self =
   let text_area_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_text_area_raw self text_area_ptr in
   let text_area = !@ text_area_ptr in
-  (text_area)let get_text_length =
+  (text_area)
+let get_text_length =
   foreign "gtk_entry_get_text_length" (t_typ @-> returning (uint16_t))
 let get_visibility =
   foreign "gtk_entry_get_visibility" (t_typ @-> returning (bool))

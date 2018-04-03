@@ -29,7 +29,8 @@ let get_layout_offsets self =
   let ret = get_layout_offsets_raw self x_ptr y_ptr in
   let x = !@ x_ptr in
   let y = !@ y_ptr in
-  (x, y)let get_value_pos =
+  (x, y)
+let get_value_pos =
   foreign "gtk_scale_get_value_pos" (t_typ @-> returning (Position_type.t_view))
 let set_digits =
   foreign "gtk_scale_set_digits" (t_typ @-> int32_t @-> returning (void))

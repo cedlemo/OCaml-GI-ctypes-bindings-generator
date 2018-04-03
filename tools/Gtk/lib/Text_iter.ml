@@ -44,7 +44,8 @@ let backward_search self str flags limit =
   let ret = backward_search_raw self str flags limit match_start_ptr match_end_ptr in
   let match_start = !@ match_start_ptr in
   let match_end = !@ match_end_ptr in
-  (ret, match_start, match_end)let backward_sentence_start =
+  (ret, match_start, match_end)
+let backward_sentence_start =
   foreign "gtk_text_iter_backward_sentence_start" (ptr t_typ @-> returning (bool))
 let backward_sentence_starts =
   foreign "gtk_text_iter_backward_sentence_starts" (ptr t_typ @-> int32_t @-> returning (bool))
@@ -108,7 +109,8 @@ let forward_search self str flags limit =
   let ret = forward_search_raw self str flags limit match_start_ptr match_end_ptr in
   let match_start = !@ match_start_ptr in
   let match_end = !@ match_end_ptr in
-  (ret, match_start, match_end)let forward_sentence_end =
+  (ret, match_start, match_end)
+let forward_sentence_end =
   foreign "gtk_text_iter_forward_sentence_end" (ptr t_typ @-> returning (bool))
 let forward_sentence_ends =
   foreign "gtk_text_iter_forward_sentence_ends" (ptr t_typ @-> int32_t @-> returning (bool))
@@ -143,7 +145,8 @@ let get_attributes self =
   let values_ptr = allocate Text_attributes.t_typ (make Text_attributes.t_typ) in
   let ret = get_attributes_raw self values_ptr in
   let values = !@ values_ptr in
-  (ret, values)let get_buffer =
+  (ret, values)
+let get_buffer =
   foreign "gtk_text_iter_get_buffer" (ptr t_typ @-> returning (Text_buffer.t_typ))
 let get_bytes_in_line =
   foreign "gtk_text_iter_get_bytes_in_line" (ptr t_typ @-> returning (int32_t))

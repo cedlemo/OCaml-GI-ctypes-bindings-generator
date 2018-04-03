@@ -24,7 +24,8 @@ let convert_bin_window_to_tree_coords self bx by =
   let ret = convert_bin_window_to_tree_coords_raw self bx by tx_ptr ty_ptr in
   let tx = !@ tx_ptr in
   let ty = !@ ty_ptr in
-  (tx, ty)let convert_bin_window_to_widget_coords self bx by =
+  (tx, ty)
+let convert_bin_window_to_widget_coords self bx by =
   let convert_bin_window_to_widget_coords_raw =
     foreign "gtk_tree_view_convert_bin_window_to_widget_coords" (t_typ @-> int32_t @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
@@ -33,7 +34,8 @@ let convert_bin_window_to_tree_coords self bx by =
   let ret = convert_bin_window_to_widget_coords_raw self bx by wx_ptr wy_ptr in
   let wx = !@ wx_ptr in
   let wy = !@ wy_ptr in
-  (wx, wy)let convert_tree_to_bin_window_coords self tx ty =
+  (wx, wy)
+let convert_tree_to_bin_window_coords self tx ty =
   let convert_tree_to_bin_window_coords_raw =
     foreign "gtk_tree_view_convert_tree_to_bin_window_coords" (t_typ @-> int32_t @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
@@ -42,7 +44,8 @@ let convert_bin_window_to_tree_coords self bx by =
   let ret = convert_tree_to_bin_window_coords_raw self tx ty bx_ptr by_ptr in
   let bx = !@ bx_ptr in
   let by = !@ by_ptr in
-  (bx, by)let convert_tree_to_widget_coords self tx ty =
+  (bx, by)
+let convert_tree_to_widget_coords self tx ty =
   let convert_tree_to_widget_coords_raw =
     foreign "gtk_tree_view_convert_tree_to_widget_coords" (t_typ @-> int32_t @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
@@ -51,7 +54,8 @@ let convert_bin_window_to_tree_coords self bx by =
   let ret = convert_tree_to_widget_coords_raw self tx ty wx_ptr wy_ptr in
   let wx = !@ wx_ptr in
   let wy = !@ wy_ptr in
-  (wx, wy)let convert_widget_to_bin_window_coords self wx wy =
+  (wx, wy)
+let convert_widget_to_bin_window_coords self wx wy =
   let convert_widget_to_bin_window_coords_raw =
     foreign "gtk_tree_view_convert_widget_to_bin_window_coords" (t_typ @-> int32_t @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
@@ -60,7 +64,8 @@ let convert_bin_window_to_tree_coords self bx by =
   let ret = convert_widget_to_bin_window_coords_raw self wx wy bx_ptr by_ptr in
   let bx = !@ bx_ptr in
   let by = !@ by_ptr in
-  (bx, by)let convert_widget_to_tree_coords self wx wy =
+  (bx, by)
+let convert_widget_to_tree_coords self wx wy =
   let convert_widget_to_tree_coords_raw =
     foreign "gtk_tree_view_convert_widget_to_tree_coords" (t_typ @-> int32_t @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
@@ -69,7 +74,8 @@ let convert_bin_window_to_tree_coords self bx by =
   let ret = convert_widget_to_tree_coords_raw self wx wy tx_ptr ty_ptr in
   let tx = !@ tx_ptr in
   let ty = !@ ty_ptr in
-  (tx, ty)let create_row_drag_icon =
+  (tx, ty)
+let create_row_drag_icon =
   foreign "gtk_tree_view_create_row_drag_icon" (t_typ @-> ptr Tree_path.t_typ @-> returning (ptr Surface.t_typ))
 (*Not implemented gtk_tree_view_enable_model_drag_dest type C Array type for Types.Array tag not implemented*)
 (*Not implemented gtk_tree_view_enable_model_drag_source type C Array type for Types.Array tag not implemented*)
@@ -88,7 +94,8 @@ let get_background_area self path column =
   let rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_background_area_raw self path column rect_ptr in
   let rect = !@ rect_ptr in
-  (rect)let get_bin_window =
+  (rect)
+let get_bin_window =
   foreign "gtk_tree_view_get_bin_window" (t_typ @-> returning (Window.t_typ))
 let get_cell_area self path column =
   let get_cell_area_raw =
@@ -97,7 +104,8 @@ let get_cell_area self path column =
   let rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_cell_area_raw self path column rect_ptr in
   let rect = !@ rect_ptr in
-  (rect)let get_column =
+  (rect)
+let get_column =
   foreign "gtk_tree_view_get_column" (t_typ @-> int32_t @-> returning (Tree_view_column.t_typ))
 let get_columns =
   foreign "gtk_tree_view_get_columns" (t_typ @-> returning (ptr List.t_typ))
@@ -110,7 +118,8 @@ let get_cursor self =
   let ret = get_cursor_raw self path_ptr focus_column_ptr in
   let path = !@ path_ptr in
   let focus_column = !@ focus_column_ptr in
-  (path, focus_column)let get_dest_row_at_pos self drag_x drag_y =
+  (path, focus_column)
+let get_dest_row_at_pos self drag_x drag_y =
   let get_dest_row_at_pos_raw =
     foreign "gtk_tree_view_get_dest_row_at_pos" (t_typ @-> int32_t @-> int32_t @-> ptr (ptr_opt Tree_path.t_typ) @-> ptr (Tree_view_drop_position.t_view) @-> returning (bool))
   in
@@ -119,7 +128,8 @@ let get_cursor self =
   let ret = get_dest_row_at_pos_raw self drag_x drag_y path_ptr pos_ptr in
   let path = !@ path_ptr in
   let pos = (!@ pos_ptr) in
-  (ret, path, pos)let get_drag_dest_row self =
+  (ret, path, pos)
+let get_drag_dest_row self =
   let get_drag_dest_row_raw =
     foreign "gtk_tree_view_get_drag_dest_row" (t_typ @-> ptr (ptr_opt Tree_path.t_typ) @-> ptr (Tree_view_drop_position.t_view) @-> returning (void))
   in
@@ -128,7 +138,8 @@ let get_cursor self =
   let ret = get_drag_dest_row_raw self path_ptr pos_ptr in
   let path = !@ path_ptr in
   let pos = (!@ pos_ptr) in
-  (path, pos)let get_enable_search =
+  (path, pos)
+let get_enable_search =
   foreign "gtk_tree_view_get_enable_search" (t_typ @-> returning (bool))
 let get_enable_tree_lines =
   foreign "gtk_tree_view_get_enable_tree_lines" (t_typ @-> returning (bool))
@@ -166,7 +177,8 @@ let get_path_at_pos self x y =
   let column = !@ column_ptr in
   let cell_x = !@ cell_x_ptr in
   let cell_y = !@ cell_y_ptr in
-  (ret, path, column, cell_x, cell_y)let get_reorderable =
+  (ret, path, column, cell_x, cell_y)
+let get_reorderable =
   foreign "gtk_tree_view_get_reorderable" (t_typ @-> returning (bool))
 let get_rubber_banding =
   foreign "gtk_tree_view_get_rubber_banding" (t_typ @-> returning (bool))
@@ -194,14 +206,16 @@ let get_visible_range self =
   let ret = get_visible_range_raw self start_path_ptr end_path_ptr in
   let start_path = !@ start_path_ptr in
   let end_path = !@ end_path_ptr in
-  (ret, start_path, end_path)let get_visible_rect self =
+  (ret, start_path, end_path)
+let get_visible_rect self =
   let get_visible_rect_raw =
     foreign "gtk_tree_view_get_visible_rect" (t_typ @-> ptr (Rectangle.t_typ) @-> returning (void))
   in
   let visible_rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_visible_rect_raw self visible_rect_ptr in
   let visible_rect = !@ visible_rect_ptr in
-  (visible_rect)let insert_column =
+  (visible_rect)
+let insert_column =
   foreign "gtk_tree_view_insert_column" (t_typ @-> Tree_view_column.t_typ @-> int32_t @-> returning (int32_t))
 (*Not implemented gtk_tree_view_insert_column_with_data_func type callback not implemented*)
 let is_blank_at_pos self x y =
@@ -217,7 +231,8 @@ let is_blank_at_pos self x y =
   let column = !@ column_ptr in
   let cell_x = !@ cell_x_ptr in
   let cell_y = !@ cell_y_ptr in
-  (ret, path, column, cell_x, cell_y)let is_rubber_banding_active =
+  (ret, path, column, cell_x, cell_y)
+let is_rubber_banding_active =
   foreign "gtk_tree_view_is_rubber_banding_active" (t_typ @-> returning (bool))
 (*Not implemented gtk_tree_view_map_expanded_rows type callback not implemented*)
 let move_column_after =

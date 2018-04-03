@@ -26,7 +26,8 @@ let position_menu menu user_data x y =
   let push_in = !@ push_in_ptr in
   let x = !@ x_ptr in
   let y = !@ y_ptr in
-  (push_in, x, y)let get_geometry self =
+  (push_in, x, y)
+let get_geometry self =
   let get_geometry_raw =
     foreign "gtk_status_icon_get_geometry" (t_typ @-> ptr (Screen.t_typ) @-> ptr (Rectangle.t_typ) @-> ptr (Orientation.t_view) @-> returning (bool))
   in
@@ -37,7 +38,8 @@ let position_menu menu user_data x y =
   let screen = !@ screen_ptr in
   let area = !@ area_ptr in
   let orientation = (!@ orientation_ptr) in
-  (ret, screen, area, orientation)(*Not implemented gtk_status_icon_get_gicon return type interface not handled*)
+  (ret, screen, area, orientation)
+(*Not implemented gtk_status_icon_get_gicon return type interface not handled*)
 let get_has_tooltip =
   foreign "gtk_status_icon_get_has_tooltip" (t_typ @-> returning (bool))
 let get_icon_name =
