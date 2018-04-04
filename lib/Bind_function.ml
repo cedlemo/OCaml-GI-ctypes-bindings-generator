@@ -453,7 +453,7 @@ let write_compute_value_instructions ml name arguments can_throw_gerror =
   match arguments with
   | No_args ->
     if can_throw_gerror then
-      File.bprintf ml "  let value = %s_raw err_ptr_ptr in\n" name
+      File.bprintf ml "  let ret = %s_raw err_ptr_ptr in\n" name
   | Args args ->
     let args_names = function
       | [] -> None
