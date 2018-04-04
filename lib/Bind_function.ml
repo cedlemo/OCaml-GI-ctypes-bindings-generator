@@ -247,7 +247,7 @@ let error_ctypes_type = "ptr_opt Error.t_typ"
 
 let allocate_gerror = "let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in"
 
-let return_gerror_result ?(indent=1) ?(ret="value") () =
+let return_gerror_result ?(indent=1) ?(ret="ret") () =
   let sep = String.make (indent * 2) ' ' in
   Printf.sprintf
     "%smatch (!@ err_ptr_ptr) with\n%s\
