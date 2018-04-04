@@ -150,7 +150,7 @@ let function_parser info sources skip_types =
 
 let () =
   match Loader.load "GLib" () with
-  | None -> print_endline "Please check the namespace, something is wrong"
-  | Some loader -> print_infos loader;
+  | Error message -> print_endline "Please check the namespace, something is wrong"
+  | Ok loader -> print_infos loader;
     let loader = Loader.set_build_path loader "tools/" in
     Loader.parse loader ~const_parser ~function_parser ~skip ()
