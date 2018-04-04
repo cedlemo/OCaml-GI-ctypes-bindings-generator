@@ -351,7 +351,10 @@ let write_function_name ml name arguments can_throw_gerror =
   let open Binding_utils in
   match arguments with
   | No_args ->
-    File.bprintf ml "let %s =\n" name
+      if can_throw_gerror then
+        File.bprintf ml "let %s () =\n" name
+      else
+        File.bprintf ml "let %s =\n" name
   | Args args ->
     let args_names = function
       | [] -> None
