@@ -80,6 +80,31 @@ let test_escape_bad_function_name test_ctxt =
   in
   Test_utils.test_writing test_ctxt mi "double" writer mli ml
 
+let test_function_bindings_function_no_args_throw_gerror test_ctxt =
+  let name = "clear_error" in
+  match Repository.find_by_name repo namespace name with
+  | None -> assert_equal_string name " has not been found"
+  | Some info -> let fi = Function_info.from_baseinfo info in
+     let mli =
+       "val clear_error :\n  \
+        unit -> (unit, Error.t structure ptr option) result" in
+     let ml = "let clear_error () =\n  \
+              let clear_error_raw =\n    \
+              foreign \"g_clear_error\" (ptr (ptr_opt Error.t_typ) @-> returning (void))\n  \
+              in\n  \
+              let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in\n  \
+              let ret = clear_error_raw err_ptr_ptr in\n  \
+              match (!@ err_ptr_ptr) with\n  \
+              | None -> Ok ret\n  \
+              | Some _ -> let err_ptr = !@ err_ptr_ptr in\n    \
+              let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in\n    \
+              Error (err_ptr)" in
+     let writer = fun n i srcs ->
+       let _ = Bind_function.append_ctypes_function_bindings n i None srcs [] in
+       Binding_utils.Sources.write_buffs srcs
+     in
+     Test_utils.test_writing test_ctxt fi name writer mli ml
+
 let test_function_bindings_for_in_args_only_function test_ctxt =
   let name = "date_get_sunday_weeks_in_year" in
   match Repository.find_by_name repo namespace name with
@@ -240,6 +265,7 @@ let tests =
     "Bind_function get arguments ctypes" >:: test_get_arguments_types;
     "Bind_function get return types" >:: test_get_return_types;
     "Bind_function escape bad function name" >:: test_escape_bad_function_name;
+    "Bind_function test function bindings for function with no args that throws gerror" >:: test_function_bindings_function_no_args_throw_gerror;
     "Bind_function test function bindings for in args only function" >:: test_function_bindings_for_in_args_only_function;
     "Bind_function test function bindings for args out function" >:: test_function_bindings_for_args_out_function;
     (* "Bind_function test function bindings for args out as enum function" >:: test_function_bindings_for_args_out_as_enum_function; *)
