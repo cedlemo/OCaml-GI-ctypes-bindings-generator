@@ -26,3 +26,9 @@ update_gtk3_raw :
 	jbuilder build tools/gtk3_raw_generator.exe
 	./_build/default/tools/gtk3_raw_generator.exe
 	cp -rf tools/Gtk/lib/* ../OCaml-Gtk3/lib/
+
+.PHONY : update_gio2_raw
+update_gio2_raw :
+	jbuilder clean
+	jbuilder build tools/gio_raw_generator.exe
+	./_build/default/tools/gio_raw_generator.exe
