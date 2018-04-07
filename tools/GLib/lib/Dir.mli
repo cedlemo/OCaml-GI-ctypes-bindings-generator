@@ -3,11 +3,11 @@ open Ctypes
 type t
 val t_typ : t structure typ
 
-val close:
+val close :
   t structure ptr -> unit
-val read_name:
+val read_name :
   t structure ptr -> string option
-val rewind:
+val rewind :
   t structure ptr -> unit
-val make_tmp:
+val make_tmp :
   string option -> (string option, Error.t structure ptr option) result

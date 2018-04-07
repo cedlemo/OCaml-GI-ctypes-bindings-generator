@@ -3,21 +3,21 @@ open Ctypes
 type t
 val t_typ : t structure typ
 
-val create:
+val create :
   Variant.t structure ptr option -> t structure ptr
-val clear:
+val clear :
   t structure ptr -> unit
-val contains:
+val contains :
   t structure ptr -> string -> bool
-val _end:
+val _end :
   t structure ptr -> Variant.t structure ptr
-val insert_value:
+val insert_value :
   t structure ptr -> string -> Variant.t structure ptr -> unit
-val lookup_value:
+val lookup_value :
   t structure ptr -> string -> Variant_type.t structure ptr option -> Variant.t structure ptr
-val incr_ref:
+val incr_ref :
   t structure ptr -> t structure ptr
-val remove:
+val remove :
   t structure ptr -> string -> bool
-val unref:
+val unref :
   t structure ptr -> unit

@@ -3,29 +3,29 @@ open Ctypes
 type t
 val t_typ : t structure typ
 
-val add:
+val add :
   t structure ptr -> unit ptr option -> bool
-val contains:
+val contains :
   t structure ptr -> unit ptr option -> bool
-val destroy:
+val destroy :
   t structure ptr -> unit
-val insert:
+val insert :
   t structure ptr -> unit ptr option -> unit ptr option -> bool
-val lookup:
+val lookup :
   t structure ptr -> unit ptr option -> unit ptr option
 val lookup_extended :
   t structure ptr -> unit ptr option -> (bool * unit ptr option * unit ptr option)
-val remove:
+val remove :
   t structure ptr -> unit ptr option -> bool
-val remove_all:
+val remove_all :
   t structure ptr -> unit
-val replace:
+val replace :
   t structure ptr -> unit ptr option -> unit ptr option -> bool
-val size:
+val size :
   t structure ptr -> Unsigned.uint32
-val steal:
+val steal :
   t structure ptr -> unit ptr option -> bool
-val steal_all:
+val steal_all :
   t structure ptr -> unit
-val unref:
+val unref :
   t structure ptr -> unit

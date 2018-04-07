@@ -10,13 +10,13 @@ val f_dummy4: (int32, t structure) field
 val f_dummy5: (bool, t structure) field
 val f_dummy6: (unit ptr, t structure) field
 
-val init:
+val init :
   t structure ptr -> Hash_table.t structure ptr -> unit
 val next :
   t structure ptr -> (bool * unit ptr option * unit ptr option)
-val remove:
+val remove :
   t structure ptr -> unit
-val replace:
+val replace :
   t structure ptr -> unit ptr option -> unit
-val steal:
+val steal :
   t structure ptr -> unit

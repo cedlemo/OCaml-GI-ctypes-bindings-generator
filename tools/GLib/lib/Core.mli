@@ -180,7 +180,7 @@ val c_VA_COPY_AS_ARRAY : int32
 val c_VERSION_MIN_REQUIRED : int32
 val c_WIN32_MSG_HANDLE : int32
 
-val access:
+val access :
   string -> int32 -> int32
 (*SKIPPED : ascii_digit_value*)
 (*SKIPPED : ascii_dtostr*)
@@ -233,25 +233,25 @@ val access:
 (*Not implemented g_base64_encode_step type C Array type for Types.Array tag not implemented*)
 (*DEPRECATED : basename*)
 
-val bit_lock:
+val bit_lock :
   int32 ptr -> int32 -> unit
 
-val bit_nth_lsf:
+val bit_nth_lsf :
   Unsigned.uint64 -> int32 -> int32
 
-val bit_nth_msf:
+val bit_nth_msf :
   Unsigned.uint64 -> int32 -> int32
 
-val bit_storage:
+val bit_storage :
   Unsigned.uint64 -> Unsigned.uint32
 
-val bit_trylock:
+val bit_trylock :
   int32 ptr -> int32 -> bool
 
-val bit_unlock:
+val bit_unlock :
   int32 ptr -> int32 -> unit
 
-val bookmark_file_error_quark:
+val bookmark_file_error_quark :
   unit -> Unsigned.uint32
 
 (*Not implemented g_build_filenamev type C Array type for Types.Array tag not implemented*)
@@ -268,30 +268,30 @@ val bookmark_file_error_quark:
 
 (*SKIPPED :  g_byte_array_unref type Byte_array.t structure ptr skipped*)
 
-val chdir:
+val chdir :
   string -> int32
 val check_version:
 Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> string option
 
-val checksum_type_get_length:
+val checksum_type_get_length :
   Checksum_type.t -> int64
 
 (*Not implemented g_child_watch_add_full type callback not implemented*)
 
-val child_watch_source_create:
+val child_watch_source_create :
   int32 -> Source.t structure ptr
 
-val clear_error:
+val clear_error :
   unit -> (unit, Error.t structure ptr option) result
 
-val close:
+val close :
   int32 -> (bool, Error.t structure ptr option) result
 
 (*SKIPPED :  g_compute_checksum_for_bytes type Bytes.t structure ptr skipped*)
 
 (*Not implemented g_compute_checksum_for_data type C Array type for Types.Array tag not implemented*)
 
-val compute_checksum_for_string:
+val compute_checksum_for_string :
   Checksum_type.t -> string -> int64 -> string option
 
 (*SKIPPED :  g_compute_hmac_for_bytes type Bytes.t structure ptr skipped*)
@@ -303,13 +303,13 @@ val compute_checksum_for_string:
 val convert :
   string -> int64 -> string -> string -> (string option * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
 
-val convert_error_quark:
+val convert_error_quark :
   unit -> Unsigned.uint32
 
-val convert_with_fallback:
+val convert_with_fallback :
   string -> int64 -> string -> string -> string -> Unsigned.uint64 ptr -> Unsigned.uint64 ptr -> (string option, Error.t structure ptr option) result
 
-val convert_with_iconv:
+val convert_with_iconv :
   string -> int64 -> IConv.t structure ptr -> Unsigned.uint64 ptr -> Unsigned.uint64 ptr -> (string option, Error.t structure ptr option) result
 (*SKIPPED : datalist_clear*)
 (*SKIPPED : datalist_get_data*)
@@ -326,76 +326,76 @@ val convert_with_iconv:
 (*SKIPPED : dataset_id_remove_no_notify*)
 (*SKIPPED : dataset_id_set_data_full*)
 
-val date_get_days_in_month:
+val date_get_days_in_month :
   Date_month.t -> Unsigned.uint16 -> Unsigned.uint8
 
-val date_get_monday_weeks_in_year:
+val date_get_monday_weeks_in_year :
   Unsigned.uint16 -> Unsigned.uint8
 
-val date_get_sunday_weeks_in_year:
+val date_get_sunday_weeks_in_year :
   Unsigned.uint16 -> Unsigned.uint8
 
-val date_is_leap_year:
+val date_is_leap_year :
   Unsigned.uint16 -> bool
 
-val date_strftime:
+val date_strftime :
   string -> Unsigned.uint64 -> string -> Date.t structure ptr -> Unsigned.uint64
 
-val date_time_compare:
+val date_time_compare :
   unit ptr -> unit ptr -> int32
 
-val date_time_equal:
+val date_time_equal :
   unit ptr -> unit ptr -> bool
 
-val date_time_hash:
+val date_time_hash :
   unit ptr -> Unsigned.uint32
 
-val date_valid_day:
+val date_valid_day :
   Unsigned.uint8 -> bool
 
-val date_valid_dmy:
+val date_valid_dmy :
   Unsigned.uint8 -> Date_month.t -> Unsigned.uint16 -> bool
 
-val date_valid_julian:
+val date_valid_julian :
   Unsigned.uint32 -> bool
 
-val date_valid_month:
+val date_valid_month :
   Date_month.t -> bool
 
-val date_valid_weekday:
+val date_valid_weekday :
   Date_weekday.t -> bool
 
-val date_valid_year:
+val date_valid_year :
   Unsigned.uint16 -> bool
 
-val dcgettext:
+val dcgettext :
   string option -> string -> int32 -> string option
 
-val dgettext:
+val dgettext :
   string option -> string -> string option
 
-val dir_make_tmp:
+val dir_make_tmp :
   string option -> (string option, Error.t structure ptr option) result
 
-val direct_equal:
+val direct_equal :
   unit ptr option -> unit ptr option -> bool
 
-val direct_hash:
+val direct_hash :
   unit ptr option -> Unsigned.uint32
 
-val dngettext:
+val dngettext :
   string option -> string -> string -> Unsigned.uint64 -> string option
 
-val double_equal:
+val double_equal :
   unit ptr -> unit ptr -> bool
 
-val double_hash:
+val double_hash :
   unit ptr -> Unsigned.uint32
 
-val dpgettext:
+val dpgettext :
   string option -> string -> Unsigned.uint64 -> string option
 
-val dpgettext2:
+val dpgettext2 :
   string option -> string -> string -> string option
 
 (*Not implemented g_environ_getenv type C Array type for Types.Array tag not implemented*)
@@ -404,10 +404,10 @@ val dpgettext2:
 
 (*Not implemented g_environ_unsetenv type C Array type for Types.Array tag not implemented*)
 
-val file_error_from_errno:
+val file_error_from_errno :
   int32 -> File_error.t
 
-val file_error_quark:
+val file_error_quark :
   unit -> Unsigned.uint32
 
 (*Not implemented g_file_get_contents type C Array type for Types.Array tag not implemented*)
@@ -415,18 +415,18 @@ val file_error_quark:
 val file_open_tmp :
   string option -> (int32 * string, Error.t structure ptr option) result
 
-val file_read_link:
+val file_read_link :
   string -> (string option, Error.t structure ptr option) result
 
 (*Not implemented g_file_set_contents type C Array type for Types.Array tag not implemented*)
 
-val file_test:
+val file_test :
   string -> File_test.t_list -> bool
 
-val filename_display_basename:
+val filename_display_basename :
   string -> string option
 
-val filename_display_name:
+val filename_display_name :
   string -> string option
 
 val filename_from_uri :
@@ -434,135 +434,135 @@ val filename_from_uri :
 
 (*Not implemented g_filename_from_utf8 return type C Array type for Types.Array tag not handled*)
 
-val filename_to_uri:
+val filename_to_uri :
   string -> string option -> (string option, Error.t structure ptr option) result
 
 val filename_to_utf8 :
   string -> int64 -> (string option * Unsigned.uint64 * Unsigned.uint64, Error.t structure ptr option) result
 
-val find_program_in_path:
+val find_program_in_path :
   string -> string option
 
-val format_size:
+val format_size :
   Unsigned.uint64 -> string option
 (*DEPRECATED : format_size_for_display*)
 
-val format_size_full:
+val format_size_full :
   Unsigned.uint64 -> Format_size_flags.t_list -> string option
 
-val free:
+val free :
   unit ptr option -> unit
 
-val get_application_name:
+val get_application_name :
   unit -> string option
 
 val get_charset :
   unit -> (bool * string)
 
-val get_codeset:
+val get_codeset :
   unit -> string option
 
-val get_current_dir:
+val get_current_dir :
   unit -> string option
 
-val get_current_time:
+val get_current_time :
   Time_val.t structure ptr -> unit
 
 (*Not implemented g_get_environ return type C Array type for Types.Array tag not handled*)
 
-val get_filename_charsets:
+val get_filename_charsets :
   string -> bool
 
-val get_home_dir:
+val get_home_dir :
   unit -> string option
 
-val get_host_name:
+val get_host_name :
   unit -> string option
 
 (*Not implemented g_get_language_names return type C Array type for Types.Array tag not handled*)
 
 (*Not implemented g_get_locale_variants return type C Array type for Types.Array tag not handled*)
 
-val get_monotonic_time:
+val get_monotonic_time :
   unit -> int64
 
-val get_num_processors:
+val get_num_processors :
   unit -> Unsigned.uint32
 
-val get_prgname:
+val get_prgname :
   unit -> string option
 
-val get_real_name:
+val get_real_name :
   unit -> string option
 
-val get_real_time:
+val get_real_time :
   unit -> int64
 
 (*Not implemented g_get_system_config_dirs return type C Array type for Types.Array tag not handled*)
 
 (*Not implemented g_get_system_data_dirs return type C Array type for Types.Array tag not handled*)
 
-val get_tmp_dir:
+val get_tmp_dir :
   unit -> string option
 
-val get_user_cache_dir:
+val get_user_cache_dir :
   unit -> string option
 
-val get_user_config_dir:
+val get_user_config_dir :
   unit -> string option
 
-val get_user_data_dir:
+val get_user_data_dir :
   unit -> string option
 
-val get_user_name:
+val get_user_name :
   unit -> string option
 
-val get_user_runtime_dir:
+val get_user_runtime_dir :
   unit -> string option
 
-val get_user_special_dir:
+val get_user_special_dir :
   User_directory.t -> string option
 
-val getenv:
+val getenv :
   string -> string option
 
-val hash_table_add:
+val hash_table_add :
   Hash_table.t structure ptr -> unit ptr option -> bool
 
-val hash_table_contains:
+val hash_table_contains :
   Hash_table.t structure ptr -> unit ptr option -> bool
 
-val hash_table_destroy:
+val hash_table_destroy :
   Hash_table.t structure ptr -> unit
 
-val hash_table_insert:
+val hash_table_insert :
   Hash_table.t structure ptr -> unit ptr option -> unit ptr option -> bool
 
-val hash_table_lookup:
+val hash_table_lookup :
   Hash_table.t structure ptr -> unit ptr option -> unit ptr option
 
 val hash_table_lookup_extended :
   Hash_table.t structure ptr -> unit ptr option -> (bool * unit ptr option * unit ptr option)
 
-val hash_table_remove:
+val hash_table_remove :
   Hash_table.t structure ptr -> unit ptr option -> bool
 
-val hash_table_remove_all:
+val hash_table_remove_all :
   Hash_table.t structure ptr -> unit
 
-val hash_table_replace:
+val hash_table_replace :
   Hash_table.t structure ptr -> unit ptr option -> unit ptr option -> bool
 
-val hash_table_size:
+val hash_table_size :
   Hash_table.t structure ptr -> Unsigned.uint32
 
-val hash_table_steal:
+val hash_table_steal :
   Hash_table.t structure ptr -> unit ptr option -> bool
 
-val hash_table_steal_all:
+val hash_table_steal_all :
   Hash_table.t structure ptr -> unit
 
-val hash_table_unref:
+val hash_table_unref :
   Hash_table.t structure ptr -> unit
 
 (*SKIPPED :  g_hook_destroy type Hook_list.t structure ptr skipped*)
@@ -577,62 +577,62 @@ val hash_table_unref:
 
 (*SKIPPED :  g_hook_unref type Hook_list.t structure ptr skipped*)
 
-val hostname_is_ascii_encoded:
+val hostname_is_ascii_encoded :
   string -> bool
 
-val hostname_is_ip_address:
+val hostname_is_ip_address :
   string -> bool
 
-val hostname_is_non_ascii:
+val hostname_is_non_ascii :
   string -> bool
 
-val hostname_to_ascii:
+val hostname_to_ascii :
   string -> string option
 
-val hostname_to_unicode:
+val hostname_to_unicode :
   string -> string option
 
-val iconv:
+val iconv :
   IConv.t structure ptr -> string -> Unsigned.uint64 ptr -> string -> Unsigned.uint64 ptr -> Unsigned.uint64
 
 (*Not implemented g_idle_add_full type callback not implemented*)
 
-val idle_remove_by_data:
+val idle_remove_by_data :
   unit ptr option -> bool
 
-val idle_source_create:
+val idle_source_create :
   unit -> Source.t structure ptr
 
-val int64_equal:
+val int64_equal :
   unit ptr -> unit ptr -> bool
 
-val int64_hash:
+val int64_hash :
   unit ptr -> Unsigned.uint32
 
-val int_equal:
+val int_equal :
   unit ptr -> unit ptr -> bool
 
-val int_hash:
+val int_hash :
   unit ptr -> Unsigned.uint32
 
-val intern_static_string:
+val intern_static_string :
   string option -> string option
 
-val intern_string:
+val intern_string :
   string option -> string option
 
 (*Not implemented g_io_add_watch_full type callback not implemented*)
 
-val io_channel_error_from_errno:
+val io_channel_error_from_errno :
   int32 -> IOChannel_error.t
 
-val io_channel_error_quark:
+val io_channel_error_quark :
   unit -> Unsigned.uint32
 
-val io_create_watch:
+val io_create_watch :
   IOChannel.t structure ptr -> IOCondition.t_list -> Source.t structure ptr
 
-val key_file_error_quark:
+val key_file_error_quark :
   unit -> Unsigned.uint32
 
 (*Not implemented g_listenv return type C Array type for Types.Array tag not handled*)
@@ -663,113 +663,113 @@ val locale_to_utf8 :
 
 (*SKIPPED : g_main_context_ref_thread_default return type Main_context.t structure ptr*)
 
-val main_current_source:
+val main_current_source :
   unit -> Source.t structure ptr
 
-val main_depth:
+val main_depth :
   unit -> int32
 (*SKIPPED : malloc*)
 (*SKIPPED : malloc0*)
 (*SKIPPED : malloc0_n*)
 (*SKIPPED : malloc_n*)
 
-val markup_error_quark:
+val markup_error_quark :
   unit -> Unsigned.uint32
 
-val markup_escape_text:
+val markup_escape_text :
   string -> int64 -> string option
 (*DEPRECATED : mem_is_system_malloc*)
 (*DEPRECATED : mem_profile*)
 (*DEPRECATED : mem_set_vtable*)
 
-val memdup:
+val memdup :
   unit ptr option -> Unsigned.uint32 -> unit ptr option
 
-val mkdir_with_parents:
+val mkdir_with_parents :
   string -> int32 -> int32
 
-val nullify_pointer:
+val nullify_pointer :
   unit ptr -> unit
 (*SKIPPED : number_parser_error_quark*)
 
-val on_error_query:
+val on_error_query :
   string -> unit
 
-val on_error_stack_trace:
+val on_error_stack_trace :
   string -> unit
 
-val once_init_enter:
+val once_init_enter :
   unit ptr -> bool
 
-val once_init_leave:
+val once_init_leave :
   unit ptr -> Unsigned.uint64 -> unit
 
-val option_error_quark:
+val option_error_quark :
   unit -> Unsigned.uint32
 
 (*Not implemented g_parse_debug_string type C Array type for Types.Array tag not implemented*)
 
-val path_get_basename:
+val path_get_basename :
   string -> string option
 
-val path_get_dirname:
+val path_get_dirname :
   string -> string option
 
-val path_is_absolute:
+val path_is_absolute :
   string -> bool
 
-val path_skip_root:
+val path_skip_root :
   string -> string option
 
-val pattern_match:
+val pattern_match :
   Pattern_spec.t structure ptr -> Unsigned.uint32 -> string -> string option -> bool
 
-val pattern_match_simple:
+val pattern_match_simple :
   string -> string -> bool
 
-val pattern_match_string:
+val pattern_match_string :
   Pattern_spec.t structure ptr -> string -> bool
 
-val pointer_bit_lock:
+val pointer_bit_lock :
   unit ptr -> int32 -> unit
 
-val pointer_bit_trylock:
+val pointer_bit_trylock :
   unit ptr -> int32 -> bool
 
-val pointer_bit_unlock:
+val pointer_bit_unlock :
   unit ptr -> int32 -> unit
 
-val poll:
+val poll :
   Poll_fd.t structure ptr -> Unsigned.uint32 -> int32 -> int32
 
 val propagate_error :
   Error.t structure ptr -> (Error.t structure ptr option)
 
-val quark_from_static_string:
+val quark_from_static_string :
   string option -> Unsigned.uint32
 
-val quark_from_string:
+val quark_from_string :
   string option -> Unsigned.uint32
 
-val quark_to_string:
+val quark_to_string :
   Unsigned.uint32 -> string option
 
-val quark_try_string:
+val quark_try_string :
   string option -> Unsigned.uint32
 
-val random_double:
+val random_double :
   unit -> float
 
-val random_double_range:
+val random_double_range :
   float -> float -> float
 
-val random_int:
+val random_int :
   unit -> Unsigned.uint32
 
-val random_int_range:
+val random_int_range :
   int32 -> int32 -> int32
 
-val random_set_seed:
+val random_set_seed :
   Unsigned.uint32 -> unit
 (*SKIPPED : realloc*)
 (*SKIPPED : realloc_n*)
@@ -777,10 +777,10 @@ val random_set_seed:
 val regex_check_replacement :
   string -> (bool * bool, Error.t structure ptr option) result
 
-val regex_error_quark:
+val regex_error_quark :
   unit -> Unsigned.uint32
 
-val regex_escape_nul:
+val regex_escape_nul :
   string -> int32 -> string option
 
 (*Not implemented g_regex_escape_string type C Array type for Types.Array tag not implemented*)
@@ -789,10 +789,10 @@ val regex_escape_nul:
 
 (*SKIPPED :  g_regex_split_simple type Regex_compile_flags.t_list skipped*)
 
-val reload_user_special_dirs_cache:
+val reload_user_special_dirs_cache :
   unit -> unit
 
-val rmdir:
+val rmdir :
   string -> int32
 
 (*SKIPPED :  g_sequence_get type Sequence_iter.t structure ptr skipped*)
@@ -813,25 +813,25 @@ val rmdir:
 
 (*SKIPPED :  g_sequence_swap type Sequence_iter.t structure ptr skipped*)
 
-val set_application_name:
+val set_application_name :
   string -> unit
 (*SKIPPED : set_error_literal*)
 
-val set_prgname:
+val set_prgname :
   string -> unit
 
-val setenv:
+val setenv :
   string -> string -> bool -> bool
 
-val shell_error_quark:
+val shell_error_quark :
   unit -> Unsigned.uint32
 
 (*Not implemented g_shell_parse_argv type C Array type for Types.Array tag not implemented*)
 
-val shell_quote:
+val shell_quote :
   string -> string option
 
-val shell_unquote:
+val shell_unquote :
   string -> (string option, Error.t structure ptr option) result
 (*SKIPPED : slice_alloc*)
 (*SKIPPED : slice_alloc0*)
@@ -842,143 +842,143 @@ val shell_unquote:
 (*SKIPPED : slice_get_config_state*)
 (*SKIPPED : slice_set_config*)
 
-val source_remove:
+val source_remove :
   Unsigned.uint32 -> bool
 
-val source_remove_by_funcs_user_data:
+val source_remove_by_funcs_user_data :
   Source_funcs.t structure ptr -> unit ptr option -> bool
 
-val source_remove_by_user_data:
+val source_remove_by_user_data :
   unit ptr option -> bool
 
-val source_set_name_by_id:
+val source_set_name_by_id :
   Unsigned.uint32 -> string -> unit
 
-val spaced_primes_closest:
+val spaced_primes_closest :
   Unsigned.uint32 -> Unsigned.uint32
 
 (*Not implemented g_spawn_async type C Array type for Types.Array tag not implemented*)
 
 (*Not implemented g_spawn_async_with_pipes type C Array type for Types.Array tag not implemented*)
 
-val spawn_check_exit_status:
+val spawn_check_exit_status :
   int32 -> (bool, Error.t structure ptr option) result
 
-val spawn_close_pid:
+val spawn_close_pid :
   int32 -> unit
 
-val spawn_command_line_async:
+val spawn_command_line_async :
   string -> (bool, Error.t structure ptr option) result
 
 (*Not implemented g_spawn_command_line_sync type C Array type for Types.Array tag not implemented*)
 
-val spawn_error_quark:
+val spawn_error_quark :
   unit -> Unsigned.uint32
 
-val spawn_exit_error_quark:
+val spawn_exit_error_quark :
   unit -> Unsigned.uint32
 
 (*Not implemented g_spawn_sync type C Array type for Types.Array tag not implemented*)
 
-val stpcpy:
+val stpcpy :
   string -> string -> string option
 
-val str_equal:
+val str_equal :
   unit ptr -> unit ptr -> bool
 
-val str_has_prefix:
+val str_has_prefix :
   string -> string -> bool
 
-val str_has_suffix:
+val str_has_suffix :
   string -> string -> bool
 
-val str_hash:
+val str_hash :
   unit ptr -> Unsigned.uint32
 
-val str_is_ascii:
+val str_is_ascii :
   string -> bool
 
-val str_match_string:
+val str_match_string :
   string -> string -> bool -> bool
 
-val str_to_ascii:
+val str_to_ascii :
   string -> string option -> string option
 
 (*Not implemented g_str_tokenize_and_fold type C Array type for Types.Array tag not implemented*)
 
-val strcanon:
+val strcanon :
   string -> string -> int -> string option
 (*DEPRECATED : strcasecmp*)
 
-val strchomp:
+val strchomp :
   string -> string option
 
-val strchug:
+val strchug :
   string -> string option
 
-val strcmp0:
+val strcmp0 :
   string option -> string option -> int32
 
-val strcompress:
+val strcompress :
   string -> string option
 
-val strdelimit:
+val strdelimit :
   string -> string option -> int -> string option
 (*DEPRECATED : strdown*)
 
-val strdup:
+val strdup :
   string option -> string option
 
-val strerror:
+val strerror :
   int32 -> string option
 
-val strescape:
+val strescape :
   string -> string option -> string option
 
-val strfreev:
+val strfreev :
   string option -> unit
 
-val string_create:
+val string_create :
   string option -> String.t structure ptr
 
-val string_create_len:
+val string_create_len :
   string -> int64 -> String.t structure ptr
 
-val string_sized_create:
+val string_sized_create :
   Unsigned.uint64 -> String.t structure ptr
 
-val strip_context:
+val strip_context :
   string -> string -> string option
 
-val strjoinv:
+val strjoinv :
   string option -> string -> string option
 
-val strlcat:
+val strlcat :
   string -> string -> Unsigned.uint64 -> Unsigned.uint64
 
-val strlcpy:
+val strlcpy :
   string -> string -> Unsigned.uint64 -> Unsigned.uint64
 (*DEPRECATED : strncasecmp*)
 
-val strndup:
+val strndup :
   string -> Unsigned.uint64 -> string option
 
-val strnfill:
+val strnfill :
   Unsigned.uint64 -> int -> string option
 
-val strreverse:
+val strreverse :
   string -> string option
 
-val strrstr:
+val strrstr :
   string -> string -> string option
 
-val strrstr_len:
+val strrstr_len :
   string -> int64 -> string -> string option
 
-val strsignal:
+val strsignal :
   int32 -> string option
 
-val strstr_len:
+val strstr_len :
   string -> int64 -> string -> string option
 
 val strtod :
@@ -988,7 +988,7 @@ val strtod :
 
 (*Not implemented g_strv_get_type return type gType not handled*)
 
-val strv_length:
+val strv_length :
   string -> Unsigned.uint32
 (*SKIPPED : test_add_data_func*)
 (*SKIPPED : test_add_data_func_full*)
@@ -1022,33 +1022,33 @@ val strv_length:
 (*SKIPPED : test_trap_reached_timeout*)
 (*SKIPPED : test_trap_subprocess*)
 
-val thread_error_quark:
+val thread_error_quark :
   unit -> Unsigned.uint32
 
-val thread_exit:
+val thread_exit :
   unit ptr option -> unit
 
-val thread_pool_get_max_idle_time:
+val thread_pool_get_max_idle_time :
   unit -> Unsigned.uint32
 
-val thread_pool_get_max_unused_threads:
+val thread_pool_get_max_unused_threads :
   unit -> int32
 
-val thread_pool_get_num_unused_threads:
+val thread_pool_get_num_unused_threads :
   unit -> Unsigned.uint32
 
-val thread_pool_set_max_idle_time:
+val thread_pool_set_max_idle_time :
   Unsigned.uint32 -> unit
 
-val thread_pool_set_max_unused_threads:
+val thread_pool_set_max_unused_threads :
   int32 -> unit
 
-val thread_pool_stop_unused_threads:
+val thread_pool_stop_unused_threads :
   unit -> unit
 
 (*SKIPPED : g_thread_self return type Thread.t structure ptr*)
 
-val thread_yield:
+val thread_yield :
   unit -> unit
 
 val time_val_from_iso8601 :
@@ -1058,10 +1058,10 @@ val time_val_from_iso8601 :
 
 (*Not implemented g_timeout_add_seconds_full type callback not implemented*)
 
-val timeout_source_create:
+val timeout_source_create :
   Unsigned.uint32 -> Source.t structure ptr
 
-val timeout_source_create_seconds:
+val timeout_source_create_seconds :
   Unsigned.uint32 -> Source.t structure ptr
 (*DEPRECATED : trash_stack_height*)
 (*DEPRECATED : trash_stack_peek*)
@@ -1145,52 +1145,52 @@ val timeout_source_create_seconds:
 
 (*Not implemented g_unicode_canonical_ordering type unichar not implemented*)
 
-val unicode_script_from_iso15924:
+val unicode_script_from_iso15924 :
   Unsigned.uint32 -> Unicode_script.t
 
-val unicode_script_to_iso15924:
+val unicode_script_to_iso15924 :
   Unicode_script.t -> Unsigned.uint32
 
-val unix_error_quark:
+val unix_error_quark :
   unit -> Unsigned.uint32
 
 (*Not implemented g_unix_fd_add_full type callback not implemented*)
 
-val unix_fd_source_create:
+val unix_fd_source_create :
   int32 -> IOCondition.t_list -> Source.t structure ptr
 
-val unix_open_pipe:
+val unix_open_pipe :
   int32 ptr -> int32 -> (bool, Error.t structure ptr option) result
 
-val unix_set_fd_nonblocking:
+val unix_set_fd_nonblocking :
   int32 -> bool -> (bool, Error.t structure ptr option) result
 
 (*Not implemented g_unix_signal_add_full type callback not implemented*)
 
-val unix_signal_source_create:
+val unix_signal_source_create :
   int32 -> Source.t structure ptr
 
-val unlink:
+val unlink :
   string -> int32
 
-val unsetenv:
+val unsetenv :
   string -> unit
 
-val uri_escape_string:
+val uri_escape_string :
   string -> string option -> bool -> string option
 
 (*Not implemented g_uri_list_extract_uris return type C Array type for Types.Array tag not handled*)
 
-val uri_parse_scheme:
+val uri_parse_scheme :
   string -> string option
 
-val uri_unescape_segment:
+val uri_unescape_segment :
   string option -> string option -> string option -> string option
 
-val uri_unescape_string:
+val uri_unescape_string :
   string -> string option -> string option
 
-val usleep:
+val usleep :
   Unsigned.uint64 -> unit
 
 (*Not implemented g_utf16_to_ucs4 return type unichar not handled*)
@@ -1227,26 +1227,26 @@ val utf16_to_utf8 :
 
 (*Not implemented g_variant_get_gtype return type gType not handled*)
 
-val variant_is_object_path:
+val variant_is_object_path :
   string -> bool
 
-val variant_is_signature:
+val variant_is_signature :
   string -> bool
 
-val variant_parse:
+val variant_parse :
   Variant_type.t structure ptr option -> string -> string option -> string option -> (Variant.t structure ptr option, Error.t structure ptr option) result
 
-val variant_parse_error_print_context:
+val variant_parse_error_print_context :
   Error.t structure ptr -> string -> string option
 
-val variant_parse_error_quark:
+val variant_parse_error_quark :
   unit -> Unsigned.uint32
 (*DEPRECATED : variant_parser_get_error_quark*)
 
-val variant_type_checked_:
+val variant_type_checked_ :
   string -> Variant_type.t structure ptr
 
-val variant_type_string_is_valid:
+val variant_type_string_is_valid :
   string -> bool
 
 val variant_type_string_scan :

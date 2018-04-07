@@ -58,10 +58,10 @@ let compare =
 (*Not implemented g_variant_dup_bytestring_array return type C Array type for Types.Array tag not handled*)
 (*Not implemented g_variant_dup_objv return type C Array type for Types.Array tag not handled*)
 let dup_string self =
-  let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let dup_string_raw =
-    foreign "g_variant_dup_string" (ptr t_typ @-> ptr (uint64_t) @-> returning string_opt)
+    foreign "g_variant_dup_string" (ptr t_typ @-> ptr (uint64_t) @-> returning (string_opt))
   in
+  let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let ret = dup_string_raw self length_ptr in
   let length = !@ length_ptr in
   (ret, length)
@@ -97,10 +97,10 @@ let get_normal_form =
 let get_size =
   foreign "g_variant_get_size" (ptr t_typ @-> returning (uint64_t))
 let get_string self =
-  let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let get_string_raw =
-    foreign "g_variant_get_string" (ptr t_typ @-> ptr (uint64_t) @-> returning string_opt)
+    foreign "g_variant_get_string" (ptr t_typ @-> ptr (uint64_t) @-> returning (string_opt))
   in
+  let length_ptr = allocate uint64_t Unsigned.UInt64.zero in
   let ret = get_string_raw self length_ptr in
   let length = !@ length_ptr in
   (ret, length)
@@ -149,12 +149,12 @@ let is_signature =
   foreign "g_variant_is_signature" (string @-> returning (bool))
 let parse _type text limit endptr =
   let parse_raw =
-    foreign "g_variant_parse" (ptr_opt Variant_type.t_typ @-> string @-> string_opt @-> string_opt@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
+    foreign "g_variant_parse" (ptr_opt Variant_type.t_typ @-> string @-> string_opt @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = parse_raw _type text limit endptr err_ptr_ptr in
+  let ret = parse_raw _type text limit endptr err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)

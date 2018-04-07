@@ -17,66 +17,66 @@ val f_next: (t structure ptr, t structure) field
 val f_name: (string, t structure) field
 val f_priv: (Source_private.t structure ptr, t structure) field
 
-val create:
+val create :
   Source_funcs.t structure ptr -> Unsigned.uint32 -> t structure ptr
-val add_child_source:
+val add_child_source :
   t structure ptr -> t structure ptr -> unit
-val add_poll:
+val add_poll :
   t structure ptr -> Poll_fd.t structure ptr -> unit
-val add_unix_fd:
+val add_unix_fd :
   t structure ptr -> int32 -> IOCondition.t_list -> unit ptr
 (*SKIPPED :  g_source_attach type Main_context.t structure ptr option skipped*)
-val destroy:
+val destroy :
   t structure ptr -> unit
-val get_can_recurse:
+val get_can_recurse :
   t structure ptr -> bool
 (*SKIPPED : g_source_get_context return type Main_context.t structure ptr option*)
-val get_current_time:
+val get_current_time :
   t structure ptr -> Time_val.t structure ptr -> unit
-val get_id:
+val get_id :
   t structure ptr -> Unsigned.uint32
-val get_name:
+val get_name :
   t structure ptr -> string option
-val get_priority:
+val get_priority :
   t structure ptr -> int32
-val get_ready_time:
+val get_ready_time :
   t structure ptr -> int64
-val get_time:
+val get_time :
   t structure ptr -> int64
-val is_destroyed:
+val is_destroyed :
   t structure ptr -> bool
-val modify_unix_fd:
+val modify_unix_fd :
   t structure ptr -> unit ptr -> IOCondition.t_list -> unit
-val query_unix_fd:
+val query_unix_fd :
   t structure ptr -> unit ptr -> IOCondition.t_list
-val incr_ref:
+val incr_ref :
   t structure ptr -> t structure ptr
-val remove_child_source:
+val remove_child_source :
   t structure ptr -> t structure ptr -> unit
-val remove_poll:
+val remove_poll :
   t structure ptr -> Poll_fd.t structure ptr -> unit
-val remove_unix_fd:
+val remove_unix_fd :
   t structure ptr -> unit ptr -> unit
 (*Not implemented g_source_set_callback type callback not implemented*)
-val set_callback_indirect:
+val set_callback_indirect :
   t structure ptr -> unit ptr option -> Source_callback_funcs.t structure ptr -> unit
-val set_can_recurse:
+val set_can_recurse :
   t structure ptr -> bool -> unit
-val set_funcs:
+val set_funcs :
   t structure ptr -> Source_funcs.t structure ptr -> unit
-val set_name:
+val set_name :
   t structure ptr -> string -> unit
-val set_priority:
+val set_priority :
   t structure ptr -> int32 -> unit
-val set_ready_time:
+val set_ready_time :
   t structure ptr -> int64 -> unit
-val unref:
+val unref :
   t structure ptr -> unit
-val remove:
+val remove :
   Unsigned.uint32 -> bool
-val remove_by_funcs_user_data:
+val remove_by_funcs_user_data :
   Source_funcs.t structure ptr -> unit ptr option -> bool
-val remove_by_user_data:
+val remove_by_user_data :
   unit ptr option -> bool
-val set_name_by_id:
+val set_name_by_id :
   Unsigned.uint32 -> string -> unit

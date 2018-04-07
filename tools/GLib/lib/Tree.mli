@@ -3,23 +3,23 @@ open Ctypes
 type t
 val t_typ : t structure typ
 
-val destroy:
+val destroy :
   t structure ptr -> unit
-val height:
+val height :
   t structure ptr -> int32
-val insert:
+val insert :
   t structure ptr -> unit ptr option -> unit ptr option -> unit
-val lookup:
+val lookup :
   t structure ptr -> unit ptr option -> unit ptr option
-val lookup_extended:
+val lookup_extended :
   t structure ptr -> unit ptr option -> unit ptr option -> unit ptr option -> bool
-val nnodes:
+val nnodes :
   t structure ptr -> int32
-val remove:
+val remove :
   t structure ptr -> unit ptr option -> bool
-val replace:
+val replace :
   t structure ptr -> unit ptr option -> unit ptr option -> unit
-val steal:
+val steal :
   t structure ptr -> unit ptr option -> bool
-val unref:
+val unref :
   t structure ptr -> unit

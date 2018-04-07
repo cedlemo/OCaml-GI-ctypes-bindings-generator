@@ -3,60 +3,60 @@ open Ctypes
 type t
 val t_typ : t structure typ
 
-val create:
+val create :
   string -> t structure ptr
-val create_array:
+val create_array :
   t structure ptr -> t structure ptr
-val create_dict_entry:
+val create_dict_entry :
   t structure ptr -> t structure ptr -> t structure ptr
-val create_maybe:
+val create_maybe :
   t structure ptr -> t structure ptr
 (*Not implemented g_variant_type_new_tuple type C Array type for Types.Array tag not implemented*)
-val copy:
+val copy :
   t structure ptr -> t structure ptr
-val dup_string:
+val dup_string :
   t structure ptr -> string option
-val element:
+val element :
   t structure ptr -> t structure ptr
-val equal:
+val equal :
   t structure ptr -> t structure ptr -> bool
-val first:
+val first :
   t structure ptr -> t structure ptr
-val free:
+val free :
   t structure ptr -> unit
-val get_string_length:
+val get_string_length :
   t structure ptr -> Unsigned.uint64
-val hash:
+val hash :
   t structure ptr -> Unsigned.uint32
-val is_array:
+val is_array :
   t structure ptr -> bool
-val is_basic:
+val is_basic :
   t structure ptr -> bool
-val is_container:
+val is_container :
   t structure ptr -> bool
-val is_definite:
+val is_definite :
   t structure ptr -> bool
-val is_dict_entry:
+val is_dict_entry :
   t structure ptr -> bool
-val is_maybe:
+val is_maybe :
   t structure ptr -> bool
-val is_subtype_of:
+val is_subtype_of :
   t structure ptr -> t structure ptr -> bool
-val is_tuple:
+val is_tuple :
   t structure ptr -> bool
-val is_variant:
+val is_variant :
   t structure ptr -> bool
-val key:
+val key :
   t structure ptr -> t structure ptr
-val n_items:
+val n_items :
   t structure ptr -> Unsigned.uint64
-val next:
+val next :
   t structure ptr -> t structure ptr
-val value:
+val value :
   t structure ptr -> t structure ptr
-val checked_:
+val checked_ :
   string -> t structure ptr
-val string_is_valid:
+val string_is_valid :
   string -> bool
 val string_scan :
   string -> string option -> (bool * string)

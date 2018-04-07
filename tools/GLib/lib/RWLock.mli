@@ -6,19 +6,19 @@ val t_typ : t structure typ
 val f_p: (unit ptr, t structure) field
 (*Struct field RWLock : C Array type for Types.Array tag tag not implemented*)
 
-val clear:
+val clear :
   t structure ptr -> unit
-val init:
+val init :
   t structure ptr -> unit
-val reader_lock:
+val reader_lock :
   t structure ptr -> unit
-val reader_trylock:
+val reader_trylock :
   t structure ptr -> bool
-val reader_unlock:
+val reader_unlock :
   t structure ptr -> unit
-val writer_lock:
+val writer_lock :
   t structure ptr -> unit
-val writer_trylock:
+val writer_trylock :
   t structure ptr -> bool
-val writer_unlock:
+val writer_unlock :
   t structure ptr -> unit

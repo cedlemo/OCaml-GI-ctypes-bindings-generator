@@ -13,10 +13,10 @@ let add =
 let to_iso8601 =
   foreign "g_time_val_to_iso8601" (ptr t_typ @-> returning (string_opt))
 let from_iso8601 iso_date =
-  let time__ptr = allocate t_typ (make t_typ) in
   let from_iso8601_raw =
-    foreign "g_time_val_from_iso8601" (string @-> ptr (t_typ) @-> returning bool)
+    foreign "g_time_val_from_iso8601" (string @-> ptr (t_typ) @-> returning (bool))
   in
+  let time__ptr = allocate t_typ (make t_typ) in
   let ret = from_iso8601_raw iso_date time__ptr in
   let time_ = !@ time__ptr in
   (ret, time_)

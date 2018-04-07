@@ -25,35 +25,35 @@ val f_buffer: (string, t structure) field
 val f_scope_id: (Unsigned.uint32, t structure) field
 (*Struct field Scanner : callback tag not implemented*)
 
-val cur_line:
+val cur_line :
   t structure ptr -> Unsigned.uint32
-val cur_position:
+val cur_position :
   t structure ptr -> Unsigned.uint32
-val cur_token:
+val cur_token :
   t structure ptr -> Token_type.t
-val destroy:
+val destroy :
   t structure ptr -> unit
-val eof:
+val eof :
   t structure ptr -> bool
-val get_next_token:
+val get_next_token :
   t structure ptr -> Token_type.t
-val input_file:
+val input_file :
   t structure ptr -> int32 -> unit
-val input_text:
+val input_text :
   t structure ptr -> string -> Unsigned.uint32 -> unit
-val lookup_symbol:
+val lookup_symbol :
   t structure ptr -> string -> unit ptr option
-val peek_next_token:
+val peek_next_token :
   t structure ptr -> Token_type.t
-val scope_add_symbol:
+val scope_add_symbol :
   t structure ptr -> Unsigned.uint32 -> string -> unit ptr option -> unit
-val scope_lookup_symbol:
+val scope_lookup_symbol :
   t structure ptr -> Unsigned.uint32 -> string -> unit ptr option
-val scope_remove_symbol:
+val scope_remove_symbol :
   t structure ptr -> Unsigned.uint32 -> string -> unit
-val set_scope:
+val set_scope :
   t structure ptr -> Unsigned.uint32 -> Unsigned.uint32
-val sync_file_offset:
+val sync_file_offset :
   t structure ptr -> unit
-val unexp_token:
+val unexp_token :
   t structure ptr -> Token_type.t -> string -> string -> string -> string -> int32 -> unit

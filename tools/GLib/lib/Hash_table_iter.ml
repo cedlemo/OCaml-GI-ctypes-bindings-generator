@@ -15,11 +15,11 @@ let _ = seal t_typ
 let init =
   foreign "g_hash_table_iter_init" (ptr t_typ @-> ptr Hash_table.t_typ @-> returning (void))
 let next self =
+  let next_raw =
+    foreign "g_hash_table_iter_next" (ptr t_typ @-> ptr (ptr_opt void) @-> ptr (ptr_opt void) @-> returning (bool))
+  in
   let key_ptr = allocate (ptr_opt void) None in
   let value_ptr = allocate (ptr_opt void) None in
-  let next_raw =
-    foreign "g_hash_table_iter_next" (ptr t_typ @-> ptr (ptr_opt void) @-> ptr (ptr_opt void) @-> returning bool)
-  in
   let ret = next_raw self key_ptr value_ptr in
   let key = !@ key_ptr in
   let value = !@ value_ptr in

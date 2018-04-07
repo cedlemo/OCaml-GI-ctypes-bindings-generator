@@ -9,23 +9,23 @@ val f_prev: (t structure ptr, t structure) field
 val f_parent: (t structure ptr, t structure) field
 val f_children: (t structure ptr, t structure) field
 
-val child_index:
+val child_index :
   t structure ptr -> unit ptr option -> int32
-val child_position:
+val child_position :
   t structure ptr -> t structure ptr -> int32
-val depth:
+val depth :
   t structure ptr -> Unsigned.uint32
-val destroy:
+val destroy :
   t structure ptr -> unit
-val is_ancestor:
+val is_ancestor :
   t structure ptr -> t structure ptr -> bool
-val max_height:
+val max_height :
   t structure ptr -> Unsigned.uint32
-val n_children:
+val n_children :
   t structure ptr -> Unsigned.uint32
-val n_nodes:
+val n_nodes :
   t structure ptr -> Traverse_flags.t_list -> Unsigned.uint32
-val reverse_children:
+val reverse_children :
   t structure ptr -> unit
-val unlink:
+val unlink :
   t structure ptr -> unit

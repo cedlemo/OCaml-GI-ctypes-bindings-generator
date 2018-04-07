@@ -15,11 +15,11 @@ let insert =
 let lookup =
   foreign "g_hash_table_lookup" (ptr t_typ @-> ptr_opt void @-> returning (ptr_opt void))
 let lookup_extended hash_table lookup_key =
+  let lookup_extended_raw =
+    foreign "g_hash_table_lookup_extended" (ptr t_typ @-> ptr_opt void @-> ptr (ptr_opt void) @-> ptr (ptr_opt void) @-> returning (bool))
+  in
   let orig_key_ptr = allocate (ptr_opt void) None in
   let value_ptr = allocate (ptr_opt void) None in
-  let lookup_extended_raw =
-    foreign "g_hash_table_lookup_extended" (ptr t_typ @-> ptr_opt void @-> ptr (ptr_opt void) @-> ptr (ptr_opt void) @-> returning bool)
-  in
   let ret = lookup_extended_raw hash_table lookup_key orig_key_ptr value_ptr in
   let orig_key = !@ orig_key_ptr in
   let value = !@ value_ptr in

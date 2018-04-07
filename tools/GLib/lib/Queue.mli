@@ -7,40 +7,40 @@ val f_head: (List.t structure ptr, t structure) field
 val f_tail: (List.t structure ptr, t structure) field
 val f_length: (Unsigned.uint32, t structure) field
 
-val clear:
+val clear :
   t structure ptr -> unit
-val free:
+val free :
   t structure ptr -> unit
 (*Not implemented g_queue_free_full type callback not implemented*)
-val get_length:
+val get_length :
   t structure ptr -> Unsigned.uint32
-val index:
+val index :
   t structure ptr -> unit ptr option -> int32
-val init:
+val init :
   t structure ptr -> unit
-val is_empty:
+val is_empty :
   t structure ptr -> bool
-val peek_head:
+val peek_head :
   t structure ptr -> unit ptr option
-val peek_nth:
+val peek_nth :
   t structure ptr -> Unsigned.uint32 -> unit ptr option
-val peek_tail:
+val peek_tail :
   t structure ptr -> unit ptr option
-val pop_head:
+val pop_head :
   t structure ptr -> unit ptr option
-val pop_nth:
+val pop_nth :
   t structure ptr -> Unsigned.uint32 -> unit ptr option
-val pop_tail:
+val pop_tail :
   t structure ptr -> unit ptr option
-val push_head:
+val push_head :
   t structure ptr -> unit ptr option -> unit
-val push_nth:
+val push_nth :
   t structure ptr -> unit ptr option -> int32 -> unit
-val push_tail:
+val push_tail :
   t structure ptr -> unit ptr option -> unit
-val remove:
+val remove :
   t structure ptr -> unit ptr option -> bool
-val remove_all:
+val remove_all :
   t structure ptr -> unit ptr option -> Unsigned.uint32
-val reverse:
+val reverse :
   t structure ptr -> unit

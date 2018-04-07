@@ -3,17 +3,17 @@ open Ctypes
 type t
 val t_typ : t structure typ
 
-val create:
+val create :
   Variant_type.t structure ptr -> t structure ptr
-val add_value:
+val add_value :
   t structure ptr -> Variant.t structure ptr -> unit
-val close:
+val close :
   t structure ptr -> unit
-val _end:
+val _end :
   t structure ptr -> Variant.t structure ptr
-val _open:
+val _open :
   t structure ptr -> Variant_type.t structure ptr -> unit
-val incr_ref:
+val incr_ref :
   t structure ptr -> t structure ptr
-val unref:
+val unref :
   t structure ptr -> unit

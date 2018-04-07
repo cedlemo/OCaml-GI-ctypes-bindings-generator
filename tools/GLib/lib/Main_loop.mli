@@ -5,13 +5,13 @@ val t_typ : t structure typ
 
 (*SKIPPED :  g_main_loop_new type Main_context.t structure ptr option skipped*)
 (*SKIPPED : g_main_loop_get_context return type Main_context.t structure ptr*)
-val is_running:
+val is_running :
   t structure ptr -> bool
-val quit:
+val quit :
   t structure ptr -> unit
-val incr_ref:
+val incr_ref :
   t structure ptr -> t structure ptr
-val run:
+val run :
   t structure ptr -> unit
-val unref:
+val unref :
   t structure ptr -> unit

@@ -3,23 +3,23 @@ open Ctypes
 type t
 val t_typ : t structure typ
 
-val create:
+val create :
   string option -> t structure ptr
-val create_local:
+val create_local :
   unit -> t structure ptr
-val create_utc:
+val create_utc :
   unit -> t structure ptr
-val adjust_time:
+val adjust_time :
   t structure ptr -> Time_type.t -> int64 ptr -> int32
-val find_interval:
+val find_interval :
   t structure ptr -> Time_type.t -> int64 -> int32
-val get_abbreviation:
+val get_abbreviation :
   t structure ptr -> int32 -> string option
-val get_offset:
+val get_offset :
   t structure ptr -> int32 -> int32
-val is_dst:
+val is_dst :
   t structure ptr -> int32 -> bool
-val incr_ref:
+val incr_ref :
   t structure ptr -> t structure ptr
-val unref:
+val unref :
   t structure ptr -> unit

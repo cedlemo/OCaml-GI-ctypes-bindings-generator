@@ -3,13 +3,13 @@ open Ctypes
 type t
 val t_typ : t structure typ
 
-val clear:
+val clear :
   t structure ptr -> unit
-val free:
+val free :
   t structure ptr -> unit
-val insert:
+val insert :
   t structure ptr -> string -> string option
-val insert_const:
+val insert_const :
   t structure ptr -> string -> string option
-val insert_len:
+val insert_len :
   t structure ptr -> string -> int64 -> string option
