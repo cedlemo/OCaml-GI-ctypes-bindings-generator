@@ -23,7 +23,7 @@ let lookup_item self uri =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = lookup_item_raw self uri err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
@@ -34,7 +34,7 @@ let move_item self uri create_uri =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = move_item_raw self uri create_uri err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
@@ -45,7 +45,7 @@ let purge_items self =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = purge_items_raw self err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
@@ -56,7 +56,7 @@ let remove_item self uri =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = remove_item_raw self uri err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)

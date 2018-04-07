@@ -13,7 +13,7 @@ let create_from_file file_name =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = create_from_file_raw file_name err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
@@ -26,7 +26,7 @@ let create_from_key_file key_file group_name =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = create_from_key_file_raw key_file group_name err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
@@ -107,7 +107,7 @@ let load_file self file_name =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = load_file_raw self file_name err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
@@ -118,7 +118,7 @@ let load_key_file self key_file group_name =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = load_key_file_raw self key_file group_name err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
@@ -188,7 +188,7 @@ let to_file self file_name =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = to_file_raw self file_name err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)

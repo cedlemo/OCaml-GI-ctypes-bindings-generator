@@ -20,7 +20,7 @@ let add_from_file self filename =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = add_from_file_raw self filename err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
@@ -31,7 +31,7 @@ let add_from_resource self resource_path =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = add_from_resource_raw self resource_path err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
@@ -42,7 +42,7 @@ let add_from_string self buffer length =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = add_from_string_raw self buffer length err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)

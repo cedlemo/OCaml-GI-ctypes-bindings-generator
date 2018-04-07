@@ -21,7 +21,7 @@ let get_error self =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = get_error_raw self err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
@@ -46,7 +46,7 @@ let run self action parent =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = run_raw self action parent err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)

@@ -34,7 +34,7 @@ let load_icon self =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = load_icon_raw self err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
@@ -47,7 +47,7 @@ let load_surface self for_window =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = load_surface_raw self for_window err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
