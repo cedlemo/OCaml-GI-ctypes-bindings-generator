@@ -137,7 +137,7 @@ let test_function_bindings_for_in_args_only_function_gerror test_ctxt =
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in\n  \
   let ret = dir_make_tmp_raw tmpl err_ptr_ptr in\n  \
   match (!@ err_ptr_ptr) with\n  \
-  | None -> Ok value\n  \
+  | None -> Ok ret\n  \
   | Some _ -> let err_ptr = !@ err_ptr_ptr in\n    \
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) \
     err_ptr in\n    Error (err_ptr)" in
