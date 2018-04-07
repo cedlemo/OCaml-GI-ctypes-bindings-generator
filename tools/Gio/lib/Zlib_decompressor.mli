@@ -3,5 +3,7 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented g_zlib_decompressor_new return type object not handled*)
-(*Not implemented g_zlib_decompressor_get_file_info return type object not handled*)
+val create :
+  Zlib_compressor_format.t -> t
+val get_file_info :
+  t -> File_info.t

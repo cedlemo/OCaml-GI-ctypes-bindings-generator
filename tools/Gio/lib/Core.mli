@@ -105,83 +105,87 @@ val c_VOLUME_IDENTIFIER_KIND_NFS_MOUNT : string
 val c_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE : string
 val c_VOLUME_IDENTIFIER_KIND_UUID : string
 val c_VOLUME_MONITOR_EXTENSION_POINT_NAME : string
-val action_name_is_valid:
+val action_name_is_valid :
   string -> bool
 
 val action_parse_detailed_name :
   string -> (bool * string * Variant.t structure ptr, Error.t structure ptr option) result
 
-val action_print_detailed_name:
+val action_print_detailed_name :
   string -> Variant.t structure ptr option -> string option
 
 (*Not implemented g_app_info_create_from_commandline return type interface not handled*)
 
-val app_info_get_all:
+val app_info_get_all :
   unit -> List.t structure ptr
 
-val app_info_get_all_for_type:
+val app_info_get_all_for_type :
   string -> List.t structure ptr
 
 (*Not implemented g_app_info_get_default_for_type return type interface not handled*)
 
 (*Not implemented g_app_info_get_default_for_uri_scheme return type interface not handled*)
 
-val app_info_get_fallback_for_type:
+val app_info_get_fallback_for_type :
   string -> List.t structure ptr
 
-val app_info_get_recommended_for_type:
+val app_info_get_recommended_for_type :
   string -> List.t structure ptr
 
-(*Not implemented g_app_info_launch_default_for_uri type object not implemented*)
+val app_info_launch_default_for_uri :
+  string -> App_launch_context.t -> (bool, Error.t structure ptr option) result
 
-(*Not implemented g_app_info_launch_default_for_uri_async type object not implemented*)
+(*Not implemented g_app_info_launch_default_for_uri_async type callback not implemented*)
 
 (*Not implemented g_app_info_launch_default_for_uri_finish type interface not implemented*)
 
-val app_info_reset_type_associations:
+val app_info_reset_type_associations :
   string -> unit
 
 (*DEPRECATED : async_initable_newv_async*)
-(*Not implemented g_bus_get type object not implemented*)
+(*Not implemented g_bus_get type callback not implemented*)
 
 (*Not implemented g_bus_get_finish type interface not implemented*)
 
-(*Not implemented g_bus_get_sync type object not implemented*)
+val bus_get_sync :
+  Bus_type.t -> Cancellable.t -> (DBus_connection.t, Error.t structure ptr option) result
 
-(*Not implemented g_bus_own_name_on_connection_with_closures type object not implemented*)
+val bus_own_name_on_connection :
+  DBus_connection.t -> string -> Bus_name_owner_flags.t_list -> Closure.t structure ptr option -> Closure.t structure ptr option -> Unsigned.uint32
 
-val bus_own_name:
+val bus_own_name :
   Bus_type.t -> string -> Bus_name_owner_flags.t_list -> Closure.t structure ptr option -> Closure.t structure ptr option -> Closure.t structure ptr option -> Unsigned.uint32
 
-val bus_unown_name:
+val bus_unown_name :
   Unsigned.uint32 -> unit
 
-val bus_unwatch_name:
+val bus_unwatch_name :
   Unsigned.uint32 -> unit
 
-(*Not implemented g_bus_watch_name_on_connection_with_closures type object not implemented*)
+val bus_watch_name_on_connection :
+  DBus_connection.t -> string -> Bus_name_watcher_flags.t_list -> Closure.t structure ptr option -> Closure.t structure ptr option -> Unsigned.uint32
 
-val bus_watch_name:
+val bus_watch_name :
   Bus_type.t -> string -> Bus_name_watcher_flags.t_list -> Closure.t structure ptr option -> Closure.t structure ptr option -> Unsigned.uint32
 
-val content_type_can_be_executable:
+val content_type_can_be_executable :
   string -> bool
 
-val content_type_equals:
+val content_type_equals :
   string -> string -> bool
 
-val content_type_from_mime_type:
+val content_type_from_mime_type :
   string -> string option
 
-val content_type_get_description:
+val content_type_get_description :
   string -> string option
 
-val content_type_get_generic_icon_name:
+val content_type_get_generic_icon_name :
   string -> string option
 
 (*Not implemented g_content_type_get_icon return type interface not handled*)
 
-val content_type_get_mime_type:
+val content_type_get_mime_type :
   string -> string option
 
 (*Not implemented g_content_type_get_symbolic_icon return type interface not handled*)
@@ -190,86 +194,88 @@ val content_type_get_mime_type:
 
 (*Not implemented g_content_type_guess_for_tree type interface not implemented*)
 
-val content_type_is_a:
+val content_type_is_a :
   string -> string -> bool
 
-val content_type_is_mime_type:
+val content_type_is_mime_type :
   string -> string -> bool
 
-val content_type_is_unknown:
+val content_type_is_unknown :
   string -> bool
 
-val content_types_get_registered:
+val content_types_get_registered :
   unit -> List.t structure ptr
 
-val dbus_address_escape_value:
+val dbus_address_escape_value :
   string -> string option
 
-(*Not implemented g_dbus_address_get_for_bus_sync type object not implemented*)
+val dbus_address_get_for_bus_sync :
+  Bus_type.t -> Cancellable.t -> (string option, Error.t structure ptr option) result
 
-(*Not implemented g_dbus_address_get_stream type object not implemented*)
+(*Not implemented g_dbus_address_get_stream type callback not implemented*)
 
 (*Not implemented g_dbus_address_get_stream_finish type interface not implemented*)
 
-(*Not implemented g_dbus_address_get_stream_sync type object not implemented*)
+val dbus_address_get_stream_sync :
+  string -> Cancellable.t -> (IOStream.t * string, Error.t structure ptr option) result
 
 (*Not implemented g_dbus_annotation_info_lookup type C Array type for Types.Array tag not implemented*)
 
-val dbus_error_encode_gerror:
+val dbus_error_encode_gerror :
   Error.t structure ptr -> string option
 
-val dbus_error_get_remote_error:
+val dbus_error_get_remote_error :
   Error.t structure ptr -> string option
 
-val dbus_error_is_remote_error:
+val dbus_error_is_remote_error :
   Error.t structure ptr -> bool
 
-val dbus_error_create_for_dbus_error:
+val dbus_error_create_for_dbus_error :
   string -> string -> Error.t structure ptr
 
-val dbus_error_quark:
+val dbus_error_quark :
   unit -> Unsigned.uint32
 
-val dbus_error_register_error:
+val dbus_error_register_error :
   Unsigned.uint32 -> int32 -> string -> bool
 
-val dbus_error_register_error_domain:
+val dbus_error_register_error_domain :
   string -> Unsigned.uint64 ptr -> DBus_error_entry.t structure ptr -> Unsigned.uint32 -> unit
 
-val dbus_error_strip_remote_error:
+val dbus_error_strip_remote_error :
   Error.t structure ptr -> bool
 
-val dbus_error_unregister_error:
+val dbus_error_unregister_error :
   Unsigned.uint32 -> int32 -> string -> bool
 
-val dbus_generate_guid:
+val dbus_generate_guid :
   unit -> string option
 
-val dbus_gvalue_to_gvariant:
+val dbus_gvalue_to_gvariant :
   Value.t structure ptr -> Variant_type.t structure ptr -> Variant.t structure ptr
 
 val dbus_gvariant_to_gvalue :
   Variant.t structure ptr -> (Value.t structure)
 
-val dbus_is_address:
+val dbus_is_address :
   string -> bool
 
-val dbus_is_guid:
+val dbus_is_guid :
   string -> bool
 
-val dbus_is_interface_name:
+val dbus_is_interface_name :
   string -> bool
 
-val dbus_is_member_name:
+val dbus_is_member_name :
   string -> bool
 
-val dbus_is_name:
+val dbus_is_name :
   string -> bool
 
-val dbus_is_supported_address:
+val dbus_is_supported_address :
   string -> (bool, Error.t structure ptr option) result
 
-val dbus_is_unique_name:
+val dbus_is_unique_name :
   string -> bool
 
 (*Not implemented g_dtls_client_connection_new type interface not implemented*)
@@ -284,78 +290,83 @@ val dbus_is_unique_name:
 
 (*Not implemented g_file_new_for_uri return type interface not handled*)
 
-(*Not implemented g_file_new_tmp type object not implemented*)
+(*Not implemented g_file_new_tmp return type interface not handled*)
 
 (*Not implemented g_file_parse_name return type interface not handled*)
 
 (*Not implemented g_icon_deserialize return type interface not handled*)
 
-val icon_hash:
+val icon_hash :
   unit ptr -> Unsigned.uint32
 
 (*Not implemented g_icon_new_for_string return type interface not handled*)
 
 (*DEPRECATED : initable_newv*)
-val io_error_from_errno:
+val io_error_from_errno :
   int32 -> IOError_enum.t
 
-val io_error_quark:
+val io_error_quark :
   unit -> Unsigned.uint32
 
 (*Not implemented g_io_extension_point_implement type gType not implemented*)
 
-val io_extension_point_lookup:
+val io_extension_point_lookup :
   string -> IOExtension_point.t structure ptr
 
-val io_extension_point_register:
+val io_extension_point_register :
   string -> IOExtension_point.t structure ptr
 
-val io_modules_load_all_in_directory:
+val io_modules_load_all_in_directory :
   string -> List.t structure ptr
 
-val io_modules_load_all_in_directory_with_scope:
+val io_modules_load_all_in_directory_with_scope :
   string -> IOModule_scope.t structure ptr -> List.t structure ptr
 
-val io_modules_scan_all_in_directory:
+val io_modules_scan_all_in_directory :
   string -> unit
 
-val io_modules_scan_all_in_directory_with_scope:
+val io_modules_scan_all_in_directory_with_scope :
   string -> IOModule_scope.t structure ptr -> unit
 
 (*DEPRECATED : io_scheduler_cancel_all_jobs*)
 (*DEPRECATED : io_scheduler_push_job*)
-(*Not implemented g_keyfile_settings_backend_new return type object not handled*)
+val keyfile_settings_backend_create :
+  string -> string -> string option -> Settings_backend.t
 
-(*Not implemented g_memory_settings_backend_new return type object not handled*)
+val memory_settings_backend_create :
+  unit -> Settings_backend.t
 
 (*Not implemented g_network_monitor_get_default return type interface not handled*)
 
-val networking_init:
+val networking_init :
   unit -> unit
 
-(*Not implemented g_null_settings_backend_new return type object not handled*)
+val null_settings_backend_create :
+  unit -> Settings_backend.t
 
-(*Not implemented g_pollable_source_new type object not implemented*)
+val pollable_source_create :
+  Object.t -> Source.t structure ptr
 
-(*Not implemented g_pollable_source_new_full type object not implemented*)
+val pollable_source_create_full :
+  Object.t -> Source.t structure ptr option -> Cancellable.t -> Source.t structure ptr
 
-(*Not implemented g_pollable_stream_read type object not implemented*)
+(*Not implemented g_pollable_stream_read type C Array type for Types.Array tag not implemented*)
 
-(*Not implemented g_pollable_stream_write type object not implemented*)
+(*Not implemented g_pollable_stream_write type C Array type for Types.Array tag not implemented*)
 
-(*Not implemented g_pollable_stream_write_all type object not implemented*)
+(*Not implemented g_pollable_stream_write_all type C Array type for Types.Array tag not implemented*)
 
 (*Not implemented g_proxy_get_default_for_protocol return type interface not handled*)
 
 (*Not implemented g_proxy_resolver_get_default return type interface not handled*)
 
-val resolver_error_quark:
+val resolver_error_quark :
   unit -> Unsigned.uint32
 
-val resource_error_quark:
+val resource_error_quark :
   unit -> Unsigned.uint32
 
-val resource_load:
+val resource_load :
   string -> (Resource.t structure ptr option, Error.t structure ptr option) result
 
 (*Not implemented g_resources_enumerate_children return type C Array type for Types.Array tag not handled*)
@@ -363,85 +374,86 @@ val resource_load:
 val resources_get_info :
   string -> Resource_lookup_flags.t_list -> (bool * Unsigned.uint64 * Unsigned.uint32, Error.t structure ptr option) result
 
-val resources_lookup_data:
+val resources_lookup_data :
   string -> Resource_lookup_flags.t_list -> (Bytes.t structure ptr option, Error.t structure ptr option) result
 
-(*Not implemented g_resources_open_stream return type object not handled*)
+val resources_open_stream :
+  string -> Resource_lookup_flags.t_list -> (Input_stream.t, Error.t structure ptr option) result
 
-val resources_register:
+val resources_register :
   Resource.t structure ptr -> unit
 
-val resources_unregister:
+val resources_unregister :
   Resource.t structure ptr -> unit
 
-val settings_schema_source_get_default:
+val settings_schema_source_get_default :
   unit -> Settings_schema_source.t structure ptr
 
 (*DEPRECATED : simple_async_report_gerror_in_idle*)
 (*Not implemented g_tls_backend_get_default return type interface not handled*)
 
-(*Not implemented g_tls_client_connection_new type object not implemented*)
+(*Not implemented g_tls_client_connection_new type interface not implemented*)
 
-val tls_error_quark:
+val tls_error_quark :
   unit -> Unsigned.uint32
 
 (*Not implemented g_tls_file_database_new return type interface not handled*)
 
-(*Not implemented g_tls_server_connection_new type object not implemented*)
+(*Not implemented g_tls_server_connection_new return type interface not handled*)
 
-val unix_is_mount_path_system_internal:
+val unix_is_mount_path_system_internal :
   string -> bool
 
 val unix_mount_at :
   string -> (Unix_mount_entry.t structure ptr * Unsigned.uint64)
 
-val unix_mount_compare:
+val unix_mount_compare :
   Unix_mount_entry.t structure ptr -> Unix_mount_entry.t structure ptr -> int32
 
-val unix_mount_copy:
+val unix_mount_copy :
   Unix_mount_entry.t structure ptr -> Unix_mount_entry.t structure ptr
 
 val unix_mount_for :
   string -> (Unix_mount_entry.t structure ptr * Unsigned.uint64)
 
-val unix_mount_free:
+val unix_mount_free :
   Unix_mount_entry.t structure ptr -> unit
 
-val unix_mount_get_device_path:
+val unix_mount_get_device_path :
   Unix_mount_entry.t structure ptr -> string option
 
-val unix_mount_get_fs_type:
+val unix_mount_get_fs_type :
   Unix_mount_entry.t structure ptr -> string option
 
-val unix_mount_get_mount_path:
+val unix_mount_get_mount_path :
   Unix_mount_entry.t structure ptr -> string option
 
-val unix_mount_guess_can_eject:
+val unix_mount_guess_can_eject :
   Unix_mount_entry.t structure ptr -> bool
 
 (*Not implemented g_unix_mount_guess_icon return type interface not handled*)
 
-val unix_mount_guess_name:
+val unix_mount_guess_name :
   Unix_mount_entry.t structure ptr -> string option
 
-val unix_mount_guess_should_display:
+val unix_mount_guess_should_display :
   Unix_mount_entry.t structure ptr -> bool
 
 (*Not implemented g_unix_mount_guess_symbolic_icon return type interface not handled*)
 
-val unix_mount_is_readonly:
+val unix_mount_is_readonly :
   Unix_mount_entry.t structure ptr -> bool
 
-val unix_mount_is_system_internal:
+val unix_mount_is_system_internal :
   Unix_mount_entry.t structure ptr -> bool
 
-val unix_mount_points_changed_since:
+val unix_mount_points_changed_since :
   Unsigned.uint64 -> bool
 
 val unix_mount_points_get :
   unit -> (List.t structure ptr * Unsigned.uint64)
 
-val unix_mounts_changed_since:
+val unix_mounts_changed_since :
   Unsigned.uint64 -> bool
 
 val unix_mounts_get :

@@ -4,10 +4,11 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented g_socket_service_new return type object not handled*)
+let create =
+  foreign "g_socket_service_new" (void @-> returning (t_typ))
 let is_active =
-  foreign "g_socket_service_is_active" (ptr t_typ @-> returning (bool))
+  foreign "g_socket_service_is_active" (t_typ @-> returning (bool))
 let start =
-  foreign "g_socket_service_start" (ptr t_typ @-> returning (void))
+  foreign "g_socket_service_start" (t_typ @-> returning (void))
 let stop =
-  foreign "g_socket_service_stop" (ptr t_typ @-> returning (void))
+  foreign "g_socket_service_stop" (t_typ @-> returning (void))

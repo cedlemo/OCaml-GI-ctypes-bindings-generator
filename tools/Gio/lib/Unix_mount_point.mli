@@ -3,29 +3,29 @@ open Ctypes
 type t
 val t_typ : t structure typ
 
-val compare:
+val compare :
   t structure ptr -> t structure ptr -> int32
-val copy:
+val copy :
   t structure ptr -> t structure ptr
-val free:
+val free :
   t structure ptr -> unit
-val get_device_path:
+val get_device_path :
   t structure ptr -> string option
-val get_fs_type:
+val get_fs_type :
   t structure ptr -> string option
-val get_mount_path:
+val get_mount_path :
   t structure ptr -> string option
-val get_options:
+val get_options :
   t structure ptr -> string option
-val guess_can_eject:
+val guess_can_eject :
   t structure ptr -> bool
 (*Not implemented g_unix_mount_point_guess_icon return type interface not handled*)
-val guess_name:
+val guess_name :
   t structure ptr -> string option
 (*Not implemented g_unix_mount_point_guess_symbolic_icon return type interface not handled*)
-val is_loopback:
+val is_loopback :
   t structure ptr -> bool
-val is_readonly:
+val is_readonly :
   t structure ptr -> bool
-val is_user_mountable:
+val is_user_mountable :
   t structure ptr -> bool

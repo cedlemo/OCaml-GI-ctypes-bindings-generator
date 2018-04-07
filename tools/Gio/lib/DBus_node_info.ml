@@ -13,12 +13,12 @@ let _ = seal t_typ
 
 let create_for_xml xml_data =
   let create_for_xml_raw =
-    foreign "g_dbus_node_info_new_for_xml" (string@-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
+    foreign "g_dbus_node_info_new_for_xml" (string @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = create_for_xml_raw xml_data err_ptr_ptr in
+  let ret = create_for_xml_raw xml_data err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)

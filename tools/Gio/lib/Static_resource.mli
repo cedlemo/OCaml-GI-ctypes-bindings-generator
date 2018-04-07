@@ -9,9 +9,9 @@ val f_resource: (Resource.t structure ptr, t structure) field
 val f_next: (t structure ptr, t structure) field
 val f_padding: (unit ptr, t structure) field
 
-val fini:
+val fini :
   t structure ptr -> unit
-val get_resource:
+val get_resource :
   t structure ptr -> Resource.t structure ptr
-val init:
+val init :
   t structure ptr -> unit

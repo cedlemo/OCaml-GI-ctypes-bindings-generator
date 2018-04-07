@@ -10,19 +10,19 @@ val f_name: (string, t structure) field
 (*Struct field DBus_interface_info : C Array type for Types.Array tag tag not implemented*)
 (*Struct field DBus_interface_info : C Array type for Types.Array tag tag not implemented*)
 
-val cache_build:
+val cache_build :
   t structure ptr -> unit
-val cache_release:
+val cache_release :
   t structure ptr -> unit
-val generate_xml:
+val generate_xml :
   t structure ptr -> Unsigned.uint32 -> String.t structure ptr -> unit
-val lookup_method:
+val lookup_method :
   t structure ptr -> string -> DBus_method_info.t structure ptr
-val lookup_property:
+val lookup_property :
   t structure ptr -> string -> DBus_property_info.t structure ptr
-val lookup_signal:
+val lookup_signal :
   t structure ptr -> string -> DBus_signal_info.t structure ptr
-val incr_ref:
+val incr_ref :
   t structure ptr -> t structure ptr
-val unref:
+val unref :
   t structure ptr -> unit

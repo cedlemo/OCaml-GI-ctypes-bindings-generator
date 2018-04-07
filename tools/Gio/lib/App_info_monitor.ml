@@ -4,4 +4,5 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented g_app_info_monitor_get return type object not handled*)
+let get =
+  foreign "g_app_info_monitor_get" (void @-> returning (t_typ))

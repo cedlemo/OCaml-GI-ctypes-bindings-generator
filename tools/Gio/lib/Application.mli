@@ -3,60 +3,67 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented g_application_new return type object not handled*)
-(*Not implemented g_application_get_default return type object not handled*)
-val id_is_valid:
+val create :
+  string option -> Application_flags.t_list -> t
+val get_default :
+  unit -> t
+val id_is_valid :
   string -> bool
-val activate:
-  t structure ptr -> unit
-val add_main_option:
-  t structure ptr -> string -> int -> Option_flags.t_list -> Option_arg.t -> string -> string option -> unit
+val activate :
+  t -> unit
+val add_main_option :
+  t -> string -> int -> Option_flags.t_list -> Option_arg.t -> string -> string option -> unit
 (*Not implemented g_application_add_main_option_entries type C Array type for Types.Array tag not implemented*)
-val add_option_group:
-  t structure ptr -> Option_group.t structure ptr -> unit
-(*Not implemented g_application_bind_busy_property type object not implemented*)
-val get_application_id:
-  t structure ptr -> string option
-(*Not implemented g_application_get_dbus_connection return type object not handled*)
-val get_dbus_object_path:
-  t structure ptr -> string option
-val get_flags:
-  t structure ptr -> Application_flags.t_list
-val get_inactivity_timeout:
-  t structure ptr -> Unsigned.uint32
-val get_is_busy:
-  t structure ptr -> bool
-val get_is_registered:
-  t structure ptr -> bool
-val get_is_remote:
-  t structure ptr -> bool
-val get_resource_base_path:
-  t structure ptr -> string option
-val hold:
-  t structure ptr -> unit
-val mark_busy:
-  t structure ptr -> unit
+val add_option_group :
+  t -> Option_group.t structure ptr -> unit
+val bind_busy_property :
+  t -> Object.t -> string -> unit
+val get_application_id :
+  t -> string option
+val get_dbus_connection :
+  t -> DBus_connection.t
+val get_dbus_object_path :
+  t -> string option
+val get_flags :
+  t -> Application_flags.t_list
+val get_inactivity_timeout :
+  t -> Unsigned.uint32
+val get_is_busy :
+  t -> bool
+val get_is_registered :
+  t -> bool
+val get_is_remote :
+  t -> bool
+val get_resource_base_path :
+  t -> string option
+val hold :
+  t -> unit
+val mark_busy :
+  t -> unit
 (*Not implemented g_application_open type C Array type for Types.Array tag not implemented*)
-val quit:
-  t structure ptr -> unit
-(*Not implemented g_application_register type object not implemented*)
-val release:
-  t structure ptr -> unit
+val quit :
+  t -> unit
+val register :
+  t -> Cancellable.t -> (bool, Error.t structure ptr option) result
+val release :
+  t -> unit
 (*Not implemented g_application_run type C Array type for Types.Array tag not implemented*)
-(*Not implemented g_application_send_notification type object not implemented*)
+val send_notification :
+  t -> string option -> Notification.t -> unit
 (*Not implemented g_application_set_action_group type interface not implemented*)
-val set_application_id:
-  t structure ptr -> string option -> unit
-val set_default:
-  t structure ptr -> unit
-val set_flags:
-  t structure ptr -> Application_flags.t_list -> unit
-val set_inactivity_timeout:
-  t structure ptr -> Unsigned.uint32 -> unit
-val set_resource_base_path:
-  t structure ptr -> string option -> unit
-(*Not implemented g_application_unbind_busy_property type object not implemented*)
-val unmark_busy:
-  t structure ptr -> unit
-val withdraw_notification:
-  t structure ptr -> string -> unit
+val set_application_id :
+  t -> string option -> unit
+val set_default :
+  t -> unit
+val set_flags :
+  t -> Application_flags.t_list -> unit
+val set_inactivity_timeout :
+  t -> Unsigned.uint32 -> unit
+val set_resource_base_path :
+  t -> string option -> unit
+val unbind_busy_property :
+  t -> Object.t -> string -> unit
+val unmark_busy :
+  t -> unit
+val withdraw_notification :
+  t -> string -> unit

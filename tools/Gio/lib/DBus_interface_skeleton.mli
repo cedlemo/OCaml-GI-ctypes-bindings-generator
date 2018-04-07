@@ -3,23 +3,27 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented g_dbus_interface_skeleton_export type object not implemented*)
-val flush:
-  t structure ptr -> unit
-(*Not implemented g_dbus_interface_skeleton_get_connection return type object not handled*)
-val get_connections:
-  t structure ptr -> List.t structure ptr
-val get_flags:
-  t structure ptr -> DBus_interface_skeleton_flags.t_list
-val get_info:
-  t structure ptr -> DBus_interface_info.t structure ptr
-val get_object_path:
-  t structure ptr -> string option
-val get_properties:
-  t structure ptr -> Variant.t structure ptr
-(*Not implemented g_dbus_interface_skeleton_has_connection type object not implemented*)
-val set_flags:
-  t structure ptr -> DBus_interface_skeleton_flags.t_list -> unit
-val unexport:
-  t structure ptr -> unit
-(*Not implemented g_dbus_interface_skeleton_unexport_from_connection type object not implemented*)
+val export :
+  t -> DBus_connection.t -> string -> (bool, Error.t structure ptr option) result
+val flush :
+  t -> unit
+val get_connection :
+  t -> DBus_connection.t
+val get_connections :
+  t -> List.t structure ptr
+val get_flags :
+  t -> DBus_interface_skeleton_flags.t_list
+val get_info :
+  t -> DBus_interface_info.t structure ptr
+val get_object_path :
+  t -> string option
+val get_properties :
+  t -> Variant.t structure ptr
+val has_connection :
+  t -> DBus_connection.t -> bool
+val set_flags :
+  t -> DBus_interface_skeleton_flags.t_list -> unit
+val unexport :
+  t -> unit
+val unexport_from_connection :
+  t -> DBus_connection.t -> unit

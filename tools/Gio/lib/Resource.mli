@@ -3,21 +3,22 @@ open Ctypes
 type t
 val t_typ : t structure typ
 
-val create_from_data:
+val create_from_data :
   Bytes.t structure ptr -> (t structure ptr option, Error.t structure ptr option) result
-val _register:
+val _register :
   t structure ptr -> unit
-val _unregister:
+val _unregister :
   t structure ptr -> unit
 (*Not implemented g_resource_enumerate_children return type C Array type for Types.Array tag not handled*)
 val get_info :
   t structure ptr -> string -> Resource_lookup_flags.t_list -> (bool * Unsigned.uint64 * Unsigned.uint32, Error.t structure ptr option) result
-val lookup_data:
+val lookup_data :
   t structure ptr -> string -> Resource_lookup_flags.t_list -> (Bytes.t structure ptr option, Error.t structure ptr option) result
-(*Not implemented g_resource_open_stream return type object not handled*)
-val incr_ref:
+val open_stream :
+  t structure ptr -> string -> Resource_lookup_flags.t_list -> (Input_stream.t, Error.t structure ptr option) result
+val incr_ref :
   t structure ptr -> t structure ptr
-val unref:
+val unref :
   t structure ptr -> unit
-val load:
+val load :
   string -> (t structure ptr option, Error.t structure ptr option) result

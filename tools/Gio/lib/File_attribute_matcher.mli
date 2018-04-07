@@ -3,21 +3,21 @@ open Ctypes
 type t
 val t_typ : t structure typ
 
-val create:
+val create :
   string -> t structure ptr
-val enumerate_namespace:
+val enumerate_namespace :
   t structure ptr -> string -> bool
-val enumerate_next:
+val enumerate_next :
   t structure ptr -> string option
-val matches:
+val matches :
   t structure ptr -> string -> bool
-val matches_only:
+val matches_only :
   t structure ptr -> string -> bool
-val incr_ref:
+val incr_ref :
   t structure ptr -> t structure ptr
-val subtract:
+val subtract :
   t structure ptr -> t structure ptr -> t structure ptr
-val to_string:
+val to_string :
   t structure ptr -> string option
-val unref:
+val unref :
   t structure ptr -> unit

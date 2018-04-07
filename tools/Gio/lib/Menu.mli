@@ -3,25 +3,35 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented g_menu_new return type object not handled*)
-val append:
-  t structure ptr -> string option -> string option -> unit
-(*Not implemented g_menu_append_item type object not implemented*)
-(*Not implemented g_menu_append_section type object not implemented*)
-(*Not implemented g_menu_append_submenu type object not implemented*)
-val freeze:
-  t structure ptr -> unit
-val insert:
-  t structure ptr -> int32 -> string option -> string option -> unit
-(*Not implemented g_menu_insert_item type object not implemented*)
-(*Not implemented g_menu_insert_section type object not implemented*)
-(*Not implemented g_menu_insert_submenu type object not implemented*)
-val prepend:
-  t structure ptr -> string option -> string option -> unit
-(*Not implemented g_menu_prepend_item type object not implemented*)
-(*Not implemented g_menu_prepend_section type object not implemented*)
-(*Not implemented g_menu_prepend_submenu type object not implemented*)
-val remove:
-  t structure ptr -> int32 -> unit
-val remove_all:
-  t structure ptr -> unit
+val create :
+  unit -> t
+val append :
+  t -> string option -> string option -> unit
+val append_item :
+  t -> Menu_item.t -> unit
+val append_section :
+  t -> string option -> Menu_model.t -> unit
+val append_submenu :
+  t -> string option -> Menu_model.t -> unit
+val freeze :
+  t -> unit
+val insert :
+  t -> int32 -> string option -> string option -> unit
+val insert_item :
+  t -> int32 -> Menu_item.t -> unit
+val insert_section :
+  t -> int32 -> string option -> Menu_model.t -> unit
+val insert_submenu :
+  t -> int32 -> string option -> Menu_model.t -> unit
+val prepend :
+  t -> string option -> string option -> unit
+val prepend_item :
+  t -> Menu_item.t -> unit
+val prepend_section :
+  t -> string option -> Menu_model.t -> unit
+val prepend_submenu :
+  t -> string option -> Menu_model.t -> unit
+val remove :
+  t -> int32 -> unit
+val remove_all :
+  t -> unit

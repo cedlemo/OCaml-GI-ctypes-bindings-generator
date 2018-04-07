@@ -3,11 +3,15 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented g_unix_connection_receive_credentials type object not implemented*)
-(*Not implemented g_unix_connection_receive_credentials_async type object not implemented*)
+val receive_credentials :
+  t -> Cancellable.t -> (Credentials.t, Error.t structure ptr option) result
+(*Not implemented g_unix_connection_receive_credentials_async type callback not implemented*)
 (*Not implemented g_unix_connection_receive_credentials_finish type interface not implemented*)
-(*Not implemented g_unix_connection_receive_fd type object not implemented*)
-(*Not implemented g_unix_connection_send_credentials type object not implemented*)
-(*Not implemented g_unix_connection_send_credentials_async type object not implemented*)
+val receive_fd :
+  t -> Cancellable.t -> (int32, Error.t structure ptr option) result
+val send_credentials :
+  t -> Cancellable.t -> (bool, Error.t structure ptr option) result
+(*Not implemented g_unix_connection_send_credentials_async type callback not implemented*)
 (*Not implemented g_unix_connection_send_credentials_finish type interface not implemented*)
-(*Not implemented g_unix_connection_send_fd type object not implemented*)
+val send_fd :
+  t -> int32 -> Cancellable.t -> (bool, Error.t structure ptr option) result

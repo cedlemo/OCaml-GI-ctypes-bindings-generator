@@ -4,64 +4,155 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented g_socket_new return type object not handled*)
-(*Not implemented g_socket_new_from_fd return type object not handled*)
-(*Not implemented g_socket_accept type object not implemented*)
-(*Not implemented g_socket_bind type object not implemented*)
-let check_connect_result self =
-  let check_connect_result_raw =
-    foreign "g_socket_check_connect_result" (ptr t_typ@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+let create family _type protocol =
+  let create_raw =
+    foreign "g_socket_new" (Socket_family.t_view @-> Socket_type.t_view @-> Socket_protocol.t_view @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = check_connect_result_raw self err_ptr_ptr in
+  let ret = create_raw family _type protocol err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
+let create_from_fd fd =
+  let create_from_fd_raw =
+    foreign "g_socket_new_from_fd" (int32_t @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+  in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let ret = create_from_fd_raw fd err_ptr_ptr in
+  match (!@ err_ptr_ptr) with
+  | None -> Ok ret
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
+let accept self cancellable =
+  let accept_raw =
+    foreign "g_socket_accept" (t_typ @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+  in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let ret = accept_raw self cancellable err_ptr_ptr in
+  match (!@ err_ptr_ptr) with
+  | None -> Ok ret
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
+let bind self address allow_reuse =
+  let bind_raw =
+    foreign "g_socket_bind" (t_typ @-> Socket_address.t_typ @-> bool @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+  in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let ret = bind_raw self address allow_reuse err_ptr_ptr in
+  match (!@ err_ptr_ptr) with
+  | None -> Ok ret
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
+let check_connect_result self =
+  let check_connect_result_raw =
+    foreign "g_socket_check_connect_result" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+  in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let ret = check_connect_result_raw self err_ptr_ptr in
+  match (!@ err_ptr_ptr) with
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
 let close self =
   let close_raw =
-    foreign "g_socket_close" (ptr t_typ@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_socket_close" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = close_raw self err_ptr_ptr in
+  let ret = close_raw self err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
 let condition_check =
-  foreign "g_socket_condition_check" (ptr t_typ @-> IOCondition.t_list_view @-> returning (IOCondition.t_list_view))
-(*Not implemented g_socket_condition_timed_wait type object not implemented*)
-(*Not implemented g_socket_condition_wait type object not implemented*)
-(*Not implemented g_socket_connect type object not implemented*)
-(*Not implemented g_socket_connection_factory_create_connection return type object not handled*)
-let get_available_bytes =
-  foreign "g_socket_get_available_bytes" (ptr t_typ @-> returning (int64_t))
-let get_blocking =
-  foreign "g_socket_get_blocking" (ptr t_typ @-> returning (bool))
-let get_broadcast =
-  foreign "g_socket_get_broadcast" (ptr t_typ @-> returning (bool))
-(*Not implemented g_socket_get_credentials return type object not handled*)
-let get_family =
-  foreign "g_socket_get_family" (ptr t_typ @-> returning (Socket_family.t_view))
-let get_fd =
-  foreign "g_socket_get_fd" (ptr t_typ @-> returning (int32_t))
-let get_keepalive =
-  foreign "g_socket_get_keepalive" (ptr t_typ @-> returning (bool))
-let get_listen_backlog =
-  foreign "g_socket_get_listen_backlog" (ptr t_typ @-> returning (int32_t))
-(*Not implemented g_socket_get_local_address return type object not handled*)
-let get_multicast_loopback =
-  foreign "g_socket_get_multicast_loopback" (ptr t_typ @-> returning (bool))
-let get_multicast_ttl =
-  foreign "g_socket_get_multicast_ttl" (ptr t_typ @-> returning (uint32_t))
-let get_option self level optname =
-  let value_ptr = allocate int32_t Int32.zero in
-  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let get_option_raw =
-    foreign "g_socket_get_option" (ptr t_typ @-> int32_t @-> int32_t @-> ptr (int32_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+  foreign "g_socket_condition_check" (t_typ @-> IOCondition.t_list_view @-> returning (IOCondition.t_list_view))
+let condition_timed_wait self condition timeout cancellable =
+  let condition_timed_wait_raw =
+    foreign "g_socket_condition_timed_wait" (t_typ @-> IOCondition.t_list_view @-> int64_t @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let ret = condition_timed_wait_raw self condition timeout cancellable err_ptr_ptr in
+  match (!@ err_ptr_ptr) with
+  | None -> Ok ret
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
+let condition_wait self condition cancellable =
+  let condition_wait_raw =
+    foreign "g_socket_condition_wait" (t_typ @-> IOCondition.t_list_view @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+  in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let ret = condition_wait_raw self condition cancellable err_ptr_ptr in
+  match (!@ err_ptr_ptr) with
+  | None -> Ok ret
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
+let connect self address cancellable =
+  let connect_raw =
+    foreign "g_socket_connect" (t_typ @-> Socket_address.t_typ @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+  in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let ret = connect_raw self address cancellable err_ptr_ptr in
+  match (!@ err_ptr_ptr) with
+  | None -> Ok ret
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
+let connection_factory_create_connection =
+  foreign "g_socket_connection_factory_create_connection" (t_typ @-> returning (Socket_connection.t_typ))
+let get_available_bytes =
+  foreign "g_socket_get_available_bytes" (t_typ @-> returning (int64_t))
+let get_blocking =
+  foreign "g_socket_get_blocking" (t_typ @-> returning (bool))
+let get_broadcast =
+  foreign "g_socket_get_broadcast" (t_typ @-> returning (bool))
+let get_credentials self =
+  let get_credentials_raw =
+    foreign "g_socket_get_credentials" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (Credentials.t_typ))
+  in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let ret = get_credentials_raw self err_ptr_ptr in
+  match (!@ err_ptr_ptr) with
+  | None -> Ok ret
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
+let get_family =
+  foreign "g_socket_get_family" (t_typ @-> returning (Socket_family.t_view))
+let get_fd =
+  foreign "g_socket_get_fd" (t_typ @-> returning (int32_t))
+let get_keepalive =
+  foreign "g_socket_get_keepalive" (t_typ @-> returning (bool))
+let get_listen_backlog =
+  foreign "g_socket_get_listen_backlog" (t_typ @-> returning (int32_t))
+let get_local_address self =
+  let get_local_address_raw =
+    foreign "g_socket_get_local_address" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (Socket_address.t_typ))
+  in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let ret = get_local_address_raw self err_ptr_ptr in
+  match (!@ err_ptr_ptr) with
+  | None -> Ok ret
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
+let get_multicast_loopback =
+  foreign "g_socket_get_multicast_loopback" (t_typ @-> returning (bool))
+let get_multicast_ttl =
+  foreign "g_socket_get_multicast_ttl" (t_typ @-> returning (uint32_t))
+let get_option self level optname =
+  let get_option_raw =
+    foreign "g_socket_get_option" (t_typ @-> int32_t @-> int32_t @-> ptr (int32_t) @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+  in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let value_ptr = allocate int32_t Int32.zero in
   let ret = get_option_raw self level optname value_ptr err_ptr_ptr in
   let get_ret_value () =
     let value = !@ value_ptr in
@@ -72,28 +163,58 @@ let get_option self level optname =
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)let get_protocol =
-  foreign "g_socket_get_protocol" (ptr t_typ @-> returning (Socket_protocol.t_view))
-(*Not implemented g_socket_get_remote_address return type object not handled*)
-let get_socket_type =
-  foreign "g_socket_get_socket_type" (ptr t_typ @-> returning (Socket_type.t_view))
-let get_timeout =
-  foreign "g_socket_get_timeout" (ptr t_typ @-> returning (uint32_t))
-let get_ttl =
-  foreign "g_socket_get_ttl" (ptr t_typ @-> returning (uint32_t))
-let is_closed =
-  foreign "g_socket_is_closed" (ptr t_typ @-> returning (bool))
-let is_connected =
-  foreign "g_socket_is_connected" (ptr t_typ @-> returning (bool))
-(*Not implemented g_socket_join_multicast_group type object not implemented*)
-(*Not implemented g_socket_leave_multicast_group type object not implemented*)
-let listen self =
-  let listen_raw =
-    foreign "g_socket_listen" (ptr t_typ@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+  foreign "g_socket_get_protocol" (t_typ @-> returning (Socket_protocol.t_view))
+let get_remote_address self =
+  let get_remote_address_raw =
+    foreign "g_socket_get_remote_address" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (Socket_address.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = listen_raw self err_ptr_ptr in
+  let ret = get_remote_address_raw self err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
+let get_socket_type =
+  foreign "g_socket_get_socket_type" (t_typ @-> returning (Socket_type.t_view))
+let get_timeout =
+  foreign "g_socket_get_timeout" (t_typ @-> returning (uint32_t))
+let get_ttl =
+  foreign "g_socket_get_ttl" (t_typ @-> returning (uint32_t))
+let is_closed =
+  foreign "g_socket_is_closed" (t_typ @-> returning (bool))
+let is_connected =
+  foreign "g_socket_is_connected" (t_typ @-> returning (bool))
+let join_multicast_group self group source_specific iface =
+  let join_multicast_group_raw =
+    foreign "g_socket_join_multicast_group" (t_typ @-> Inet_address.t_typ @-> bool @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+  in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let ret = join_multicast_group_raw self group source_specific iface err_ptr_ptr in
+  match (!@ err_ptr_ptr) with
+  | None -> Ok ret
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
+let leave_multicast_group self group source_specific iface =
+  let leave_multicast_group_raw =
+    foreign "g_socket_leave_multicast_group" (t_typ @-> Inet_address.t_typ @-> bool @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+  in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let ret = leave_multicast_group_raw self group source_specific iface err_ptr_ptr in
+  match (!@ err_ptr_ptr) with
+  | None -> Ok ret
+  | Some _ -> let err_ptr = !@ err_ptr_ptr in
+    let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
+    Error (err_ptr)
+let listen self =
+  let listen_raw =
+    foreign "g_socket_listen" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+  in
+  let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
+  let ret = listen_raw self err_ptr_ptr in
+  match (!@ err_ptr_ptr) with
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
@@ -103,47 +224,47 @@ let listen self =
 (*Not implemented g_socket_receive_messages type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_socket_receive_with_blocking type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_socket_send type C Array type for Types.Array tag not implemented*)
-(*Not implemented g_socket_send_message type object not implemented*)
+(*Not implemented g_socket_send_message type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_socket_send_messages type C Array type for Types.Array tag not implemented*)
-(*Not implemented g_socket_send_to type object not implemented*)
+(*Not implemented g_socket_send_to type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_socket_send_with_blocking type C Array type for Types.Array tag not implemented*)
 let set_blocking =
-  foreign "g_socket_set_blocking" (ptr t_typ @-> bool @-> returning (void))
+  foreign "g_socket_set_blocking" (t_typ @-> bool @-> returning (void))
 let set_broadcast =
-  foreign "g_socket_set_broadcast" (ptr t_typ @-> bool @-> returning (void))
+  foreign "g_socket_set_broadcast" (t_typ @-> bool @-> returning (void))
 let set_keepalive =
-  foreign "g_socket_set_keepalive" (ptr t_typ @-> bool @-> returning (void))
+  foreign "g_socket_set_keepalive" (t_typ @-> bool @-> returning (void))
 let set_listen_backlog =
-  foreign "g_socket_set_listen_backlog" (ptr t_typ @-> int32_t @-> returning (void))
+  foreign "g_socket_set_listen_backlog" (t_typ @-> int32_t @-> returning (void))
 let set_multicast_loopback =
-  foreign "g_socket_set_multicast_loopback" (ptr t_typ @-> bool @-> returning (void))
+  foreign "g_socket_set_multicast_loopback" (t_typ @-> bool @-> returning (void))
 let set_multicast_ttl =
-  foreign "g_socket_set_multicast_ttl" (ptr t_typ @-> uint32_t @-> returning (void))
+  foreign "g_socket_set_multicast_ttl" (t_typ @-> uint32_t @-> returning (void))
 let set_option self level optname value =
   let set_option_raw =
-    foreign "g_socket_set_option" (ptr t_typ @-> int32_t @-> int32_t @-> int32_t@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_socket_set_option" (t_typ @-> int32_t @-> int32_t @-> int32_t @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = set_option_raw self level optname value err_ptr_ptr in
+  let ret = set_option_raw self level optname value err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
 let set_timeout =
-  foreign "g_socket_set_timeout" (ptr t_typ @-> uint32_t @-> returning (void))
+  foreign "g_socket_set_timeout" (t_typ @-> uint32_t @-> returning (void))
 let set_ttl =
-  foreign "g_socket_set_ttl" (ptr t_typ @-> uint32_t @-> returning (void))
+  foreign "g_socket_set_ttl" (t_typ @-> uint32_t @-> returning (void))
 let shutdown self shutdown_read shutdown_write =
   let shutdown_raw =
-    foreign "g_socket_shutdown" (ptr t_typ @-> bool @-> bool@-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_socket_shutdown" (t_typ @-> bool @-> bool @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
-  let value = shutdown_raw self shutdown_read shutdown_write err_ptr_ptr in
+  let ret = shutdown_raw self shutdown_read shutdown_write err_ptr_ptr in
   match (!@ err_ptr_ptr) with
-  | None -> Ok value
+  | None -> Ok ret
   | Some _ -> let err_ptr = !@ err_ptr_ptr in
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
 let speaks_ipv4 =
-  foreign "g_socket_speaks_ipv4" (ptr t_typ @-> returning (bool))
+  foreign "g_socket_speaks_ipv4" (t_typ @-> returning (bool))

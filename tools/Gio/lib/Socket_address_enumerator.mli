@@ -3,6 +3,7 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented g_socket_address_enumerator_next type object not implemented*)
-(*Not implemented g_socket_address_enumerator_next_async type object not implemented*)
+val next :
+  t -> Cancellable.t -> (Socket_address.t, Error.t structure ptr option) result
+(*Not implemented g_socket_address_enumerator_next_async type callback not implemented*)
 (*Not implemented g_socket_address_enumerator_next_finish type interface not implemented*)

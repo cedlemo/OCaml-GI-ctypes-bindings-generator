@@ -3,11 +3,13 @@ open Ctypes
 type t
 val t_typ : t typ
 
-(*Not implemented g_simple_action_new return type object not handled*)
-(*Not implemented g_simple_action_new_stateful return type object not handled*)
-val set_enabled:
-  t structure ptr -> bool -> unit
-val set_state:
-  t structure ptr -> Variant.t structure ptr -> unit
-val set_state_hint:
-  t structure ptr -> Variant.t structure ptr option -> unit
+val create :
+  string -> Variant_type.t structure ptr option -> t
+val create_stateful :
+  string -> Variant_type.t structure ptr option -> Variant.t structure ptr -> t
+val set_enabled :
+  t -> bool -> unit
+val set_state :
+  t -> Variant.t structure ptr -> unit
+val set_state_hint :
+  t -> Variant.t structure ptr option -> unit

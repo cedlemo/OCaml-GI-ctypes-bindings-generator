@@ -4,4 +4,5 @@ open Foreign
 type t = unit ptr
 let t_typ : t typ = ptr void
 
-(*Not implemented g_threaded_socket_service_new return type object not handled*)
+let create =
+  foreign "g_threaded_socket_service_new" (int32_t @-> returning (Socket_service.t_typ))
