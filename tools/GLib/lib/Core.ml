@@ -1,10 +1,10 @@
 open Ctypes
 open Foreign
 
-let c_ANALYZER_ANALYZING = Int32.of_string "1"
-let c_ASCII_DTOSTR_BUF_SIZE = Int32.of_string "39"
+let c_ANALYZER_ANALYZING = 1l
+let c_ASCII_DTOSTR_BUF_SIZE = 39l
 (*SKIPPED : AsciiType*)
-let c_BIG_ENDIAN = Int32.of_string "4321"
+let c_BIG_ENDIAN = 4321l
 (*SKIPPED : BookmarkFile*)
 (*SKIPPED : BookmarkFileError*)
 (*SKIPPED : ByteArray*)
@@ -12,11 +12,11 @@ let c_BIG_ENDIAN = Int32.of_string "4321"
 let c_CSET_A_2_Z = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 let c_CSET_DIGITS = "0123456789"
 let c_CSET_a_2_z = "abcdefghijklmnopqrstuvwxyz"
-let c_DATALIST_FLAGS_MASK = Int32.of_string "3"
-let c_DATE_BAD_DAY = Int32.of_string "0"
-let c_DATE_BAD_JULIAN = Int32.of_string "0"
-let c_DATE_BAD_YEAR = Int32.of_string "0"
-let c_DIR_SEPARATOR = Int32.of_string "92"
+let c_DATALIST_FLAGS_MASK = 3l
+let c_DATE_BAD_DAY = 0l
+let c_DATE_BAD_JULIAN = 0l
+let c_DATE_BAD_YEAR = 0l
+let c_DIR_SEPARATOR = 92l
 let c_DIR_SEPARATOR_S = "\\"
 (*SKIPPED : Data*)
 (*SKIPPED : DataForeachFunc*)
@@ -39,12 +39,12 @@ let c_GUINT16_FORMAT = "hu"
 let c_GUINT32_FORMAT = "u"
 let c_GUINT64_FORMAT = "lu"
 let c_GUINTPTR_FORMAT = "lu"
-let c_HAVE_GINT64 = Int32.of_string "1"
-let c_HAVE_GNUC_VARARGS = Int32.of_string "1"
-let c_HAVE_GNUC_VISIBILITY = Int32.of_string "1"
-let c_HAVE_GROWING_STACK = Int32.of_string "0"
-let c_HAVE_ISO_VARARGS = Int32.of_string "1"
-let c_HOOK_FLAG_USER_SHIFT = Int32.of_string "4"
+let c_HAVE_GINT64 = 1l
+let c_HAVE_GNUC_VARARGS = 1l
+let c_HAVE_GNUC_VISIBILITY = 1l
+let c_HAVE_GROWING_STACK = 0l
+let c_HAVE_ISO_VARARGS = 1l
+let c_HOOK_FLAG_USER_SHIFT = 4l
 (*SKIPPED : Hook*)
 (*SKIPPED : HookCheckFunc*)
 (*SKIPPED : HookCheckMarshaller*)
@@ -55,8 +55,8 @@ let c_HOOK_FLAG_USER_SHIFT = Int32.of_string "4"
 (*SKIPPED : HookFunc*)
 (*SKIPPED : HookList*)
 (*SKIPPED : HookMarshaller*)
-let c_IEEE754_DOUBLE_BIAS = Int32.of_string "1023"
-let c_IEEE754_FLOAT_BIAS = Int32.of_string "127"
+let c_IEEE754_DOUBLE_BIAS = 1023l
+let c_IEEE754_FLOAT_BIAS = 127l
 let c_KEY_FILE_DESKTOP_GROUP = "Desktop Entry"
 let c_KEY_FILE_DESKTOP_KEY_ACTIONS = "Actions"
 let c_KEY_FILE_DESKTOP_KEY_CATEGORIES = "Categories"
@@ -82,13 +82,13 @@ let c_KEY_FILE_DESKTOP_KEY_VERSION = "Version"
 let c_KEY_FILE_DESKTOP_TYPE_APPLICATION = "Application"
 let c_KEY_FILE_DESKTOP_TYPE_DIRECTORY = "Directory"
 let c_KEY_FILE_DESKTOP_TYPE_LINK = "Link"
-let c_LITTLE_ENDIAN = Int32.of_string "1234"
+let c_LITTLE_ENDIAN = 1234l
 let c_LN10 = 2.302585
 let c_LN2 = 0.693147
 let c_LOG_2_BASE_10 = 0.30103
 let c_LOG_DOMAIN = 0
-let c_LOG_FATAL_MASK = Int32.of_string "0"
-let c_LOG_LEVEL_USER_SHIFT = Int32.of_string "8"
+let c_LOG_FATAL_MASK = 0l
+let c_LOG_LEVEL_USER_SHIFT = 8l
 (*SKIPPED : LogField*)
 (*SKIPPED : LogFunc*)
 (*SKIPPED : LogLevelFlags*)
@@ -97,7 +97,7 @@ let c_LOG_LEVEL_USER_SHIFT = Int32.of_string "8"
 external get_major_version: unit -> int = "get_major_version"
 let c_MAJOR_VERSION = get_major_version () |> Int32.of_int
 let c_MAXINT16 = 32767
-let c_MAXINT32 = Int32.of_string "2147483647"
+let c_MAXINT32 = 2147483647l
 let c_MAXINT64 = 9223372036854775807L
 let c_MAXINT8 = 127
 let c_MAXUINT16 = Unsigned.UInt16.of_int 65535
@@ -107,7 +107,7 @@ let c_MAXUINT8 = Unsigned.UInt8.of_int 255
 external get_micro_version: unit -> int = "get_micro_version"
 let c_MICRO_VERSION = get_micro_version () |> Int32.of_int
 let c_MININT16 = -32768
-let c_MININT32 = Int32.of_string "-2147483648"
+let c_MININT32 = -2147483648l
 let c_MININT64 = -9223372036854775808L
 let c_MININT8 = -128
 external get_minor_version: unit -> int = "get_minor_version"
@@ -116,39 +116,39 @@ let c_MODULE_SUFFIX = "so"
 (*SKIPPED : MainContext*)
 (*SKIPPED : MatchInfo*)
 let c_OPTION_REMAINING = ""
-let c_PDP_ENDIAN = Int32.of_string "3412"
+let c_PDP_ENDIAN = 3412l
 let c_PI = 3.141593
 let c_PID_FORMAT = "i"
 let c_PI_2 = 1.570796
 let c_PI_4 = 0.785398
 let c_POLLFD_FORMAT = "%d"
-let c_PRIORITY_DEFAULT = Int32.of_string "0"
-let c_PRIORITY_DEFAULT_IDLE = Int32.of_string "200"
-let c_PRIORITY_HIGH = Int32.of_string "-100"
-let c_PRIORITY_HIGH_IDLE = Int32.of_string "100"
-let c_PRIORITY_LOW = Int32.of_string "300"
+let c_PRIORITY_DEFAULT = 0l
+let c_PRIORITY_DEFAULT_IDLE = 200l
+let c_PRIORITY_HIGH = -100l
+let c_PRIORITY_HIGH_IDLE = 100l
+let c_PRIORITY_LOW = 300l
 (*SKIPPED : Rand*)
 (*SKIPPED : Regex*)
 (*SKIPPED : RegexCompileFlags*)
 (*SKIPPED : RegexError*)
 (*SKIPPED : RegexEvalCallback*)
 (*SKIPPED : RegexMatchFlags*)
-let c_SEARCHPATH_SEPARATOR = Int32.of_string "59"
+let c_SEARCHPATH_SEPARATOR = 59l
 let c_SEARCHPATH_SEPARATOR_S = ";"
-let c_SIZEOF_LONG = Int32.of_string "8"
-let c_SIZEOF_SIZE_T = Int32.of_string "8"
-let c_SIZEOF_SSIZE_T = Int32.of_string "8"
-let c_SIZEOF_VOID_P = Int32.of_string "8"
+let c_SIZEOF_LONG = 8l
+let c_SIZEOF_SIZE_T = 8l
+let c_SIZEOF_SSIZE_T = 8l
+let c_SIZEOF_VOID_P = 8l
 let c_SOURCE_CONTINUE = true
 let c_SOURCE_REMOVE = false
 let c_SQRT2 = 1.414214
 let c_STR_DELIMITERS = "_-|> <."
-let c_SYSDEF_AF_INET = Int32.of_string "2"
-let c_SYSDEF_AF_INET6 = Int32.of_string "10"
-let c_SYSDEF_AF_UNIX = Int32.of_string "1"
-let c_SYSDEF_MSG_DONTROUTE = Int32.of_string "4"
-let c_SYSDEF_MSG_OOB = Int32.of_string "1"
-let c_SYSDEF_MSG_PEEK = Int32.of_string "2"
+let c_SYSDEF_AF_INET = 2l
+let c_SYSDEF_AF_INET6 = 10l
+let c_SYSDEF_AF_UNIX = 1l
+let c_SYSDEF_MSG_DONTROUTE = 4l
+let c_SYSDEF_MSG_OOB = 1l
+let c_SYSDEF_MSG_PEEK = 2l
 (*SKIPPED : Sequence*)
 (*SKIPPED : SequenceIter*)
 (*SKIPPED : SequenceIterCompareFunc*)
@@ -176,13 +176,13 @@ let c_TIME_SPAN_SECOND = 1000000L
 (*SKIPPED : ThreadFunc*)
 (*SKIPPED : ThreadPool*)
 (*DEPRECATED : TrashStack*)
-let c_UNICHAR_MAX_DECOMPOSITION_LENGTH = Int32.of_string "18"
+let c_UNICHAR_MAX_DECOMPOSITION_LENGTH = 18l
 let c_URI_RESERVED_CHARS_GENERIC_DELIMITERS = ":/?#[]@"
 let c_URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS = "!$&'()*+,;="
-let c_USEC_PER_SEC = Int32.of_string "1000000"
-let c_VA_COPY_AS_ARRAY = Int32.of_string "1"
-let c_VERSION_MIN_REQUIRED = Int32.of_string "2"
-let c_WIN32_MSG_HANDLE = Int32.of_string "19981206"
+let c_USEC_PER_SEC = 1000000l
+let c_VA_COPY_AS_ARRAY = 1l
+let c_VERSION_MIN_REQUIRED = 2l
+let c_WIN32_MSG_HANDLE = 19981206l
 
 let access =
   foreign "g_access" (string @-> int32_t @-> returning (int32_t))

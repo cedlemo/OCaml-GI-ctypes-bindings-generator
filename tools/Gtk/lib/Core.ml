@@ -3,20 +3,20 @@ open Foreign
 
 (*DEPRECATED : ActionEntry*)
 (*DEPRECATED : ActivatableIface*)
-let c_BINARY_AGE = Int32.of_string "2226"
+let c_BINARY_AGE = 2226l
 (*DEPRECATED : ColorSelectionChangePaletteFunc*)
 (*DEPRECATED : ColorSelectionChangePaletteWithScreenFunc*)
 (*DEPRECATED : IMPreeditStyle*)
 (*DEPRECATED : IMStatusStyle*)
-let c_INPUT_ERROR = Int32.of_string "-1"
-let c_INTERFACE_AGE = Int32.of_string "26"
+let c_INPUT_ERROR = -1l
+let c_INTERFACE_AGE = 26l
 let c_LEVEL_BAR_OFFSET_FULL = "full"
 let c_LEVEL_BAR_OFFSET_HIGH = "high"
 let c_LEVEL_BAR_OFFSET_LOW = "low"
-let c_MAJOR_VERSION = Int32.of_string "3"
-let c_MAX_COMPOSE_LEN = Int32.of_string "7"
-let c_MICRO_VERSION = Int32.of_string "26"
-let c_MINOR_VERSION = Int32.of_string "22"
+let c_MAJOR_VERSION = 3l
+let c_MAX_COMPOSE_LEN = 7l
+let c_MICRO_VERSION = 26l
+let c_MINOR_VERSION = 22l
 let c_PAPER_NAME_A3 = "iso_a3"
 let c_PAPER_NAME_A4 = "iso_a4"
 let c_PAPER_NAME_A5 = "iso_a5"
@@ -24,7 +24,7 @@ let c_PAPER_NAME_B5 = "iso_b5"
 let c_PAPER_NAME_EXECUTIVE = "na_executive"
 let c_PAPER_NAME_LEGAL = "na_legal"
 let c_PAPER_NAME_LETTER = "na_letter"
-let c_PATH_PRIO_MASK = Int32.of_string "15"
+let c_PATH_PRIO_MASK = 15l
 let c_PRINT_SETTINGS_COLLATE = "collate"
 let c_PRINT_SETTINGS_DEFAULT_SOURCE = "default-source"
 let c_PRINT_SETTINGS_DITHER = "dither"
@@ -57,7 +57,7 @@ let c_PRINT_SETTINGS_SCALE = "scale"
 let c_PRINT_SETTINGS_USE_COLOR = "use-color"
 let c_PRINT_SETTINGS_WIN32_DRIVER_EXTRA = "win32-driver-extra"
 let c_PRINT_SETTINGS_WIN32_DRIVER_VERSION = "win32-driver-version"
-let c_PRIORITY_RESIZE = Int32.of_string "10"
+let c_PRIORITY_RESIZE = 10l
 (*DEPRECATED : PathPriorityType*)
 (*DEPRECATED : PathType*)
 (*DEPRECATED : RadioActionEntry*)
@@ -261,20 +261,20 @@ let c_STYLE_PROPERTY_COLOR = "color"
 let c_STYLE_PROPERTY_FONT = "font"
 let c_STYLE_PROPERTY_MARGIN = "margin"
 let c_STYLE_PROPERTY_PADDING = "padding"
-let c_STYLE_PROVIDER_PRIORITY_APPLICATION = Int32.of_string "600"
-let c_STYLE_PROVIDER_PRIORITY_FALLBACK = Int32.of_string "1"
-let c_STYLE_PROVIDER_PRIORITY_SETTINGS = Int32.of_string "400"
-let c_STYLE_PROVIDER_PRIORITY_THEME = Int32.of_string "200"
-let c_STYLE_PROVIDER_PRIORITY_USER = Int32.of_string "800"
+let c_STYLE_PROVIDER_PRIORITY_APPLICATION = 600l
+let c_STYLE_PROVIDER_PRIORITY_FALLBACK = 1l
+let c_STYLE_PROVIDER_PRIORITY_SETTINGS = 400l
+let c_STYLE_PROVIDER_PRIORITY_THEME = 200l
+let c_STYLE_PROVIDER_PRIORITY_USER = 800l
 (*DEPRECATED : STYLE_REGION_COLUMN*)
 (*DEPRECATED : STYLE_REGION_COLUMN_HEADER*)
 (*DEPRECATED : STYLE_REGION_ROW*)
 (*DEPRECATED : STYLE_REGION_TAB*)
 (*DEPRECATED : StateType*)
 (*DEPRECATED : StockItem*)
-let c_TEXT_VIEW_PRIORITY_VALIDATE = Int32.of_string "5"
-let c_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID = Int32.of_string "-1"
-let c_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID = Int32.of_string "-2"
+let c_TEXT_VIEW_PRIORITY_VALIDATE = 5l
+let c_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID = -1l
+let c_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID = -2l
 (*DEPRECATED : ToggleActionEntry*)
 (*DEPRECATED : ToolbarSpaceStyle*)
 (*DEPRECATED : TranslateFunc*)
