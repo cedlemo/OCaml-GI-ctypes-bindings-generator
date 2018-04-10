@@ -83,11 +83,16 @@ let append_uint16_constant name info files =
   let printer = Unsigned.UInt16.to_string in
   append_constant_of_31_or_less_bits name info files field field_type "Unsigned.UInt16" printer
 
-let append_int32_constant name info files =
+let append_int32_constant name info (mli, ml) =
+  let open Binding_utils in
   let field = Types.v_int32 in
   let field_type = "int32" in
-  let printer = Int32.to_string in
-  append_constant_of_32_or_more_bits name info files field field_type "Int32" printer
+  let argument = Constant_info.get_value info in
+  let value = getf (!@argument) field in
+  let modified_name = binding_constant_name name in
+  let _ = File.bprintf mli "val %s : %s\n" modified_name field_type in
+  let str_value = Int32.to_string value in
+  File.bprintf ml "let %s = %sl\n" modified_name str_value
 
 let append_uint32_constant name info files =
   let field = Types.v_uint32 in
