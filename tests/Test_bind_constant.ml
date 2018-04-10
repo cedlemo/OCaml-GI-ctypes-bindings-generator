@@ -134,7 +134,7 @@ let test_append_int32_constant test_ctxt =
   )
   in
   let mli_content = "val c_MAXINT32 : int32" in
-  let ml_content = "let c_MAXINT32 = Int32.of_string \"2147483647\"" in
+  let ml_content = "let c_MAXINT32 = 2147483647l" in
   constant_test namespace name (fun info ->
       test_writing test_ctxt info name writer mli_content ml_content
     )
