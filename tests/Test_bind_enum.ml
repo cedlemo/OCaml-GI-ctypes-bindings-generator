@@ -21,10 +21,8 @@ open OUnit2
 open GI_bindings_generator
 open GObject_introspection
 
-let repo = Repository.get_default ()
-
 let get_enum_info namespace enum_name =
-  match Repository.find_by_name repo namespace enum_name with
+  match Repository.find_by_name namespace enum_name with
   | None -> None
   | Some (base_info) ->
     match Base_info.get_type base_info with
@@ -168,7 +166,7 @@ let flags_type_view_sig = "val t_list_view : t_list typ"
 let flags_type_view = "let t_list_view = view ~read:list_of_value ~write:list_to_value uint32_t"
 
 let get_flags_info namespace enum_name =
-  match Repository.find_by_name repo namespace enum_name with
+  match Repository.find_by_name namespace enum_name with
   | None -> None
   | Some (base_info) ->
     match Base_info.get_type base_info with

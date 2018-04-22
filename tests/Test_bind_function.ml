@@ -23,6 +23,7 @@ open GObject_introspection
 
 let namespace = "GLib"
 let name = "ascii_strcasecmp"
+let typelib = Repository.require namespace ()
 
 let get_function_info name () =
   match Repository.find_by_name namespace name with
@@ -180,7 +181,7 @@ let test_function_bindings_for_args_out_function test_ctxt =
 
 let test_function_bindings_for_args_out_as_enum_function test_ctxt =
   let namespace = "Gio" in
-  let _ = Repository.require namespace () in
+  let typelib = Repository.require namespace () in
   let cont = "FileInfo" in
   let name = "get_attribute_data" in
   match Repository.find_by_name namespace name with
@@ -265,7 +266,7 @@ let tests =
     "Bind_function test function bindings for function with no args that throws gerror" >:: test_function_bindings_function_no_args_throw_gerror;
     "Bind_function test function bindings for in args only function" >:: test_function_bindings_for_in_args_only_function;
     "Bind_function test function bindings for args out function" >:: test_function_bindings_for_args_out_function;
-    (* "Bind_function test function bindings for args out as enum function" >:: test_function_bindings_for_args_out_as_enum_function; *)
+    (*"Bind_function test function bindings for args out as enum function" >:: test_function_bindings_for_args_out_as_enum_function;*)
     "Bind_funtcion test function bindings for in args only function that can throw GError" >:: test_function_bindings_for_in_args_only_function_gerror;
     "Bind_function test function bindings for args out with gerror function" >:: test_function_bindings_for_args_out_with_gerror_function;
   ]
