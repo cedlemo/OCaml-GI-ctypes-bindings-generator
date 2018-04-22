@@ -20,7 +20,7 @@ open Ctypes
 open GObject_introspection
 
 type t = {
-  repo : Repository.repository;
+  repository : Repository.repository option;
   typelib : Repository.typelib;
   namespace : string;
   version : string;
@@ -28,11 +28,11 @@ type t = {
 }
 
 let load namespace ?version () =
-  let repo = Repository.get_default () in
-  match Repository.require repo namespace ?version:version () with
+  let repository = Some (Repository.get_default ()) in
+  match Repository.require namespace ?version:version () with
   | Error message -> Error message
-  | Ok typelib -> let version' = Repository.get_version repo namespace in
-    Ok {repo; typelib; namespace; version = version'; build_path = "."}
+  | Ok typelib -> let version' = Repository.get_version namespace in
+    Ok {repository; typelib; namespace; version = version'; build_path = "."}
 
 let dir_exists path =
   if not (Sys.file_exists path) then
@@ -56,7 +56,7 @@ let get_namespace loader =
   loader.namespace
 
 let get_loaded_namespaces loader =
-  Repository.get_loaded_namespaces loader.repo
+  Repository.get_loaded_namespaces ()
 
 let get_version loader =
   loader.version
@@ -183,9 +183,9 @@ let parse loader
     | None -> ()
     | Some writer -> writer main_sources
   in
-  let n = Repository.get_n_infos loader.repo loader.namespace in
+  let n = Repository.get_n_infos loader.namespace in
   for i = 0 to n - 1 do
-    let info = Repository.get_info loader.repo loader.namespace i in
+    let info = Repository.get_info loader.namespace i in
     match Base_info.get_name info with
     | None -> ()
     | Some name ->
