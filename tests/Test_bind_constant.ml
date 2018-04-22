@@ -21,10 +21,8 @@ open OUnit2
 open GI_bindings_generator
 open GObject_introspection
 
-let repo = Repository.get_default ()
-
 let get_constant_info namespace const_name =
-  match Repository.find_by_name repo namespace const_name with
+  match Repository.find_by_name namespace const_name with
   | None -> None
   | Some (base_info) ->
     match Base_info.get_type base_info with

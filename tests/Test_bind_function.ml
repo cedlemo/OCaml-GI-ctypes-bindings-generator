@@ -21,13 +21,11 @@ open OUnit2
 open GI_bindings_generator
 open GObject_introspection
 
-let repo = Repository.get_default ()
 let namespace = "GLib"
-let typelib = Repository.require repo namespace ()
 let name = "ascii_strcasecmp"
 
 let get_function_info name () =
-  match Repository.find_by_name repo namespace name with
+  match Repository.find_by_name namespace name with
   | None -> None
   | Some (base_info) -> match Base_info.get_type base_info with
     | Base_info.Function -> let info = Function_info.from_baseinfo base_info in
@@ -65,7 +63,7 @@ let test_get_return_types test_ctx =
 
 let test_escape_bad_function_name test_ctxt =
   let cont = "Rand" in
-  match Repository.find_by_name repo namespace cont with
+  match Repository.find_by_name namespace cont with
   | None -> assert_equal_string name " should return an I info"
   | Some i -> let si = Struct_info.from_baseinfo i in
   let mi = Struct_info.get_method si 0 in
@@ -82,7 +80,7 @@ let test_escape_bad_function_name test_ctxt =
 
 let test_function_bindings_function_no_args_throw_gerror test_ctxt =
   let name = "clear_error" in
-  match Repository.find_by_name repo namespace name with
+  match Repository.find_by_name namespace name with
   | None -> assert_equal_string name " has not been found"
   | Some info -> let fi = Function_info.from_baseinfo info in
      let mli =
@@ -107,7 +105,7 @@ let test_function_bindings_function_no_args_throw_gerror test_ctxt =
 
 let test_function_bindings_for_in_args_only_function test_ctxt =
   let name = "date_get_sunday_weeks_in_year" in
-  match Repository.find_by_name repo namespace name with
+  match Repository.find_by_name namespace name with
   | None -> assert_equal_string name " has not been found"
   | Some info -> let fi = Function_info.from_baseinfo info in
      let mli =
@@ -124,7 +122,7 @@ let test_function_bindings_for_in_args_only_function test_ctxt =
 
 let test_function_bindings_for_in_args_only_function_gerror test_ctxt =
   let name = "dir_make_tmp" in
-  match Repository.find_by_name repo namespace name with
+  match Repository.find_by_name namespace name with
   | None -> assert_equal_string name " has not been found"
   | Some info -> let fi = Function_info.from_baseinfo info in
      let mli ="val dir_make_tmp :\n  \
@@ -150,7 +148,7 @@ let test_function_bindings_for_in_args_only_function_gerror test_ctxt =
 let test_function_bindings_for_args_out_function test_ctxt =
   let cont = "DateTime" in
   let name = "get_ymd" in
-  match Repository.find_by_name repo namespace cont with
+  match Repository.find_by_name namespace cont with
   | None -> assert_equal_string cont " has not been found"
   | Some date_time_info ->
       let si = Struct_info.from_baseinfo date_time_info in
@@ -182,11 +180,10 @@ let test_function_bindings_for_args_out_function test_ctxt =
 
 let test_function_bindings_for_args_out_as_enum_function test_ctxt =
   let namespace = "Gio" in
-  let repo = Repository.get_default () in
-  let _ = Repository.require repo namespace () in
+  let _ = Repository.require namespace () in
   let cont = "FileInfo" in
   let name = "get_attribute_data" in
-  match Repository.find_by_name repo namespace name with
+  match Repository.find_by_name namespace name with
   | None -> assert_equal_string name "No base info found"
   | Some bi -> match Base_info.get_type bi with
     | Base_info.Function -> begin
@@ -227,7 +224,7 @@ let test_function_bindings_for_args_out_as_enum_function test_ctxt =
 
 let test_function_bindings_for_args_out_with_gerror_function test_ctxt =
   let name = "filename_from_uri" in
-  match Repository.find_by_name repo namespace name with
+  match Repository.find_by_name namespace name with
   | None -> assert_equal_string name " has not been found"
   | Some info ->
       let fi = Function_info.from_baseinfo info in

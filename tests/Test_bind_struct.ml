@@ -21,10 +21,8 @@ open OUnit2
 open GI_bindings_generator
 open GObject_introspection
 
-let repo = Repository.get_default ()
-
 let get_struct_info namespace struct_name =
-  match Repository.find_by_name repo namespace struct_name with
+  match Repository.find_by_name namespace struct_name with
   | None -> None
   | Some bi ->
     match Base_info.get_type bi with
