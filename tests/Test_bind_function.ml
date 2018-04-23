@@ -184,42 +184,44 @@ let test_function_bindings_for_args_out_as_enum_function test_ctxt =
   let typelib = Repository.require namespace () in
   let cont = "FileInfo" in
   let name = "get_attribute_data" in
-  match Repository.find_by_name namespace name with
+  match Repository.find_by_name namespace cont with
   | None -> assert_equal_string name "No base info found"
   | Some bi -> match Base_info.get_type bi with
-    | Base_info.Function -> begin
-      let info = Function_info.from_baseinfo bi in
+    | Base_info.Object -> begin
+      let oi = Object_info.from_baseinfo bi in
+      match Object_info.find_method oi name with
+      | None -> assert_equal_string name "No base info found for this method"
+      | Some info ->
       let mli =
         "val get_attribute_data :\n  \
-         t structure ptr -> string -> \
+         t -> string -> \
          (bool * File_attribute_type.t \
          * unit ptr * File_attribute_status.t)" in
       let ml =
       "let get_attribute_data self attribute =\n  \
+       let get_attribute_data_raw =\n    \
+       foreign \"g_file_info_get_attribute_data\" (t_typ @-> string @-> \
+       ptr (File_attribute_type.t_view) @-> ptr (ptr void) @-> ptr \
+       (File_attribute_status.t_view) @-> returning (bool))\n  \
+       in\n  \
        let _type_ptr = allocate File_attribute_type.t_view \
        (File_attribute_type.t_view.of_value (Unsigned.UInt32.zero)) in\n  \
        let value_pp_ptr = allocate (ptr_opt void) None in\n  \
        let status_ptr = allocate File_attribute_status.t_view \
        (File_attribute_status.t_view.of_value (Unsigned.UInt32.zero)) in\n  \
-       let get_attribute_data_raw =\n    \
-       foreign \"g_file_info_get_attribute_data\" (ptr t_typ @-> string @-> \
-       ptr (File_attribute_type.t_view) @-> ptr (ptr void) @-> ptr \
-       (File_attribute_status.t_view) @-> returning bool)\n  \
-       in\n  \
        let ret = get_attribute_data_raw self attribute _type_ptr value_pp_ptr \
        status_ptr in\n  \
        let _type = (!@ _type_ptr) in\n  \
        let value_pp = !@ value_pp_ptr in\n  \
        let status = (!@ status_ptr) in\n  \
        (ret, _type, value_pp, status)"
-    in
-    let writer = fun n i srcs ->
-      let c = Some (cont, "t", "t_typ") in
-      let _ = Bind_function.append_ctypes_function_bindings n i c srcs [] in
-      Binding_utils.Sources.write_buffs srcs
-    in
-    Test_utils.test_writing test_ctxt info name writer mli ml
-
+      in
+      let writer = fun n i srcs ->
+        let c = Some (cont, "t", "t_typ") in
+        let _ = Bind_function.append_ctypes_function_bindings n i c srcs [] in
+        Binding_utils.Sources.write_buffs srcs
+      in
+      Test_utils.test_writing test_ctxt info name writer mli ml
     end
     | _ -> assert_equal_string name "Should be a function"
 
@@ -266,7 +268,7 @@ let tests =
     "Bind_function test function bindings for function with no args that throws gerror" >:: test_function_bindings_function_no_args_throw_gerror;
     "Bind_function test function bindings for in args only function" >:: test_function_bindings_for_in_args_only_function;
     "Bind_function test function bindings for args out function" >:: test_function_bindings_for_args_out_function;
-    (*"Bind_function test function bindings for args out as enum function" >:: test_function_bindings_for_args_out_as_enum_function;*)
+    "Bind_function test function bindings for args out as enum function" >:: test_function_bindings_for_args_out_as_enum_function;
     "Bind_funtcion test function bindings for in args only function that can throw GError" >:: test_function_bindings_for_in_args_only_function_gerror;
     "Bind_function test function bindings for args out with gerror function" >:: test_function_bindings_for_args_out_with_gerror_function;
   ]
