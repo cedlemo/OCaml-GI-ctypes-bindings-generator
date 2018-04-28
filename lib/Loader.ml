@@ -208,3 +208,29 @@ let parse loader
       )
   done;
   Binding_utils.Sources.close main_sources
+
+let generate_files loader name =
+  let module_name = Lexer.snake_case name in
+  Binding_utils.Sources.create_ctypes module_name
+
+let rec write_bindings_for loader = function
+  | [] -> ()
+  | name :: others ->
+      let _ =  begin
+        match Repository.find_by_name name loader.namespace with
+        | None ->
+            let strs =  ["Unable to find"; name; "in the namespace"; loader.namespace] in
+            let message = String.concat " " strs  in
+            print_endline  message
+        | Some bi ->
+            if Base_info.is_deprecated bi then
+              let message = name ^ " is deprecated" in
+              print_endline message
+            else begin
+              let open Binding_utils in
+              let sources = generate_files loader name in
+
+              Sources.close sources
+            end;
+      end
+      in write_bindings_for loader others
