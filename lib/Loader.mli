@@ -112,3 +112,12 @@ val parse:
   ?skip:string list ->
   unit ->
   unit
+
+(** Juste write bindings for a list of data structures in the current directory *)
+val write_bindings_for :
+  t -> string list -> unit
+
+(** Generate all the bindings for the constants. They should be found in Core.ml/mli files
+val write_constant_bindings :
+  t -> unit
+*)
