@@ -265,3 +265,34 @@ let rec write_bindings_for namespace = function
               end;
         end
         in write_bindings_for namespace others
+
+let write_constant_bindings_for namespace alternate_bindings skipped =
+  let open Binding_utils in
+  match Repository.require namespace () with
+  | Error message -> print_endline message
+  | Ok typelib ->
+      let sources = generate_files "Core" in
+      let n = Repository.get_n_infos namespace in
+      let _ = for i = 0 to n - 1 do
+        let bi = Repository.get_info namespace i in
+        match Base_info.get_name bi with
+        | None -> ()
+        | Some name ->
+            let rec has_alternate_bindings name = function
+              |[] -> None
+              | (n, f) :: t -> if name = n then Some f
+              else has_alternate_bindings name t
+            in
+            match Base_info.is_deprecated bi,
+                  match_one_of name skipped,
+                  has_alternate_bindings name alternate_bindings with
+            | true , _, _ -> Sources.buffs_add_deprecated sources name
+            | _, true, _ -> Sources.buffs_add_skipped sources name
+            | _, _, Some f -> f bi sources
+            | _ ->
+                match Base_info.get_type bi with
+                | Base_info.Constant ->
+                    Bind_constant.parse_constant_info bi sources
+                | _ -> ()
+      done in
+      Binding_utils.Sources.close sources
