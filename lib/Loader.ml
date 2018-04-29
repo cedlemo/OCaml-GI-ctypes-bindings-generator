@@ -296,3 +296,36 @@ let write_constant_bindings_for namespace alternate_bindings skipped =
                 | _ -> ()
       done in
       Binding_utils.Sources.close sources
+
+let write_enum_and_flag_bindings_for namespace =
+  let open Binding_utils in
+  match Repository.require namespace () with
+  | Error message -> print_endline message
+  | Ok typelib ->
+      let n = Repository.get_n_infos namespace in
+      for i = 0 to n - 1 do
+        let bi = Repository.get_info namespace i in
+        match Base_info.get_name bi with
+        | None -> ()
+        | Some name ->
+            if Base_info.is_deprecated bi then ()
+            else begin
+              let show_name () =
+                let module_name = Lexer.snake_case name in
+                let ouput = String.concat "" [module_name; ".ml "; module_name; ".mli"] in
+                print_endline ouput
+              in
+              match Base_info.get_type bi with
+              | Base_info.Enum ->
+                  let _ = show_name () in
+                  let sources = generate_files name in
+                  let _ = Bind_enum.parse_enum_info bi sources in
+                  Sources.close sources
+              | Base_info.Flags ->
+                  let _ = show_name () in
+                  let sources = generate_files name in
+                  let _ = Bind_enum.parse_flags_info bi sources in
+                  Sources.close sources
+              | _ -> ()
+            end
+      done

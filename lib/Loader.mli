@@ -124,3 +124,7 @@ val write_bindings_for :
 val write_constant_bindings_for :
   string ->
   (string * (GObject_introspection.Base_info.t Ctypes.structure Ctypes.ptr ->  Binding_utils.Sources.t -> unit)) list -> string list -> unit
+
+(** Generate all the bindings for enums and flags for a namespace. *)
+val write_enum_and_flag_bindings_for :
+  string -> unit
