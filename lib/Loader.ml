@@ -266,12 +266,16 @@ let rec write_bindings_for namespace = function
         end
         in write_bindings_for namespace others
 
-let write_constant_bindings_for namespace alternate_bindings skipped =
+let write_constant_bindings_for namespace ?files_suffix alternate_bindings skipped =
   let open Binding_utils in
   match Repository.require namespace () with
   | Error message -> print_endline message
   | Ok typelib ->
-      let sources = generate_files "Core" in
+      let filenames = match files_suffix with
+          | None -> "Core"
+          | Some suff -> "Core" ^ suff
+      in
+      let sources = generate_files filenames in
       let n = Repository.get_n_infos namespace in
       let _ = for i = 0 to n - 1 do
         let bi = Repository.get_info namespace i in
