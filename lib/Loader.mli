@@ -119,11 +119,9 @@ val write_bindings_for :
 
 (** Generate all the bindings for the constants in the Core.ml/mli files
  *  @arg namespace
- *  @arg (name, binding_generator) list : customize bindings for constants names
  *  @arg list of constants to skip. *)
 val write_constant_bindings_for :
-  string -> ?files_suffix:string ->
-  (string * (GObject_introspection.Base_info.t Ctypes.structure Ctypes.ptr ->  Binding_utils.Sources.t -> unit)) list -> string list -> unit
+  string -> ?files_suffix:string -> string list -> unit
 
 (** Generate all the bindings for enums and flags for a namespace. *)
 val write_enum_and_flag_bindings_for :

@@ -266,7 +266,7 @@ let rec write_bindings_for namespace = function
         end
         in write_bindings_for namespace others
 
-let write_constant_bindings_for namespace ?files_suffix alternate_bindings skipped =
+let write_constant_bindings_for namespace ?files_suffix skipped =
   let open Binding_utils in
   match Repository.require namespace () with
   | Error message -> print_endline message
@@ -282,17 +282,10 @@ let write_constant_bindings_for namespace ?files_suffix alternate_bindings skipp
         match Base_info.get_name bi with
         | None -> ()
         | Some name ->
-            let rec has_alternate_bindings name = function
-              |[] -> None
-              | (n, f) :: t -> if name = n then Some f
-              else has_alternate_bindings name t
-            in
             match Base_info.is_deprecated bi,
-                  match_one_of name skipped,
-                  has_alternate_bindings name alternate_bindings with
-            | true , _, _ -> Sources.buffs_add_deprecated sources name
-            | _, true, _ -> Sources.buffs_add_skipped sources name
-            | _, _, Some f -> f bi sources
+                  match_one_of name skipped with
+            | true , _ -> Sources.buffs_add_deprecated sources name
+            | _, true -> Sources.buffs_add_skipped sources name
             | _ ->
                 match Base_info.get_type bi with
                 | Base_info.Constant ->
