@@ -326,3 +326,33 @@ let write_enum_and_flag_bindings_for namespace =
               | _ -> ()
             end
       done
+
+let write_function_bindings_for namespace ?files_suffix = function
+  | [] -> ()
+  | name :: others ->
+      let _ =  begin
+        match Repository.require namespace () with
+        | Error message -> print_endline message
+        | Ok typelib ->
+          match Repository.find_by_name namespace name with
+          | None ->
+              let strs =  ["Unable to find"; name; "in the namespace"; namespace] in
+              let message = String.concat " " strs  in
+              print_endline  message
+          | Some bi ->
+              if Base_info.is_deprecated bi then
+                let message = name ^ " is deprecated" in
+                print_endline message
+              else begin
+                let open Binding_utils in
+                let sources = match files_suffix with
+                  | None -> generate_files "Core"
+                  | Some suffix -> generate_files ("Core" ^ suffix)
+                in
+                match Base_info.get_type bi with
+                | Base_info.Function ->
+                    Bind_function.parse_function_info bi sources []
+                | _ -> ()
+              end;
+        end
+        in write_bindings_for namespace others
