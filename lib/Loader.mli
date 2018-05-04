@@ -113,6 +113,10 @@ val parse:
   unit ->
   unit
 
+(** Generate file sources for code generator *)
+val generate_files :
+  string -> Binding_utils.Sources.t
+
 (** Juste write bindings for a list of data structures in the current directory *)
 val write_bindings_for :
   string -> string list -> unit
