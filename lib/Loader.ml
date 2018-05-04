@@ -232,36 +232,37 @@ let rec write_bindings_for namespace = function
               else begin
                 let open Binding_utils in
                 let sources = generate_files name in
-                match Base_info.get_type bi with
-                | Base_info.Boxed | Base_info.Struct -> begin
-                    let si = Struct_info.from_baseinfo bi in
-                    if Struct_info.is_gtype_struct si then ()
-                    else
-                      Bind_struct.parse_struct_info bi sources []
-                  end
-                | Base_info.Enum ->
-                    Bind_enum.parse_enum_info bi sources
-                | Base_info.Flags ->
-                    Bind_enum.parse_flags_info bi sources
-                | Base_info.Constant ->
-                    Bind_constant.parse_constant_info bi sources
-                | Base_info.Union ->
-                    Bind_union.parse_union_info bi sources []
-                | Base_info.Callback -> ()
-                | Base_info.Invalid -> ()
-                | Base_info.Value -> ()
-                | Base_info.Signal -> ()
-                | Base_info.Vfunc -> ()
-                | Base_info.Property -> ()
-                | Base_info.Field -> ()
-                | Base_info.Arg -> ()
-                | Base_info.Type -> ()
-                | Base_info.Unresolved -> ()
-                | Base_info.Object ->
-                    Bind_object.parse_object_info bi sources []
-                | Base_info.Invalid_0 -> ()
-                | Base_info.Interface -> ()
-                | _ -> ()
+                let _ = match Base_info.get_type bi with
+                  | Base_info.Boxed | Base_info.Struct -> begin
+                      let si = Struct_info.from_baseinfo bi in
+                      if Struct_info.is_gtype_struct si then ()
+                      else
+                        Bind_struct.parse_struct_info bi sources []
+                    end
+                  | Base_info.Enum ->
+                      Bind_enum.parse_enum_info bi sources
+                  | Base_info.Flags ->
+                      Bind_enum.parse_flags_info bi sources
+                  | Base_info.Constant ->
+                      Bind_constant.parse_constant_info bi sources
+                  | Base_info.Union ->
+                      Bind_union.parse_union_info bi sources []
+                  | Base_info.Callback -> ()
+                  | Base_info.Invalid -> ()
+                  | Base_info.Value -> ()
+                  | Base_info.Signal -> ()
+                  | Base_info.Vfunc -> ()
+                  | Base_info.Property -> ()
+                  | Base_info.Field -> ()
+                  | Base_info.Arg -> ()
+                  | Base_info.Type -> ()
+                  | Base_info.Unresolved -> ()
+                  | Base_info.Object ->
+                      Bind_object.parse_object_info bi sources []
+                  | Base_info.Invalid_0 -> ()
+                  | Base_info.Interface -> ()
+                  | _ -> ()
+                in Sources.close sources
               end;
         end
         in write_bindings_for namespace others
@@ -327,7 +328,14 @@ let write_enum_and_flag_bindings_for namespace =
             end
       done
 
-let write_function_bindings_for namespace ?files_suffix = function
+let write_function_bindings_for namespace ?files_suffix functions =
+  let open Binding_utils in
+  let open Binding_utils in
+  let sources = match files_suffix with
+    | None -> generate_files "Core"
+    | Some suffix -> generate_files ("Core" ^ suffix)
+  in
+  let rec loop = function
   | [] -> ()
   | name :: others ->
       let _ =  begin
@@ -344,15 +352,13 @@ let write_function_bindings_for namespace ?files_suffix = function
                 let message = name ^ " is deprecated" in
                 print_endline message
               else begin
-                let open Binding_utils in
-                let sources = match files_suffix with
-                  | None -> generate_files "Core"
-                  | Some suffix -> generate_files ("Core" ^ suffix)
-                in
                 match Base_info.get_type bi with
                 | Base_info.Function ->
                     Bind_function.parse_function_info bi sources []
                 | _ -> ()
               end;
         end
-        in write_bindings_for namespace others
+        in loop others
+  in
+  let _ = loop functions in
+  Sources.close sources
