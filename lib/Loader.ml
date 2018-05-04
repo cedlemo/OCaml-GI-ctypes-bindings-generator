@@ -293,7 +293,7 @@ let write_constant_bindings_for namespace ?files_suffix skipped =
                     Bind_constant.parse_constant_info bi sources
                 | _ -> ()
       done in
-      Binding_utils.Sources.close sources
+      Sources.close sources
 
 let write_enum_and_flag_bindings_for namespace =
   let open Binding_utils in
@@ -329,7 +329,6 @@ let write_enum_and_flag_bindings_for namespace =
       done
 
 let write_function_bindings_for namespace ?files_suffix functions =
-  let open Binding_utils in
   let open Binding_utils in
   let sources = match files_suffix with
     | None -> generate_files "Core"
