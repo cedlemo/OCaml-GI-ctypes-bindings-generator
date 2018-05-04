@@ -121,7 +121,7 @@ val write_bindings_for :
  *  @arg namespace
  *  @arg list of constants to skip. *)
 val write_constant_bindings_for :
-  string -> ?files_suffix:string -> string list -> unit
+  string -> Binding_utils.Sources.t -> string list -> unit
 
 (** Generate all the bindings for enums and flags for a namespace. *)
 val write_enum_and_flag_bindings_for :
@@ -130,4 +130,4 @@ val write_enum_and_flag_bindings_for :
 (** Juste write bindings for a list of functions that are directly accessible
  *  in the namespace. *)
 val write_function_bindings_for :
-  string -> ?files_suffix:string -> string list -> unit
+  string -> Binding_utils.Sources.t -> string list -> unit

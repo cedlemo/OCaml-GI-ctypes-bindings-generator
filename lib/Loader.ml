@@ -267,18 +267,13 @@ let rec write_bindings_for namespace = function
         end
         in write_bindings_for namespace others
 
-let write_constant_bindings_for namespace ?files_suffix skipped =
+let write_constant_bindings_for namespace sources skipped =
   let open Binding_utils in
   match Repository.require namespace () with
   | Error message -> print_endline message
   | Ok typelib ->
-      let filenames = match files_suffix with
-          | None -> "Core"
-          | Some suff -> "Core" ^ suff
-      in
-      let sources = generate_files filenames in
       let n = Repository.get_n_infos namespace in
-      let _ = for i = 0 to n - 1 do
+      for i = 0 to n - 1 do
         let bi = Repository.get_info namespace i in
         match Base_info.get_name bi with
         | None -> ()
@@ -292,8 +287,7 @@ let write_constant_bindings_for namespace ?files_suffix skipped =
                 | Base_info.Constant ->
                     Bind_constant.parse_constant_info bi sources
                 | _ -> ()
-      done in
-      Sources.close sources
+      done
 
 let write_enum_and_flag_bindings_for namespace =
   let open Binding_utils in
@@ -328,12 +322,8 @@ let write_enum_and_flag_bindings_for namespace =
             end
       done
 
-let write_function_bindings_for namespace ?files_suffix functions =
+let write_function_bindings_for namespace sources functions =
   let open Binding_utils in
-  let sources = match files_suffix with
-    | None -> generate_files "Core"
-    | Some suffix -> generate_files ("Core" ^ suffix)
-  in
   let rec loop = function
   | [] -> ()
   | name :: others ->
@@ -359,5 +349,4 @@ let write_function_bindings_for namespace ?files_suffix functions =
         end
         in loop others
   in
-  let _ = loop functions in
-  Sources.close sources
+  loop functions
