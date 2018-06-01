@@ -22,7 +22,6 @@ let () =
   run_test_tt_main
   ("GObjectIntrospection" >:::
     [
-      Test_loader.tests;
       Test_bind_struct.tests;
       Test_bind_enum.tests;
       Test_bind_constant.tests;
