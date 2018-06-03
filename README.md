@@ -7,7 +7,7 @@ Ctypes bindings of any C GObject libraries (not all but at least a big part).
 
 ## gi-bindings-generator and Dune (jbuilder)
 
-Dune allows to easily use a [custom code generator]. Let's take the example
+Dune allows to easily use a [custom code generator](http://dune.readthedocs.io/en/latest/quick-start.html#using-a-custom-code-generator). Let's take the example
 of the [gi-glib2 package : OCaml-GLib2 ctypes bindings](https://github.com/cedlemo/OCaml-GLib2).
 
 Here is the directory tree of the repository:
