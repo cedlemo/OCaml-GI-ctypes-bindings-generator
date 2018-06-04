@@ -22,13 +22,17 @@ open GI_bindings_generator
 open GObject_introspection
 
 let get_object_info namespace name =
-  match Repository.find_by_name namespace name with
-  | None -> None
-  | Some (base_info) ->
-    match Base_info.get_type base_info with
-    | Base_info.Object -> let object_info = Object_info.from_baseinfo base_info in
-      Some object_info
-    | _ -> None
+  match Repository.require namespace () with
+  | Error _ -> None
+  | Ok typelib ->
+    match Repository.find_by_name namespace name with
+    | None -> None
+    | Some (base_info) ->
+      match Base_info.get_type base_info with
+      | Base_info.Object ->
+        let object_info = Object_info.from_baseinfo base_info in
+        Some object_info
+      | _ -> None
 
 let object_test namespace name fn =
   match get_object_info namespace name with
