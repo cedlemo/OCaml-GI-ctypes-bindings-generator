@@ -14,12 +14,12 @@ let () =
   end
 
 let namespace = Sys.argv.(1)
-let version = if n_args = 3 then Some Sys.argv.(1) else None
+let version = if n_args = 3 then Some Sys.argv.(2) else None
 let sources = Loader.generate_files "Core"
 
-let get_data_structures_and_functions namespace =
+let get_data_structures_and_functions namespace ?version () =
   let open GI in
-  match Repository.require namespace () with
+  match Repository.require namespace ?version () with
   | Error message -> ([], [])
   | Ok typelib ->
     let n = Repository.get_n_infos namespace in
@@ -47,9 +47,10 @@ let get_data_structures_and_functions namespace =
     in get_names 0 [] []
 
 let () =
-  let _ = Loader.write_constant_bindings_for namespace sources [] in
-  let _ = Loader.write_enum_and_flag_bindings_for namespace in
-  let data_structures, functions = get_data_structures_and_functions namespace in
-  let _ = Loader.write_function_bindings_for namespace sources functions in
-  let _ = Loader.write_bindings_for namespace data_structures in
+  let _ = Loader.write_constant_bindings_for namespace ?version sources [] in
+  let _ = Loader.write_enum_and_flag_bindings_for namespace ?version () in
+  let data_structures, functions =
+    get_data_structures_and_functions namespace ?version () in
+  let _ = Loader.write_function_bindings_for namespace ?version sources functions in
+  let _ = Loader.write_bindings_for namespace ?version data_structures in
   BG.Binding_utils.Sources.close sources
