@@ -28,19 +28,19 @@ val generate_files :
 
 (** Juste write bindings for a list of data structures in the current directory *)
 val write_bindings_for :
-  string -> string list -> unit
+  string -> ?version:string -> string list -> unit
 
 (** Generate all the bindings for the constants in the Core.ml/mli files
  *  @arg namespace
  *  @arg list of constants to skip. *)
 val write_constant_bindings_for :
-  string -> Binding_utils.Sources.t -> string list -> unit
+  string -> ?version:string -> Binding_utils.Sources.t -> string list -> unit
 
 (** Generate all the bindings for enums and flags for a namespace. *)
 val write_enum_and_flag_bindings_for :
-  string -> unit
+  string -> ?version:string -> unit -> unit
 
 (** Juste write bindings for a list of functions that are directly accessible
  *  in the namespace. *)
 val write_function_bindings_for :
-  string -> Binding_utils.Sources.t -> string list -> unit
+  string -> ?version:string -> Binding_utils.Sources.t -> string list -> unit

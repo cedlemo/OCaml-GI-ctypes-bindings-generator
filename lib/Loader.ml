@@ -23,11 +23,11 @@ let generate_files name =
   let module_name = Lexer.snake_case name in
   Binding_utils.Sources.create_ctypes module_name
 
-let rec write_bindings_for namespace = function
+let rec write_bindings_for namespace ?version = function
   | [] -> ()
   | name :: others ->
       let _ =  begin
-        match Repository.require namespace () with
+        match Repository.require namespace ?version () with
         | Error message -> print_endline message
         | Ok typelib ->
           match Repository.find_by_name namespace name with
@@ -75,11 +75,11 @@ let rec write_bindings_for namespace = function
                 in Sources.close sources
               end;
         end
-        in write_bindings_for namespace others
+        in write_bindings_for namespace ?version others
 
-let write_constant_bindings_for namespace sources skipped =
+let write_constant_bindings_for namespace ?version sources skipped =
   let open Binding_utils in
-  match Repository.require namespace () with
+  match Repository.require namespace ?version () with
   | Error message -> print_endline message
   | Ok typelib ->
       let n = Repository.get_n_infos namespace in
@@ -99,9 +99,9 @@ let write_constant_bindings_for namespace sources skipped =
                 | _ -> ()
       done
 
-let write_enum_and_flag_bindings_for namespace =
+let write_enum_and_flag_bindings_for namespace ?version () =
   let open Binding_utils in
-  match Repository.require namespace () with
+  match Repository.require namespace ?version () with
   | Error message -> print_endline message
   | Ok typelib ->
       let n = Repository.get_n_infos namespace in
@@ -125,13 +125,13 @@ let write_enum_and_flag_bindings_for namespace =
             end
       done
 
-let write_function_bindings_for namespace sources functions =
+let write_function_bindings_for namespace ?version sources functions =
   let open Binding_utils in
   let rec loop = function
   | [] -> ()
   | name :: others ->
       let _ =  begin
-        match Repository.require namespace () with
+        match Repository.require namespace ?version () with
         | Error message -> print_endline message
         | Ok typelib ->
           match Repository.find_by_name namespace name with
