@@ -15,8 +15,6 @@ let append =
   foreign "g_value_array_append" (ptr t_typ @-> ptr_opt Value.t_typ @-> returning (ptr t_typ))
 let copy =
   foreign "g_value_array_copy" (ptr t_typ @-> returning (ptr t_typ))
-let free =
-  foreign "g_value_array_free" (ptr t_typ @-> returning (void))
 let get_nth =
   foreign "g_value_array_get_nth" (ptr t_typ @-> uint32_t @-> returning (ptr Value.t_typ))
 let insert =

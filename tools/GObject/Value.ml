@@ -8,11 +8,12 @@ let t_typ : t structure typ = structure "Value"
 (*Struct field Value : C Array type for Types.Array tag tag not implemented*)
 let copy =
   foreign "g_value_copy" (ptr t_typ @-> ptr t_typ @-> returning (void))
-(*Not implemented g_value_dup_object return type object not handled*)
+let dup_object =
+  foreign "g_value_dup_object" (ptr t_typ @-> returning (Object.t_typ))
 let dup_string =
   foreign "g_value_dup_string" (ptr t_typ @-> returning (string_opt))
 let dup_variant =
-  foreign "g_value_dup_variant" (ptr t_typ @-> returning (ptr Variant.t_typ))
+  foreign "g_value_dup_variant" (ptr t_typ @-> returning (ptr_opt Variant.t_typ))
 let fits_pointer =
   foreign "g_value_fits_pointer" (ptr t_typ @-> returning (bool))
 let get_boolean =
@@ -36,8 +37,10 @@ let get_int64 =
   foreign "g_value_get_int64" (ptr t_typ @-> returning (int64_t))
 let get_long =
   foreign "g_value_get_long" (ptr t_typ @-> returning (int64_t))
-(*Not implemented g_value_get_object return type object not handled*)
-(*Not implemented g_value_get_param return type object not handled*)
+let get_object =
+  foreign "g_value_get_object" (ptr t_typ @-> returning (Object.t_typ))
+let get_param =
+  foreign "g_value_get_param" (ptr t_typ @-> returning (Param_spec.t_typ))
 let get_pointer =
   foreign "g_value_get_pointer" (ptr t_typ @-> returning (ptr_opt void))
 let get_schar =
@@ -53,7 +56,7 @@ let get_uint64 =
 let get_ulong =
   foreign "g_value_get_ulong" (ptr t_typ @-> returning (uint64_t))
 let get_variant =
-  foreign "g_value_get_variant" (ptr t_typ @-> returning (ptr Variant.t_typ))
+  foreign "g_value_get_variant" (ptr t_typ @-> returning (ptr_opt Variant.t_typ))
 (*Not implemented g_value_init type gType not implemented*)
 let init_from_instance =
   foreign "g_value_init_from_instance" (ptr t_typ @-> ptr Type_instance.t_typ @-> returning (void))
@@ -86,8 +89,10 @@ let set_int64 =
   foreign "g_value_set_int64" (ptr t_typ @-> int64_t @-> returning (void))
 let set_long =
   foreign "g_value_set_long" (ptr t_typ @-> int64_t @-> returning (void))
-(*Not implemented g_value_set_object type object not implemented*)
-(*Not implemented g_value_set_param type object not implemented*)
+let set_object =
+  foreign "g_value_set_object" (ptr t_typ @-> Object.t_typ @-> returning (void))
+let set_param =
+  foreign "g_value_set_param" (ptr t_typ @-> Param_spec.t_typ @-> returning (void))
 let set_pointer =
   foreign "g_value_set_pointer" (ptr t_typ @-> ptr_opt void @-> returning (void))
 let set_schar =

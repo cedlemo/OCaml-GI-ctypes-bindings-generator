@@ -17,15 +17,16 @@ val f_is_invalid: (Unsigned.uint32, t structure) field
 val f_data: (unit ptr, t structure) field
 val f_notifiers: (Closure_notify_data.t structure ptr, t structure) field
 
-(*Not implemented g_closure_new_object type object not implemented*)
-val create_simple:
+val create_object :
+  Unsigned.uint32 -> Object.t -> t structure ptr
+val create_simple :
   Unsigned.uint32 -> unit ptr option -> t structure ptr
-val invalidate:
+val invalidate :
   t structure ptr -> unit
 (*Not implemented g_closure_invoke type C Array type for Types.Array tag not implemented*)
-val incr_ref:
+val incr_ref :
   t structure ptr -> t structure ptr
-val sink:
+val sink :
   t structure ptr -> unit
-val unref:
+val unref :
   t structure ptr -> unit

@@ -5,119 +5,124 @@ val t_typ : t structure typ
 
 (*Struct field Value : gType tag not implemented*)
 (*Struct field Value : C Array type for Types.Array tag tag not implemented*)
-val copy:
+val copy :
   t structure ptr -> t structure ptr -> unit
-(*Not implemented g_value_dup_object return type object not handled*)
-val dup_string:
+val dup_object :
+  t structure ptr -> Object.t
+val dup_string :
   t structure ptr -> string option
-val dup_variant:
-  t structure ptr -> Variant.t structure ptr
-val fits_pointer:
+val dup_variant :
+  t structure ptr -> Variant.t structure ptr option
+val fits_pointer :
   t structure ptr -> bool
-val get_boolean:
+val get_boolean :
   t structure ptr -> bool
-val get_boxed:
+val get_boxed :
   t structure ptr -> unit ptr option
-val get_char:
+val get_char :
   t structure ptr -> int
-val get_double:
+val get_double :
   t structure ptr -> float
-val get_enum:
+val get_enum :
   t structure ptr -> int32
-val get_flags:
+val get_flags :
   t structure ptr -> Unsigned.uint32
-val get_float:
+val get_float :
   t structure ptr -> float
 (*Not implemented g_value_get_gtype return type gType not handled*)
-val get_int:
+val get_int :
   t structure ptr -> int32
-val get_int64:
+val get_int64 :
   t structure ptr -> int64
-val get_long:
+val get_long :
   t structure ptr -> int64
-(*Not implemented g_value_get_object return type object not handled*)
-(*Not implemented g_value_get_param return type object not handled*)
-val get_pointer:
+val get_object :
+  t structure ptr -> Object.t
+val get_param :
+  t structure ptr -> Param_spec.t
+val get_pointer :
   t structure ptr -> unit ptr option
-val get_schar:
+val get_schar :
   t structure ptr -> int
-val get_string:
+val get_string :
   t structure ptr -> string option
-val get_uchar:
+val get_uchar :
   t structure ptr -> Unsigned.uint8
-val get_uint:
+val get_uint :
   t structure ptr -> Unsigned.uint32
-val get_uint64:
+val get_uint64 :
   t structure ptr -> Unsigned.uint64
-val get_ulong:
+val get_ulong :
   t structure ptr -> Unsigned.uint64
-val get_variant:
-  t structure ptr -> Variant.t structure ptr
+val get_variant :
+  t structure ptr -> Variant.t structure ptr option
 (*Not implemented g_value_init type gType not implemented*)
-val init_from_instance:
+val init_from_instance :
   t structure ptr -> Type_instance.t structure ptr -> unit
-val peek_pointer:
+val peek_pointer :
   t structure ptr -> unit ptr option
-val reset:
+val reset :
   t structure ptr -> t structure ptr
-val set_boolean:
+val set_boolean :
   t structure ptr -> bool -> unit
-val set_boxed:
+val set_boxed :
   t structure ptr -> unit ptr option -> unit
-val set_boxed_take_ownership:
+val set_boxed_take_ownership :
   t structure ptr -> unit ptr option -> unit
-val set_char:
+val set_char :
   t structure ptr -> int -> unit
-val set_double:
+val set_double :
   t structure ptr -> float -> unit
-val set_enum:
+val set_enum :
   t structure ptr -> int32 -> unit
-val set_flags:
+val set_flags :
   t structure ptr -> Unsigned.uint32 -> unit
-val set_float:
+val set_float :
   t structure ptr -> float -> unit
 (*Not implemented g_value_set_gtype type gType not implemented*)
-val set_instance:
+val set_instance :
   t structure ptr -> unit ptr option -> unit
-val set_int:
+val set_int :
   t structure ptr -> int32 -> unit
-val set_int64:
+val set_int64 :
   t structure ptr -> int64 -> unit
-val set_long:
+val set_long :
   t structure ptr -> int64 -> unit
-(*Not implemented g_value_set_object type object not implemented*)
-(*Not implemented g_value_set_param type object not implemented*)
-val set_pointer:
+val set_object :
+  t structure ptr -> Object.t -> unit
+val set_param :
+  t structure ptr -> Param_spec.t -> unit
+val set_pointer :
   t structure ptr -> unit ptr option -> unit
-val set_schar:
+val set_schar :
   t structure ptr -> int -> unit
-val set_static_boxed:
+val set_static_boxed :
   t structure ptr -> unit ptr option -> unit
-val set_static_string:
+val set_static_string :
   t structure ptr -> string option -> unit
-val set_string:
+val set_string :
   t structure ptr -> string option -> unit
-val set_string_take_ownership:
+val set_string_take_ownership :
   t structure ptr -> string option -> unit
-val set_uchar:
+val set_uchar :
   t structure ptr -> Unsigned.uint8 -> unit
-val set_uint:
+val set_uint :
   t structure ptr -> Unsigned.uint32 -> unit
-val set_uint64:
+val set_uint64 :
   t structure ptr -> Unsigned.uint64 -> unit
-val set_ulong:
+val set_ulong :
   t structure ptr -> Unsigned.uint64 -> unit
-val set_variant:
+val set_variant :
   t structure ptr -> Variant.t structure ptr option -> unit
-val take_boxed:
+val take_boxed :
   t structure ptr -> unit ptr option -> unit
-val take_string:
+val take_string :
   t structure ptr -> string option -> unit
-val take_variant:
+val take_variant :
   t structure ptr -> Variant.t structure ptr option -> unit
-val transform:
+val transform :
   t structure ptr -> t structure ptr -> bool
-val unset:
+val unset :
   t structure ptr -> unit
 (*Not implemented g_value_type_compatible type gType not implemented*)
 (*Not implemented g_value_type_transformable type gType not implemented*)
