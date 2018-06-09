@@ -2,8 +2,19 @@ module BG = GI_bindings_generator
 module Loader = BG.Loader
 module GI = GObject_introspection
 
-let namespace = "GLib"
+let n_args = Array.length Sys.argv
 
+let () =
+  if n_args == 1 || n_args > 3 then begin
+    let message =
+      "Please provide a GObject Introspection namespace and optionnaly a \
+       version number." in
+    print_endline message;
+    exit 1;
+  end
+
+let namespace = Sys.argv.(1)
+let version = if n_args = 3 then Some Sys.argv.(1) else None
 let sources = Loader.generate_files "Core"
 
 let get_data_structures_and_functions namespace =
