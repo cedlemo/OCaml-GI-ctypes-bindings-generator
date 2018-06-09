@@ -2,10 +2,7 @@
 
 (executables
  (
-   (names (glib_raw_generator
-           gio_raw_generator
-	   gobject_raw_generator
-	   gtk3_raw_generator))
+   (names (raw_generator))
 
     (libraries (gobject-introspection gi-bindings-generator))
   )
