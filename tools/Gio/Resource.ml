@@ -30,7 +30,7 @@ let get_info self path lookup_flags =
   let ret = get_info_raw self path lookup_flags size_ptr flags_ptr err_ptr_ptr in
   let get_ret_value () =
     let size = !@ size_ptr in
-  let flags = !@ flags_ptr in
+   let flags = !@ flags_ptr in
     (ret, size, flags)
   in
   match (!@ err_ptr_ptr) with

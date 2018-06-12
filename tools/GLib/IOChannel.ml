@@ -82,8 +82,8 @@ let read_line self =
   let ret = read_line_raw self str_return_ptr length_ptr terminator_pos_ptr err_ptr_ptr in
   let get_ret_value () =
     let str_return = !@ str_return_ptr in
-  let length = !@ length_ptr in
-  let terminator_pos = !@ terminator_pos_ptr in
+   let length = !@ length_ptr in
+   let terminator_pos = !@ terminator_pos_ptr in
     (ret, str_return, length, terminator_pos)
   in
   match (!@ err_ptr_ptr) with

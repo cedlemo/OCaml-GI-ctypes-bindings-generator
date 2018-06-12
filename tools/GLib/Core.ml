@@ -207,7 +207,7 @@ let utf8_to_utf16 str len =
   let ret = utf8_to_utf16_raw str len items_read_ptr items_written_ptr err_ptr_ptr in
   let get_ret_value () =
     let items_read = !@ items_read_ptr in
-  let items_written = !@ items_written_ptr in
+   let items_written = !@ items_written_ptr in
     (ret, items_read, items_written)
   in
   match (!@ err_ptr_ptr) with
@@ -288,7 +288,7 @@ let utf16_to_utf8 str len =
   let ret = utf16_to_utf8_raw str len items_read_ptr items_written_ptr err_ptr_ptr in
   let get_ret_value () =
     let items_read = !@ items_read_ptr in
-  let items_written = !@ items_written_ptr in
+   let items_written = !@ items_written_ptr in
     (ret, items_read, items_written)
   in
   match (!@ err_ptr_ptr) with
@@ -1281,7 +1281,7 @@ let filename_to_utf8 opsysstring len =
   let ret = filename_to_utf8_raw opsysstring len bytes_read_ptr bytes_written_ptr err_ptr_ptr in
   let get_ret_value () =
     let bytes_read = !@ bytes_read_ptr in
-  let bytes_written = !@ bytes_written_ptr in
+   let bytes_written = !@ bytes_written_ptr in
     (ret, bytes_read, bytes_written)
   in
   match (!@ err_ptr_ptr) with
@@ -1311,7 +1311,7 @@ let filename_from_utf8 utf8string len =
   let ret = filename_from_utf8_raw utf8string len bytes_read_ptr bytes_written_ptr err_ptr_ptr in
   let get_ret_value () =
     let bytes_read = !@ bytes_read_ptr in
-  let bytes_written = !@ bytes_written_ptr in
+   let bytes_written = !@ bytes_written_ptr in
     (ret, bytes_read, bytes_written)
   in
   match (!@ err_ptr_ptr) with

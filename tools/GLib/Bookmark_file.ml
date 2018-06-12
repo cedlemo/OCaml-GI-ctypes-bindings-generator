@@ -32,8 +32,8 @@ let get_app_info self uri name =
   let ret = get_app_info_raw self uri name exec_ptr count_ptr stamp_ptr err_ptr_ptr in
   let get_ret_value () =
     let exec = !@ exec_ptr in
-  let count = !@ count_ptr in
-  let stamp = !@ stamp_ptr in
+   let count = !@ count_ptr in
+   let stamp = !@ stamp_ptr in
     (ret, exec, count, stamp)
   in
   match (!@ err_ptr_ptr) with
@@ -63,7 +63,7 @@ let get_icon self uri =
   let ret = get_icon_raw self uri href_ptr mime_type_ptr err_ptr_ptr in
   let get_ret_value () =
     let href = !@ href_ptr in
-  let mime_type = !@ mime_type_ptr in
+   let mime_type = !@ mime_type_ptr in
     (ret, href, mime_type)
   in
   match (!@ err_ptr_ptr) with

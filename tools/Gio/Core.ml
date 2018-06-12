@@ -253,7 +253,7 @@ let resources_get_info path lookup_flags =
   let ret = resources_get_info_raw path lookup_flags size_ptr flags_ptr err_ptr_ptr in
   let get_ret_value () =
     let size = !@ size_ptr in
-  let flags = !@ flags_ptr in
+   let flags = !@ flags_ptr in
     (ret, size, flags)
   in
   match (!@ err_ptr_ptr) with
@@ -590,7 +590,7 @@ let action_parse_detailed_name detailed_name =
   let ret = action_parse_detailed_name_raw detailed_name action_name_ptr target_value_ptr err_ptr_ptr in
   let get_ret_value () =
     let action_name = !@ action_name_ptr in
-  let target_value = !@ target_value_ptr in
+   let target_value = !@ target_value_ptr in
     (ret, action_name, target_value)
   in
   match (!@ err_ptr_ptr) with

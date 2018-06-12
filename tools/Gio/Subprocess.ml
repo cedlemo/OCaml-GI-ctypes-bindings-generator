@@ -15,7 +15,7 @@ let communicate self stdin_buf cancellable =
   let ret = communicate_raw self stdin_buf cancellable stdout_buf_ptr stderr_buf_ptr err_ptr_ptr in
   let get_ret_value () =
     let stdout_buf = !@ stdout_buf_ptr in
-  let stderr_buf = !@ stderr_buf_ptr in
+   let stderr_buf = !@ stderr_buf_ptr in
     (ret, stdout_buf, stderr_buf)
   in
   match (!@ err_ptr_ptr) with
@@ -34,7 +34,7 @@ let communicate_utf8 self stdin_buf cancellable =
   let ret = communicate_utf8_raw self stdin_buf cancellable stdout_buf_ptr stderr_buf_ptr err_ptr_ptr in
   let get_ret_value () =
     let stdout_buf = !@ stdout_buf_ptr in
-  let stderr_buf = !@ stderr_buf_ptr in
+   let stderr_buf = !@ stderr_buf_ptr in
     (ret, stdout_buf, stderr_buf)
   in
   match (!@ err_ptr_ptr) with
