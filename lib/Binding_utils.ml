@@ -343,7 +343,7 @@ let type_tag_to_bindings_types = function
   | Types.Error as tag -> Not_implemented (Types.string_of_tag tag)
   | Types.Unichar as tag -> Not_implemented (Types.string_of_tag tag)
 
-let type_info_to_bindings_types type_info maybe_null =
+let rec type_info_to_bindings_types type_info maybe_null =
   let check_if_pointer (ocaml_t, ctypes_t) =
     if Type_info.is_pointer type_info then
       if maybe_null then {ocaml = ocaml_t ^ " ptr option";
@@ -385,10 +385,29 @@ let type_info_to_bindings_types type_info maybe_null =
         | Types.Byte_array -> Types (check_if_pointer ("Byte_array.t structure", "Byte_array.t_typ"))
       )
     | Types.Interface as tag -> Not_implemented (Types.string_of_tag tag)
-    | Types.GList -> Types (check_if_pointer ("List.t structure", "List.t_typ"))
-    | Types.GSList -> Types (check_if_pointer ("SList.t structure", "SList.t_typ"))
-    | Types.GHash -> Types (check_if_pointer ("Hash_table.t structure", "Hash_table.t_typ"))
-    | Types.Error -> Types (check_if_pointer ("Error.t structure", "Error.t_typ"))
+    | Types.GList ->
+      let data_type = begin match get_data_type_of_container type_info maybe_null with
+        | Types {ocaml; ctypes} -> ocaml
+        | Not_implemented tag -> "Not implemented : "^ tag
+      end in
+      let container_type = String.concat " " ["List.t structure"; "(*"; data_type; "*)"] in
+      Types (check_if_pointer (container_type, "List.t_typ"))
+    | Types.GSList ->
+      let data_type = begin match get_data_type_of_container type_info maybe_null with
+        | Types {ocaml; ctypes} -> ocaml
+        | Not_implemented tag -> "Not implemented : "^ tag
+      end in
+      let container_type = String.concat " " ["SList.t structure"; "(*"; data_type; "*)"] in
+      Types (check_if_pointer (container_type, "SList.t_typ"))
+    | Types.GHash ->
+      let data_type = begin match get_data_type_of_container type_info maybe_null with
+        | Types {ocaml; ctypes} -> ocaml
+        | Not_implemented tag -> "Not implemented : "^ tag
+      end in
+      let container_type = String.concat " " ["Hash_table.t structure"; "(*"; data_type; "*)"] in
+      Types (check_if_pointer (container_type, "Hash_table.t_typ"))
+    | Types.Error ->
+      Types (check_if_pointer ("Error.t structure", "Error.t_typ"))
     | Types.Unichar as tag -> Not_implemented (Types.string_of_tag tag)
     )
   | Some interface ->
@@ -436,6 +455,10 @@ let type_info_to_bindings_types type_info maybe_null =
       | Arg as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
       | Type as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
       | Unresolved as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
+and
+get_data_type_of_container type_info maybe_null =
+  let data_type_info = Type_info.get_param_type type_info 0 in
+  type_info_to_bindings_types data_type_info maybe_null
 
 let allocate_out_argument type_info var_name maybe_null =
   let check_if_pointer (ctypes_t, default_value) =
@@ -642,8 +665,6 @@ let allocate_out_argument_with_default_value type_info var_name maybe_null defau
       | Field as t -> Error (Base_info.string_of_baseinfo_type t)
       | Arg as t -> Error (Base_info.string_of_baseinfo_type t)
       | Unresolved as t -> Error (Base_info.string_of_baseinfo_type t)
-
-
 
 let get_out_argument_value type_info var_name maybe_null =
   let _get_value_simple_instructions () =
