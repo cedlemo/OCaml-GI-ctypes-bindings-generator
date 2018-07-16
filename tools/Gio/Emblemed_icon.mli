@@ -9,5 +9,5 @@ val add_emblem :
 val clear_emblems :
   t -> unit
 val get_emblems :
-  t -> List.t structure ptr
+  t -> List.t structure (* Emblem.t *) ptr
 (*Not implemented g_emblemed_icon_get_icon return type interface not handled*)

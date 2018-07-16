@@ -24,9 +24,9 @@ val get_example_icon_name :
 val has_icon :
   t -> string -> bool
 val list_contexts :
-  t -> List.t structure ptr
+  t -> List.t structure (* string *) ptr
 val list_icons :
-  t -> string option -> List.t structure ptr
+  t -> string option -> List.t structure (* string *) ptr
 val load_icon :
   t -> string -> int32 -> Icon_lookup_flags.t_list -> (Pixbuf.t, Error.t structure ptr option) result
 val load_icon_for_scale :

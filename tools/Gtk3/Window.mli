@@ -6,11 +6,11 @@ val t_typ : t typ
 val create :
   Window_type.t -> Widget.t
 val get_default_icon_list :
-  unit -> List.t structure ptr
+  unit -> List.t structure (* Pixbuf.t *) ptr
 val get_default_icon_name :
   unit -> string option
 val list_toplevels :
-  unit -> List.t structure ptr
+  unit -> List.t structure (* Widget.t *) ptr
 val set_auto_startup_notification :
   bool -> unit
 val set_default_icon :
@@ -18,7 +18,7 @@ val set_default_icon :
 val set_default_icon_from_file :
   string -> (bool, Error.t structure ptr option) result
 val set_default_icon_list :
-  List.t structure ptr -> unit
+  List.t structure (* Pixbuf.t *) ptr -> unit
 val set_default_icon_name :
   string -> unit
 val set_interactive_debugging :
@@ -78,7 +78,7 @@ val get_hide_titlebar_when_maximized :
 val get_icon :
   t -> Pixbuf.t
 val get_icon_list :
-  t -> List.t structure ptr
+  t -> List.t structure (* Pixbuf.t *) ptr
 val get_icon_name :
   t -> string option
 val get_mnemonic_modifier :
@@ -192,7 +192,7 @@ val set_icon :
 val set_icon_from_file :
   t -> string -> (bool, Error.t structure ptr option) result
 val set_icon_list :
-  t -> List.t structure ptr -> unit
+  t -> List.t structure (* Pixbuf.t *) ptr -> unit
 val set_icon_name :
   t -> string option -> unit
 val set_keep_above :

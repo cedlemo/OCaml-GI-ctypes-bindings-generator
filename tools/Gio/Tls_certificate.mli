@@ -10,7 +10,7 @@ val create_from_files :
 val create_from_pem :
   string -> int64 -> (t, Error.t structure ptr option) result
 val list_create_from_file :
-  string -> (List.t structure ptr option, Error.t structure ptr option) result
+  string -> (List.t structure (* t *) ptr option, Error.t structure ptr option) result
 val get_issuer :
   t -> t
 val is_same :

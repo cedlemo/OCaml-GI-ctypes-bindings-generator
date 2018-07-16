@@ -503,7 +503,7 @@ val print_error_quark :
 (*Not implemented gtk_parse_args type C Array type for Types.Array tag not implemented*)
 
 val paper_size_get_paper_sizes :
-  bool -> List.t structure ptr
+  bool -> List.t structure (* Paper_size.t structure *) ptr
 
 val paper_size_get_default :
   unit -> string option
@@ -658,7 +658,7 @@ val binding_entry_remove :
   Binding_set.t structure ptr -> Unsigned.uint32 -> Modifier_type.t_list -> unit
 
 val binding_entry_add_signall :
-  Binding_set.t structure ptr -> Unsigned.uint32 -> Modifier_type.t_list -> string -> SList.t structure ptr -> unit
+  Binding_set.t structure ptr -> Unsigned.uint32 -> Modifier_type.t_list -> string -> SList.t structure (* Binding_arg.t structure *) ptr -> unit
 
 val binding_entry_add_signal_from_string :
   Binding_set.t structure ptr -> string -> Token_type.t
@@ -690,7 +690,7 @@ val accelerator_get_default_mod_mask :
   unit -> Modifier_type.t_list
 
 val accel_groups_from_object :
-  Object.t -> SList.t structure ptr
+  Object.t -> SList.t structure (* Accel_group.t *) ptr
 
 val accel_groups_activate :
   Object.t -> Unsigned.uint32 -> Modifier_type.t_list -> bool

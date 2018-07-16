@@ -22,7 +22,7 @@ val get_menubar :
 val get_window_by_id :
   t -> Unsigned.uint32 -> Window.t
 val get_windows :
-  t -> List.t structure ptr
+  t -> List.t structure (* Window.t *) ptr
 val inhibit :
   t -> Window.t -> Application_inhibit_flags.t_list -> string option -> Unsigned.uint32
 val is_inhibited :

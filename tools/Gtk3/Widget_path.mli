@@ -49,9 +49,9 @@ val iter_has_qregion :
 val iter_has_region :
   t structure ptr -> int32 -> string -> (bool * Region_flags.t_list)
 val iter_list_classes :
-  t structure ptr -> int32 -> SList.t structure ptr
+  t structure ptr -> int32 -> SList.t structure (* string *) ptr
 val iter_list_regions :
-  t structure ptr -> int32 -> SList.t structure ptr
+  t structure ptr -> int32 -> SList.t structure (* string *) ptr
 val iter_remove_class :
   t structure ptr -> int32 -> string -> unit
 val iter_remove_region :

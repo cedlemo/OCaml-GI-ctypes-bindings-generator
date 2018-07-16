@@ -10,7 +10,7 @@ val get_bounding_box_center :
 val get_device :
   t -> Device.t
 val get_group :
-  t -> List.t structure ptr
+  t -> List.t structure (* t *) ptr
 (*Not implemented gtk_gesture_get_last_event return type union not handled*)
 val get_last_updated_sequence :
   t -> Event_sequence.t structure ptr option
@@ -19,7 +19,7 @@ val get_point :
 val get_sequence_state :
   t -> Event_sequence.t structure ptr -> Event_sequence_state.t
 val get_sequences :
-  t -> List.t structure ptr
+  t -> List.t structure (* Event_sequence.t structure *) ptr
 val get_window :
   t -> Window.t
 val group :

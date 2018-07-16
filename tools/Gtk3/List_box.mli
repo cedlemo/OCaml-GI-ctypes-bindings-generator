@@ -21,7 +21,7 @@ val get_row_at_y :
 val get_selected_row :
   t -> List_box_row.t
 val get_selected_rows :
-  t -> List.t structure ptr
+  t -> List.t structure (* List_box_row.t *) ptr
 val get_selection_mode :
   t -> Selection_mode.t
 val insert :

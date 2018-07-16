@@ -20,7 +20,7 @@ val get_sensitive :
 val get_visible :
   t -> bool
 val list_actions :
-  t -> List.t structure ptr
+  t -> List.t structure (* Action.t *) ptr
 val remove_action :
   t -> Action.t -> unit
 val set_accel_group :

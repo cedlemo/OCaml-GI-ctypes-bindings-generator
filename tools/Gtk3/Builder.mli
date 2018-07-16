@@ -32,7 +32,7 @@ val get_application :
 val get_object :
   t -> string -> Object.t
 val get_objects :
-  t -> SList.t structure ptr
+  t -> SList.t structure (* Object.t *) ptr
 val get_translation_domain :
   t -> string option
 (*Not implemented gtk_builder_get_type_from_name return type gType not handled*)

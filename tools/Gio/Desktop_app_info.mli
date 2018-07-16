@@ -10,7 +10,7 @@ val create_from_filename :
 val create_from_keyfile :
   Key_file.t structure ptr -> t
 val get_implementations :
-  string -> List.t structure ptr
+  string -> List.t structure (* t *) ptr
 (*Not implemented g_desktop_app_info_search return type C Array type for Types.Array tag not handled*)
 val set_desktop_env :
   string -> unit

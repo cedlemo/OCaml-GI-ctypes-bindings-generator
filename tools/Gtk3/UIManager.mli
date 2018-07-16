@@ -20,11 +20,11 @@ val get_accel_group :
 val get_action :
   t -> string -> Action.t
 val get_action_groups :
-  t -> List.t structure ptr
+  t -> List.t structure (* Action_group.t *) ptr
 val get_add_tearoffs :
   t -> bool
 val get_toplevels :
-  t -> UIManager_item_type.t_list -> SList.t structure ptr
+  t -> UIManager_item_type.t_list -> SList.t structure (* Widget.t *) ptr
 val get_ui :
   t -> string option
 val get_widget :

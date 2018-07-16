@@ -27,7 +27,7 @@ val get_show_starred_location :
 val get_show_trash :
   t -> bool
 val list_shortcuts :
-  t -> SList.t structure ptr
+  t -> SList.t structure (* Not implemented : interface *) ptr
 (*Not implemented gtk_places_sidebar_remove_shortcut type interface not implemented*)
 val set_drop_targets_visible :
   t -> bool -> Drag_context.t -> unit

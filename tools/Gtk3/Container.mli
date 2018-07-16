@@ -21,9 +21,9 @@ val child_set_property :
 val get_border_width :
   t -> Unsigned.uint32
 val get_children :
-  t -> List.t structure ptr
+  t -> List.t structure (* Widget.t *) ptr
 val get_focus_chain :
-  t -> (bool * List.t structure ptr)
+  t -> (bool * List.t structure (* Widget.t *) ptr)
 val get_focus_child :
   t -> Widget.t
 val get_focus_hadjustment :
@@ -43,7 +43,7 @@ val resize_children :
 val set_border_width :
   t -> Unsigned.uint32 -> unit
 val set_focus_chain :
-  t -> List.t structure ptr -> unit
+  t -> List.t structure (* Widget.t *) ptr -> unit
 val set_focus_child :
   t -> Widget.t -> unit
 val set_focus_hadjustment :

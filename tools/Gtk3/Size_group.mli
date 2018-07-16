@@ -12,7 +12,7 @@ val get_ignore_hidden :
 val get_mode :
   t -> Size_group_mode.t
 val get_widgets :
-  t -> SList.t structure ptr
+  t -> SList.t structure (* Widget.t *) ptr
 val remove_widget :
   t -> Widget.t -> unit
 val set_ignore_hidden :

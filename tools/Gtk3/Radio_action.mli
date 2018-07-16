@@ -8,10 +8,10 @@ val create :
 val get_current_value :
   t -> int32
 val get_group :
-  t -> SList.t structure ptr
+  t -> SList.t structure (* t *) ptr
 val join_group :
   t -> t -> unit
 val set_current_value :
   t -> int32 -> unit
 val set_group :
-  t -> SList.t structure ptr option -> unit
+  t -> SList.t structure (* t *) ptr option -> unit

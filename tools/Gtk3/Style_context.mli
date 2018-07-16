@@ -59,9 +59,9 @@ val has_region :
 val invalidate :
   t -> unit
 val list_classes :
-  t -> List.t structure ptr
+  t -> List.t structure (* string *) ptr
 val list_regions :
-  t -> List.t structure ptr
+  t -> List.t structure (* string *) ptr
 val lookup_color :
   t -> string -> (bool * RGBA.t structure)
 val lookup_icon_set :

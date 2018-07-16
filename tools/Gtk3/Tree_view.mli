@@ -47,7 +47,7 @@ val get_cell_area :
 val get_column :
   t -> int32 -> Tree_view_column.t
 val get_columns :
-  t -> List.t structure ptr
+  t -> List.t structure (* Tree_view_column.t *) ptr
 val get_cursor :
   t -> (Tree_path.t structure ptr option * Tree_view_column.t)
 val get_dest_row_at_pos :

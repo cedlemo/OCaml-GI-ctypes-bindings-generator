@@ -8,6 +8,6 @@ val create :
 val add_child :
   t -> Cell_accessible.t -> unit
 val get_children :
-  t -> List.t structure ptr
+  t -> List.t structure (* Cell_accessible.t *) ptr
 val remove_child :
   t -> Cell_accessible.t -> unit

@@ -44,7 +44,7 @@ val get_focus_cell :
 val get_focus_from_sibling :
   t -> Cell_renderer.t -> Cell_renderer.t
 val get_focus_siblings :
-  t -> Cell_renderer.t -> List.t structure ptr
+  t -> Cell_renderer.t -> List.t structure (* Cell_renderer.t *) ptr
 val get_preferred_height :
   t -> Cell_area_context.t -> Widget.t -> (int32 * int32)
 val get_preferred_height_for_width :

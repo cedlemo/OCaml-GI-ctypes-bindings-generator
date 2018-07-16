@@ -23,7 +23,7 @@ val get_min_children_per_line :
 val get_row_spacing :
   t -> Unsigned.uint32
 val get_selected_children :
-  t -> List.t structure ptr
+  t -> List.t structure (* Flow_box_child.t *) ptr
 val get_selection_mode :
   t -> Selection_mode.t
 val insert :

@@ -12,6 +12,6 @@ val get_current_device_grab :
 val get_current_grab :
   t -> Widget.t
 val list_windows :
-  t -> List.t structure ptr
+  t -> List.t structure (* Window.t *) ptr
 val remove_window :
   t -> Window.t -> unit

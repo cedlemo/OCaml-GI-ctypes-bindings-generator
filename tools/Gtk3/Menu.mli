@@ -8,7 +8,7 @@ val create :
 val create_from_model :
   Menu_model.t -> Widget.t
 val get_for_attach_widget :
-  Widget.t -> List.t structure ptr
+  Widget.t -> List.t structure (* Widget.t *) ptr
 val attach :
   t -> Widget.t -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> unit
 (*Not implemented gtk_menu_attach_to_widget type callback not implemented*)

@@ -10,7 +10,7 @@ val flush :
 val get_connection :
   t -> DBus_connection.t
 val get_connections :
-  t -> List.t structure ptr
+  t -> List.t structure (* DBus_connection.t *) ptr
 val get_flags :
   t -> DBus_interface_skeleton_flags.t_list
 val get_info :

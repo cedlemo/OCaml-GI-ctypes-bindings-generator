@@ -111,13 +111,13 @@ val c_VOLUME_MONITOR_EXTENSION_POINT_NAME : string
 (*DEPRECATED : io_scheduler_push_job*)
 (*DEPRECATED : simple_async_report_gerror_in_idle*)
 val unix_mounts_get :
-  unit -> (List.t structure ptr * Unsigned.uint64)
+  unit -> (List.t structure (* Unix_mount_entry.t structure *) ptr * Unsigned.uint64)
 
 val unix_mounts_changed_since :
   Unsigned.uint64 -> bool
 
 val unix_mount_points_get :
-  unit -> (List.t structure ptr * Unsigned.uint64)
+  unit -> (List.t structure (* Unix_mount_point.t structure *) ptr * Unsigned.uint64)
 
 val unix_mount_points_changed_since :
   Unsigned.uint64 -> bool
@@ -251,10 +251,10 @@ val io_modules_scan_all_in_directory :
   string -> unit
 
 val io_modules_load_all_in_directory_with_scope :
-  string -> IOModule_scope.t structure ptr -> List.t structure ptr
+  string -> IOModule_scope.t structure ptr -> List.t structure (* IOModule.t *) ptr
 
 val io_modules_load_all_in_directory :
-  string -> List.t structure ptr
+  string -> List.t structure (* IOModule.t *) ptr
 
 val io_extension_point_register :
   string -> IOExtension_point.t structure ptr
@@ -365,7 +365,7 @@ val dbus_address_escape_value :
   string -> string option
 
 val content_types_get_registered :
-  unit -> List.t structure ptr
+  unit -> List.t structure (* string *) ptr
 
 val content_type_is_unknown :
   string -> bool
@@ -438,20 +438,20 @@ val app_info_launch_default_for_uri :
   string -> App_launch_context.t -> (bool, Error.t structure ptr option) result
 
 val app_info_get_recommended_for_type :
-  string -> List.t structure ptr
+  string -> List.t structure (* Not implemented : interface *) ptr
 
 val app_info_get_fallback_for_type :
-  string -> List.t structure ptr
+  string -> List.t structure (* Not implemented : interface *) ptr
 
 (*Not implemented g_app_info_get_default_for_uri_scheme return type interface not handled*)
 
 (*Not implemented g_app_info_get_default_for_type return type interface not handled*)
 
 val app_info_get_all_for_type :
-  string -> List.t structure ptr
+  string -> List.t structure (* Not implemented : interface *) ptr
 
 val app_info_get_all :
-  unit -> List.t structure ptr
+  unit -> List.t structure (* Not implemented : interface *) ptr
 
 (*Not implemented g_app_info_create_from_commandline return type interface not handled*)
 

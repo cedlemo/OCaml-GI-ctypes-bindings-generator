@@ -8,4 +8,4 @@ val create :
 val get_deleted :
   t -> bool
 val get_widgets :
-  t -> List.t structure ptr
+  t -> List.t structure (* Widget.t *) ptr

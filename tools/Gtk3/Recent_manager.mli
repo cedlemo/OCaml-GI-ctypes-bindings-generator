@@ -12,7 +12,7 @@ val add_full :
 val add_item :
   t -> string -> bool
 val get_items :
-  t -> List.t structure ptr
+  t -> List.t structure (* Recent_info.t structure *) ptr
 val has_item :
   t -> string -> bool
 val lookup_item :

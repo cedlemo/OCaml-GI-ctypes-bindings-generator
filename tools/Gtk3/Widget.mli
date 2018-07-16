@@ -313,10 +313,10 @@ val is_visible :
 val keynav_failed :
   t -> Direction_type.t -> bool
 val list_accel_closures :
-  t -> List.t structure ptr
+  t -> List.t structure (* Closure.t structure *) ptr
 (*Not implemented gtk_widget_list_action_prefixes return type C Array type for Types.Array tag not handled*)
 val list_mnemonic_labels :
-  t -> List.t structure ptr
+  t -> List.t structure (* t *) ptr
 val map :
   t -> unit
 val mnemonic_activate :

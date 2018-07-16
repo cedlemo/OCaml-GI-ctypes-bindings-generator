@@ -52,4 +52,4 @@ val to_key_file :
 val get_default :
   unit -> string option
 val get_paper_sizes :
-  bool -> List.t structure ptr
+  bool -> List.t structure (* t structure *) ptr

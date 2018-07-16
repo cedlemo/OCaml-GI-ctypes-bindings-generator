@@ -54,7 +54,7 @@ val get_reorderable :
 val get_row_spacing :
   t -> int32
 val get_selected_items :
-  t -> List.t structure ptr
+  t -> List.t structure (* Tree_path.t structure *) ptr
 val get_selection_mode :
   t -> Selection_mode.t
 val get_spacing :

@@ -37,7 +37,7 @@ val get_label :
 val get_name :
   t -> string option
 val get_proxies :
-  t -> SList.t structure ptr
+  t -> SList.t structure (* Widget.t *) ptr
 val get_sensitive :
   t -> bool
 val get_short_label :

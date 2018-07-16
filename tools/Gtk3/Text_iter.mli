@@ -140,7 +140,7 @@ val get_line_index :
 val get_line_offset :
   t structure ptr -> int32
 val get_marks :
-  t structure ptr -> SList.t structure ptr
+  t structure ptr -> SList.t structure (* Text_mark.t *) ptr
 val get_offset :
   t structure ptr -> int32
 val get_pixbuf :
@@ -148,11 +148,11 @@ val get_pixbuf :
 val get_slice :
   t structure ptr -> t structure ptr -> string option
 val get_tags :
-  t structure ptr -> SList.t structure ptr
+  t structure ptr -> SList.t structure (* Text_tag.t *) ptr
 val get_text :
   t structure ptr -> t structure ptr -> string option
 val get_toggled_tags :
-  t structure ptr -> bool -> SList.t structure ptr
+  t structure ptr -> bool -> SList.t structure (* Text_tag.t *) ptr
 val get_visible_line_index :
   t structure ptr -> int32
 val get_visible_line_offset :
