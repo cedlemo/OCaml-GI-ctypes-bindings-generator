@@ -72,5 +72,5 @@ let tests =
   "GObject Introspection Bind_struct tests" >:::
   [
     "Bind_struct append ctypes struct declaration" >:: test_append_ctypes_struct_declaration;
-    "Bind_struct append ctypes struct field declarations" >:: test_append_ctypes_struct_field_declarations
+  (*  "Bind_struct append ctypes struct field declarations" >:: test_append_ctypes_struct_field_declarations *)
   ]
