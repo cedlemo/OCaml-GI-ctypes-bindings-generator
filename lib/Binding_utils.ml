@@ -343,6 +343,7 @@ let type_tag_to_bindings_types = function
   | Types.Error as tag -> Not_implemented (Types.string_of_tag tag)
   | Types.Unichar as tag -> Not_implemented (Types.string_of_tag tag)
 
+(** Used in type_info_to_bindings_types. *)
 let check_if_pointer type_info maybe_null (ocaml_t, ctypes_t) =
   if Type_info.is_pointer type_info then
     if maybe_null then {ocaml = ocaml_t ^ " ptr option";
@@ -351,7 +352,7 @@ let check_if_pointer type_info maybe_null (ocaml_t, ctypes_t) =
           ctypes = "ptr " ^ ctypes_t}
   else {ocaml = ocaml_t; ctypes = ctypes_t}
 
-(** Use in type_info_to_bindings_types. When a type is an interface, this
+(** Used in type_info_to_bindings_types. When a type is an interface, this
     function generate the bindings of the interface. *)
 let interface_to_binding_types interface check_if_pointer type_info =
     let interface_bindings t (ocaml_suffix, ctypes_suffix) =
@@ -396,6 +397,14 @@ let get_data_types_of_container type_info =
 
 let rec type_info_to_bindings_types type_info maybe_null =
   let check_if_pointer = check_if_pointer type_info maybe_null in
+  let get_full_types_of_container suffix_type =
+      let data_type = begin match get_data_types_of_container type_info with
+        | Types {ocaml; ctypes} -> ocaml
+        | Not_implemented tag -> "Not implemented : "^ tag
+      end in
+      let container_type = String.concat " " [suffix_type ^ ".t structure"; "(*"; data_type; "*)"] in
+      Types (check_if_pointer (container_type, suffix_type ^ ".t_typ"))
+  in
   match Type_info.get_interface type_info with
   | None -> (
     match Type_info.get_tag type_info with
@@ -411,7 +420,6 @@ let rec type_info_to_bindings_types type_info maybe_null =
     | Types.Uint64 -> Types (check_if_pointer ("Unsigned.uint64", "uint64_t"))
     | Types.Float -> Types (check_if_pointer ("float", "float"))
     | Types.Double -> Types (check_if_pointer ("float", "double"))
-    | Types.GType as tag -> Not_implemented (Types.string_of_tag tag)
     | Types.Utf8 | Types.Filename ->
       if maybe_null then
         Types {ocaml = "string option"; ctypes = "string_opt"}
@@ -427,31 +435,13 @@ let rec type_info_to_bindings_types type_info maybe_null =
         | Types.Ptr_array -> Types (check_if_pointer ("Ptr_array.t structure", "Ptr_array.t_typ"))
         | Types.Byte_array -> Types (check_if_pointer ("Byte_array.t structure", "Byte_array.t_typ"))
       )
-    | Types.GList ->
-      let data_type = begin match get_data_types_of_container type_info with
-        | Types {ocaml; ctypes} -> ocaml
-        | Not_implemented tag -> "Not implemented : "^ tag
-      end in
-      let container_type = String.concat " " ["List.t structure"; "(*"; data_type; "*)"] in
-      Types (check_if_pointer (container_type, "List.t_typ"))
-    | Types.GSList ->
-      let data_type = begin match get_data_types_of_container type_info with
-        | Types {ocaml; ctypes} -> ocaml
-        | Not_implemented tag -> "Not implemented : "^ tag
-      end in
-      let container_type = String.concat " " ["SList.t structure"; "(*"; data_type; "*)"] in
-      Types (check_if_pointer (container_type, "SList.t_typ"))
-    | Types.GHash ->
-      let data_type = begin match get_data_types_of_container type_info with
-        | Types {ocaml; ctypes} -> ocaml
-        | Not_implemented tag -> "Not implemented : "^ tag
-      end in
-      let container_type = String.concat " " ["Hash_table.t structure"; "(*"; data_type; "*)"] in
-      Types (check_if_pointer (container_type, "Hash_table.t_typ"))
+    | Types.GList -> get_full_types_of_container "List"
+    | Types.GSList -> get_full_types_of_container "SList"
+    | Types.GHash -> get_full_types_of_container "Hash_table.t"
     | Types.Error ->
       Types (check_if_pointer ("Error.t structure", "Error.t_typ"))
-    | Types.Unichar as tag -> Not_implemented (Types.string_of_tag tag)
-    | Types.Interface as tag -> Not_implemented (Types.string_of_tag tag)
+    | Types.GType | Types.Unichar | Types.Interface as tag ->
+      Not_implemented (Types.string_of_tag tag)
     )
   | Some interface ->
     interface_to_binding_types interface check_if_pointer type_info
