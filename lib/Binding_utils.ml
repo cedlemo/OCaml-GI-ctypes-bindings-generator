@@ -343,15 +343,59 @@ let type_tag_to_bindings_types = function
   | Types.Error as tag -> Not_implemented (Types.string_of_tag tag)
   | Types.Unichar as tag -> Not_implemented (Types.string_of_tag tag)
 
+let check_if_pointer type_info maybe_null (ocaml_t, ctypes_t) =
+  if Type_info.is_pointer type_info then
+    if maybe_null then {ocaml = ocaml_t ^ " ptr option";
+                        ctypes = "ptr_opt " ^ ctypes_t}
+    else {ocaml = ocaml_t ^ " ptr";
+          ctypes = "ptr " ^ ctypes_t}
+  else {ocaml = ocaml_t; ctypes = ctypes_t}
+
+(** Use in type_info_to_bindings_types. When a type is an interface, this
+    function generate the bindings of the interface. *)
+let interface_to_binding_types interface check_if_pointer type_info =
+    let interface_bindings t (ocaml_suffix, ctypes_suffix) =
+      match get_binding_name interface with
+      | None -> Not_implemented (Base_info.string_of_baseinfo_type t)
+      | Some name ->
+      Types (check_if_pointer (name ^ ocaml_suffix, name ^ ctypes_suffix))
+    in
+    match Base_info.get_type interface with
+    | Struct as t -> interface_bindings t ("%s.t structure", "%s.t_typ")
+    | Enum as t-> let suffixes = if  Type_info.is_pointer type_info then
+            ("**%s.t", "**%s.t_view") else ("%s.t", "%s.t_view")
+        in interface_bindings t suffixes
+    | Flags as t -> interface_bindings t ("%s.t_list", "%s.t_list_view")
+    | Object as t -> interface_bindings t ("%s.t", "%s.t_typ")
+    | Boxed | Invalid | Function | Callback | Interface | Constant | Invalid_0
+    | Union | Value | Signal | Vfunc | Property | Field | Arg | Type
+    | Unresolved as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
+
+(** This function is used when the type_info analysed describes a type that is
+    a container (SList, GList, Hash table or Array) and it returns the types
+    for the data that is contained by this container. *)
+let get_data_types_of_container type_info =
+  let type_info = Type_info.get_param_type type_info 0 in
+  match Type_info.get_tag type_info with
+  | Types.Void -> Types {ocaml = "unit"; ctypes = "void"}
+  | Types.Boolean -> Types {ocaml = "bool"; ctypes = "bool"}
+    | Types.Int8 -> Types {ocaml = "int"; ctypes = "int8_t"}
+    | Types.Uint8 -> Types {ocaml = "Unsigned.uint8"; ctypes = "uint8_t"}
+    | Types.Int16 -> Types {ocaml = "int"; ctypes = "int16_t"}
+    | Types.Uint16 -> Types {ocaml = "Unsigned.uint16"; ctypes = "uint16_t"}
+    | Types.Int32 -> Types {ocaml = "int32"; ctypes = "int32_t"}
+    | Types.Uint32 -> Types {ocaml = "Unsigned.uint32"; ctypes = "uint32_t"}
+    | Types.Int64 -> Types {ocaml = "int64"; ctypes = "int64_t"}
+    | Types.Uint64 -> Types {ocaml = "Unsigned.uint64"; ctypes = "uint64_t"}
+    | Types.Float -> Types {ocaml = "float"; ctypes = "float"}
+    | Types.Double -> Types {ocaml = "float"; ctypes = "double"}
+    | Types.Utf8 | Types.Filename -> Types {ocaml = "string"; ctypes = "string"}
+    | Types.Array | Types.GList | Types.GSList | Types.GHash | Types.Error
+    | Types.Unichar | Types.Interface | Types.GType as tag ->
+      Not_implemented (Types.string_of_tag tag)
+
 let rec type_info_to_bindings_types type_info maybe_null =
-  let check_if_pointer (ocaml_t, ctypes_t) =
-    if Type_info.is_pointer type_info then
-      if maybe_null then {ocaml = ocaml_t ^ " ptr option";
-                          ctypes = "ptr_opt " ^ ctypes_t}
-      else {ocaml = ocaml_t ^ " ptr";
-            ctypes = "ptr " ^ ctypes_t}
-    else {ocaml = ocaml_t; ctypes = ctypes_t}
-  in
+  let check_if_pointer = check_if_pointer type_info maybe_null in
   match Type_info.get_interface type_info with
   | None -> (
     match Type_info.get_tag type_info with
@@ -368,12 +412,11 @@ let rec type_info_to_bindings_types type_info maybe_null =
     | Types.Float -> Types (check_if_pointer ("float", "float"))
     | Types.Double -> Types (check_if_pointer ("float", "double"))
     | Types.GType as tag -> Not_implemented (Types.string_of_tag tag)
-    | Types.Utf8 -> if maybe_null then Types {ocaml = "string option";
-                                                ctypes = "string_opt"}
-      else Types {ocaml = "string"; ctypes = "string"}
-    | Types.Filename -> if maybe_null then Types {ocaml = "string option";
-                                                    ctypes = "string_opt"}
-      else Types {ocaml = "string"; ctypes = "string"}
+    | Types.Utf8 | Types.Filename ->
+      if maybe_null then
+        Types {ocaml = "string option"; ctypes = "string_opt"}
+      else
+        Types {ocaml = "string"; ctypes = "string"}
     | Types.Array -> (
       match Type_info.get_array_type type_info with
       | None -> Not_implemented ("Bad Array type for Types.Array tag")
@@ -384,23 +427,22 @@ let rec type_info_to_bindings_types type_info maybe_null =
         | Types.Ptr_array -> Types (check_if_pointer ("Ptr_array.t structure", "Ptr_array.t_typ"))
         | Types.Byte_array -> Types (check_if_pointer ("Byte_array.t structure", "Byte_array.t_typ"))
       )
-    | Types.Interface as tag -> Not_implemented (Types.string_of_tag tag)
     | Types.GList ->
-      let data_type = begin match get_data_type_of_container type_info maybe_null with
+      let data_type = begin match get_data_types_of_container type_info with
         | Types {ocaml; ctypes} -> ocaml
         | Not_implemented tag -> "Not implemented : "^ tag
       end in
       let container_type = String.concat " " ["List.t structure"; "(*"; data_type; "*)"] in
       Types (check_if_pointer (container_type, "List.t_typ"))
     | Types.GSList ->
-      let data_type = begin match get_data_type_of_container type_info maybe_null with
+      let data_type = begin match get_data_types_of_container type_info with
         | Types {ocaml; ctypes} -> ocaml
         | Not_implemented tag -> "Not implemented : "^ tag
       end in
       let container_type = String.concat " " ["SList.t structure"; "(*"; data_type; "*)"] in
       Types (check_if_pointer (container_type, "SList.t_typ"))
     | Types.GHash ->
-      let data_type = begin match get_data_type_of_container type_info maybe_null with
+      let data_type = begin match get_data_types_of_container type_info with
         | Types {ocaml; ctypes} -> ocaml
         | Not_implemented tag -> "Not implemented : "^ tag
       end in
@@ -409,56 +451,10 @@ let rec type_info_to_bindings_types type_info maybe_null =
     | Types.Error ->
       Types (check_if_pointer ("Error.t structure", "Error.t_typ"))
     | Types.Unichar as tag -> Not_implemented (Types.string_of_tag tag)
+    | Types.Interface as tag -> Not_implemented (Types.string_of_tag tag)
     )
   | Some interface ->
-      match Base_info.get_type interface with
-      | Invalid as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Function as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Callback as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Struct as t -> (
-        match get_binding_name interface with
-        | None -> Not_implemented (Base_info.string_of_baseinfo_type t)
-        | Some name ->
-        Types (check_if_pointer (Printf.sprintf "%s.t structure" name, Printf.sprintf "%s.t_typ" name))
-      )
-      | Boxed as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Enum as t -> (
-        match get_binding_name interface with
-        | None -> Not_implemented (Base_info.string_of_baseinfo_type t)
-        | Some name ->
-            if Type_info.is_pointer type_info then
-              Types {ocaml = Printf.sprintf "**%s.t" name; ctypes = Printf.sprintf "**%s.t_view" name}
-            else
-              Types {ocaml = Printf.sprintf "%s.t" name; ctypes = Printf.sprintf "%s.t_view" name}
-      )
-      | Flags as t -> (
-        match get_binding_name interface with
-        | None -> Not_implemented (Base_info.string_of_baseinfo_type t)
-        | Some name ->
-        Types {ocaml = Printf.sprintf "%s.t_list" name; ctypes = Printf.sprintf "%s.t_list_view" name}
-      )
-      | Object as t -> (
-        match get_binding_name interface with
-        | None -> Not_implemented (Base_info.string_of_baseinfo_type t)
-        | Some name ->
-        Types {ocaml = Printf.sprintf "%s.t" name; ctypes = Printf.sprintf "%s.t_typ" name}
-      )
-      | Interface as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Constant as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Invalid_0 as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Union as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Value as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Signal as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Vfunc as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Property as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Field as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Arg as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Type as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-      | Unresolved as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
-and
-get_data_type_of_container type_info maybe_null =
-  let data_type_info = Type_info.get_param_type type_info 0 in
-  type_info_to_bindings_types data_type_info maybe_null
+    interface_to_binding_types interface check_if_pointer type_info
 
 let allocate_out_argument type_info var_name maybe_null =
   let check_if_pointer (ctypes_t, default_value) =
