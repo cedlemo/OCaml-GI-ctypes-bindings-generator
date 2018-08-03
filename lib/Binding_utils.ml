@@ -376,7 +376,7 @@ let interface_to_binding_types interface check_if_pointer type_info =
     a container (SList, GList, Hash table or Array) and it returns the types
     for the data that is contained by this container. *)
 let get_data_types_of_container type_info =
-  let type_info = Type_info.get_param_type type_info 0 in
+  let type_info = Type_info.get_param_type type_info in
   match Type_info.get_tag type_info with
   | Types.Void -> Types {ocaml = "unit"; ctypes = "void"}
   | Types.Boolean -> Types {ocaml = "bool"; ctypes = "bool"}
