@@ -362,12 +362,12 @@ let interface_to_binding_types interface check_if_pointer type_info =
       Types (check_if_pointer (name ^ ocaml_suffix, name ^ ctypes_suffix))
     in
     match Base_info.get_type interface with
-    | Struct as t -> interface_bindings t ("%s.t structure", "%s.t_typ")
+    | Struct as t -> interface_bindings t (".t structure", ".t_typ")
     | Enum as t-> let suffixes = if  Type_info.is_pointer type_info then
-            ("**%s.t", "**%s.t_view") else ("%s.t", "%s.t_view")
+            (".t", ".t_view") else (".t", ".t_view")
         in interface_bindings t suffixes
-    | Flags as t -> interface_bindings t ("%s.t_list", "%s.t_list_view")
-    | Object as t -> interface_bindings t ("%s.t", "%s.t_typ")
+    | Flags as t -> interface_bindings t (".t_list", ".t_list_view")
+    | Object as t -> interface_bindings t (".t", ".t_typ")
     | Boxed | Invalid | Function | Callback | Interface | Constant | Invalid_0
     | Union | Value | Signal | Vfunc | Property | Field | Arg | Type
     | Unresolved as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
