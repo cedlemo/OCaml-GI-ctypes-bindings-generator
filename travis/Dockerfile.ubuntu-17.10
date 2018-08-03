@@ -48,5 +48,5 @@ RUN opam install ctypes configurator base stdio ctypes-foreign jbuilder odoc bis
 RUN git clone https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator.git /home/ocaml-gi/OCaml-GObject-Introspection \
     && opam pin add -y gobject-introspection https://github.com/cedlemo/OCaml-GObject-Introspection.git
 RUN echo ". /home/ocaml-gi/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true" > /home/ocaml-gi/ocaml-gi/runtest.sh
-RUN echo "jbuilder runtest" >> /home/ocaml-gi/ocaml-gi/runtest.sh
+RUN echo "dune runtest --profile release" >> /home/ocaml-gi/ocaml-gi/runtest.sh
 CMD bash -ex /home/ocaml-gi/ocaml-gi/runtest.sh
