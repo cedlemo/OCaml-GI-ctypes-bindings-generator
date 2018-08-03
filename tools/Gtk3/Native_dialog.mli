@@ -10,7 +10,7 @@ val get_modal :
 val get_title :
   t -> string option
 val get_transient_for :
-  t -> Window.t
+  t -> Window.t ptr option
 val get_visible :
   t -> bool
 val hide :
@@ -22,6 +22,6 @@ val set_modal :
 val set_title :
   t -> string -> unit
 val set_transient_for :
-  t -> Window.t -> unit
+  t -> Window.t ptr option -> unit
 val show :
   t -> unit

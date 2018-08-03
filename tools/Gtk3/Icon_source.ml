@@ -19,7 +19,7 @@ let get_filename =
 let get_icon_name =
   foreign "gtk_icon_source_get_icon_name" (ptr t_typ @-> returning (string_opt))
 let get_pixbuf =
-  foreign "gtk_icon_source_get_pixbuf" (ptr t_typ @-> returning (Pixbuf.t_typ))
+  foreign "gtk_icon_source_get_pixbuf" (ptr t_typ @-> returning (ptr Pixbuf.t_typ))
 let get_size =
   foreign "gtk_icon_source_get_size" (ptr t_typ @-> returning (int32_t))
 let get_size_wildcarded =
@@ -37,7 +37,7 @@ let set_filename =
 let set_icon_name =
   foreign "gtk_icon_source_set_icon_name" (ptr t_typ @-> string_opt @-> returning (void))
 let set_pixbuf =
-  foreign "gtk_icon_source_set_pixbuf" (ptr t_typ @-> Pixbuf.t_typ @-> returning (void))
+  foreign "gtk_icon_source_set_pixbuf" (ptr t_typ @-> ptr Pixbuf.t_typ @-> returning (void))
 let set_size =
   foreign "gtk_icon_source_set_size" (ptr t_typ @-> int32_t @-> returning (void))
 let set_size_wildcarded =

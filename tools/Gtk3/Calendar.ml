@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_calendar_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_calendar_new" (void @-> returning (ptr Widget.t_typ))
 let clear_marks =
   foreign "gtk_calendar_clear_marks" (t_typ @-> returning (void))
 let get_date self =

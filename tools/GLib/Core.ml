@@ -1134,29 +1134,29 @@ let hook_destroy =
   foreign "g_hook_destroy" (ptr Hook_list.t_typ @-> uint64_t @-> returning (bool))
 
 let hash_table_unref =
-  foreign "g_hash_table_unref" (ptr Hash_table.t_typ @-> returning (void))
+  foreign "g_hash_table_unref" (ptr Hash_table.t.t_typ @-> returning (void))
 
 let hash_table_steal_all =
-  foreign "g_hash_table_steal_all" (ptr Hash_table.t_typ @-> returning (void))
+  foreign "g_hash_table_steal_all" (ptr Hash_table.t.t_typ @-> returning (void))
 
 let hash_table_steal =
-  foreign "g_hash_table_steal" (ptr Hash_table.t_typ @-> ptr_opt void @-> returning (bool))
+  foreign "g_hash_table_steal" (ptr Hash_table.t.t_typ @-> ptr_opt void @-> returning (bool))
 
 let hash_table_size =
-  foreign "g_hash_table_size" (ptr Hash_table.t_typ @-> returning (uint32_t))
+  foreign "g_hash_table_size" (ptr Hash_table.t.t_typ @-> returning (uint32_t))
 
 let hash_table_replace =
-  foreign "g_hash_table_replace" (ptr Hash_table.t_typ @-> ptr_opt void @-> ptr_opt void @-> returning (bool))
+  foreign "g_hash_table_replace" (ptr Hash_table.t.t_typ @-> ptr_opt void @-> ptr_opt void @-> returning (bool))
 
 let hash_table_remove_all =
-  foreign "g_hash_table_remove_all" (ptr Hash_table.t_typ @-> returning (void))
+  foreign "g_hash_table_remove_all" (ptr Hash_table.t.t_typ @-> returning (void))
 
 let hash_table_remove =
-  foreign "g_hash_table_remove" (ptr Hash_table.t_typ @-> ptr_opt void @-> returning (bool))
+  foreign "g_hash_table_remove" (ptr Hash_table.t.t_typ @-> ptr_opt void @-> returning (bool))
 
 let hash_table_lookup_extended hash_table lookup_key =
   let hash_table_lookup_extended_raw =
-    foreign "g_hash_table_lookup_extended" (ptr Hash_table.t_typ @-> ptr_opt void @-> ptr (ptr_opt void) @-> ptr (ptr_opt void) @-> returning (bool))
+    foreign "g_hash_table_lookup_extended" (ptr Hash_table.t.t_typ @-> ptr_opt void @-> ptr (ptr_opt void) @-> ptr (ptr_opt void) @-> returning (bool))
   in
   let orig_key_ptr = allocate (ptr_opt void) None in
   let value_ptr = allocate (ptr_opt void) None in
@@ -1166,19 +1166,19 @@ let hash_table_lookup_extended hash_table lookup_key =
   (ret, orig_key, value)
 
 let hash_table_lookup =
-  foreign "g_hash_table_lookup" (ptr Hash_table.t_typ @-> ptr_opt void @-> returning (ptr_opt void))
+  foreign "g_hash_table_lookup" (ptr Hash_table.t.t_typ @-> ptr_opt void @-> returning (ptr_opt void))
 
 let hash_table_insert =
-  foreign "g_hash_table_insert" (ptr Hash_table.t_typ @-> ptr_opt void @-> ptr_opt void @-> returning (bool))
+  foreign "g_hash_table_insert" (ptr Hash_table.t.t_typ @-> ptr_opt void @-> ptr_opt void @-> returning (bool))
 
 let hash_table_destroy =
-  foreign "g_hash_table_destroy" (ptr Hash_table.t_typ @-> returning (void))
+  foreign "g_hash_table_destroy" (ptr Hash_table.t.t_typ @-> returning (void))
 
 let hash_table_contains =
-  foreign "g_hash_table_contains" (ptr Hash_table.t_typ @-> ptr_opt void @-> returning (bool))
+  foreign "g_hash_table_contains" (ptr Hash_table.t.t_typ @-> ptr_opt void @-> returning (bool))
 
 let hash_table_add =
-  foreign "g_hash_table_add" (ptr Hash_table.t_typ @-> ptr_opt void @-> returning (bool))
+  foreign "g_hash_table_add" (ptr Hash_table.t.t_typ @-> ptr_opt void @-> returning (bool))
 
 let getenv =
   foreign "g_getenv" (string @-> returning (string_opt))

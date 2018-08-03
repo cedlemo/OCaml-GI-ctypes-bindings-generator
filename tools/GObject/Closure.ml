@@ -20,7 +20,7 @@ let f_notifiers = field t_typ "notifiers" (ptr Closure_notify_data.t_typ)
 let _ = seal t_typ
 
 let create_object =
-  foreign "g_closure_new_object" (uint32_t @-> Object.t_typ @-> returning (ptr t_typ))
+  foreign "g_closure_new_object" (uint32_t @-> ptr Object.t_typ @-> returning (ptr t_typ))
 let create_simple =
   foreign "g_closure_new_simple" (uint32_t @-> ptr_opt void @-> returning (ptr t_typ))
 let invalidate =

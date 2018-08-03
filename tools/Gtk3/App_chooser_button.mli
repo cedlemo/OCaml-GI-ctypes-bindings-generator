@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  string -> Widget.t
+  string -> Widget.t ptr
 (*Not implemented gtk_app_chooser_button_append_custom_item type interface not implemented*)
 val append_separator :
   t -> unit

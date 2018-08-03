@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  Tls_password_flags.t_list -> string -> t
+  Tls_password_flags.t_list -> string -> t ptr
 val get_description :
   t -> string option
 val get_flags :

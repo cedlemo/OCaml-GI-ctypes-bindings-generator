@@ -5,11 +5,11 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_desktop_app_info_new" (string @-> returning (t_typ))
+  foreign "g_desktop_app_info_new" (string @-> returning (ptr t_typ))
 let create_from_filename =
-  foreign "g_desktop_app_info_new_from_filename" (string @-> returning (t_typ))
+  foreign "g_desktop_app_info_new_from_filename" (string @-> returning (ptr t_typ))
 let create_from_keyfile =
-  foreign "g_desktop_app_info_new_from_keyfile" (ptr Key_file.t_typ @-> returning (t_typ))
+  foreign "g_desktop_app_info_new_from_keyfile" (ptr Key_file.t_typ @-> returning (ptr t_typ))
 let get_implementations =
   foreign "g_desktop_app_info_get_implementations" (string @-> returning (ptr List.t_typ))
 (*Not implemented g_desktop_app_info_search return type C Array type for Types.Array tag not handled*)
@@ -41,6 +41,6 @@ let get_string =
 let has_key =
   foreign "g_desktop_app_info_has_key" (t_typ @-> string @-> returning (bool))
 let launch_action =
-  foreign "g_desktop_app_info_launch_action" (t_typ @-> string @-> App_launch_context.t_typ @-> returning (void))
+  foreign "g_desktop_app_info_launch_action" (t_typ @-> string @-> ptr_opt App_launch_context.t_typ @-> returning (void))
 (*Not implemented g_desktop_app_info_launch_uris_as_manager type callback not implemented*)
 (*Not implemented g_desktop_app_info_list_actions return type C Array type for Types.Array tag not handled*)

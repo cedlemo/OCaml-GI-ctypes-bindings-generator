@@ -4,15 +4,15 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val attach :
-  t -> Widget.t -> int32 -> int32 -> int32 -> int32 -> unit
+  t -> Widget.t ptr -> int32 -> int32 -> int32 -> int32 -> unit
 val attach_next_to :
-  t -> Widget.t -> Widget.t -> Position_type.t -> int32 -> int32 -> unit
+  t -> Widget.t ptr -> Widget.t ptr option -> Position_type.t -> int32 -> int32 -> unit
 val get_baseline_row :
   t -> int32
 val get_child_at :
-  t -> int32 -> int32 -> Widget.t
+  t -> int32 -> int32 -> Widget.t ptr option
 val get_column_homogeneous :
   t -> bool
 val get_column_spacing :
@@ -26,7 +26,7 @@ val get_row_spacing :
 val insert_column :
   t -> int32 -> unit
 val insert_next_to :
-  t -> Widget.t -> Position_type.t -> unit
+  t -> Widget.t ptr -> Position_type.t -> unit
 val insert_row :
   t -> int32 -> unit
 val remove_column :

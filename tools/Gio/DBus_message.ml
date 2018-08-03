@@ -5,16 +5,16 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_dbus_message_new" (void @-> returning (t_typ))
+  foreign "g_dbus_message_new" (void @-> returning (ptr t_typ))
 (*Not implemented g_dbus_message_new_from_blob type C Array type for Types.Array tag not implemented*)
 let create_method_call =
-  foreign "g_dbus_message_new_method_call" (string_opt @-> string @-> string_opt @-> string @-> returning (t_typ))
+  foreign "g_dbus_message_new_method_call" (string_opt @-> string @-> string_opt @-> string @-> returning (ptr t_typ))
 let create_signal =
-  foreign "g_dbus_message_new_signal" (string @-> string @-> string @-> returning (t_typ))
+  foreign "g_dbus_message_new_signal" (string @-> string @-> string @-> returning (ptr t_typ))
 (*Not implemented g_dbus_message_bytes_needed type C Array type for Types.Array tag not implemented*)
 let copy self =
   let copy_raw =
-    foreign "g_dbus_message_copy" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+    foreign "g_dbus_message_copy" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = copy_raw self err_ptr_ptr in
@@ -59,13 +59,13 @@ let get_serial =
 let get_signature =
   foreign "g_dbus_message_get_signature" (t_typ @-> returning (string_opt))
 let get_unix_fd_list =
-  foreign "g_dbus_message_get_unix_fd_list" (t_typ @-> returning (Unix_fdlist.t_typ))
+  foreign "g_dbus_message_get_unix_fd_list" (t_typ @-> returning (ptr Unix_fdlist.t_typ))
 let lock =
   foreign "g_dbus_message_lock" (t_typ @-> returning (void))
 let create_method_error_literal =
-  foreign "g_dbus_message_new_method_error_literal" (t_typ @-> string @-> string @-> returning (t_typ))
+  foreign "g_dbus_message_new_method_error_literal" (t_typ @-> string @-> string @-> returning (ptr t_typ))
 let create_method_reply =
-  foreign "g_dbus_message_new_method_reply" (t_typ @-> returning (t_typ))
+  foreign "g_dbus_message_new_method_reply" (t_typ @-> returning (ptr t_typ))
 let print =
   foreign "g_dbus_message_print" (t_typ @-> uint32_t @-> returning (string_opt))
 let set_body =
@@ -99,7 +99,7 @@ let set_serial =
 let set_signature =
   foreign "g_dbus_message_set_signature" (t_typ @-> string @-> returning (void))
 let set_unix_fd_list =
-  foreign "g_dbus_message_set_unix_fd_list" (t_typ @-> Unix_fdlist.t_typ @-> returning (void))
+  foreign "g_dbus_message_set_unix_fd_list" (t_typ @-> ptr_opt Unix_fdlist.t_typ @-> returning (void))
 (*Not implemented g_dbus_message_to_blob return type C Array type for Types.Array tag not handled*)
 let to_gerror self =
   let to_gerror_raw =

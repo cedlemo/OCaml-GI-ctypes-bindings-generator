@@ -4,4 +4,4 @@ type t
 val t_typ : t typ
 
 val create :
-  Adjustment.t -> Widget.t
+  Adjustment.t ptr option -> Widget.t ptr

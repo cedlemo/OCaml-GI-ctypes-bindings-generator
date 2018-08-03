@@ -7,7 +7,7 @@ let t_typ : t typ = ptr void
 (*Not implemented gtk_cell_renderer_activate type union not implemented*)
 let get_aligned_area self widget flags cell_area =
   let get_aligned_area_raw =
-    foreign "gtk_cell_renderer_get_aligned_area" (t_typ @-> Widget.t_typ @-> Cell_renderer_state.t_list_view @-> ptr Rectangle.t_typ @-> ptr (Rectangle.t_typ) @-> returning (void))
+    foreign "gtk_cell_renderer_get_aligned_area" (t_typ @-> ptr Widget.t_typ @-> Cell_renderer_state.t_list_view @-> ptr Rectangle.t_typ @-> ptr (Rectangle.t_typ) @-> returning (void))
   in
   let aligned_area_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_aligned_area_raw self widget flags cell_area aligned_area_ptr in
@@ -45,7 +45,7 @@ let get_padding self =
   (xpad, ypad)
 let get_preferred_height self widget =
   let get_preferred_height_raw =
-    foreign "gtk_cell_renderer_get_preferred_height" (t_typ @-> Widget.t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+    foreign "gtk_cell_renderer_get_preferred_height" (t_typ @-> ptr Widget.t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
   let minimum_size_ptr = allocate int32_t Int32.zero in
   let natural_size_ptr = allocate int32_t Int32.zero in
@@ -55,7 +55,7 @@ let get_preferred_height self widget =
   (minimum_size, natural_size)
 let get_preferred_height_for_width self widget width =
   let get_preferred_height_for_width_raw =
-    foreign "gtk_cell_renderer_get_preferred_height_for_width" (t_typ @-> Widget.t_typ @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+    foreign "gtk_cell_renderer_get_preferred_height_for_width" (t_typ @-> ptr Widget.t_typ @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
   let minimum_height_ptr = allocate int32_t Int32.zero in
   let natural_height_ptr = allocate int32_t Int32.zero in
@@ -65,7 +65,7 @@ let get_preferred_height_for_width self widget width =
   (minimum_height, natural_height)
 let get_preferred_size self widget =
   let get_preferred_size_raw =
-    foreign "gtk_cell_renderer_get_preferred_size" (t_typ @-> Widget.t_typ @-> ptr (Requisition.t_typ) @-> ptr (Requisition.t_typ) @-> returning (void))
+    foreign "gtk_cell_renderer_get_preferred_size" (t_typ @-> ptr Widget.t_typ @-> ptr (Requisition.t_typ) @-> ptr (Requisition.t_typ) @-> returning (void))
   in
   let minimum_size_ptr = allocate Requisition.t_typ (make Requisition.t_typ) in
   let natural_size_ptr = allocate Requisition.t_typ (make Requisition.t_typ) in
@@ -75,7 +75,7 @@ let get_preferred_size self widget =
   (minimum_size, natural_size)
 let get_preferred_width self widget =
   let get_preferred_width_raw =
-    foreign "gtk_cell_renderer_get_preferred_width" (t_typ @-> Widget.t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+    foreign "gtk_cell_renderer_get_preferred_width" (t_typ @-> ptr Widget.t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
   let minimum_size_ptr = allocate int32_t Int32.zero in
   let natural_size_ptr = allocate int32_t Int32.zero in
@@ -85,7 +85,7 @@ let get_preferred_width self widget =
   (minimum_size, natural_size)
 let get_preferred_width_for_height self widget height =
   let get_preferred_width_for_height_raw =
-    foreign "gtk_cell_renderer_get_preferred_width_for_height" (t_typ @-> Widget.t_typ @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+    foreign "gtk_cell_renderer_get_preferred_width_for_height" (t_typ @-> ptr Widget.t_typ @-> int32_t @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
   let minimum_width_ptr = allocate int32_t Int32.zero in
   let natural_width_ptr = allocate int32_t Int32.zero in
@@ -99,7 +99,7 @@ let get_sensitive =
   foreign "gtk_cell_renderer_get_sensitive" (t_typ @-> returning (bool))
 let get_size self widget cell_area =
   let get_size_raw =
-    foreign "gtk_cell_renderer_get_size" (t_typ @-> Widget.t_typ @-> ptr_opt Rectangle.t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+    foreign "gtk_cell_renderer_get_size" (t_typ @-> ptr Widget.t_typ @-> ptr_opt Rectangle.t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
   let x_offset_ptr = allocate int32_t Int32.zero in
   let y_offset_ptr = allocate int32_t Int32.zero in
@@ -112,13 +112,13 @@ let get_size self widget cell_area =
   let height = !@ height_ptr in
   (x_offset, y_offset, width, height)
 let get_state =
-  foreign "gtk_cell_renderer_get_state" (t_typ @-> Widget.t_typ @-> Cell_renderer_state.t_list_view @-> returning (State_flags.t_list_view))
+  foreign "gtk_cell_renderer_get_state" (t_typ @-> ptr_opt Widget.t_typ @-> Cell_renderer_state.t_list_view @-> returning (State_flags.t_list_view))
 let get_visible =
   foreign "gtk_cell_renderer_get_visible" (t_typ @-> returning (bool))
 let is_activatable =
   foreign "gtk_cell_renderer_is_activatable" (t_typ @-> returning (bool))
 let render =
-  foreign "gtk_cell_renderer_render" (t_typ @-> ptr Context.t_typ @-> Widget.t_typ @-> ptr Rectangle.t_typ @-> ptr Rectangle.t_typ @-> Cell_renderer_state.t_list_view @-> returning (void))
+  foreign "gtk_cell_renderer_render" (t_typ @-> ptr Context.t_typ @-> ptr Widget.t_typ @-> ptr Rectangle.t_typ @-> ptr Rectangle.t_typ @-> Cell_renderer_state.t_list_view @-> returning (void))
 let set_alignment =
   foreign "gtk_cell_renderer_set_alignment" (t_typ @-> float @-> float @-> returning (void))
 let set_fixed_size =

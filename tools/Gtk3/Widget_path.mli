@@ -6,7 +6,7 @@ val t_typ : t structure typ
 val create :
   unit -> t structure ptr
 val append_for_widget :
-  t structure ptr -> Widget.t -> int32
+  t structure ptr -> Widget.t ptr -> int32
 (*Not implemented gtk_widget_path_append_type type gType not implemented*)
 val append_with_siblings :
   t structure ptr -> t structure ptr -> Unsigned.uint32 -> int32

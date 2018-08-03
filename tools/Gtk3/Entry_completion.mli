@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val create_with_area :
-  Cell_area.t -> t
+  Cell_area.t ptr -> t ptr
 val complete :
   t -> unit
 val compute_prefix :
@@ -16,7 +16,7 @@ val delete_action :
 val get_completion_prefix :
   t -> string option
 val get_entry :
-  t -> Widget.t
+  t -> Widget.t ptr
 val get_inline_completion :
   t -> bool
 val get_inline_selection :

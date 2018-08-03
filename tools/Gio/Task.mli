@@ -7,7 +7,7 @@ val t_typ : t typ
 (*Not implemented g_task_is_valid type interface not implemented*)
 (*Not implemented g_task_report_error type callback not implemented*)
 val get_cancellable :
-  t -> Cancellable.t
+  t -> Cancellable.t ptr
 val get_check_cancellable :
   t -> bool
 val get_completed :
@@ -19,7 +19,7 @@ val get_priority :
 val get_return_on_cancel :
   t -> bool
 val get_source_object :
-  t -> Object.t
+  t -> Object.t ptr option
 val get_source_tag :
   t -> unit ptr option
 val get_task_data :

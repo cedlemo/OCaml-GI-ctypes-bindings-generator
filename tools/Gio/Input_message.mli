@@ -3,7 +3,7 @@ open Ctypes
 type t
 val t_typ : t structure typ
 
-val f_address: (Socket_address.t, t structure) field
+val f_address: (Socket_address.t ptr, t structure) field
 (*Struct field Input_message : C Array type for Types.Array tag tag not implemented*)
 val f_num_vectors: (Unsigned.uint32, t structure) field
 val f_bytes_received: (Unsigned.uint64, t structure) field

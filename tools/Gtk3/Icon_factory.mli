@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val lookup_default :
   string -> Icon_set.t structure ptr
 val add :

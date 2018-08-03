@@ -4,13 +4,13 @@ type t
 val t_typ : t typ
 
 val create :
-  string -> Unsigned.uint16 -> t
+  string -> Unsigned.uint16 -> t ptr
 val create_loopback :
-  Unsigned.uint16 -> t
+  Unsigned.uint16 -> t ptr
 val parse :
-  string -> Unsigned.uint16 -> (t, Error.t structure ptr option) result
+  string -> Unsigned.uint16 -> (t ptr option, Error.t structure ptr option) result
 val parse_uri :
-  string -> Unsigned.uint16 -> (t, Error.t structure ptr option) result
+  string -> Unsigned.uint16 -> (t ptr option, Error.t structure ptr option) result
 val get_hostname :
   t -> string option
 val get_port :

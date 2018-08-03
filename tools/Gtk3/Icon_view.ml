@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_icon_view_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_icon_view_new" (void @-> returning (ptr Widget.t_typ))
 let create_with_area =
-  foreign "gtk_icon_view_new_with_area" (Cell_area.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_icon_view_new_with_area" (ptr Cell_area.t_typ @-> returning (ptr Widget.t_typ))
 (*Not implemented gtk_icon_view_new_with_model type interface not implemented*)
 let convert_widget_to_bin_window_coords self wx wy =
   let convert_widget_to_bin_window_coords_raw =
@@ -27,7 +27,7 @@ let get_activate_on_single_click =
   foreign "gtk_icon_view_get_activate_on_single_click" (t_typ @-> returning (bool))
 let get_cell_rect self path cell =
   let get_cell_rect_raw =
-    foreign "gtk_icon_view_get_cell_rect" (t_typ @-> ptr Tree_path.t_typ @-> Cell_renderer.t_typ @-> ptr (Rectangle.t_typ) @-> returning (bool))
+    foreign "gtk_icon_view_get_cell_rect" (t_typ @-> ptr Tree_path.t_typ @-> ptr_opt Cell_renderer.t_typ @-> ptr (Rectangle.t_typ) @-> returning (bool))
   in
   let rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_cell_rect_raw self path cell rect_ptr in
@@ -39,7 +39,7 @@ let get_columns =
   foreign "gtk_icon_view_get_columns" (t_typ @-> returning (int32_t))
 let get_cursor self =
   let get_cursor_raw =
-    foreign "gtk_icon_view_get_cursor" (t_typ @-> ptr (ptr Tree_path.t_typ) @-> ptr (Cell_renderer.t_typ) @-> returning (bool))
+    foreign "gtk_icon_view_get_cursor" (t_typ @-> ptr (ptr Tree_path.t_typ) @-> ptr (ptr Cell_renderer.t_typ) @-> returning (bool))
   in
   let path_ptr = allocate (ptr_opt Tree_path.t_typ) None in
   let cell_ptr = allocate (ptr_opt Cell_renderer.t_typ) None in
@@ -69,7 +69,7 @@ let get_drag_dest_item self =
   (path, pos)
 let get_item_at_pos self x y =
   let get_item_at_pos_raw =
-    foreign "gtk_icon_view_get_item_at_pos" (t_typ @-> int32_t @-> int32_t @-> ptr (ptr Tree_path.t_typ) @-> ptr (Cell_renderer.t_typ) @-> returning (bool))
+    foreign "gtk_icon_view_get_item_at_pos" (t_typ @-> int32_t @-> int32_t @-> ptr (ptr Tree_path.t_typ) @-> ptr (ptr Cell_renderer.t_typ) @-> returning (bool))
   in
   let path_ptr = allocate (ptr_opt Tree_path.t_typ) None in
   let cell_ptr = allocate (ptr_opt Cell_renderer.t_typ) None in
@@ -139,7 +139,7 @@ let set_column_spacing =
 let set_columns =
   foreign "gtk_icon_view_set_columns" (t_typ @-> int32_t @-> returning (void))
 let set_cursor =
-  foreign "gtk_icon_view_set_cursor" (t_typ @-> ptr Tree_path.t_typ @-> Cell_renderer.t_typ @-> bool @-> returning (void))
+  foreign "gtk_icon_view_set_cursor" (t_typ @-> ptr Tree_path.t_typ @-> ptr_opt Cell_renderer.t_typ @-> bool @-> returning (void))
 let set_drag_dest_item =
   foreign "gtk_icon_view_set_drag_dest_item" (t_typ @-> ptr_opt Tree_path.t_typ @-> Icon_view_drop_position.t_view @-> returning (void))
 let set_item_orientation =
@@ -166,11 +166,11 @@ let set_spacing =
 let set_text_column =
   foreign "gtk_icon_view_set_text_column" (t_typ @-> int32_t @-> returning (void))
 let set_tooltip_cell =
-  foreign "gtk_icon_view_set_tooltip_cell" (t_typ @-> Tooltip.t_typ @-> ptr Tree_path.t_typ @-> Cell_renderer.t_typ @-> returning (void))
+  foreign "gtk_icon_view_set_tooltip_cell" (t_typ @-> ptr Tooltip.t_typ @-> ptr Tree_path.t_typ @-> ptr_opt Cell_renderer.t_typ @-> returning (void))
 let set_tooltip_column =
   foreign "gtk_icon_view_set_tooltip_column" (t_typ @-> int32_t @-> returning (void))
 let set_tooltip_item =
-  foreign "gtk_icon_view_set_tooltip_item" (t_typ @-> Tooltip.t_typ @-> ptr Tree_path.t_typ @-> returning (void))
+  foreign "gtk_icon_view_set_tooltip_item" (t_typ @-> ptr Tooltip.t_typ @-> ptr Tree_path.t_typ @-> returning (void))
 let unselect_all =
   foreign "gtk_icon_view_unselect_all" (t_typ @-> returning (void))
 let unselect_path =

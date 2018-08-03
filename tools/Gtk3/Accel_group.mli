@@ -4,11 +4,11 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val from_accel_closure :
-  Closure.t structure ptr -> t
+  Closure.t structure ptr -> t ptr option
 val activate :
-  t -> Unsigned.uint32 -> Object.t -> Unsigned.uint32 -> Modifier_type.t_list -> bool
+  t -> Unsigned.uint32 -> Object.t ptr -> Unsigned.uint32 -> Modifier_type.t_list -> bool
 val connect :
   t -> Unsigned.uint32 -> Modifier_type.t_list -> Accel_flags.t_list -> Closure.t structure ptr -> unit
 val connect_by_path :

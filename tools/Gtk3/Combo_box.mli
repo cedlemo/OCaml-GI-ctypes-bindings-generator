@@ -4,13 +4,13 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val create_with_area :
-  Cell_area.t -> Widget.t
+  Cell_area.t ptr -> Widget.t ptr
 val create_with_area_and_entry :
-  Cell_area.t -> Widget.t
+  Cell_area.t ptr -> Widget.t ptr
 val create_with_entry :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 (*Not implemented gtk_combo_box_new_with_model type interface not implemented*)
 (*Not implemented gtk_combo_box_new_with_model_and_entry type interface not implemented*)
 val get_active :
@@ -35,7 +35,7 @@ val get_id_column :
   t -> int32
 (*Not implemented gtk_combo_box_get_model return type interface not handled*)
 val get_popup_accessible :
-  t -> Object.t
+  t -> Object.t ptr
 val get_popup_fixed_width :
   t -> bool
 val get_row_span_column :
@@ -49,7 +49,7 @@ val popdown :
 val popup :
   t -> unit
 val popup_for_device :
-  t -> Device.t -> unit
+  t -> Device.t ptr -> unit
 val set_active :
   t -> int32 -> unit
 val set_active_id :

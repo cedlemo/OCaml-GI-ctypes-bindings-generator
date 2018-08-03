@@ -6,9 +6,9 @@ let t_typ : t typ = ptr void
 
 (*Not implemented g_list_store_new type gType not implemented*)
 let append =
-  foreign "g_list_store_append" (t_typ @-> Object.t_typ @-> returning (void))
+  foreign "g_list_store_append" (t_typ @-> ptr Object.t_typ @-> returning (void))
 let insert =
-  foreign "g_list_store_insert" (t_typ @-> uint32_t @-> Object.t_typ @-> returning (void))
+  foreign "g_list_store_insert" (t_typ @-> uint32_t @-> ptr Object.t_typ @-> returning (void))
 (*Not implemented g_list_store_insert_sorted type callback not implemented*)
 let remove =
   foreign "g_list_store_remove" (t_typ @-> uint32_t @-> returning (void))

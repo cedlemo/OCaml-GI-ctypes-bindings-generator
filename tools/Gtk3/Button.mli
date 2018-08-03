@@ -4,15 +4,15 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val create_from_icon_name :
-  string option -> int32 -> Widget.t
+  string option -> int32 -> Widget.t ptr
 val create_from_stock :
-  string -> Widget.t
+  string -> Widget.t ptr
 val create_with_label :
-  string -> Widget.t
+  string -> Widget.t ptr
 val create_with_mnemonic :
-  string -> Widget.t
+  string -> Widget.t ptr
 val clicked :
   t -> unit
 val enter :
@@ -22,11 +22,11 @@ val get_alignment :
 val get_always_show_image :
   t -> bool
 val get_event_window :
-  t -> Window.t
+  t -> Window.t ptr
 val get_focus_on_click :
   t -> bool
 val get_image :
-  t -> Widget.t
+  t -> Widget.t ptr option
 val get_image_position :
   t -> Position_type.t
 val get_label :
@@ -50,7 +50,7 @@ val set_always_show_image :
 val set_focus_on_click :
   t -> bool -> unit
 val set_image :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr option -> unit
 val set_image_position :
   t -> Position_type.t -> unit
 val set_label :

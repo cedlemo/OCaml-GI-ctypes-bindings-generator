@@ -11,7 +11,7 @@ let get_modal =
 let get_title =
   foreign "gtk_native_dialog_get_title" (t_typ @-> returning (string_opt))
 let get_transient_for =
-  foreign "gtk_native_dialog_get_transient_for" (t_typ @-> returning (Window.t_typ))
+  foreign "gtk_native_dialog_get_transient_for" (t_typ @-> returning (ptr_opt Window.t_typ))
 let get_visible =
   foreign "gtk_native_dialog_get_visible" (t_typ @-> returning (bool))
 let hide =
@@ -23,6 +23,6 @@ let set_modal =
 let set_title =
   foreign "gtk_native_dialog_set_title" (t_typ @-> string @-> returning (void))
 let set_transient_for =
-  foreign "gtk_native_dialog_set_transient_for" (t_typ @-> Window.t_typ @-> returning (void))
+  foreign "gtk_native_dialog_set_transient_for" (t_typ @-> ptr_opt Window.t_typ @-> returning (void))
 let show =
   foreign "gtk_native_dialog_show" (t_typ @-> returning (void))

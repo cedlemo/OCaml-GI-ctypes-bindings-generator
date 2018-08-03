@@ -27,7 +27,7 @@ let propagate_error self =
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
 let set_check_cancellable =
-  foreign "g_simple_async_result_set_check_cancellable" (t_typ @-> Cancellable.t_typ @-> returning (void))
+  foreign "g_simple_async_result_set_check_cancellable" (t_typ @-> ptr_opt Cancellable.t_typ @-> returning (void))
 let set_from_error =
   foreign "g_simple_async_result_set_from_error" (t_typ @-> ptr Error.t_typ @-> returning (void))
 let set_handle_cancellation =

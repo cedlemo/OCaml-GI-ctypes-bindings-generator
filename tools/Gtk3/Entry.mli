@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val create_with_buffer :
-  Entry_buffer.t -> Widget.t
+  Entry_buffer.t ptr -> Widget.t ptr
 val get_activates_default :
   t -> bool
 val get_alignment :
@@ -14,13 +14,13 @@ val get_alignment :
 val get_attributes :
   t -> Attr_list.t structure ptr option
 val get_buffer :
-  t -> Entry_buffer.t
+  t -> Entry_buffer.t ptr
 val get_completion :
-  t -> Entry_completion.t
+  t -> Entry_completion.t ptr
 val get_current_icon_drag_source :
   t -> int32
 val get_cursor_hadjustment :
-  t -> Adjustment.t
+  t -> Adjustment.t ptr option
 val get_has_frame :
   t -> bool
 val get_icon_activatable :
@@ -33,7 +33,7 @@ val get_icon_at_pos :
 val get_icon_name :
   t -> Entry_icon_position.t -> string option
 val get_icon_pixbuf :
-  t -> Entry_icon_position.t -> Pixbuf.t
+  t -> Entry_icon_position.t -> Pixbuf.t ptr option
 val get_icon_sensitive :
   t -> Entry_icon_position.t -> bool
 val get_icon_stock :
@@ -52,7 +52,7 @@ val get_input_purpose :
   t -> Input_purpose.t
 (*Not implemented gtk_entry_get_invisible_char return type unichar not handled*)
 val get_layout :
-  t -> Layout.t
+  t -> Layout.t ptr
 val get_layout_offsets :
   t -> (int32 * int32)
 val get_max_length :
@@ -96,11 +96,11 @@ val set_alignment :
 val set_attributes :
   t -> Attr_list.t structure ptr -> unit
 val set_buffer :
-  t -> Entry_buffer.t -> unit
+  t -> Entry_buffer.t ptr -> unit
 val set_completion :
-  t -> Entry_completion.t -> unit
+  t -> Entry_completion.t ptr option -> unit
 val set_cursor_hadjustment :
-  t -> Adjustment.t -> unit
+  t -> Adjustment.t ptr option -> unit
 val set_has_frame :
   t -> bool -> unit
 val set_icon_activatable :
@@ -111,7 +111,7 @@ val set_icon_drag_source :
 val set_icon_from_icon_name :
   t -> Entry_icon_position.t -> string option -> unit
 val set_icon_from_pixbuf :
-  t -> Entry_icon_position.t -> Pixbuf.t -> unit
+  t -> Entry_icon_position.t -> Pixbuf.t ptr option -> unit
 val set_icon_from_stock :
   t -> Entry_icon_position.t -> string option -> unit
 val set_icon_sensitive :

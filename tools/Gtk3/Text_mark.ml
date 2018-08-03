@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_text_mark_new" (string_opt @-> bool @-> returning (t_typ))
+  foreign "gtk_text_mark_new" (string_opt @-> bool @-> returning (ptr t_typ))
 let get_buffer =
-  foreign "gtk_text_mark_get_buffer" (t_typ @-> returning (Text_buffer.t_typ))
+  foreign "gtk_text_mark_get_buffer" (t_typ @-> returning (ptr Text_buffer.t_typ))
 let get_deleted =
   foreign "gtk_text_mark_get_deleted" (t_typ @-> returning (bool))
 let get_left_gravity =

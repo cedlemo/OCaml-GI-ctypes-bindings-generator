@@ -4,15 +4,15 @@ type t
 val t_typ : t typ
 
 val emit_accept_certificate :
-  t -> Tls_certificate.t -> Tls_certificate_flags.t_list -> bool
+  t -> Tls_certificate.t ptr -> Tls_certificate_flags.t_list -> bool
 val get_certificate :
-  t -> Tls_certificate.t
+  t -> Tls_certificate.t ptr
 val get_database :
-  t -> Tls_database.t
+  t -> Tls_database.t ptr
 val get_interaction :
-  t -> Tls_interaction.t
+  t -> Tls_interaction.t ptr
 val get_peer_certificate :
-  t -> Tls_certificate.t
+  t -> Tls_certificate.t ptr
 val get_peer_certificate_errors :
   t -> Tls_certificate_flags.t_list
 val get_rehandshake_mode :
@@ -22,15 +22,15 @@ val get_require_close_notify :
 val get_use_system_certdb :
   t -> bool
 val handshake :
-  t -> Cancellable.t -> (bool, Error.t structure ptr option) result
+  t -> Cancellable.t ptr option -> (bool, Error.t structure ptr option) result
 (*Not implemented g_tls_connection_handshake_async type callback not implemented*)
 (*Not implemented g_tls_connection_handshake_finish type interface not implemented*)
 val set_certificate :
-  t -> Tls_certificate.t -> unit
+  t -> Tls_certificate.t ptr -> unit
 val set_database :
-  t -> Tls_database.t -> unit
+  t -> Tls_database.t ptr -> unit
 val set_interaction :
-  t -> Tls_interaction.t -> unit
+  t -> Tls_interaction.t ptr option -> unit
 val set_rehandshake_mode :
   t -> Tls_rehandshake_mode.t -> unit
 val set_require_close_notify :

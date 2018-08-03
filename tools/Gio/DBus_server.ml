@@ -6,7 +6,7 @@ let t_typ : t typ = ptr void
 
 let create_sync address flags guid observer cancellable =
   let create_sync_raw =
-    foreign "g_dbus_server_new_sync" (string @-> DBus_server_flags.t_list_view @-> string @-> DBus_auth_observer.t_typ @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+    foreign "g_dbus_server_new_sync" (string @-> DBus_server_flags.t_list_view @-> string @-> ptr_opt DBus_auth_observer.t_typ @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = create_sync_raw address flags guid observer cancellable err_ptr_ptr in

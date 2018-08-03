@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let get_adjustment =
-  foreign "gtk_range_get_adjustment" (t_typ @-> returning (Adjustment.t_typ))
+  foreign "gtk_range_get_adjustment" (t_typ @-> returning (ptr Adjustment.t_typ))
 let get_fill_level =
   foreign "gtk_range_get_fill_level" (t_typ @-> returning (double))
 let get_flippable =
@@ -47,7 +47,7 @@ let get_upper_stepper_sensitivity =
 let get_value =
   foreign "gtk_range_get_value" (t_typ @-> returning (double))
 let set_adjustment =
-  foreign "gtk_range_set_adjustment" (t_typ @-> Adjustment.t_typ @-> returning (void))
+  foreign "gtk_range_set_adjustment" (t_typ @-> ptr Adjustment.t_typ @-> returning (void))
 let set_fill_level =
   foreign "gtk_range_set_fill_level" (t_typ @-> double @-> returning (void))
 let set_flippable =

@@ -13,7 +13,7 @@ let f_dummy6 = field t_typ "dummy6" (ptr void)
 let _ = seal t_typ
 
 let init =
-  foreign "g_hash_table_iter_init" (ptr t_typ @-> ptr Hash_table.t_typ @-> returning (void))
+  foreign "g_hash_table_iter_init" (ptr t_typ @-> ptr Hash_table.t.t_typ @-> returning (void))
 let next self =
   let next_raw =
     foreign "g_hash_table_iter_next" (ptr t_typ @-> ptr (ptr_opt void) @-> ptr (ptr_opt void) @-> returning (bool))

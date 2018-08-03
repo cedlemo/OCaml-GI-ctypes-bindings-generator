@@ -5,11 +5,11 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_color_button_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_color_button_new" (void @-> returning (ptr Widget.t_typ))
 let create_with_color =
-  foreign "gtk_color_button_new_with_color" (ptr Color.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_color_button_new_with_color" (ptr Color.t_typ @-> returning (ptr Widget.t_typ))
 let create_with_rgba =
-  foreign "gtk_color_button_new_with_rgba" (ptr RGBA.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_color_button_new_with_rgba" (ptr RGBA.t_typ @-> returning (ptr Widget.t_typ))
 let get_alpha =
   foreign "gtk_color_button_get_alpha" (t_typ @-> returning (uint16_t))
 let get_color self =

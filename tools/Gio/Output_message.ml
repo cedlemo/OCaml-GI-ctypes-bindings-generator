@@ -4,7 +4,7 @@ open Foreign
 type t
 let t_typ : t structure typ = structure "Output_message"
 
-let f_address = field t_typ "address" (Socket_address.t_typ)
+let f_address = field t_typ "address" (ptr Socket_address.t_typ)
 let f_vectors = field t_typ "vectors" (ptr Output_vector.t_typ)
 let f_num_vectors = field t_typ "num_vectors" (uint32_t)
 let f_bytes_sent = field t_typ "bytes_sent" (uint32_t)

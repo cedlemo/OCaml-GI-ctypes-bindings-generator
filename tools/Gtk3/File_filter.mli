@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val create_from_gvariant :
-  Variant.t structure ptr -> t
+  Variant.t structure ptr -> t ptr
 (*Not implemented gtk_file_filter_add_custom type callback not implemented*)
 val add_mime_type :
   t -> string -> unit

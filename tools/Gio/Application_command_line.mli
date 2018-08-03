@@ -17,7 +17,7 @@ val get_options_dict :
 val get_platform_data :
   t -> Variant.t structure ptr option
 val get_stdin :
-  t -> Input_stream.t
+  t -> Input_stream.t ptr
 val getenv :
   t -> string -> string option
 val set_exit_status :

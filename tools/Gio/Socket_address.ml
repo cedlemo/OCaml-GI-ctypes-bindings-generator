@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create_from_native =
-  foreign "g_socket_address_new_from_native" (ptr void @-> uint64_t @-> returning (t_typ))
+  foreign "g_socket_address_new_from_native" (ptr void @-> uint64_t @-> returning (ptr t_typ))
 let get_family =
   foreign "g_socket_address_get_family" (t_typ @-> returning (Socket_family.t_view))
 let get_native_size =

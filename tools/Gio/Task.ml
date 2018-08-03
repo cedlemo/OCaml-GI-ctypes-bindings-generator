@@ -8,7 +8,7 @@ let t_typ : t typ = ptr void
 (*Not implemented g_task_is_valid type interface not implemented*)
 (*Not implemented g_task_report_error type callback not implemented*)
 let get_cancellable =
-  foreign "g_task_get_cancellable" (t_typ @-> returning (Cancellable.t_typ))
+  foreign "g_task_get_cancellable" (t_typ @-> returning (ptr Cancellable.t_typ))
 let get_check_cancellable =
   foreign "g_task_get_check_cancellable" (t_typ @-> returning (bool))
 let get_completed =
@@ -20,7 +20,7 @@ let get_priority =
 let get_return_on_cancel =
   foreign "g_task_get_return_on_cancel" (t_typ @-> returning (bool))
 let get_source_object =
-  foreign "g_task_get_source_object" (t_typ @-> returning (Object.t_typ))
+  foreign "g_task_get_source_object" (t_typ @-> returning (ptr_opt Object.t_typ))
 let get_source_tag =
   foreign "g_task_get_source_tag" (t_typ @-> returning (ptr_opt void))
 let get_task_data =

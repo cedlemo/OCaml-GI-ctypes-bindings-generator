@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_icon_factory_new" (void @-> returning (t_typ))
+  foreign "gtk_icon_factory_new" (void @-> returning (ptr t_typ))
 let lookup_default =
   foreign "gtk_icon_factory_lookup_default" (string @-> returning (ptr Icon_set.t_typ))
 let add =

@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Input_stream.t
+  unit -> Input_stream.t ptr
 val create_from_bytes :
-  Bytes.t structure ptr -> Input_stream.t
+  Bytes.t structure ptr -> Input_stream.t ptr
 (*Not implemented g_memory_input_stream_new_from_data type C Array type for Types.Array tag not implemented*)
 val add_bytes :
   t -> Bytes.t structure ptr -> unit

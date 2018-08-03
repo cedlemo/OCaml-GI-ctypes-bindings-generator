@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  float -> float -> float -> float -> float -> float -> t
+  float -> float -> float -> float -> float -> float -> t ptr
 val changed :
   t -> unit
 val clamp_page :

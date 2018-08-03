@@ -4,4 +4,4 @@ type t
 val t_typ : t typ
 
 val create :
-  bool -> Permission.t
+  bool -> Permission.t ptr

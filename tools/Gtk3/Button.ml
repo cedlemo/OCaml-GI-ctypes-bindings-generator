@@ -5,15 +5,15 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_button_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_button_new" (void @-> returning (ptr Widget.t_typ))
 let create_from_icon_name =
-  foreign "gtk_button_new_from_icon_name" (string_opt @-> int32_t @-> returning (Widget.t_typ))
+  foreign "gtk_button_new_from_icon_name" (string_opt @-> int32_t @-> returning (ptr Widget.t_typ))
 let create_from_stock =
-  foreign "gtk_button_new_from_stock" (string @-> returning (Widget.t_typ))
+  foreign "gtk_button_new_from_stock" (string @-> returning (ptr Widget.t_typ))
 let create_with_label =
-  foreign "gtk_button_new_with_label" (string @-> returning (Widget.t_typ))
+  foreign "gtk_button_new_with_label" (string @-> returning (ptr Widget.t_typ))
 let create_with_mnemonic =
-  foreign "gtk_button_new_with_mnemonic" (string @-> returning (Widget.t_typ))
+  foreign "gtk_button_new_with_mnemonic" (string @-> returning (ptr Widget.t_typ))
 let clicked =
   foreign "gtk_button_clicked" (t_typ @-> returning (void))
 let enter =
@@ -31,11 +31,11 @@ let get_alignment self =
 let get_always_show_image =
   foreign "gtk_button_get_always_show_image" (t_typ @-> returning (bool))
 let get_event_window =
-  foreign "gtk_button_get_event_window" (t_typ @-> returning (Window.t_typ))
+  foreign "gtk_button_get_event_window" (t_typ @-> returning (ptr Window.t_typ))
 let get_focus_on_click =
   foreign "gtk_button_get_focus_on_click" (t_typ @-> returning (bool))
 let get_image =
-  foreign "gtk_button_get_image" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_button_get_image" (t_typ @-> returning (ptr_opt Widget.t_typ))
 let get_image_position =
   foreign "gtk_button_get_image_position" (t_typ @-> returning (Position_type.t_view))
 let get_label =
@@ -59,7 +59,7 @@ let set_always_show_image =
 let set_focus_on_click =
   foreign "gtk_button_set_focus_on_click" (t_typ @-> bool @-> returning (void))
 let set_image =
-  foreign "gtk_button_set_image" (t_typ @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_button_set_image" (t_typ @-> ptr_opt Widget.t_typ @-> returning (void))
 let set_image_position =
   foreign "gtk_button_set_image_position" (t_typ @-> Position_type.t_view @-> returning (void))
 let set_label =

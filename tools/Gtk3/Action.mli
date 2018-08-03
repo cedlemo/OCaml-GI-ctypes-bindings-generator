@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  string -> string option -> string option -> string option -> t
+  string -> string option -> string option -> string option -> t ptr
 val activate :
   t -> unit
 val block_activate :
@@ -12,13 +12,13 @@ val block_activate :
 val connect_accelerator :
   t -> unit
 val create_icon :
-  t -> int32 -> Widget.t
+  t -> int32 -> Widget.t ptr
 val create_menu :
-  t -> Widget.t
+  t -> Widget.t ptr
 val create_menu_item :
-  t -> Widget.t
+  t -> Widget.t ptr
 val create_tool_item :
-  t -> Widget.t
+  t -> Widget.t ptr
 val disconnect_accelerator :
   t -> unit
 val get_accel_closure :
@@ -37,7 +37,7 @@ val get_label :
 val get_name :
   t -> string option
 val get_proxies :
-  t -> SList.t structure (* Widget.t *) ptr
+  t -> SList.t structure (* Not implemented : interface *) ptr
 val get_sensitive :
   t -> bool
 val get_short_label :
@@ -57,7 +57,7 @@ val is_sensitive :
 val is_visible :
   t -> bool
 val set_accel_group :
-  t -> Accel_group.t -> unit
+  t -> Accel_group.t ptr option -> unit
 val set_accel_path :
   t -> string -> unit
 val set_always_show_image :

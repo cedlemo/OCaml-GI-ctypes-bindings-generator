@@ -5,7 +5,7 @@ val t_typ : t typ
 
 (*Not implemented g_settings_backend_flatten_tree type C Array type for Types.Array tag not implemented*)
 val get_default :
-  unit -> t
+  unit -> t ptr
 val changed :
   t -> string -> unit ptr option -> unit
 val changed_tree :

@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_shortcut_label_new" (string @-> returning (Widget.t_typ))
+  foreign "gtk_shortcut_label_new" (string @-> returning (ptr Widget.t_typ))
 let get_accelerator =
   foreign "gtk_shortcut_label_get_accelerator" (t_typ @-> returning (string_opt))
 let get_disabled_text =

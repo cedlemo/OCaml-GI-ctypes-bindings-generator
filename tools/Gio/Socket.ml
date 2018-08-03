@@ -6,7 +6,7 @@ let t_typ : t typ = ptr void
 
 let create family _type protocol =
   let create_raw =
-    foreign "g_socket_new" (Socket_family.t_view @-> Socket_type.t_view @-> Socket_protocol.t_view @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+    foreign "g_socket_new" (Socket_family.t_view @-> Socket_type.t_view @-> Socket_protocol.t_view @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = create_raw family _type protocol err_ptr_ptr in
@@ -17,7 +17,7 @@ let create family _type protocol =
     Error (err_ptr)
 let create_from_fd fd =
   let create_from_fd_raw =
-    foreign "g_socket_new_from_fd" (int32_t @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+    foreign "g_socket_new_from_fd" (int32_t @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = create_from_fd_raw fd err_ptr_ptr in
@@ -28,7 +28,7 @@ let create_from_fd fd =
     Error (err_ptr)
 let accept self cancellable =
   let accept_raw =
-    foreign "g_socket_accept" (t_typ @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+    foreign "g_socket_accept" (t_typ @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = accept_raw self cancellable err_ptr_ptr in
@@ -39,7 +39,7 @@ let accept self cancellable =
     Error (err_ptr)
 let bind self address allow_reuse =
   let bind_raw =
-    foreign "g_socket_bind" (t_typ @-> Socket_address.t_typ @-> bool @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_socket_bind" (t_typ @-> ptr Socket_address.t_typ @-> bool @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = bind_raw self address allow_reuse err_ptr_ptr in
@@ -74,7 +74,7 @@ let condition_check =
   foreign "g_socket_condition_check" (t_typ @-> IOCondition.t_list_view @-> returning (IOCondition.t_list_view))
 let condition_timed_wait self condition timeout cancellable =
   let condition_timed_wait_raw =
-    foreign "g_socket_condition_timed_wait" (t_typ @-> IOCondition.t_list_view @-> int64_t @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_socket_condition_timed_wait" (t_typ @-> IOCondition.t_list_view @-> int64_t @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = condition_timed_wait_raw self condition timeout cancellable err_ptr_ptr in
@@ -85,7 +85,7 @@ let condition_timed_wait self condition timeout cancellable =
     Error (err_ptr)
 let condition_wait self condition cancellable =
   let condition_wait_raw =
-    foreign "g_socket_condition_wait" (t_typ @-> IOCondition.t_list_view @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_socket_condition_wait" (t_typ @-> IOCondition.t_list_view @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = condition_wait_raw self condition cancellable err_ptr_ptr in
@@ -96,7 +96,7 @@ let condition_wait self condition cancellable =
     Error (err_ptr)
 let connect self address cancellable =
   let connect_raw =
-    foreign "g_socket_connect" (t_typ @-> Socket_address.t_typ @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_socket_connect" (t_typ @-> ptr Socket_address.t_typ @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = connect_raw self address cancellable err_ptr_ptr in
@@ -106,7 +106,7 @@ let connect self address cancellable =
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
 let connection_factory_create_connection =
-  foreign "g_socket_connection_factory_create_connection" (t_typ @-> returning (Socket_connection.t_typ))
+  foreign "g_socket_connection_factory_create_connection" (t_typ @-> returning (ptr Socket_connection.t_typ))
 let get_available_bytes =
   foreign "g_socket_get_available_bytes" (t_typ @-> returning (int64_t))
 let get_blocking =
@@ -115,7 +115,7 @@ let get_broadcast =
   foreign "g_socket_get_broadcast" (t_typ @-> returning (bool))
 let get_credentials self =
   let get_credentials_raw =
-    foreign "g_socket_get_credentials" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (Credentials.t_typ))
+    foreign "g_socket_get_credentials" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Credentials.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = get_credentials_raw self err_ptr_ptr in
@@ -134,7 +134,7 @@ let get_listen_backlog =
   foreign "g_socket_get_listen_backlog" (t_typ @-> returning (int32_t))
 let get_local_address self =
   let get_local_address_raw =
-    foreign "g_socket_get_local_address" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (Socket_address.t_typ))
+    foreign "g_socket_get_local_address" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Socket_address.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = get_local_address_raw self err_ptr_ptr in
@@ -166,7 +166,7 @@ let get_option self level optname =
   foreign "g_socket_get_protocol" (t_typ @-> returning (Socket_protocol.t_view))
 let get_remote_address self =
   let get_remote_address_raw =
-    foreign "g_socket_get_remote_address" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (Socket_address.t_typ))
+    foreign "g_socket_get_remote_address" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Socket_address.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = get_remote_address_raw self err_ptr_ptr in
@@ -187,7 +187,7 @@ let is_connected =
   foreign "g_socket_is_connected" (t_typ @-> returning (bool))
 let join_multicast_group self group source_specific iface =
   let join_multicast_group_raw =
-    foreign "g_socket_join_multicast_group" (t_typ @-> Inet_address.t_typ @-> bool @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_socket_join_multicast_group" (t_typ @-> ptr Inet_address.t_typ @-> bool @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = join_multicast_group_raw self group source_specific iface err_ptr_ptr in
@@ -198,7 +198,7 @@ let join_multicast_group self group source_specific iface =
     Error (err_ptr)
 let join_multicast_group_ssm self group source_specific iface =
   let join_multicast_group_ssm_raw =
-    foreign "g_socket_join_multicast_group_ssm" (t_typ @-> Inet_address.t_typ @-> Inet_address.t_typ @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_socket_join_multicast_group_ssm" (t_typ @-> ptr Inet_address.t_typ @-> ptr_opt Inet_address.t_typ @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = join_multicast_group_ssm_raw self group source_specific iface err_ptr_ptr in
@@ -209,7 +209,7 @@ let join_multicast_group_ssm self group source_specific iface =
     Error (err_ptr)
 let leave_multicast_group self group source_specific iface =
   let leave_multicast_group_raw =
-    foreign "g_socket_leave_multicast_group" (t_typ @-> Inet_address.t_typ @-> bool @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_socket_leave_multicast_group" (t_typ @-> ptr Inet_address.t_typ @-> bool @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = leave_multicast_group_raw self group source_specific iface err_ptr_ptr in
@@ -220,7 +220,7 @@ let leave_multicast_group self group source_specific iface =
     Error (err_ptr)
 let leave_multicast_group_ssm self group source_specific iface =
   let leave_multicast_group_ssm_raw =
-    foreign "g_socket_leave_multicast_group_ssm" (t_typ @-> Inet_address.t_typ @-> Inet_address.t_typ @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_socket_leave_multicast_group_ssm" (t_typ @-> ptr Inet_address.t_typ @-> ptr_opt Inet_address.t_typ @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = leave_multicast_group_ssm_raw self group source_specific iface err_ptr_ptr in

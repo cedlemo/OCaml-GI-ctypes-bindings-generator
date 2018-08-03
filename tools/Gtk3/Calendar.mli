@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val clear_marks :
   t -> unit
 val get_date :

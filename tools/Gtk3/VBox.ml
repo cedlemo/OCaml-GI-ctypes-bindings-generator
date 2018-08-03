@@ -5,4 +5,4 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_vbox_new" (bool @-> int32_t @-> returning (Widget.t_typ))
+  foreign "gtk_vbox_new" (bool @-> int32_t @-> returning (ptr Widget.t_typ))

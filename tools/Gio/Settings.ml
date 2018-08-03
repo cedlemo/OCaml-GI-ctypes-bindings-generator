@@ -5,34 +5,34 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_settings_new" (string @-> returning (t_typ))
+  foreign "g_settings_new" (string @-> returning (ptr t_typ))
 let create_full =
-  foreign "g_settings_new_full" (ptr Settings_schema.t_typ @-> Settings_backend.t_typ @-> string_opt @-> returning (t_typ))
+  foreign "g_settings_new_full" (ptr Settings_schema.t_typ @-> ptr_opt Settings_backend.t_typ @-> string_opt @-> returning (ptr t_typ))
 let create_with_backend =
-  foreign "g_settings_new_with_backend" (string @-> Settings_backend.t_typ @-> returning (t_typ))
+  foreign "g_settings_new_with_backend" (string @-> ptr Settings_backend.t_typ @-> returning (ptr t_typ))
 let create_with_backend_and_path =
-  foreign "g_settings_new_with_backend_and_path" (string @-> Settings_backend.t_typ @-> string @-> returning (t_typ))
+  foreign "g_settings_new_with_backend_and_path" (string @-> ptr Settings_backend.t_typ @-> string @-> returning (ptr t_typ))
 let create_with_path =
-  foreign "g_settings_new_with_path" (string @-> string @-> returning (t_typ))
+  foreign "g_settings_new_with_path" (string @-> string @-> returning (ptr t_typ))
 (*Not implemented g_settings_list_relocatable_schemas return type C Array type for Types.Array tag not handled*)
 (*Not implemented g_settings_list_schemas return type C Array type for Types.Array tag not handled*)
 let sync =
   foreign "g_settings_sync" (void @-> returning (void))
 let unbind =
-  foreign "g_settings_unbind" (Object.t_typ @-> string @-> returning (void))
+  foreign "g_settings_unbind" (ptr Object.t_typ @-> string @-> returning (void))
 let apply =
   foreign "g_settings_apply" (t_typ @-> returning (void))
 let bind =
-  foreign "g_settings_bind" (t_typ @-> string @-> Object.t_typ @-> string @-> Settings_bind_flags.t_list_view @-> returning (void))
+  foreign "g_settings_bind" (t_typ @-> string @-> ptr Object.t_typ @-> string @-> Settings_bind_flags.t_list_view @-> returning (void))
 let bind_writable =
-  foreign "g_settings_bind_writable" (t_typ @-> string @-> Object.t_typ @-> string @-> bool @-> returning (void))
+  foreign "g_settings_bind_writable" (t_typ @-> string @-> ptr Object.t_typ @-> string @-> bool @-> returning (void))
 (*Not implemented g_settings_create_action return type interface not handled*)
 let delay =
   foreign "g_settings_delay" (t_typ @-> returning (void))
 let get_boolean =
   foreign "g_settings_get_boolean" (t_typ @-> string @-> returning (bool))
 let get_child =
-  foreign "g_settings_get_child" (t_typ @-> string @-> returning (t_typ))
+  foreign "g_settings_get_child" (t_typ @-> string @-> returning (ptr t_typ))
 let get_default_value =
   foreign "g_settings_get_default_value" (t_typ @-> string @-> returning (ptr_opt Variant.t_typ))
 let get_double =

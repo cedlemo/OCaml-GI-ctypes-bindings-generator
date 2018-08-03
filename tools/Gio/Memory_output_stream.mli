@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create_resizable :
-  unit -> Output_stream.t
+  unit -> Output_stream.t ptr
 val get_data :
   t -> unit ptr option
 val get_data_size :

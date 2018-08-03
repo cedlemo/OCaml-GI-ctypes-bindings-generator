@@ -4,10 +4,10 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val create_for_screen :
-  Screen.t -> Widget.t
+  Screen.t ptr -> Widget.t ptr
 val get_screen :
-  t -> Screen.t
+  t -> Screen.t ptr
 val set_screen :
-  t -> Screen.t -> unit
+  t -> Screen.t ptr -> unit

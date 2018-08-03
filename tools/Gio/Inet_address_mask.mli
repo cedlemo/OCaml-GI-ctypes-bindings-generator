@@ -4,18 +4,18 @@ type t
 val t_typ : t typ
 
 val create :
-  Inet_address.t -> Unsigned.uint32 -> (t, Error.t structure ptr option) result
+  Inet_address.t ptr -> Unsigned.uint32 -> (t ptr option, Error.t structure ptr option) result
 val create_from_string :
-  string -> (t, Error.t structure ptr option) result
+  string -> (t ptr option, Error.t structure ptr option) result
 val equal :
-  t -> t -> bool
+  t -> t ptr -> bool
 val get_address :
-  t -> Inet_address.t
+  t -> Inet_address.t ptr
 val get_family :
   t -> Socket_family.t
 val get_length :
   t -> Unsigned.uint32
 val matches :
-  t -> Inet_address.t -> bool
+  t -> Inet_address.t ptr -> bool
 val to_string :
   t -> string option

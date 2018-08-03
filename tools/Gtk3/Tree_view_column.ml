@@ -5,14 +5,14 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_tree_view_column_new" (void @-> returning (t_typ))
+  foreign "gtk_tree_view_column_new" (void @-> returning (ptr t_typ))
 let create_with_area =
-  foreign "gtk_tree_view_column_new_with_area" (Cell_area.t_typ @-> returning (t_typ))
+  foreign "gtk_tree_view_column_new_with_area" (ptr Cell_area.t_typ @-> returning (ptr t_typ))
 let add_attribute =
-  foreign "gtk_tree_view_column_add_attribute" (t_typ @-> Cell_renderer.t_typ @-> string @-> int32_t @-> returning (void))
+  foreign "gtk_tree_view_column_add_attribute" (t_typ @-> ptr Cell_renderer.t_typ @-> string @-> int32_t @-> returning (void))
 let cell_get_position self cell_renderer =
   let cell_get_position_raw =
-    foreign "gtk_tree_view_column_cell_get_position" (t_typ @-> Cell_renderer.t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (bool))
+    foreign "gtk_tree_view_column_cell_get_position" (t_typ @-> ptr Cell_renderer.t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (bool))
   in
   let x_offset_ptr = allocate int32_t Int32.zero in
   let width_ptr = allocate int32_t Int32.zero in
@@ -40,15 +40,15 @@ let cell_is_visible =
 let clear =
   foreign "gtk_tree_view_column_clear" (t_typ @-> returning (void))
 let clear_attributes =
-  foreign "gtk_tree_view_column_clear_attributes" (t_typ @-> Cell_renderer.t_typ @-> returning (void))
+  foreign "gtk_tree_view_column_clear_attributes" (t_typ @-> ptr Cell_renderer.t_typ @-> returning (void))
 let clicked =
   foreign "gtk_tree_view_column_clicked" (t_typ @-> returning (void))
 let focus_cell =
-  foreign "gtk_tree_view_column_focus_cell" (t_typ @-> Cell_renderer.t_typ @-> returning (void))
+  foreign "gtk_tree_view_column_focus_cell" (t_typ @-> ptr Cell_renderer.t_typ @-> returning (void))
 let get_alignment =
   foreign "gtk_tree_view_column_get_alignment" (t_typ @-> returning (float))
 let get_button =
-  foreign "gtk_tree_view_column_get_button" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_tree_view_column_get_button" (t_typ @-> returning (ptr Widget.t_typ))
 let get_clickable =
   foreign "gtk_tree_view_column_get_clickable" (t_typ @-> returning (bool))
 let get_expand =
@@ -76,19 +76,19 @@ let get_spacing =
 let get_title =
   foreign "gtk_tree_view_column_get_title" (t_typ @-> returning (string_opt))
 let get_tree_view =
-  foreign "gtk_tree_view_column_get_tree_view" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_tree_view_column_get_tree_view" (t_typ @-> returning (ptr_opt Widget.t_typ))
 let get_visible =
   foreign "gtk_tree_view_column_get_visible" (t_typ @-> returning (bool))
 let get_widget =
-  foreign "gtk_tree_view_column_get_widget" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_tree_view_column_get_widget" (t_typ @-> returning (ptr_opt Widget.t_typ))
 let get_width =
   foreign "gtk_tree_view_column_get_width" (t_typ @-> returning (int32_t))
 let get_x_offset =
   foreign "gtk_tree_view_column_get_x_offset" (t_typ @-> returning (int32_t))
 let pack_end =
-  foreign "gtk_tree_view_column_pack_end" (t_typ @-> Cell_renderer.t_typ @-> bool @-> returning (void))
+  foreign "gtk_tree_view_column_pack_end" (t_typ @-> ptr Cell_renderer.t_typ @-> bool @-> returning (void))
 let pack_start =
-  foreign "gtk_tree_view_column_pack_start" (t_typ @-> Cell_renderer.t_typ @-> bool @-> returning (void))
+  foreign "gtk_tree_view_column_pack_start" (t_typ @-> ptr Cell_renderer.t_typ @-> bool @-> returning (void))
 let queue_resize =
   foreign "gtk_tree_view_column_queue_resize" (t_typ @-> returning (void))
 let set_alignment =
@@ -123,4 +123,4 @@ let set_title =
 let set_visible =
   foreign "gtk_tree_view_column_set_visible" (t_typ @-> bool @-> returning (void))
 let set_widget =
-  foreign "gtk_tree_view_column_set_widget" (t_typ @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_tree_view_column_set_widget" (t_typ @-> ptr_opt Widget.t_typ @-> returning (void))

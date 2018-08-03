@@ -6,7 +6,7 @@ val t_typ : t typ
 val get_default_direction :
   unit -> Text_direction.t
 val get_default_style :
-  unit -> Style.t
+  unit -> Style.t ptr
 val pop_composite_child :
   unit -> unit
 val push_composite_child :
@@ -16,13 +16,13 @@ val set_default_direction :
 val activate :
   t -> bool
 val add_accelerator :
-  t -> string -> Accel_group.t -> Unsigned.uint32 -> Modifier_type.t_list -> Accel_flags.t_list -> unit
+  t -> string -> Accel_group.t ptr -> Unsigned.uint32 -> Modifier_type.t_list -> Accel_flags.t_list -> unit
 val add_device_events :
-  t -> Device.t -> Event_mask.t_list -> unit
+  t -> Device.t ptr -> Event_mask.t_list -> unit
 val add_events :
   t -> int32 -> unit
 val add_mnemonic_label :
-  t -> t -> unit
+  t -> t ptr -> unit
 (*Not implemented gtk_widget_add_tick_callback type callback not implemented*)
 val can_activate_accel :
   t -> Unsigned.uint32 -> bool
@@ -35,15 +35,15 @@ val class_path :
 val compute_expand :
   t -> Orientation.t -> bool
 val create_pango_context :
-  t -> Context.t
+  t -> Context.t ptr
 val create_pango_layout :
-  t -> string option -> Layout.t
+  t -> string option -> Layout.t ptr
 val destroy :
   t -> unit
 val destroyed :
-  t -> t -> (t)
+  t -> t ptr -> (t ptr)
 val device_is_shadowed :
-  t -> Device.t -> bool
+  t -> Device.t ptr -> bool
 (*Not implemented gtk_drag_begin type union not implemented*)
 (*Not implemented gtk_drag_begin_with_coordinates type union not implemented*)
 val drag_check_threshold :
@@ -55,14 +55,14 @@ val drag_dest_add_text_targets :
 val drag_dest_add_uri_targets :
   t -> unit
 val drag_dest_find_target :
-  t -> Drag_context.t -> Target_list.t structure ptr option -> Atom.t structure ptr
+  t -> Drag_context.t ptr -> Target_list.t structure ptr option -> Atom.t structure ptr
 val drag_dest_get_target_list :
   t -> Target_list.t structure ptr option
 val drag_dest_get_track_motion :
   t -> bool
 (*Not implemented gtk_drag_dest_set type C Array type for Types.Array tag not implemented*)
 val drag_dest_set_proxy :
-  t -> Window.t -> Drag_protocol.t -> bool -> unit
+  t -> Window.t ptr -> Drag_protocol.t -> bool -> unit
 val drag_dest_set_target_list :
   t -> Target_list.t structure ptr option -> unit
 val drag_dest_set_track_motion :
@@ -70,7 +70,7 @@ val drag_dest_set_track_motion :
 val drag_dest_unset :
   t -> unit
 val drag_get_data :
-  t -> Drag_context.t -> Atom.t structure ptr -> Unsigned.uint32 -> unit
+  t -> Drag_context.t ptr -> Atom.t structure ptr -> Unsigned.uint32 -> unit
 val drag_highlight :
   t -> unit
 val drag_source_add_image_targets :
@@ -86,7 +86,7 @@ val drag_source_get_target_list :
 val drag_source_set_icon_name :
   t -> string -> unit
 val drag_source_set_icon_pixbuf :
-  t -> Pixbuf.t -> unit
+  t -> Pixbuf.t ptr -> unit
 val drag_source_set_icon_stock :
   t -> string -> unit
 val drag_source_set_target_list :
@@ -105,7 +105,7 @@ val error_bell :
 val freeze_child_notify :
   t -> unit
 val get_accessible :
-  t -> Object.t
+  t -> Object.t ptr
 (*Not implemented gtk_widget_get_action_group return type interface not handled*)
 val get_allocated_baseline :
   t -> int32
@@ -131,17 +131,17 @@ val get_child_visible :
 val get_clip :
   t -> (Rectangle.t structure)
 val get_clipboard :
-  t -> Atom.t structure ptr -> Clipboard.t
+  t -> Atom.t structure ptr -> Clipboard.t ptr
 val get_composite_name :
   t -> string option
 val get_device_enabled :
-  t -> Device.t -> bool
+  t -> Device.t ptr -> bool
 val get_device_events :
-  t -> Device.t -> Event_mask.t_list
+  t -> Device.t ptr -> Event_mask.t_list
 val get_direction :
   t -> Text_direction.t
 val get_display :
-  t -> Display.t
+  t -> Display.t ptr
 val get_double_buffered :
   t -> bool
 val get_events :
@@ -149,11 +149,11 @@ val get_events :
 val get_focus_on_click :
   t -> bool
 val get_font_map :
-  t -> Font_map.t
+  t -> Font_map.t ptr option
 val get_font_options :
   t -> Font_options.t structure ptr option
 val get_frame_clock :
-  t -> Frame_clock.t
+  t -> Frame_clock.t ptr option
 val get_halign :
   t -> Align.t
 val get_has_tooltip :
@@ -181,7 +181,7 @@ val get_margin_top :
 val get_modifier_mask :
   t -> Modifier_intent.t -> Modifier_type.t_list
 val get_modifier_style :
-  t -> Rc_style.t
+  t -> Rc_style.t ptr
 val get_name :
   t -> string option
 val get_no_show_all :
@@ -189,11 +189,11 @@ val get_no_show_all :
 val get_opacity :
   t -> float
 val get_pango_context :
-  t -> Context.t
+  t -> Context.t ptr
 val get_parent :
-  t -> t
+  t -> t ptr option
 val get_parent_window :
-  t -> Window.t
+  t -> Window.t ptr option
 val get_path :
   t -> Widget_path.t structure ptr
 val get_pointer :
@@ -219,15 +219,15 @@ val get_request_mode :
 val get_requisition :
   t -> (Requisition.t structure)
 val get_root_window :
-  t -> Window.t
+  t -> Window.t ptr
 val get_scale_factor :
   t -> int32
 val get_screen :
-  t -> Screen.t
+  t -> Screen.t ptr
 val get_sensitive :
   t -> bool
 val get_settings :
-  t -> Settings.t
+  t -> Settings.t ptr
 val get_size_request :
   t -> (int32 * int32)
 val get_state :
@@ -235,9 +235,9 @@ val get_state :
 val get_state_flags :
   t -> State_flags.t_list
 val get_style :
-  t -> Style.t
+  t -> Style.t ptr
 val get_style_context :
-  t -> Style_context.t
+  t -> Style_context.t ptr
 val get_support_multidevice :
   t -> bool
 (*Not implemented gtk_widget_get_template_child type gType not implemented*)
@@ -246,9 +246,9 @@ val get_tooltip_markup :
 val get_tooltip_text :
   t -> string option
 val get_tooltip_window :
-  t -> Window.t
+  t -> Window.t ptr
 val get_toplevel :
-  t -> t
+  t -> t ptr
 val get_valign :
   t -> Align.t
 val get_valign_with_baseline :
@@ -260,9 +260,9 @@ val get_vexpand_set :
 val get_visible :
   t -> bool
 val get_visual :
-  t -> Visual.t
+  t -> Visual.t ptr
 val get_window :
-  t -> Window.t
+  t -> Window.t ptr option
 val grab_add :
   t -> unit
 val grab_default :
@@ -297,7 +297,7 @@ val input_shape_combine_region :
 val intersect :
   t -> Rectangle.t structure ptr -> (bool * Rectangle.t structure)
 val is_ancestor :
-  t -> t -> bool
+  t -> t ptr -> bool
 val is_composited :
   t -> bool
 val is_drawable :
@@ -313,10 +313,10 @@ val is_visible :
 val keynav_failed :
   t -> Direction_type.t -> bool
 val list_accel_closures :
-  t -> List.t structure (* Closure.t structure *) ptr
+  t -> List.t structure (* Not implemented : interface *) ptr
 (*Not implemented gtk_widget_list_action_prefixes return type C Array type for Types.Array tag not handled*)
 val list_mnemonic_labels :
-  t -> List.t structure (* t *) ptr
+  t -> List.t structure (* Not implemented : interface *) ptr
 val map :
   t -> unit
 val mnemonic_activate :
@@ -332,7 +332,7 @@ val modify_fg :
 val modify_font :
   t -> Font_description.t structure ptr option -> unit
 val modify_style :
-  t -> Rc_style.t -> unit
+  t -> Rc_style.t ptr -> unit
 val modify_text :
   t -> State_type.t -> Color.t structure ptr option -> unit
 val override_background_color :
@@ -366,19 +366,19 @@ val realize :
 val region_intersect :
   t -> Region.t structure ptr -> Region.t structure ptr
 val register_window :
-  t -> Window.t -> unit
+  t -> Window.t ptr -> unit
 val remove_accelerator :
-  t -> Accel_group.t -> Unsigned.uint32 -> Modifier_type.t_list -> bool
+  t -> Accel_group.t ptr -> Unsigned.uint32 -> Modifier_type.t_list -> bool
 val remove_mnemonic_label :
-  t -> t -> unit
+  t -> t ptr -> unit
 val remove_tick_callback :
   t -> Unsigned.uint32 -> unit
 val render_icon :
-  t -> string -> int32 -> string option -> Pixbuf.t
+  t -> string -> int32 -> string option -> Pixbuf.t ptr option
 val render_icon_pixbuf :
-  t -> string -> int32 -> Pixbuf.t
+  t -> string -> int32 -> Pixbuf.t ptr option
 val reparent :
-  t -> t -> unit
+  t -> t ptr -> unit
 val reset_rc_styles :
   t -> unit
 val reset_style :
@@ -386,7 +386,7 @@ val reset_style :
 (*Not implemented gtk_widget_send_expose type union not implemented*)
 (*Not implemented gtk_widget_send_focus_change type union not implemented*)
 val set_accel_path :
-  t -> string option -> Accel_group.t -> unit
+  t -> string option -> Accel_group.t ptr option -> unit
 val set_allocation :
   t -> Rectangle.t structure ptr -> unit
 val set_app_paintable :
@@ -402,9 +402,9 @@ val set_clip :
 val set_composite_name :
   t -> string -> unit
 val set_device_enabled :
-  t -> Device.t -> bool -> unit
+  t -> Device.t ptr -> bool -> unit
 val set_device_events :
-  t -> Device.t -> Event_mask.t_list -> unit
+  t -> Device.t ptr -> Event_mask.t_list -> unit
 val set_direction :
   t -> Text_direction.t -> unit
 val set_double_buffered :
@@ -414,7 +414,7 @@ val set_events :
 val set_focus_on_click :
   t -> bool -> unit
 val set_font_map :
-  t -> Font_map.t -> unit
+  t -> Font_map.t ptr option -> unit
 val set_font_options :
   t -> Font_options.t structure ptr option -> unit
 val set_halign :
@@ -448,9 +448,9 @@ val set_no_show_all :
 val set_opacity :
   t -> float -> unit
 val set_parent :
-  t -> t -> unit
+  t -> t ptr -> unit
 val set_parent_window :
-  t -> Window.t -> unit
+  t -> Window.t ptr -> unit
 val set_realized :
   t -> bool -> unit
 val set_receives_default :
@@ -466,7 +466,7 @@ val set_state :
 val set_state_flags :
   t -> State_flags.t_list -> bool -> unit
 val set_style :
-  t -> Style.t -> unit
+  t -> Style.t ptr option -> unit
 val set_support_multidevice :
   t -> bool -> unit
 val set_tooltip_markup :
@@ -474,7 +474,7 @@ val set_tooltip_markup :
 val set_tooltip_text :
   t -> string option -> unit
 val set_tooltip_window :
-  t -> Window.t -> unit
+  t -> Window.t ptr option -> unit
 val set_valign :
   t -> Align.t -> unit
 val set_vexpand :
@@ -484,9 +484,9 @@ val set_vexpand_set :
 val set_visible :
   t -> bool -> unit
 val set_visual :
-  t -> Visual.t -> unit
+  t -> Visual.t ptr option -> unit
 val set_window :
-  t -> Window.t -> unit
+  t -> Window.t ptr -> unit
 val shape_combine_region :
   t -> Region.t structure ptr option -> unit
 val show :
@@ -508,7 +508,7 @@ val style_get_property :
 val thaw_child_notify :
   t -> unit
 val translate_coordinates :
-  t -> t -> int32 -> int32 -> (bool * int32 * int32)
+  t -> t ptr -> int32 -> int32 -> (bool * int32 * int32)
 val trigger_tooltip_query :
   t -> unit
 val unmap :
@@ -518,6 +518,6 @@ val unparent :
 val unrealize :
   t -> unit
 val unregister_window :
-  t -> Window.t -> unit
+  t -> Window.t ptr -> unit
 val unset_state_flags :
   t -> State_flags.t_list -> unit

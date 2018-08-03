@@ -1006,43 +1006,43 @@ val hook_destroy :
   Hook_list.t structure ptr -> Unsigned.uint64 -> bool
 
 val hash_table_unref :
-  Hash_table.t structure (* unit ptr *) ptr -> unit
+  Hash_table.t.t structure (* unit *) ptr -> unit
 
 val hash_table_steal_all :
-  Hash_table.t structure (* unit ptr *) ptr -> unit
+  Hash_table.t.t structure (* unit *) ptr -> unit
 
 val hash_table_steal :
-  Hash_table.t structure (* unit ptr *) ptr -> unit ptr option -> bool
+  Hash_table.t.t structure (* unit *) ptr -> unit ptr option -> bool
 
 val hash_table_size :
-  Hash_table.t structure (* unit ptr *) ptr -> Unsigned.uint32
+  Hash_table.t.t structure (* unit *) ptr -> Unsigned.uint32
 
 val hash_table_replace :
-  Hash_table.t structure (* unit ptr *) ptr -> unit ptr option -> unit ptr option -> bool
+  Hash_table.t.t structure (* unit *) ptr -> unit ptr option -> unit ptr option -> bool
 
 val hash_table_remove_all :
-  Hash_table.t structure (* unit ptr *) ptr -> unit
+  Hash_table.t.t structure (* unit *) ptr -> unit
 
 val hash_table_remove :
-  Hash_table.t structure (* unit ptr *) ptr -> unit ptr option -> bool
+  Hash_table.t.t structure (* unit *) ptr -> unit ptr option -> bool
 
 val hash_table_lookup_extended :
-  Hash_table.t structure (* unit ptr *) ptr -> unit ptr option -> (bool * unit ptr option * unit ptr option)
+  Hash_table.t.t structure (* unit *) ptr -> unit ptr option -> (bool * unit ptr option * unit ptr option)
 
 val hash_table_lookup :
-  Hash_table.t structure (* unit ptr *) ptr -> unit ptr option -> unit ptr option
+  Hash_table.t.t structure (* unit *) ptr -> unit ptr option -> unit ptr option
 
 val hash_table_insert :
-  Hash_table.t structure (* unit ptr *) ptr -> unit ptr option -> unit ptr option -> bool
+  Hash_table.t.t structure (* unit *) ptr -> unit ptr option -> unit ptr option -> bool
 
 val hash_table_destroy :
-  Hash_table.t structure (* unit ptr *) ptr -> unit
+  Hash_table.t.t structure (* unit *) ptr -> unit
 
 val hash_table_contains :
-  Hash_table.t structure (* unit ptr *) ptr -> unit ptr option -> bool
+  Hash_table.t.t structure (* unit *) ptr -> unit ptr option -> bool
 
 val hash_table_add :
-  Hash_table.t structure (* unit ptr *) ptr -> unit ptr option -> bool
+  Hash_table.t.t structure (* unit *) ptr -> unit ptr option -> bool
 
 val getenv :
   string -> string option

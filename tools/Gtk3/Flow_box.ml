@@ -5,14 +5,14 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_flow_box_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_flow_box_new" (void @-> returning (ptr Widget.t_typ))
 (*Not implemented gtk_flow_box_bind_model type interface not implemented*)
 let get_activate_on_single_click =
   foreign "gtk_flow_box_get_activate_on_single_click" (t_typ @-> returning (bool))
 let get_child_at_index =
-  foreign "gtk_flow_box_get_child_at_index" (t_typ @-> int32_t @-> returning (Flow_box_child.t_typ))
+  foreign "gtk_flow_box_get_child_at_index" (t_typ @-> int32_t @-> returning (ptr_opt Flow_box_child.t_typ))
 let get_child_at_pos =
-  foreign "gtk_flow_box_get_child_at_pos" (t_typ @-> int32_t @-> int32_t @-> returning (Flow_box_child.t_typ))
+  foreign "gtk_flow_box_get_child_at_pos" (t_typ @-> int32_t @-> int32_t @-> returning (ptr_opt Flow_box_child.t_typ))
 let get_column_spacing =
   foreign "gtk_flow_box_get_column_spacing" (t_typ @-> returning (uint32_t))
 let get_homogeneous =
@@ -28,7 +28,7 @@ let get_selected_children =
 let get_selection_mode =
   foreign "gtk_flow_box_get_selection_mode" (t_typ @-> returning (Selection_mode.t_view))
 let insert =
-  foreign "gtk_flow_box_insert" (t_typ @-> Widget.t_typ @-> int32_t @-> returning (void))
+  foreign "gtk_flow_box_insert" (t_typ @-> ptr Widget.t_typ @-> int32_t @-> returning (void))
 let invalidate_filter =
   foreign "gtk_flow_box_invalidate_filter" (t_typ @-> returning (void))
 let invalidate_sort =
@@ -36,7 +36,7 @@ let invalidate_sort =
 let select_all =
   foreign "gtk_flow_box_select_all" (t_typ @-> returning (void))
 let select_child =
-  foreign "gtk_flow_box_select_child" (t_typ @-> Flow_box_child.t_typ @-> returning (void))
+  foreign "gtk_flow_box_select_child" (t_typ @-> ptr Flow_box_child.t_typ @-> returning (void))
 (*Not implemented gtk_flow_box_selected_foreach type callback not implemented*)
 let set_activate_on_single_click =
   foreign "gtk_flow_box_set_activate_on_single_click" (t_typ @-> bool @-> returning (void))
@@ -44,7 +44,7 @@ let set_column_spacing =
   foreign "gtk_flow_box_set_column_spacing" (t_typ @-> uint32_t @-> returning (void))
 (*Not implemented gtk_flow_box_set_filter_func type callback not implemented*)
 let set_hadjustment =
-  foreign "gtk_flow_box_set_hadjustment" (t_typ @-> Adjustment.t_typ @-> returning (void))
+  foreign "gtk_flow_box_set_hadjustment" (t_typ @-> ptr Adjustment.t_typ @-> returning (void))
 let set_homogeneous =
   foreign "gtk_flow_box_set_homogeneous" (t_typ @-> bool @-> returning (void))
 let set_max_children_per_line =
@@ -57,8 +57,8 @@ let set_selection_mode =
   foreign "gtk_flow_box_set_selection_mode" (t_typ @-> Selection_mode.t_view @-> returning (void))
 (*Not implemented gtk_flow_box_set_sort_func type callback not implemented*)
 let set_vadjustment =
-  foreign "gtk_flow_box_set_vadjustment" (t_typ @-> Adjustment.t_typ @-> returning (void))
+  foreign "gtk_flow_box_set_vadjustment" (t_typ @-> ptr Adjustment.t_typ @-> returning (void))
 let unselect_all =
   foreign "gtk_flow_box_unselect_all" (t_typ @-> returning (void))
 let unselect_child =
-  foreign "gtk_flow_box_unselect_child" (t_typ @-> Flow_box_child.t_typ @-> returning (void))
+  foreign "gtk_flow_box_unselect_child" (t_typ @-> ptr Flow_box_child.t_typ @-> returning (void))

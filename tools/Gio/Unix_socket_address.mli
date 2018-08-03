@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  string -> Socket_address.t
+  string -> Socket_address.t ptr
 (*Not implemented g_unix_socket_address_new_abstract type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_unix_socket_address_new_with_type type C Array type for Types.Array tag not implemented*)
 val abstract_names_supported :

@@ -5,11 +5,11 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let get_connection =
-  foreign "g_dbus_method_invocation_get_connection" (t_typ @-> returning (DBus_connection.t_typ))
+  foreign "g_dbus_method_invocation_get_connection" (t_typ @-> returning (ptr DBus_connection.t_typ))
 let get_interface_name =
   foreign "g_dbus_method_invocation_get_interface_name" (t_typ @-> returning (string_opt))
 let get_message =
-  foreign "g_dbus_method_invocation_get_message" (t_typ @-> returning (DBus_message.t_typ))
+  foreign "g_dbus_method_invocation_get_message" (t_typ @-> returning (ptr DBus_message.t_typ))
 let get_method_info =
   foreign "g_dbus_method_invocation_get_method_info" (t_typ @-> returning (ptr DBus_method_info.t_typ))
 let get_method_name =
@@ -31,4 +31,4 @@ let return_gerror =
 let return_value =
   foreign "g_dbus_method_invocation_return_value" (t_typ @-> ptr_opt Variant.t_typ @-> returning (void))
 let return_value_with_unix_fd_list =
-  foreign "g_dbus_method_invocation_return_value_with_unix_fd_list" (t_typ @-> ptr_opt Variant.t_typ @-> Unix_fdlist.t_typ @-> returning (void))
+  foreign "g_dbus_method_invocation_return_value_with_unix_fd_list" (t_typ @-> ptr_opt Variant.t_typ @-> ptr_opt Unix_fdlist.t_typ @-> returning (void))

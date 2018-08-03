@@ -18,7 +18,7 @@ val get_surrounding :
 val reset :
   t -> unit
 val set_client_window :
-  t -> Window.t -> unit
+  t -> Window.t ptr option -> unit
 val set_cursor_location :
   t -> Rectangle.t structure ptr -> unit
 val set_surrounding :

@@ -9,12 +9,12 @@ val f_origin: (string, t structure) field
 val f_value: (Value.t structure, t structure) field
 
 val parse_border :
-  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
+  Param_spec.t ptr -> String.t structure ptr -> Value.t structure ptr -> bool
 val parse_color :
-  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
+  Param_spec.t ptr -> String.t structure ptr -> Value.t structure ptr -> bool
 val parse_enum :
-  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
+  Param_spec.t ptr -> String.t structure ptr -> Value.t structure ptr -> bool
 val parse_flags :
-  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
+  Param_spec.t ptr -> String.t structure ptr -> Value.t structure ptr -> bool
 val parse_requisition :
-  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
+  Param_spec.t ptr -> String.t structure ptr -> Value.t structure ptr -> bool

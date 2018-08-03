@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_tls_password_new" (Tls_password_flags.t_list_view @-> string @-> returning (t_typ))
+  foreign "g_tls_password_new" (Tls_password_flags.t_list_view @-> string @-> returning (ptr t_typ))
 let get_description =
   foreign "g_tls_password_get_description" (t_typ @-> returning (string_opt))
 let get_flags =

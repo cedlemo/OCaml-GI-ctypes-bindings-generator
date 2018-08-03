@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_mount_operation_new" (void @-> returning (t_typ))
+  foreign "g_mount_operation_new" (void @-> returning (ptr t_typ))
 let get_anonymous =
   foreign "g_mount_operation_get_anonymous" (t_typ @-> returning (bool))
 let get_choice =

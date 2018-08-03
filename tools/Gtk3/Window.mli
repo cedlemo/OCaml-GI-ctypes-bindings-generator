@@ -4,21 +4,21 @@ type t
 val t_typ : t typ
 
 val create :
-  Window_type.t -> Widget.t
+  Window_type.t -> Widget.t ptr
 val get_default_icon_list :
-  unit -> List.t structure (* Pixbuf.t *) ptr
+  unit -> List.t structure (* Not implemented : interface *) ptr
 val get_default_icon_name :
   unit -> string option
 val list_toplevels :
-  unit -> List.t structure (* Widget.t *) ptr
+  unit -> List.t structure (* Not implemented : interface *) ptr
 val set_auto_startup_notification :
   bool -> unit
 val set_default_icon :
-  Pixbuf.t -> unit
+  Pixbuf.t ptr -> unit
 val set_default_icon_from_file :
   string -> (bool, Error.t structure ptr option) result
 val set_default_icon_list :
-  List.t structure (* Pixbuf.t *) ptr -> unit
+  List.t structure (* Not implemented : interface *) ptr -> unit
 val set_default_icon_name :
   string -> unit
 val set_interactive_debugging :
@@ -30,9 +30,9 @@ val activate_focus :
 val activate_key :
   t -> Event_key.t structure ptr -> bool
 val add_accel_group :
-  t -> Accel_group.t -> unit
+  t -> Accel_group.t ptr -> unit
 val add_mnemonic :
-  t -> Unsigned.uint32 -> Widget.t -> unit
+  t -> Unsigned.uint32 -> Widget.t ptr -> unit
 val begin_move_drag :
   t -> int32 -> int32 -> int32 -> Unsigned.uint32 -> unit
 val begin_resize_drag :
@@ -44,25 +44,25 @@ val deiconify :
 val fullscreen :
   t -> unit
 val fullscreen_on_monitor :
-  t -> Screen.t -> int32 -> unit
+  t -> Screen.t ptr -> int32 -> unit
 val get_accept_focus :
   t -> bool
 val get_application :
-  t -> Application.t
+  t -> Application.t ptr option
 val get_attached_to :
-  t -> Widget.t
+  t -> Widget.t ptr option
 val get_decorated :
   t -> bool
 val get_default_size :
   t -> (int32 * int32)
 val get_default_widget :
-  t -> Widget.t
+  t -> Widget.t ptr option
 val get_deletable :
   t -> bool
 val get_destroy_with_parent :
   t -> bool
 val get_focus :
-  t -> Widget.t
+  t -> Widget.t ptr option
 val get_focus_on_map :
   t -> bool
 val get_focus_visible :
@@ -70,15 +70,15 @@ val get_focus_visible :
 val get_gravity :
   t -> Gravity.t
 val get_group :
-  t -> Window_group.t
+  t -> Window_group.t ptr
 val get_has_resize_grip :
   t -> bool
 val get_hide_titlebar_when_maximized :
   t -> bool
 val get_icon :
-  t -> Pixbuf.t
+  t -> Pixbuf.t ptr option
 val get_icon_list :
-  t -> List.t structure (* Pixbuf.t *) ptr
+  t -> List.t structure (* Not implemented : interface *) ptr
 val get_icon_name :
   t -> string option
 val get_mnemonic_modifier :
@@ -98,7 +98,7 @@ val get_resize_grip_area :
 val get_role :
   t -> string option
 val get_screen :
-  t -> Screen.t
+  t -> Screen.t ptr
 val get_size :
   t -> (int32 * int32)
 val get_skip_pager_hint :
@@ -108,9 +108,9 @@ val get_skip_taskbar_hint :
 val get_title :
   t -> string option
 val get_titlebar :
-  t -> Widget.t
+  t -> Widget.t ptr option
 val get_transient_for :
-  t -> t
+  t -> t ptr option
 val get_type_hint :
   t -> Window_type_hint.t
 val get_urgency_hint :
@@ -142,9 +142,9 @@ val present_with_time :
 val propagate_key_event :
   t -> Event_key.t structure ptr -> bool
 val remove_accel_group :
-  t -> Accel_group.t -> unit
+  t -> Accel_group.t ptr -> unit
 val remove_mnemonic :
-  t -> Unsigned.uint32 -> Widget.t -> unit
+  t -> Unsigned.uint32 -> Widget.t ptr -> unit
 val reshow_with_initial_size :
   t -> unit
 val resize :
@@ -156,13 +156,13 @@ val resize_to_geometry :
 val set_accept_focus :
   t -> bool -> unit
 val set_application :
-  t -> Application.t -> unit
+  t -> Application.t ptr option -> unit
 val set_attached_to :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr option -> unit
 val set_decorated :
   t -> bool -> unit
 val set_default :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr option -> unit
 val set_default_geometry :
   t -> int32 -> int32 -> unit
 val set_default_size :
@@ -172,13 +172,13 @@ val set_deletable :
 val set_destroy_with_parent :
   t -> bool -> unit
 val set_focus :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr option -> unit
 val set_focus_on_map :
   t -> bool -> unit
 val set_focus_visible :
   t -> bool -> unit
 val set_geometry_hints :
-  t -> Widget.t -> Geometry.t structure ptr option -> Window_hints.t_list -> unit
+  t -> Widget.t ptr option -> Geometry.t structure ptr option -> Window_hints.t_list -> unit
 val set_gravity :
   t -> Gravity.t -> unit
 val set_has_resize_grip :
@@ -188,11 +188,11 @@ val set_has_user_ref_count :
 val set_hide_titlebar_when_maximized :
   t -> bool -> unit
 val set_icon :
-  t -> Pixbuf.t -> unit
+  t -> Pixbuf.t ptr option -> unit
 val set_icon_from_file :
   t -> string -> (bool, Error.t structure ptr option) result
 val set_icon_list :
-  t -> List.t structure (* Pixbuf.t *) ptr -> unit
+  t -> List.t structure (* Not implemented : interface *) ptr -> unit
 val set_icon_name :
   t -> string option -> unit
 val set_keep_above :
@@ -214,7 +214,7 @@ val set_resizable :
 val set_role :
   t -> string -> unit
 val set_screen :
-  t -> Screen.t -> unit
+  t -> Screen.t ptr -> unit
 val set_skip_pager_hint :
   t -> bool -> unit
 val set_skip_taskbar_hint :
@@ -224,9 +224,9 @@ val set_startup_id :
 val set_title :
   t -> string -> unit
 val set_titlebar :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr option -> unit
 val set_transient_for :
-  t -> t -> unit
+  t -> t ptr option -> unit
 val set_type_hint :
   t -> Window_type_hint.t -> unit
 val set_urgency_hint :

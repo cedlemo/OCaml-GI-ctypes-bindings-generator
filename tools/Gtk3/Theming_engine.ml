@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let load =
-  foreign "gtk_theming_engine_load" (string @-> returning (t_typ))
+  foreign "gtk_theming_engine_load" (string @-> returning (ptr_opt t_typ))
 let get_background_color self state =
   let get_background_color_raw =
     foreign "gtk_theming_engine_get_background_color" (t_typ @-> State_flags.t_list_view @-> ptr (RGBA.t_typ) @-> returning (void))
@@ -71,7 +71,7 @@ let get_property self property state =
   let value = !@ value_ptr in
   (value)
 let get_screen =
-  foreign "gtk_theming_engine_get_screen" (t_typ @-> returning (Screen.t_typ))
+  foreign "gtk_theming_engine_get_screen" (t_typ @-> returning (ptr_opt Screen.t_typ))
 let get_state =
   foreign "gtk_theming_engine_get_state" (t_typ @-> returning (State_flags.t_list_view))
 let get_style_property self property_name =

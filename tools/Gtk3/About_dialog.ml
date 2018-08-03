@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_about_dialog_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_about_dialog_new" (void @-> returning (ptr Widget.t_typ))
 (*Not implemented gtk_about_dialog_add_credit_section type C Array type for Types.Array tag not implemented*)
 (*Not implemented gtk_about_dialog_get_artists return type C Array type for Types.Array tag not handled*)
 (*Not implemented gtk_about_dialog_get_authors return type C Array type for Types.Array tag not handled*)
@@ -19,7 +19,7 @@ let get_license =
 let get_license_type =
   foreign "gtk_about_dialog_get_license_type" (t_typ @-> returning (License.t_view))
 let get_logo =
-  foreign "gtk_about_dialog_get_logo" (t_typ @-> returning (Pixbuf.t_typ))
+  foreign "gtk_about_dialog_get_logo" (t_typ @-> returning (ptr Pixbuf.t_typ))
 let get_logo_icon_name =
   foreign "gtk_about_dialog_get_logo_icon_name" (t_typ @-> returning (string_opt))
 let get_program_name =
@@ -46,7 +46,7 @@ let set_license =
 let set_license_type =
   foreign "gtk_about_dialog_set_license_type" (t_typ @-> License.t_view @-> returning (void))
 let set_logo =
-  foreign "gtk_about_dialog_set_logo" (t_typ @-> Pixbuf.t_typ @-> returning (void))
+  foreign "gtk_about_dialog_set_logo" (t_typ @-> ptr_opt Pixbuf.t_typ @-> returning (void))
 let set_logo_icon_name =
   foreign "gtk_about_dialog_set_logo_icon_name" (t_typ @-> string_opt @-> returning (void))
 let set_program_name =

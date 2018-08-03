@@ -4,15 +4,15 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val create_with_context :
-  Cell_area.t -> Cell_area_context.t -> Widget.t
+  Cell_area.t ptr -> Cell_area_context.t ptr -> Widget.t ptr
 val create_with_markup :
-  string -> Widget.t
+  string -> Widget.t ptr
 val create_with_pixbuf :
-  Pixbuf.t -> Widget.t
+  Pixbuf.t ptr -> Widget.t ptr
 val create_with_text :
-  string -> Widget.t
+  string -> Widget.t ptr
 val get_displayed_row :
   t -> Tree_path.t structure ptr option
 val get_draw_sensitive :

@@ -8,14 +8,14 @@ val t_typ : t typ
 val compat_control :
   Unsigned.uint64 -> unit ptr option -> Unsigned.uint64
 val interface_find_property :
-  Type_interface.t structure ptr -> string -> Param_spec.t
+  Type_interface.t structure ptr -> string -> Param_spec.t ptr
 val interface_install_property :
-  Type_interface.t structure ptr -> Param_spec.t -> unit
+  Type_interface.t structure ptr -> Param_spec.t ptr -> unit
 (*Not implemented g_object_interface_list_properties return type C Array type for Types.Array tag not handled*)
 val bind_property :
-  t -> string -> t -> string -> Binding_flags.t_list -> Binding.t
+  t -> string -> t ptr -> string -> Binding_flags.t_list -> Binding.t ptr
 val bind_property_full :
-  t -> string -> t -> string -> Binding_flags.t_list -> Closure.t structure ptr -> Closure.t structure ptr -> Binding.t
+  t -> string -> t ptr -> string -> Binding_flags.t_list -> Closure.t structure ptr -> Closure.t structure ptr -> Binding.t ptr
 val force_floating :
   t -> unit
 val freeze_notify :
@@ -32,11 +32,11 @@ val is_floating :
 val notify :
   t -> string -> unit
 val notify_by_pspec :
-  t -> Param_spec.t -> unit
+  t -> Param_spec.t ptr -> unit
 val incr_ref :
-  t -> t
+  t -> t ptr
 val ref_sink :
-  t -> t
+  t -> t ptr
 val run_dispose :
   t -> unit
 val set_data :

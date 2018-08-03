@@ -4,13 +4,13 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val create_with_buffer :
-  Text_buffer.t -> Widget.t
+  Text_buffer.t ptr -> Widget.t ptr
 val add_child_at_anchor :
-  t -> Widget.t -> Text_child_anchor.t -> unit
+  t -> Widget.t ptr -> Text_child_anchor.t ptr -> unit
 val add_child_in_window :
-  t -> Widget.t -> Text_window_type.t -> int32 -> int32 -> unit
+  t -> Widget.t ptr -> Text_window_type.t -> int32 -> int32 -> unit
 val backward_display_line :
   t -> Text_iter.t structure ptr -> bool
 val backward_display_line_start :
@@ -28,7 +28,7 @@ val get_border_window_size :
 val get_bottom_margin :
   t -> int32
 val get_buffer :
-  t -> Text_buffer.t
+  t -> Text_buffer.t ptr
 val get_cursor_locations :
   t -> Text_iter.t structure ptr option -> (Rectangle.t structure * Rectangle.t structure)
 val get_cursor_visible :
@@ -38,7 +38,7 @@ val get_default_attributes :
 val get_editable :
   t -> bool
 val get_hadjustment :
-  t -> Adjustment.t
+  t -> Adjustment.t ptr
 val get_indent :
   t -> int32
 val get_input_hints :
@@ -76,21 +76,21 @@ val get_tabs :
 val get_top_margin :
   t -> int32
 val get_vadjustment :
-  t -> Adjustment.t
+  t -> Adjustment.t ptr
 val get_visible_rect :
   t -> (Rectangle.t structure)
 val get_window :
-  t -> Text_window_type.t -> Window.t
+  t -> Text_window_type.t -> Window.t ptr option
 val get_window_type :
-  t -> Window.t -> Text_window_type.t
+  t -> Window.t ptr -> Text_window_type.t
 val get_wrap_mode :
   t -> Wrap_mode.t
 val im_context_filter_keypress :
   t -> Event_key.t structure ptr -> bool
 val move_child :
-  t -> Widget.t -> int32 -> int32 -> unit
+  t -> Widget.t ptr -> int32 -> int32 -> unit
 val move_mark_onscreen :
-  t -> Text_mark.t -> bool
+  t -> Text_mark.t ptr -> bool
 val move_visually :
   t -> Text_iter.t structure ptr -> int32 -> bool
 val place_cursor_onscreen :
@@ -100,11 +100,11 @@ val reset_cursor_blink :
 val reset_im_context :
   t -> unit
 val scroll_mark_onscreen :
-  t -> Text_mark.t -> unit
+  t -> Text_mark.t ptr -> unit
 val scroll_to_iter :
   t -> Text_iter.t structure ptr -> float -> bool -> float -> float -> bool
 val scroll_to_mark :
-  t -> Text_mark.t -> float -> bool -> float -> float -> unit
+  t -> Text_mark.t ptr -> float -> bool -> float -> float -> unit
 val set_accepts_tab :
   t -> bool -> unit
 val set_border_window_size :
@@ -112,7 +112,7 @@ val set_border_window_size :
 val set_bottom_margin :
   t -> int32 -> unit
 val set_buffer :
-  t -> Text_buffer.t -> unit
+  t -> Text_buffer.t ptr option -> unit
 val set_cursor_visible :
   t -> bool -> unit
 val set_editable :

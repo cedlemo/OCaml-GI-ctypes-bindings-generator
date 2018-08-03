@@ -4,13 +4,13 @@ type t
 val t_typ : t typ
 
 val create :
-  string -> t
+  string -> t ptr
 val create_from_filename :
-  string -> t
+  string -> t ptr
 val create_from_keyfile :
-  Key_file.t structure ptr -> t
+  Key_file.t structure ptr -> t ptr
 val get_implementations :
-  string -> List.t structure (* t *) ptr
+  string -> List.t structure (* Not implemented : interface *) ptr
 (*Not implemented g_desktop_app_info_search return type C Array type for Types.Array tag not handled*)
 val set_desktop_env :
   string -> unit
@@ -40,6 +40,6 @@ val get_string :
 val has_key :
   t -> string -> bool
 val launch_action :
-  t -> string -> App_launch_context.t -> unit
+  t -> string -> App_launch_context.t ptr option -> unit
 (*Not implemented g_desktop_app_info_launch_uris_as_manager type callback not implemented*)
 (*Not implemented g_desktop_app_info_list_actions return type C Array type for Types.Array tag not handled*)

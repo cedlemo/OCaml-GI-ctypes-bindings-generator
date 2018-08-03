@@ -11,7 +11,7 @@ val f_context: (Main_context.t structure ptr, t structure) field
 val f_priority: (int32, t structure) field
 val f_flags: (Unsigned.uint32, t structure) field
 val f_source_id: (Unsigned.uint32, t structure) field
-val f_poll_fds: (SList.t structure (* unit ptr *) ptr, t structure) field
+val f_poll_fds: (SList.t structure (* unit *) ptr, t structure) field
 val f_prev: (t structure ptr, t structure) field
 val f_next: (t structure ptr, t structure) field
 val f_name: (string, t structure) field

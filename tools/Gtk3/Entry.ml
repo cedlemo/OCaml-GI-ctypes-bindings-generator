@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_entry_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_entry_new" (void @-> returning (ptr Widget.t_typ))
 let create_with_buffer =
-  foreign "gtk_entry_new_with_buffer" (Entry_buffer.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_entry_new_with_buffer" (ptr Entry_buffer.t_typ @-> returning (ptr Widget.t_typ))
 let get_activates_default =
   foreign "gtk_entry_get_activates_default" (t_typ @-> returning (bool))
 let get_alignment =
@@ -15,13 +15,13 @@ let get_alignment =
 let get_attributes =
   foreign "gtk_entry_get_attributes" (t_typ @-> returning (ptr_opt Attr_list.t_typ))
 let get_buffer =
-  foreign "gtk_entry_get_buffer" (t_typ @-> returning (Entry_buffer.t_typ))
+  foreign "gtk_entry_get_buffer" (t_typ @-> returning (ptr Entry_buffer.t_typ))
 let get_completion =
-  foreign "gtk_entry_get_completion" (t_typ @-> returning (Entry_completion.t_typ))
+  foreign "gtk_entry_get_completion" (t_typ @-> returning (ptr Entry_completion.t_typ))
 let get_current_icon_drag_source =
   foreign "gtk_entry_get_current_icon_drag_source" (t_typ @-> returning (int32_t))
 let get_cursor_hadjustment =
-  foreign "gtk_entry_get_cursor_hadjustment" (t_typ @-> returning (Adjustment.t_typ))
+  foreign "gtk_entry_get_cursor_hadjustment" (t_typ @-> returning (ptr_opt Adjustment.t_typ))
 let get_has_frame =
   foreign "gtk_entry_get_has_frame" (t_typ @-> returning (bool))
 let get_icon_activatable =
@@ -40,7 +40,7 @@ let get_icon_at_pos =
 let get_icon_name =
   foreign "gtk_entry_get_icon_name" (t_typ @-> Entry_icon_position.t_view @-> returning (string_opt))
 let get_icon_pixbuf =
-  foreign "gtk_entry_get_icon_pixbuf" (t_typ @-> Entry_icon_position.t_view @-> returning (Pixbuf.t_typ))
+  foreign "gtk_entry_get_icon_pixbuf" (t_typ @-> Entry_icon_position.t_view @-> returning (ptr_opt Pixbuf.t_typ))
 let get_icon_sensitive =
   foreign "gtk_entry_get_icon_sensitive" (t_typ @-> Entry_icon_position.t_view @-> returning (bool))
 let get_icon_stock =
@@ -59,7 +59,7 @@ let get_input_purpose =
   foreign "gtk_entry_get_input_purpose" (t_typ @-> returning (Input_purpose.t_view))
 (*Not implemented gtk_entry_get_invisible_char return type unichar not handled*)
 let get_layout =
-  foreign "gtk_entry_get_layout" (t_typ @-> returning (Layout.t_typ))
+  foreign "gtk_entry_get_layout" (t_typ @-> returning (ptr Layout.t_typ))
 let get_layout_offsets self =
   let get_layout_offsets_raw =
     foreign "gtk_entry_get_layout_offsets" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
@@ -117,11 +117,11 @@ let set_alignment =
 let set_attributes =
   foreign "gtk_entry_set_attributes" (t_typ @-> ptr Attr_list.t_typ @-> returning (void))
 let set_buffer =
-  foreign "gtk_entry_set_buffer" (t_typ @-> Entry_buffer.t_typ @-> returning (void))
+  foreign "gtk_entry_set_buffer" (t_typ @-> ptr Entry_buffer.t_typ @-> returning (void))
 let set_completion =
-  foreign "gtk_entry_set_completion" (t_typ @-> Entry_completion.t_typ @-> returning (void))
+  foreign "gtk_entry_set_completion" (t_typ @-> ptr_opt Entry_completion.t_typ @-> returning (void))
 let set_cursor_hadjustment =
-  foreign "gtk_entry_set_cursor_hadjustment" (t_typ @-> Adjustment.t_typ @-> returning (void))
+  foreign "gtk_entry_set_cursor_hadjustment" (t_typ @-> ptr_opt Adjustment.t_typ @-> returning (void))
 let set_has_frame =
   foreign "gtk_entry_set_has_frame" (t_typ @-> bool @-> returning (void))
 let set_icon_activatable =
@@ -132,7 +132,7 @@ let set_icon_drag_source =
 let set_icon_from_icon_name =
   foreign "gtk_entry_set_icon_from_icon_name" (t_typ @-> Entry_icon_position.t_view @-> string_opt @-> returning (void))
 let set_icon_from_pixbuf =
-  foreign "gtk_entry_set_icon_from_pixbuf" (t_typ @-> Entry_icon_position.t_view @-> Pixbuf.t_typ @-> returning (void))
+  foreign "gtk_entry_set_icon_from_pixbuf" (t_typ @-> Entry_icon_position.t_view @-> ptr_opt Pixbuf.t_typ @-> returning (void))
 let set_icon_from_stock =
   foreign "gtk_entry_set_icon_from_stock" (t_typ @-> Entry_icon_position.t_view @-> string_opt @-> returning (void))
 let set_icon_sensitive =

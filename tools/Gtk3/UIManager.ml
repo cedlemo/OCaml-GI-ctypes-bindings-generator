@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_ui_manager_new" (void @-> returning (t_typ))
+  foreign "gtk_ui_manager_new" (void @-> returning (ptr t_typ))
 let add_ui =
   foreign "gtk_ui_manager_add_ui" (t_typ @-> uint32_t @-> string @-> string @-> string_opt @-> UIManager_item_type.t_list_view @-> bool @-> returning (void))
 let add_ui_from_file self filename =
@@ -44,9 +44,9 @@ let add_ui_from_string self buffer length =
 let ensure_update =
   foreign "gtk_ui_manager_ensure_update" (t_typ @-> returning (void))
 let get_accel_group =
-  foreign "gtk_ui_manager_get_accel_group" (t_typ @-> returning (Accel_group.t_typ))
+  foreign "gtk_ui_manager_get_accel_group" (t_typ @-> returning (ptr Accel_group.t_typ))
 let get_action =
-  foreign "gtk_ui_manager_get_action" (t_typ @-> string @-> returning (Action.t_typ))
+  foreign "gtk_ui_manager_get_action" (t_typ @-> string @-> returning (ptr Action.t_typ))
 let get_action_groups =
   foreign "gtk_ui_manager_get_action_groups" (t_typ @-> returning (ptr List.t_typ))
 let get_add_tearoffs =
@@ -56,13 +56,13 @@ let get_toplevels =
 let get_ui =
   foreign "gtk_ui_manager_get_ui" (t_typ @-> returning (string_opt))
 let get_widget =
-  foreign "gtk_ui_manager_get_widget" (t_typ @-> string @-> returning (Widget.t_typ))
+  foreign "gtk_ui_manager_get_widget" (t_typ @-> string @-> returning (ptr Widget.t_typ))
 let insert_action_group =
-  foreign "gtk_ui_manager_insert_action_group" (t_typ @-> Action_group.t_typ @-> int32_t @-> returning (void))
+  foreign "gtk_ui_manager_insert_action_group" (t_typ @-> ptr Action_group.t_typ @-> int32_t @-> returning (void))
 let create_merge_id =
   foreign "gtk_ui_manager_new_merge_id" (t_typ @-> returning (uint32_t))
 let remove_action_group =
-  foreign "gtk_ui_manager_remove_action_group" (t_typ @-> Action_group.t_typ @-> returning (void))
+  foreign "gtk_ui_manager_remove_action_group" (t_typ @-> ptr Action_group.t_typ @-> returning (void))
 let remove_ui =
   foreign "gtk_ui_manager_remove_ui" (t_typ @-> uint32_t @-> returning (void))
 let set_add_tearoffs =

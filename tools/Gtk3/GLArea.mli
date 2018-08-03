@@ -4,13 +4,13 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val attach_buffers :
   t -> unit
 val get_auto_render :
   t -> bool
 val get_context :
-  t -> GLContext.t
+  t -> GLContext.t ptr
 val get_error :
   t -> Error.t structure ptr option
 val get_has_alpha :

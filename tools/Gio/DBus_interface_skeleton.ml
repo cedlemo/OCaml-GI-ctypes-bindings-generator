@@ -6,7 +6,7 @@ let t_typ : t typ = ptr void
 
 let export self connection object_path =
   let export_raw =
-    foreign "g_dbus_interface_skeleton_export" (t_typ @-> DBus_connection.t_typ @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_dbus_interface_skeleton_export" (t_typ @-> ptr DBus_connection.t_typ @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = export_raw self connection object_path err_ptr_ptr in
@@ -18,7 +18,7 @@ let export self connection object_path =
 let flush =
   foreign "g_dbus_interface_skeleton_flush" (t_typ @-> returning (void))
 let get_connection =
-  foreign "g_dbus_interface_skeleton_get_connection" (t_typ @-> returning (DBus_connection.t_typ))
+  foreign "g_dbus_interface_skeleton_get_connection" (t_typ @-> returning (ptr DBus_connection.t_typ))
 let get_connections =
   foreign "g_dbus_interface_skeleton_get_connections" (t_typ @-> returning (ptr List.t_typ))
 let get_flags =
@@ -30,10 +30,10 @@ let get_object_path =
 let get_properties =
   foreign "g_dbus_interface_skeleton_get_properties" (t_typ @-> returning (ptr Variant.t_typ))
 let has_connection =
-  foreign "g_dbus_interface_skeleton_has_connection" (t_typ @-> DBus_connection.t_typ @-> returning (bool))
+  foreign "g_dbus_interface_skeleton_has_connection" (t_typ @-> ptr DBus_connection.t_typ @-> returning (bool))
 let set_flags =
   foreign "g_dbus_interface_skeleton_set_flags" (t_typ @-> DBus_interface_skeleton_flags.t_list_view @-> returning (void))
 let unexport =
   foreign "g_dbus_interface_skeleton_unexport" (t_typ @-> returning (void))
 let unexport_from_connection =
-  foreign "g_dbus_interface_skeleton_unexport_from_connection" (t_typ @-> DBus_connection.t_typ @-> returning (void))
+  foreign "g_dbus_interface_skeleton_unexport_from_connection" (t_typ @-> ptr DBus_connection.t_typ @-> returning (void))

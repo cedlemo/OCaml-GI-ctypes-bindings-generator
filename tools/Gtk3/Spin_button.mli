@@ -4,13 +4,13 @@ type t
 val t_typ : t typ
 
 val create :
-  Adjustment.t -> float -> Unsigned.uint32 -> Widget.t
+  Adjustment.t ptr option -> float -> Unsigned.uint32 -> Widget.t ptr
 val create_with_range :
-  float -> float -> float -> Widget.t
+  float -> float -> float -> Widget.t ptr
 val configure :
-  t -> Adjustment.t -> float -> Unsigned.uint32 -> unit
+  t -> Adjustment.t ptr option -> float -> Unsigned.uint32 -> unit
 val get_adjustment :
-  t -> Adjustment.t
+  t -> Adjustment.t ptr
 val get_digits :
   t -> Unsigned.uint32
 val get_increments :
@@ -30,7 +30,7 @@ val get_value_as_int :
 val get_wrap :
   t -> bool
 val set_adjustment :
-  t -> Adjustment.t -> unit
+  t -> Adjustment.t ptr -> unit
 val set_digits :
   t -> Unsigned.uint32 -> unit
 val set_increments :

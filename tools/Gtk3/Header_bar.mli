@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val get_custom_title :
-  t -> Widget.t
+  t -> Widget.t ptr option
 val get_decoration_layout :
   t -> string option
 val get_has_subtitle :
@@ -18,11 +18,11 @@ val get_subtitle :
 val get_title :
   t -> string option
 val pack_end :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr -> unit
 val pack_start :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr -> unit
 val set_custom_title :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr option -> unit
 val set_decoration_layout :
   t -> string option -> unit
 val set_has_subtitle :

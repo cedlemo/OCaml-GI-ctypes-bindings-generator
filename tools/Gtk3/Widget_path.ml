@@ -7,7 +7,7 @@ let t_typ : t structure typ = structure "Widget_path"
 let create =
   foreign "gtk_widget_path_new" (void @-> returning (ptr t_typ))
 let append_for_widget =
-  foreign "gtk_widget_path_append_for_widget" (ptr t_typ @-> Widget.t_typ @-> returning (int32_t))
+  foreign "gtk_widget_path_append_for_widget" (ptr t_typ @-> ptr Widget.t_typ @-> returning (int32_t))
 (*Not implemented gtk_widget_path_append_type type gType not implemented*)
 let append_with_siblings =
   foreign "gtk_widget_path_append_with_siblings" (ptr t_typ @-> ptr t_typ @-> uint32_t @-> returning (int32_t))

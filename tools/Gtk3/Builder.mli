@@ -4,13 +4,13 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val create_from_file :
-  string -> t
+  string -> t ptr
 val create_from_resource :
-  string -> t
+  string -> t ptr
 val create_from_string :
-  string -> int64 -> t
+  string -> int64 -> t ptr
 (*Not implemented gtk_builder_add_callback_symbol type callback not implemented*)
 val add_from_file :
   t -> string -> (Unsigned.uint32, Error.t structure ptr option) result
@@ -25,21 +25,21 @@ val connect_signals :
   t -> unit ptr option -> unit
 (*Not implemented gtk_builder_connect_signals_full type callback not implemented*)
 val expose_object :
-  t -> string -> Object.t -> unit
+  t -> string -> Object.t ptr -> unit
 (*Not implemented gtk_builder_extend_with_template type gType not implemented*)
 val get_application :
-  t -> Application.t
+  t -> Application.t ptr option
 val get_object :
-  t -> string -> Object.t
+  t -> string -> Object.t ptr option
 val get_objects :
-  t -> SList.t structure (* Object.t *) ptr
+  t -> SList.t structure (* Not implemented : interface *) ptr
 val get_translation_domain :
   t -> string option
 (*Not implemented gtk_builder_get_type_from_name return type gType not handled*)
 val set_application :
-  t -> Application.t -> unit
+  t -> Application.t ptr -> unit
 val set_translation_domain :
   t -> string option -> unit
 val value_from_string :
-  t -> Param_spec.t -> string -> (bool * Value.t structure, Error.t structure ptr option) result
+  t -> Param_spec.t ptr -> string -> (bool * Value.t structure, Error.t structure ptr option) result
 (*Not implemented gtk_builder_value_from_string_type type gType not implemented*)

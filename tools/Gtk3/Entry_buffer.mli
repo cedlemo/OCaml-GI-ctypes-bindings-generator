@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  string option -> int32 -> t
+  string option -> int32 -> t ptr
 val delete_text :
   t -> Unsigned.uint32 -> int32 -> Unsigned.uint32
 val emit_deleted_text :

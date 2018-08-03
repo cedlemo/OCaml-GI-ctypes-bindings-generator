@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_app_chooser_widget_new" (string @-> returning (Widget.t_typ))
+  foreign "gtk_app_chooser_widget_new" (string @-> returning (ptr Widget.t_typ))
 let get_default_text =
   foreign "gtk_app_chooser_widget_get_default_text" (t_typ @-> returning (string_opt))
 let get_show_all =

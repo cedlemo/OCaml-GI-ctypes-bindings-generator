@@ -16,6 +16,6 @@ let get_path =
 let valid =
   foreign "gtk_tree_row_reference_valid" (ptr t_typ @-> returning (bool))
 let deleted =
-  foreign "gtk_tree_row_reference_deleted" (Object.t_typ @-> ptr Tree_path.t_typ @-> returning (void))
+  foreign "gtk_tree_row_reference_deleted" (ptr Object.t_typ @-> ptr Tree_path.t_typ @-> returning (void))
 let inserted =
-  foreign "gtk_tree_row_reference_inserted" (Object.t_typ @-> ptr Tree_path.t_typ @-> returning (void))
+  foreign "gtk_tree_row_reference_inserted" (ptr Object.t_typ @-> ptr Tree_path.t_typ @-> returning (void))

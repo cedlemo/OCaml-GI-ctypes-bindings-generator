@@ -6,7 +6,7 @@ let t_typ : t typ = ptr void
 
 let close self cancellable =
   let close_raw =
-    foreign "g_file_enumerator_close" (t_typ @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_file_enumerator_close" (t_typ @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = close_raw self cancellable err_ptr_ptr in
@@ -26,7 +26,7 @@ let is_closed =
 (*Not implemented g_file_enumerator_iterate type interface not implemented*)
 let next_file self cancellable =
   let next_file_raw =
-    foreign "g_file_enumerator_next_file" (t_typ @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (File_info.t_typ))
+    foreign "g_file_enumerator_next_file" (t_typ @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt File_info.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = next_file_raw self cancellable err_ptr_ptr in

@@ -18,7 +18,7 @@ val f_data: (unit ptr, t structure) field
 val f_notifiers: (Closure_notify_data.t structure ptr, t structure) field
 
 val create_object :
-  Unsigned.uint32 -> Object.t -> t structure ptr
+  Unsigned.uint32 -> Object.t ptr -> t structure ptr
 val create_simple :
   Unsigned.uint32 -> unit ptr option -> t structure ptr
 val invalidate :

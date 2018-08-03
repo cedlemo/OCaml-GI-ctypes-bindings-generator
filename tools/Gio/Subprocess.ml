@@ -7,7 +7,7 @@ let t_typ : t typ = ptr void
 (*Not implemented g_subprocess_newv type C Array type for Types.Array tag not implemented*)
 let communicate self stdin_buf cancellable =
   let communicate_raw =
-    foreign "g_subprocess_communicate" (t_typ @-> ptr_opt Bytes.t_typ @-> Cancellable.t_typ @-> ptr (ptr_opt Bytes.t_typ) @-> ptr (ptr_opt Bytes.t_typ) @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_subprocess_communicate" (t_typ @-> ptr_opt Bytes.t_typ @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Bytes.t_typ) @-> ptr (ptr_opt Bytes.t_typ) @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let stdout_buf_ptr = allocate (ptr_opt Bytes.t_typ) None in
@@ -26,7 +26,7 @@ let communicate self stdin_buf cancellable =
 (*Not implemented g_subprocess_communicate_finish type interface not implemented*)
 let communicate_utf8 self stdin_buf cancellable =
   let communicate_utf8_raw =
-    foreign "g_subprocess_communicate_utf8" (t_typ @-> string_opt @-> Cancellable.t_typ @-> ptr (string_opt) @-> ptr (string_opt) @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_subprocess_communicate_utf8" (t_typ @-> string_opt @-> ptr_opt Cancellable.t_typ @-> ptr (string_opt) @-> ptr (string_opt) @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let stdout_buf_ptr = allocate string_opt None in
@@ -56,11 +56,11 @@ let get_if_signaled =
 let get_status =
   foreign "g_subprocess_get_status" (t_typ @-> returning (int32_t))
 let get_stderr_pipe =
-  foreign "g_subprocess_get_stderr_pipe" (t_typ @-> returning (Input_stream.t_typ))
+  foreign "g_subprocess_get_stderr_pipe" (t_typ @-> returning (ptr Input_stream.t_typ))
 let get_stdin_pipe =
-  foreign "g_subprocess_get_stdin_pipe" (t_typ @-> returning (Output_stream.t_typ))
+  foreign "g_subprocess_get_stdin_pipe" (t_typ @-> returning (ptr Output_stream.t_typ))
 let get_stdout_pipe =
-  foreign "g_subprocess_get_stdout_pipe" (t_typ @-> returning (Input_stream.t_typ))
+  foreign "g_subprocess_get_stdout_pipe" (t_typ @-> returning (ptr Input_stream.t_typ))
 let get_successful =
   foreign "g_subprocess_get_successful" (t_typ @-> returning (bool))
 let get_term_sig =
@@ -69,7 +69,7 @@ let send_signal =
   foreign "g_subprocess_send_signal" (t_typ @-> int32_t @-> returning (void))
 let wait self cancellable =
   let wait_raw =
-    foreign "g_subprocess_wait" (t_typ @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_subprocess_wait" (t_typ @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = wait_raw self cancellable err_ptr_ptr in
@@ -81,7 +81,7 @@ let wait self cancellable =
 (*Not implemented g_subprocess_wait_async type callback not implemented*)
 let wait_check self cancellable =
   let wait_check_raw =
-    foreign "g_subprocess_wait_check" (t_typ @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_subprocess_wait_check" (t_typ @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = wait_check_raw self cancellable err_ptr_ptr in

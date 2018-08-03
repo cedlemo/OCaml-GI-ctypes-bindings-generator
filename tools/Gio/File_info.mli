@@ -4,13 +4,13 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val clear_status :
   t -> unit
 val copy_into :
-  t -> t -> unit
+  t -> t ptr -> unit
 val dup :
-  t -> t
+  t -> t ptr
 val get_attribute_as_string :
   t -> string -> string option
 val get_attribute_boolean :
@@ -24,7 +24,7 @@ val get_attribute_int32 :
 val get_attribute_int64 :
   t -> string -> int64
 val get_attribute_object :
-  t -> string -> Object.t
+  t -> string -> Object.t ptr
 val get_attribute_status :
   t -> string -> File_attribute_status.t
 val get_attribute_string :
@@ -86,7 +86,7 @@ val set_attribute_int64 :
 val set_attribute_mask :
   t -> File_attribute_matcher.t structure ptr -> unit
 val set_attribute_object :
-  t -> string -> Object.t -> unit
+  t -> string -> Object.t ptr -> unit
 val set_attribute_status :
   t -> string -> File_attribute_status.t -> bool
 val set_attribute_string :

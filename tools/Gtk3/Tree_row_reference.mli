@@ -15,6 +15,6 @@ val get_path :
 val valid :
   t structure ptr -> bool
 val deleted :
-  Object.t -> Tree_path.t structure ptr -> unit
+  Object.t ptr -> Tree_path.t structure ptr -> unit
 val inserted :
-  Object.t -> Tree_path.t structure ptr -> unit
+  Object.t ptr -> Tree_path.t structure ptr -> unit

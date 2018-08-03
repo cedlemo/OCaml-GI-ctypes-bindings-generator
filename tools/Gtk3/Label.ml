@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_label_new" (string_opt @-> returning (Widget.t_typ))
+  foreign "gtk_label_new" (string_opt @-> returning (ptr Widget.t_typ))
 let create_with_mnemonic =
-  foreign "gtk_label_new_with_mnemonic" (string_opt @-> returning (Widget.t_typ))
+  foreign "gtk_label_new_with_mnemonic" (string_opt @-> returning (ptr Widget.t_typ))
 let get_angle =
   foreign "gtk_label_get_angle" (t_typ @-> returning (double))
 let get_attributes =
@@ -21,7 +21,7 @@ let get_justify =
 let get_label =
   foreign "gtk_label_get_label" (t_typ @-> returning (string_opt))
 let get_layout =
-  foreign "gtk_label_get_layout" (t_typ @-> returning (Layout.t_typ))
+  foreign "gtk_label_get_layout" (t_typ @-> returning (ptr Layout.t_typ))
 let get_layout_offsets self =
   let get_layout_offsets_raw =
     foreign "gtk_label_get_layout_offsets" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
@@ -43,7 +43,7 @@ let get_max_width_chars =
 let get_mnemonic_keyval =
   foreign "gtk_label_get_mnemonic_keyval" (t_typ @-> returning (uint32_t))
 let get_mnemonic_widget =
-  foreign "gtk_label_get_mnemonic_widget" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_label_get_mnemonic_widget" (t_typ @-> returning (ptr_opt Widget.t_typ))
 let get_selectable =
   foreign "gtk_label_get_selectable" (t_typ @-> returning (bool))
 let get_selection_bounds self =
@@ -97,7 +97,7 @@ let set_markup_with_mnemonic =
 let set_max_width_chars =
   foreign "gtk_label_set_max_width_chars" (t_typ @-> int32_t @-> returning (void))
 let set_mnemonic_widget =
-  foreign "gtk_label_set_mnemonic_widget" (t_typ @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_label_set_mnemonic_widget" (t_typ @-> ptr_opt Widget.t_typ @-> returning (void))
 let set_pattern =
   foreign "gtk_label_set_pattern" (t_typ @-> string @-> returning (void))
 let set_selectable =

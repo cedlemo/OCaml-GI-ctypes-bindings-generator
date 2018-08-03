@@ -10,7 +10,7 @@ let add =
 let add_image_targets =
   foreign "gtk_target_list_add_image_targets" (ptr t_typ @-> uint32_t @-> bool @-> returning (void))
 let add_rich_text_targets =
-  foreign "gtk_target_list_add_rich_text_targets" (ptr t_typ @-> uint32_t @-> bool @-> Text_buffer.t_typ @-> returning (void))
+  foreign "gtk_target_list_add_rich_text_targets" (ptr t_typ @-> uint32_t @-> bool @-> ptr Text_buffer.t_typ @-> returning (void))
 (*Not implemented gtk_target_list_add_table type C Array type for Types.Array tag not implemented*)
 let add_text_targets =
   foreign "gtk_target_list_add_text_targets" (ptr t_typ @-> uint32_t @-> returning (void))

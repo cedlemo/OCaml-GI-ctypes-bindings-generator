@@ -13,7 +13,7 @@ val get_count :
 val get_label :
   t -> string option
 val get_style_context :
-  t -> Style_context.t
+  t -> Style_context.t ptr option
 (*Not implemented gtk_numerable_icon_set_background_gicon type interface not implemented*)
 val set_background_icon_name :
   t -> string option -> unit
@@ -22,4 +22,4 @@ val set_count :
 val set_label :
   t -> string option -> unit
 val set_style_context :
-  t -> Style_context.t -> unit
+  t -> Style_context.t ptr -> unit

@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_cell_renderer_toggle_new" (void @-> returning (Cell_renderer.t_typ))
+  foreign "gtk_cell_renderer_toggle_new" (void @-> returning (ptr Cell_renderer.t_typ))
 let get_activatable =
   foreign "gtk_cell_renderer_toggle_get_activatable" (t_typ @-> returning (bool))
 let get_active =

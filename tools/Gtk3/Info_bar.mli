@@ -4,15 +4,15 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val add_action_widget :
-  t -> Widget.t -> int32 -> unit
+  t -> Widget.t ptr -> int32 -> unit
 val add_button :
-  t -> string -> int32 -> Button.t
+  t -> string -> int32 -> Button.t ptr
 val get_action_area :
-  t -> Widget.t
+  t -> Widget.t ptr
 val get_content_area :
-  t -> Widget.t
+  t -> Widget.t ptr
 val get_message_type :
   t -> Message_type.t
 val get_revealed :

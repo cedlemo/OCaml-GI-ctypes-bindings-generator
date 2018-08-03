@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_font_button_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_font_button_new" (void @-> returning (ptr Widget.t_typ))
 let create_with_font =
-  foreign "gtk_font_button_new_with_font" (string @-> returning (Widget.t_typ))
+  foreign "gtk_font_button_new_with_font" (string @-> returning (ptr Widget.t_typ))
 let get_font_name =
   foreign "gtk_font_button_get_font_name" (t_typ @-> returning (string_opt))
 let get_show_size =

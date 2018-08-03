@@ -50,7 +50,7 @@ let backward_sentence_start =
 let backward_sentence_starts =
   foreign "gtk_text_iter_backward_sentence_starts" (ptr t_typ @-> int32_t @-> returning (bool))
 let backward_to_tag_toggle =
-  foreign "gtk_text_iter_backward_to_tag_toggle" (ptr t_typ @-> Text_tag.t_typ @-> returning (bool))
+  foreign "gtk_text_iter_backward_to_tag_toggle" (ptr t_typ @-> ptr_opt Text_tag.t_typ @-> returning (bool))
 let backward_visible_cursor_position =
   foreign "gtk_text_iter_backward_visible_cursor_position" (ptr t_typ @-> returning (bool))
 let backward_visible_cursor_positions =
@@ -68,7 +68,7 @@ let backward_word_start =
 let backward_word_starts =
   foreign "gtk_text_iter_backward_word_starts" (ptr t_typ @-> int32_t @-> returning (bool))
 let begins_tag =
-  foreign "gtk_text_iter_begins_tag" (ptr t_typ @-> Text_tag.t_typ @-> returning (bool))
+  foreign "gtk_text_iter_begins_tag" (ptr t_typ @-> ptr_opt Text_tag.t_typ @-> returning (bool))
 let can_insert =
   foreign "gtk_text_iter_can_insert" (ptr t_typ @-> bool @-> returning (bool))
 let compare =
@@ -82,7 +82,7 @@ let ends_line =
 let ends_sentence =
   foreign "gtk_text_iter_ends_sentence" (ptr t_typ @-> returning (bool))
 let ends_tag =
-  foreign "gtk_text_iter_ends_tag" (ptr t_typ @-> Text_tag.t_typ @-> returning (bool))
+  foreign "gtk_text_iter_ends_tag" (ptr t_typ @-> ptr_opt Text_tag.t_typ @-> returning (bool))
 let ends_word =
   foreign "gtk_text_iter_ends_word" (ptr t_typ @-> returning (bool))
 let equal =
@@ -119,7 +119,7 @@ let forward_to_end =
 let forward_to_line_end =
   foreign "gtk_text_iter_forward_to_line_end" (ptr t_typ @-> returning (bool))
 let forward_to_tag_toggle =
-  foreign "gtk_text_iter_forward_to_tag_toggle" (ptr t_typ @-> Text_tag.t_typ @-> returning (bool))
+  foreign "gtk_text_iter_forward_to_tag_toggle" (ptr t_typ @-> ptr_opt Text_tag.t_typ @-> returning (bool))
 let forward_visible_cursor_position =
   foreign "gtk_text_iter_forward_visible_cursor_position" (ptr t_typ @-> returning (bool))
 let forward_visible_cursor_positions =
@@ -147,14 +147,14 @@ let get_attributes self =
   let values = !@ values_ptr in
   (ret, values)
 let get_buffer =
-  foreign "gtk_text_iter_get_buffer" (ptr t_typ @-> returning (Text_buffer.t_typ))
+  foreign "gtk_text_iter_get_buffer" (ptr t_typ @-> returning (ptr Text_buffer.t_typ))
 let get_bytes_in_line =
   foreign "gtk_text_iter_get_bytes_in_line" (ptr t_typ @-> returning (int32_t))
 (*Not implemented gtk_text_iter_get_char return type unichar not handled*)
 let get_chars_in_line =
   foreign "gtk_text_iter_get_chars_in_line" (ptr t_typ @-> returning (int32_t))
 let get_child_anchor =
-  foreign "gtk_text_iter_get_child_anchor" (ptr t_typ @-> returning (Text_child_anchor.t_typ))
+  foreign "gtk_text_iter_get_child_anchor" (ptr t_typ @-> returning (ptr Text_child_anchor.t_typ))
 let get_language =
   foreign "gtk_text_iter_get_language" (ptr t_typ @-> returning (ptr Language.t_typ))
 let get_line =
@@ -168,7 +168,7 @@ let get_marks =
 let get_offset =
   foreign "gtk_text_iter_get_offset" (ptr t_typ @-> returning (int32_t))
 let get_pixbuf =
-  foreign "gtk_text_iter_get_pixbuf" (ptr t_typ @-> returning (Pixbuf.t_typ))
+  foreign "gtk_text_iter_get_pixbuf" (ptr t_typ @-> returning (ptr Pixbuf.t_typ))
 let get_slice =
   foreign "gtk_text_iter_get_slice" (ptr t_typ @-> ptr t_typ @-> returning (string_opt))
 let get_tags =
@@ -186,7 +186,7 @@ let get_visible_slice =
 let get_visible_text =
   foreign "gtk_text_iter_get_visible_text" (ptr t_typ @-> ptr t_typ @-> returning (string_opt))
 let has_tag =
-  foreign "gtk_text_iter_has_tag" (ptr t_typ @-> Text_tag.t_typ @-> returning (bool))
+  foreign "gtk_text_iter_has_tag" (ptr t_typ @-> ptr Text_tag.t_typ @-> returning (bool))
 let in_range =
   foreign "gtk_text_iter_in_range" (ptr t_typ @-> ptr t_typ @-> ptr t_typ @-> returning (bool))
 let inside_sentence =
@@ -218,8 +218,8 @@ let starts_line =
 let starts_sentence =
   foreign "gtk_text_iter_starts_sentence" (ptr t_typ @-> returning (bool))
 let starts_tag =
-  foreign "gtk_text_iter_starts_tag" (ptr t_typ @-> Text_tag.t_typ @-> returning (bool))
+  foreign "gtk_text_iter_starts_tag" (ptr t_typ @-> ptr_opt Text_tag.t_typ @-> returning (bool))
 let starts_word =
   foreign "gtk_text_iter_starts_word" (ptr t_typ @-> returning (bool))
 let toggles_tag =
-  foreign "gtk_text_iter_toggles_tag" (ptr t_typ @-> Text_tag.t_typ @-> returning (bool))
+  foreign "gtk_text_iter_toggles_tag" (ptr t_typ @-> ptr_opt Text_tag.t_typ @-> returning (bool))

@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_unix_fd_list_new" (void @-> returning (t_typ))
+  foreign "g_unix_fd_list_new" (void @-> returning (ptr t_typ))
 (*Not implemented g_unix_fd_list_new_from_array type C Array type for Types.Array tag not implemented*)
 let append self fd =
   let append_raw =

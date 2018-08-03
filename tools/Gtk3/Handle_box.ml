@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_handle_box_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_handle_box_new" (void @-> returning (ptr Widget.t_typ))
 let get_child_detached =
   foreign "gtk_handle_box_get_child_detached" (t_typ @-> returning (bool))
 let get_handle_position =

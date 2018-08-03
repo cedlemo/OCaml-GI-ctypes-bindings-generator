@@ -346,18 +346,18 @@ val _true :
 (*Not implemented gtk_tree_set_row_drag_data type interface not implemented*)
 
 val tree_row_reference_inserted :
-  Object.t -> Tree_path.t structure ptr -> unit
+  Object.t ptr -> Tree_path.t structure ptr -> unit
 
 val tree_row_reference_deleted :
-  Object.t -> Tree_path.t structure ptr -> unit
+  Object.t ptr -> Tree_path.t structure ptr -> unit
 
 (*Not implemented gtk_tree_get_row_drag_data type interface not implemented*)
 
 val test_widget_wait_for_draw :
-  Widget.t -> unit
+  Widget.t ptr -> unit
 
 val test_widget_send_key :
-  Widget.t -> Unsigned.uint32 -> Modifier_type.t_list -> bool
+  Widget.t ptr -> Unsigned.uint32 -> Modifier_type.t_list -> bool
 
 val test_register_all_types :
   unit -> unit
@@ -369,7 +369,7 @@ val test_register_all_types :
 (*Not implemented gtk_test_find_sibling type gType not implemented*)
 
 val test_find_label :
-  Widget.t -> string -> Widget.t
+  Widget.t ptr -> string -> Widget.t ptr
 
 (*Not implemented gtk_targets_include_uri type C Array type for Types.Array tag not implemented*)
 
@@ -384,90 +384,90 @@ val test_find_label :
 (*Not implemented gtk_target_table_free type C Array type for Types.Array tag not implemented*)
 
 val show_uri_on_window :
-  Window.t -> string -> Unsigned.uint32 -> (bool, Error.t structure ptr option) result
+  Window.t ptr option -> string -> Unsigned.uint32 -> (bool, Error.t structure ptr option) result
 
 val show_uri :
-  Screen.t -> string -> Unsigned.uint32 -> (bool, Error.t structure ptr option) result
+  Screen.t ptr option -> string -> Unsigned.uint32 -> (bool, Error.t structure ptr option) result
 
 val set_debug_flags :
   Unsigned.uint32 -> unit
 
 val selection_remove_all :
-  Widget.t -> unit
+  Widget.t ptr -> unit
 
 val selection_owner_set_for_display :
-  Display.t -> Widget.t -> Atom.t structure ptr -> Unsigned.uint32 -> bool
+  Display.t ptr -> Widget.t ptr option -> Atom.t structure ptr -> Unsigned.uint32 -> bool
 
 val selection_owner_set :
-  Widget.t -> Atom.t structure ptr -> Unsigned.uint32 -> bool
+  Widget.t ptr option -> Atom.t structure ptr -> Unsigned.uint32 -> bool
 
 val selection_convert :
-  Widget.t -> Atom.t structure ptr -> Atom.t structure ptr -> Unsigned.uint32 -> bool
+  Widget.t ptr -> Atom.t structure ptr -> Atom.t structure ptr -> Unsigned.uint32 -> bool
 
 val selection_clear_targets :
-  Widget.t -> Atom.t structure ptr -> unit
+  Widget.t ptr -> Atom.t structure ptr -> unit
 
 (*Not implemented gtk_selection_add_targets type C Array type for Types.Array tag not implemented*)
 
 val selection_add_target :
-  Widget.t -> Atom.t structure ptr -> Atom.t structure ptr -> Unsigned.uint32 -> unit
+  Widget.t ptr -> Atom.t structure ptr -> Atom.t structure ptr -> Unsigned.uint32 -> unit
 
 val rgb_to_hsv :
   float -> float -> float -> (float * float * float)
 
 val render_slider :
-  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> Orientation.t -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> float -> float -> Orientation.t -> unit
 
 val render_option :
-  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
 val render_line :
-  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
 val render_layout :
-  Style_context.t -> Context.t structure ptr -> float -> float -> Layout.t -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> Layout.t ptr -> unit
 
 val render_insertion_cursor :
-  Style_context.t -> Context.t structure ptr -> float -> float -> Layout.t -> int32 -> Direction.t -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> Layout.t ptr -> int32 -> Direction.t -> unit
 
 val render_icon_surface :
-  Style_context.t -> Context.t structure ptr -> Surface.t structure ptr -> float -> float -> unit
+  Style_context.t ptr -> Context.t structure ptr -> Surface.t structure ptr -> float -> float -> unit
 
 val render_icon :
-  Style_context.t -> Context.t structure ptr -> Pixbuf.t -> float -> float -> unit
+  Style_context.t ptr -> Context.t structure ptr -> Pixbuf.t ptr -> float -> float -> unit
 
 val render_handle :
-  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
 val render_frame_gap :
-  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> Position_type.t -> float -> float -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> float -> float -> Position_type.t -> float -> float -> unit
 
 val render_frame :
-  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
 val render_focus :
-  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
 val render_extension :
-  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> Position_type.t -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> float -> float -> Position_type.t -> unit
 
 val render_expander :
-  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
 val render_check :
-  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
 val render_background_get_clip :
-  Style_context.t -> float -> float -> float -> float -> (Rectangle.t structure)
+  Style_context.t ptr -> float -> float -> float -> float -> (Rectangle.t structure)
 
 val render_background :
-  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
 val render_arrow :
-  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
 val render_activity :
-  Style_context.t -> Context.t structure ptr -> float -> float -> float -> float -> unit
+  Style_context.t ptr -> Context.t structure ptr -> float -> float -> float -> float -> unit
 
 val recent_manager_error_quark :
   unit -> Unsigned.uint32
@@ -476,26 +476,26 @@ val recent_chooser_error_quark :
   unit -> Unsigned.uint32
 
 val rc_property_parse_requisition :
-  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
+  Param_spec.t ptr -> String.t structure ptr -> Value.t structure ptr -> bool
 
 val rc_property_parse_flags :
-  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
+  Param_spec.t ptr -> String.t structure ptr -> Value.t structure ptr -> bool
 
 val rc_property_parse_enum :
-  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
+  Param_spec.t ptr -> String.t structure ptr -> Value.t structure ptr -> bool
 
 val rc_property_parse_color :
-  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
+  Param_spec.t ptr -> String.t structure ptr -> Value.t structure ptr -> bool
 
 val rc_property_parse_border :
-  Param_spec.t -> String.t structure ptr -> Value.t structure ptr -> bool
+  Param_spec.t ptr -> String.t structure ptr -> Value.t structure ptr -> bool
 
 (*Not implemented gtk_propagate_event type union not implemented*)
 
 (*Not implemented gtk_print_run_page_setup_dialog_async type callback not implemented*)
 
 val print_run_page_setup_dialog :
-  Window.t -> Page_setup.t -> Print_settings.t -> Page_setup.t
+  Window.t ptr option -> Page_setup.t ptr option -> Print_settings.t ptr -> Page_setup.t ptr
 
 val print_error_quark :
   unit -> Unsigned.uint32
@@ -503,7 +503,7 @@ val print_error_quark :
 (*Not implemented gtk_parse_args type C Array type for Types.Array tag not implemented*)
 
 val paper_size_get_paper_sizes :
-  bool -> List.t structure (* Paper_size.t structure *) ptr
+  bool -> List.t structure (* Not implemented : interface *) ptr
 
 val paper_size_get_default :
   unit -> string option
@@ -538,7 +538,7 @@ val icon_size_lookup :
   int32 -> (bool * int32 * int32)
 
 val grab_get_current :
-  unit -> Widget.t
+  unit -> Widget.t ptr option
 
 val get_option_group :
   bool -> Option_group.t structure ptr
@@ -573,7 +573,7 @@ val get_current_event_state :
   unit -> (bool * Modifier_type.t_list)
 
 val get_current_event_device :
-  unit -> Device.t
+  unit -> Device.t ptr option
 
 (*Not implemented gtk_get_current_event return type union not handled*)
 
@@ -590,30 +590,30 @@ val events_pending :
   unit -> bool
 
 val drag_set_icon_widget :
-  Drag_context.t -> Widget.t -> int32 -> int32 -> unit
+  Drag_context.t ptr -> Widget.t ptr -> int32 -> int32 -> unit
 
 val drag_set_icon_surface :
-  Drag_context.t -> Surface.t structure ptr -> unit
+  Drag_context.t ptr -> Surface.t structure ptr -> unit
 
 val drag_set_icon_pixbuf :
-  Drag_context.t -> Pixbuf.t -> int32 -> int32 -> unit
+  Drag_context.t ptr -> Pixbuf.t ptr -> int32 -> int32 -> unit
 
 val drag_set_icon_name :
-  Drag_context.t -> string -> int32 -> int32 -> unit
+  Drag_context.t ptr -> string -> int32 -> int32 -> unit
 
 (*Not implemented gtk_drag_set_icon_gicon type interface not implemented*)
 
 val drag_set_icon_default :
-  Drag_context.t -> unit
+  Drag_context.t ptr -> unit
 
 val drag_get_source_widget :
-  Drag_context.t -> Widget.t
+  Drag_context.t ptr -> Widget.t ptr option
 
 val drag_finish :
-  Drag_context.t -> bool -> bool -> Unsigned.uint32 -> unit
+  Drag_context.t ptr -> bool -> bool -> Unsigned.uint32 -> unit
 
 val drag_cancel :
-  Drag_context.t -> unit
+  Drag_context.t ptr -> unit
 
 val distribute_natural_allocation :
   int32 -> Unsigned.uint32 -> Requested_size.t structure ptr -> int32
@@ -622,10 +622,10 @@ val disable_setlocale :
   unit -> unit
 
 val device_grab_remove :
-  Widget.t -> Device.t -> unit
+  Widget.t ptr -> Device.t ptr -> unit
 
 val device_grab_add :
-  Widget.t -> Device.t -> bool -> unit
+  Widget.t ptr -> Device.t ptr -> bool -> unit
 
 val css_provider_error_quark :
   unit -> Unsigned.uint32
@@ -634,19 +634,19 @@ val check_version :
   Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> string option
 
 val cairo_transform_to_window :
-  Context.t structure ptr -> Widget.t -> Window.t -> unit
+  Context.t structure ptr -> Widget.t ptr -> Window.t ptr -> unit
 
 val cairo_should_draw_window :
-  Context.t structure ptr -> Window.t -> bool
+  Context.t structure ptr -> Window.t ptr -> bool
 
 val builder_error_quark :
   unit -> Unsigned.uint32
 
 val bindings_activate_event :
-  Object.t -> Event_key.t structure ptr -> bool
+  Object.t ptr -> Event_key.t structure ptr -> bool
 
 val bindings_activate :
-  Object.t -> Unsigned.uint32 -> Modifier_type.t_list -> bool
+  Object.t ptr -> Unsigned.uint32 -> Modifier_type.t_list -> bool
 
 val binding_set_find :
   string -> Binding_set.t structure ptr option
@@ -658,7 +658,7 @@ val binding_entry_remove :
   Binding_set.t structure ptr -> Unsigned.uint32 -> Modifier_type.t_list -> unit
 
 val binding_entry_add_signall :
-  Binding_set.t structure ptr -> Unsigned.uint32 -> Modifier_type.t_list -> string -> SList.t structure (* Binding_arg.t structure *) ptr -> unit
+  Binding_set.t structure ptr -> Unsigned.uint32 -> Modifier_type.t_list -> string -> SList.t structure (* Not implemented : interface *) ptr -> unit
 
 val binding_entry_add_signal_from_string :
   Binding_set.t structure ptr -> string -> Token_type.t
@@ -675,13 +675,13 @@ val accelerator_parse :
   string -> (Unsigned.uint32 * Modifier_type.t_list)
 
 val accelerator_name_with_keycode :
-  Display.t -> Unsigned.uint32 -> Unsigned.uint32 -> Modifier_type.t_list -> string option
+  Display.t ptr option -> Unsigned.uint32 -> Unsigned.uint32 -> Modifier_type.t_list -> string option
 
 val accelerator_name :
   Unsigned.uint32 -> Modifier_type.t_list -> string option
 
 val accelerator_get_label_with_keycode :
-  Display.t -> Unsigned.uint32 -> Unsigned.uint32 -> Modifier_type.t_list -> string option
+  Display.t ptr option -> Unsigned.uint32 -> Unsigned.uint32 -> Modifier_type.t_list -> string option
 
 val accelerator_get_label :
   Unsigned.uint32 -> Modifier_type.t_list -> string option
@@ -690,8 +690,8 @@ val accelerator_get_default_mod_mask :
   unit -> Modifier_type.t_list
 
 val accel_groups_from_object :
-  Object.t -> SList.t structure (* Accel_group.t *) ptr
+  Object.t ptr -> SList.t structure (* Not implemented : interface *) ptr
 
 val accel_groups_activate :
-  Object.t -> Unsigned.uint32 -> Modifier_type.t_list -> bool
+  Object.t ptr -> Unsigned.uint32 -> Modifier_type.t_list -> bool
 

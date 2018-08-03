@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val clear :
   t -> unit
 val get_property :
@@ -14,7 +14,7 @@ val lookup_color :
 val map_color :
   t -> string -> Symbolic_color.t structure ptr -> unit
 val merge :
-  t -> t -> bool -> unit
+  t -> t ptr -> bool -> unit
 val set_property :
   t -> string -> State_flags.t_list -> Value.t structure ptr -> unit
 val unset_property :

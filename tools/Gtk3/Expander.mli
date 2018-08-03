@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  string option -> Widget.t
+  string option -> Widget.t ptr
 val create_with_mnemonic :
-  string option -> Widget.t
+  string option -> Widget.t ptr
 val get_expanded :
   t -> bool
 val get_label :
@@ -14,7 +14,7 @@ val get_label :
 val get_label_fill :
   t -> bool
 val get_label_widget :
-  t -> Widget.t
+  t -> Widget.t ptr option
 val get_resize_toplevel :
   t -> bool
 val get_spacing :
@@ -30,7 +30,7 @@ val set_label :
 val set_label_fill :
   t -> bool -> unit
 val set_label_widget :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr option -> unit
 val set_resize_toplevel :
   t -> bool -> unit
 val set_spacing :

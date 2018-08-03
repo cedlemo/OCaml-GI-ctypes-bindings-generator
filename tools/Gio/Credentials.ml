@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_credentials_new" (void @-> returning (t_typ))
+  foreign "g_credentials_new" (void @-> returning (ptr t_typ))
 let get_unix_pid self =
   let get_unix_pid_raw =
     foreign "g_credentials_get_unix_pid" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (int32_t))
@@ -30,7 +30,7 @@ let get_unix_user self =
     Error (err_ptr)
 let is_same_user self other_credentials =
   let is_same_user_raw =
-    foreign "g_credentials_is_same_user" (t_typ @-> t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_credentials_is_same_user" (t_typ @-> ptr t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = is_same_user_raw self other_credentials err_ptr_ptr in

@@ -347,18 +347,18 @@ let _true =
 (*Not implemented gtk_tree_set_row_drag_data type interface not implemented*)
 
 let tree_row_reference_inserted =
-  foreign "gtk_tree_row_reference_inserted" (Object.t_typ @-> ptr Tree_path.t_typ @-> returning (void))
+  foreign "gtk_tree_row_reference_inserted" (ptr Object.t_typ @-> ptr Tree_path.t_typ @-> returning (void))
 
 let tree_row_reference_deleted =
-  foreign "gtk_tree_row_reference_deleted" (Object.t_typ @-> ptr Tree_path.t_typ @-> returning (void))
+  foreign "gtk_tree_row_reference_deleted" (ptr Object.t_typ @-> ptr Tree_path.t_typ @-> returning (void))
 
 (*Not implemented gtk_tree_get_row_drag_data type interface not implemented*)
 
 let test_widget_wait_for_draw =
-  foreign "gtk_test_widget_wait_for_draw" (Widget.t_typ @-> returning (void))
+  foreign "gtk_test_widget_wait_for_draw" (ptr Widget.t_typ @-> returning (void))
 
 let test_widget_send_key =
-  foreign "gtk_test_widget_send_key" (Widget.t_typ @-> uint32_t @-> Modifier_type.t_list_view @-> returning (bool))
+  foreign "gtk_test_widget_send_key" (ptr Widget.t_typ @-> uint32_t @-> Modifier_type.t_list_view @-> returning (bool))
 
 let test_register_all_types =
   foreign "gtk_test_register_all_types" (void @-> returning (void))
@@ -370,7 +370,7 @@ let test_register_all_types =
 (*Not implemented gtk_test_find_sibling type gType not implemented*)
 
 let test_find_label =
-  foreign "gtk_test_find_label" (Widget.t_typ @-> string @-> returning (Widget.t_typ))
+  foreign "gtk_test_find_label" (ptr Widget.t_typ @-> string @-> returning (ptr Widget.t_typ))
 
 (*Not implemented gtk_targets_include_uri type C Array type for Types.Array tag not implemented*)
 
@@ -386,7 +386,7 @@ let test_find_label =
 
 let show_uri_on_window parent uri timestamp =
   let show_uri_on_window_raw =
-    foreign "gtk_show_uri_on_window" (Window.t_typ @-> string @-> uint32_t @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "gtk_show_uri_on_window" (ptr_opt Window.t_typ @-> string @-> uint32_t @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = show_uri_on_window_raw parent uri timestamp err_ptr_ptr in
@@ -398,7 +398,7 @@ let show_uri_on_window parent uri timestamp =
 
 let show_uri screen uri timestamp =
   let show_uri_raw =
-    foreign "gtk_show_uri" (Screen.t_typ @-> string @-> uint32_t @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "gtk_show_uri" (ptr_opt Screen.t_typ @-> string @-> uint32_t @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = show_uri_raw screen uri timestamp err_ptr_ptr in
@@ -412,24 +412,24 @@ let set_debug_flags =
   foreign "gtk_set_debug_flags" (uint32_t @-> returning (void))
 
 let selection_remove_all =
-  foreign "gtk_selection_remove_all" (Widget.t_typ @-> returning (void))
+  foreign "gtk_selection_remove_all" (ptr Widget.t_typ @-> returning (void))
 
 let selection_owner_set_for_display =
-  foreign "gtk_selection_owner_set_for_display" (Display.t_typ @-> Widget.t_typ @-> ptr Atom.t_typ @-> uint32_t @-> returning (bool))
+  foreign "gtk_selection_owner_set_for_display" (ptr Display.t_typ @-> ptr_opt Widget.t_typ @-> ptr Atom.t_typ @-> uint32_t @-> returning (bool))
 
 let selection_owner_set =
-  foreign "gtk_selection_owner_set" (Widget.t_typ @-> ptr Atom.t_typ @-> uint32_t @-> returning (bool))
+  foreign "gtk_selection_owner_set" (ptr_opt Widget.t_typ @-> ptr Atom.t_typ @-> uint32_t @-> returning (bool))
 
 let selection_convert =
-  foreign "gtk_selection_convert" (Widget.t_typ @-> ptr Atom.t_typ @-> ptr Atom.t_typ @-> uint32_t @-> returning (bool))
+  foreign "gtk_selection_convert" (ptr Widget.t_typ @-> ptr Atom.t_typ @-> ptr Atom.t_typ @-> uint32_t @-> returning (bool))
 
 let selection_clear_targets =
-  foreign "gtk_selection_clear_targets" (Widget.t_typ @-> ptr Atom.t_typ @-> returning (void))
+  foreign "gtk_selection_clear_targets" (ptr Widget.t_typ @-> ptr Atom.t_typ @-> returning (void))
 
 (*Not implemented gtk_selection_add_targets type C Array type for Types.Array tag not implemented*)
 
 let selection_add_target =
-  foreign "gtk_selection_add_target" (Widget.t_typ @-> ptr Atom.t_typ @-> ptr Atom.t_typ @-> uint32_t @-> returning (void))
+  foreign "gtk_selection_add_target" (ptr Widget.t_typ @-> ptr Atom.t_typ @-> ptr Atom.t_typ @-> uint32_t @-> returning (void))
 
 let rgb_to_hsv r g b =
   let rgb_to_hsv_raw =
@@ -445,50 +445,50 @@ let rgb_to_hsv r g b =
   (h, s, v)
 
 let render_slider =
-  foreign "gtk_render_slider" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> Orientation.t_view @-> returning (void))
+  foreign "gtk_render_slider" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> Orientation.t_view @-> returning (void))
 
 let render_option =
-  foreign "gtk_render_option" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
+  foreign "gtk_render_option" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
 
 let render_line =
-  foreign "gtk_render_line" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
+  foreign "gtk_render_line" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
 
 let render_layout =
-  foreign "gtk_render_layout" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> Layout.t_typ @-> returning (void))
+  foreign "gtk_render_layout" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> ptr Layout.t_typ @-> returning (void))
 
 let render_insertion_cursor =
-  foreign "gtk_render_insertion_cursor" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> Layout.t_typ @-> int32_t @-> Direction.t_view @-> returning (void))
+  foreign "gtk_render_insertion_cursor" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> ptr Layout.t_typ @-> int32_t @-> Direction.t_view @-> returning (void))
 
 let render_icon_surface =
-  foreign "gtk_render_icon_surface" (Style_context.t_typ @-> ptr Context.t_typ @-> ptr Surface.t_typ @-> double @-> double @-> returning (void))
+  foreign "gtk_render_icon_surface" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> ptr Surface.t_typ @-> double @-> double @-> returning (void))
 
 let render_icon =
-  foreign "gtk_render_icon" (Style_context.t_typ @-> ptr Context.t_typ @-> Pixbuf.t_typ @-> double @-> double @-> returning (void))
+  foreign "gtk_render_icon" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> ptr Pixbuf.t_typ @-> double @-> double @-> returning (void))
 
 let render_handle =
-  foreign "gtk_render_handle" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
+  foreign "gtk_render_handle" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
 
 let render_frame_gap =
-  foreign "gtk_render_frame_gap" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> Position_type.t_view @-> double @-> double @-> returning (void))
+  foreign "gtk_render_frame_gap" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> Position_type.t_view @-> double @-> double @-> returning (void))
 
 let render_frame =
-  foreign "gtk_render_frame" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
+  foreign "gtk_render_frame" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
 
 let render_focus =
-  foreign "gtk_render_focus" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
+  foreign "gtk_render_focus" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
 
 let render_extension =
-  foreign "gtk_render_extension" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> Position_type.t_view @-> returning (void))
+  foreign "gtk_render_extension" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> Position_type.t_view @-> returning (void))
 
 let render_expander =
-  foreign "gtk_render_expander" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
+  foreign "gtk_render_expander" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
 
 let render_check =
-  foreign "gtk_render_check" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
+  foreign "gtk_render_check" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
 
 let render_background_get_clip context x y width height =
   let render_background_get_clip_raw =
-    foreign "gtk_render_background_get_clip" (Style_context.t_typ @-> double @-> double @-> double @-> double @-> ptr (Rectangle.t_typ) @-> returning (void))
+    foreign "gtk_render_background_get_clip" (ptr Style_context.t_typ @-> double @-> double @-> double @-> double @-> ptr (Rectangle.t_typ) @-> returning (void))
   in
   let out_clip_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = render_background_get_clip_raw context x y width height out_clip_ptr in
@@ -496,13 +496,13 @@ let render_background_get_clip context x y width height =
   (out_clip)
 
 let render_background =
-  foreign "gtk_render_background" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
+  foreign "gtk_render_background" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
 
 let render_arrow =
-  foreign "gtk_render_arrow" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
+  foreign "gtk_render_arrow" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
 
 let render_activity =
-  foreign "gtk_render_activity" (Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
+  foreign "gtk_render_activity" (ptr Style_context.t_typ @-> ptr Context.t_typ @-> double @-> double @-> double @-> double @-> returning (void))
 
 let recent_manager_error_quark =
   foreign "gtk_recent_manager_error_quark" (void @-> returning (uint32_t))
@@ -511,26 +511,26 @@ let recent_chooser_error_quark =
   foreign "gtk_recent_chooser_error_quark" (void @-> returning (uint32_t))
 
 let rc_property_parse_requisition =
-  foreign "gtk_rc_property_parse_requisition" (Param_spec.t_typ @-> ptr String.t_typ @-> ptr Value.t_typ @-> returning (bool))
+  foreign "gtk_rc_property_parse_requisition" (ptr Param_spec.t_typ @-> ptr String.t_typ @-> ptr Value.t_typ @-> returning (bool))
 
 let rc_property_parse_flags =
-  foreign "gtk_rc_property_parse_flags" (Param_spec.t_typ @-> ptr String.t_typ @-> ptr Value.t_typ @-> returning (bool))
+  foreign "gtk_rc_property_parse_flags" (ptr Param_spec.t_typ @-> ptr String.t_typ @-> ptr Value.t_typ @-> returning (bool))
 
 let rc_property_parse_enum =
-  foreign "gtk_rc_property_parse_enum" (Param_spec.t_typ @-> ptr String.t_typ @-> ptr Value.t_typ @-> returning (bool))
+  foreign "gtk_rc_property_parse_enum" (ptr Param_spec.t_typ @-> ptr String.t_typ @-> ptr Value.t_typ @-> returning (bool))
 
 let rc_property_parse_color =
-  foreign "gtk_rc_property_parse_color" (Param_spec.t_typ @-> ptr String.t_typ @-> ptr Value.t_typ @-> returning (bool))
+  foreign "gtk_rc_property_parse_color" (ptr Param_spec.t_typ @-> ptr String.t_typ @-> ptr Value.t_typ @-> returning (bool))
 
 let rc_property_parse_border =
-  foreign "gtk_rc_property_parse_border" (Param_spec.t_typ @-> ptr String.t_typ @-> ptr Value.t_typ @-> returning (bool))
+  foreign "gtk_rc_property_parse_border" (ptr Param_spec.t_typ @-> ptr String.t_typ @-> ptr Value.t_typ @-> returning (bool))
 
 (*Not implemented gtk_propagate_event type union not implemented*)
 
 (*Not implemented gtk_print_run_page_setup_dialog_async type callback not implemented*)
 
 let print_run_page_setup_dialog =
-  foreign "gtk_print_run_page_setup_dialog" (Window.t_typ @-> Page_setup.t_typ @-> Print_settings.t_typ @-> returning (Page_setup.t_typ))
+  foreign "gtk_print_run_page_setup_dialog" (ptr_opt Window.t_typ @-> ptr_opt Page_setup.t_typ @-> ptr Print_settings.t_typ @-> returning (ptr Page_setup.t_typ))
 
 let print_error_quark =
   foreign "gtk_print_error_quark" (void @-> returning (uint32_t))
@@ -581,7 +581,7 @@ let icon_size_lookup size =
   (ret, width, height)
 
 let grab_get_current =
-  foreign "gtk_grab_get_current" (void @-> returning (Widget.t_typ))
+  foreign "gtk_grab_get_current" (void @-> returning (ptr_opt Widget.t_typ))
 
 let get_option_group =
   foreign "gtk_get_option_group" (bool @-> returning (ptr Option_group.t_typ))
@@ -622,7 +622,7 @@ let get_current_event_state () =
   (ret, state)
 
 let get_current_event_device =
-  foreign "gtk_get_current_event_device" (void @-> returning (Device.t_typ))
+  foreign "gtk_get_current_event_device" (void @-> returning (ptr_opt Device.t_typ))
 
 (*Not implemented gtk_get_current_event return type union not handled*)
 
@@ -639,30 +639,30 @@ let events_pending =
   foreign "gtk_events_pending" (void @-> returning (bool))
 
 let drag_set_icon_widget =
-  foreign "gtk_drag_set_icon_widget" (Drag_context.t_typ @-> Widget.t_typ @-> int32_t @-> int32_t @-> returning (void))
+  foreign "gtk_drag_set_icon_widget" (ptr Drag_context.t_typ @-> ptr Widget.t_typ @-> int32_t @-> int32_t @-> returning (void))
 
 let drag_set_icon_surface =
-  foreign "gtk_drag_set_icon_surface" (Drag_context.t_typ @-> ptr Surface.t_typ @-> returning (void))
+  foreign "gtk_drag_set_icon_surface" (ptr Drag_context.t_typ @-> ptr Surface.t_typ @-> returning (void))
 
 let drag_set_icon_pixbuf =
-  foreign "gtk_drag_set_icon_pixbuf" (Drag_context.t_typ @-> Pixbuf.t_typ @-> int32_t @-> int32_t @-> returning (void))
+  foreign "gtk_drag_set_icon_pixbuf" (ptr Drag_context.t_typ @-> ptr Pixbuf.t_typ @-> int32_t @-> int32_t @-> returning (void))
 
 let drag_set_icon_name =
-  foreign "gtk_drag_set_icon_name" (Drag_context.t_typ @-> string @-> int32_t @-> int32_t @-> returning (void))
+  foreign "gtk_drag_set_icon_name" (ptr Drag_context.t_typ @-> string @-> int32_t @-> int32_t @-> returning (void))
 
 (*Not implemented gtk_drag_set_icon_gicon type interface not implemented*)
 
 let drag_set_icon_default =
-  foreign "gtk_drag_set_icon_default" (Drag_context.t_typ @-> returning (void))
+  foreign "gtk_drag_set_icon_default" (ptr Drag_context.t_typ @-> returning (void))
 
 let drag_get_source_widget =
-  foreign "gtk_drag_get_source_widget" (Drag_context.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_drag_get_source_widget" (ptr Drag_context.t_typ @-> returning (ptr_opt Widget.t_typ))
 
 let drag_finish =
-  foreign "gtk_drag_finish" (Drag_context.t_typ @-> bool @-> bool @-> uint32_t @-> returning (void))
+  foreign "gtk_drag_finish" (ptr Drag_context.t_typ @-> bool @-> bool @-> uint32_t @-> returning (void))
 
 let drag_cancel =
-  foreign "gtk_drag_cancel" (Drag_context.t_typ @-> returning (void))
+  foreign "gtk_drag_cancel" (ptr Drag_context.t_typ @-> returning (void))
 
 let distribute_natural_allocation =
   foreign "gtk_distribute_natural_allocation" (int32_t @-> uint32_t @-> ptr Requested_size.t_typ @-> returning (int32_t))
@@ -671,10 +671,10 @@ let disable_setlocale =
   foreign "gtk_disable_setlocale" (void @-> returning (void))
 
 let device_grab_remove =
-  foreign "gtk_device_grab_remove" (Widget.t_typ @-> Device.t_typ @-> returning (void))
+  foreign "gtk_device_grab_remove" (ptr Widget.t_typ @-> ptr Device.t_typ @-> returning (void))
 
 let device_grab_add =
-  foreign "gtk_device_grab_add" (Widget.t_typ @-> Device.t_typ @-> bool @-> returning (void))
+  foreign "gtk_device_grab_add" (ptr Widget.t_typ @-> ptr Device.t_typ @-> bool @-> returning (void))
 
 let css_provider_error_quark =
   foreign "gtk_css_provider_error_quark" (void @-> returning (uint32_t))
@@ -683,19 +683,19 @@ let check_version =
   foreign "gtk_check_version" (uint32_t @-> uint32_t @-> uint32_t @-> returning (string_opt))
 
 let cairo_transform_to_window =
-  foreign "gtk_cairo_transform_to_window" (ptr Context.t_typ @-> Widget.t_typ @-> Window.t_typ @-> returning (void))
+  foreign "gtk_cairo_transform_to_window" (ptr Context.t_typ @-> ptr Widget.t_typ @-> ptr Window.t_typ @-> returning (void))
 
 let cairo_should_draw_window =
-  foreign "gtk_cairo_should_draw_window" (ptr Context.t_typ @-> Window.t_typ @-> returning (bool))
+  foreign "gtk_cairo_should_draw_window" (ptr Context.t_typ @-> ptr Window.t_typ @-> returning (bool))
 
 let builder_error_quark =
   foreign "gtk_builder_error_quark" (void @-> returning (uint32_t))
 
 let bindings_activate_event =
-  foreign "gtk_bindings_activate_event" (Object.t_typ @-> ptr Event_key.t_typ @-> returning (bool))
+  foreign "gtk_bindings_activate_event" (ptr Object.t_typ @-> ptr Event_key.t_typ @-> returning (bool))
 
 let bindings_activate =
-  foreign "gtk_bindings_activate" (Object.t_typ @-> uint32_t @-> Modifier_type.t_list_view @-> returning (bool))
+  foreign "gtk_bindings_activate" (ptr Object.t_typ @-> uint32_t @-> Modifier_type.t_list_view @-> returning (bool))
 
 let binding_set_find =
   foreign "gtk_binding_set_find" (string @-> returning (ptr_opt Binding_set.t_typ))
@@ -732,13 +732,13 @@ let accelerator_parse accelerator =
   (accelerator_key, accelerator_mods)
 
 let accelerator_name_with_keycode =
-  foreign "gtk_accelerator_name_with_keycode" (Display.t_typ @-> uint32_t @-> uint32_t @-> Modifier_type.t_list_view @-> returning (string_opt))
+  foreign "gtk_accelerator_name_with_keycode" (ptr_opt Display.t_typ @-> uint32_t @-> uint32_t @-> Modifier_type.t_list_view @-> returning (string_opt))
 
 let accelerator_name =
   foreign "gtk_accelerator_name" (uint32_t @-> Modifier_type.t_list_view @-> returning (string_opt))
 
 let accelerator_get_label_with_keycode =
-  foreign "gtk_accelerator_get_label_with_keycode" (Display.t_typ @-> uint32_t @-> uint32_t @-> Modifier_type.t_list_view @-> returning (string_opt))
+  foreign "gtk_accelerator_get_label_with_keycode" (ptr_opt Display.t_typ @-> uint32_t @-> uint32_t @-> Modifier_type.t_list_view @-> returning (string_opt))
 
 let accelerator_get_label =
   foreign "gtk_accelerator_get_label" (uint32_t @-> Modifier_type.t_list_view @-> returning (string_opt))
@@ -747,8 +747,8 @@ let accelerator_get_default_mod_mask =
   foreign "gtk_accelerator_get_default_mod_mask" (void @-> returning (Modifier_type.t_list_view))
 
 let accel_groups_from_object =
-  foreign "gtk_accel_groups_from_object" (Object.t_typ @-> returning (ptr SList.t_typ))
+  foreign "gtk_accel_groups_from_object" (ptr Object.t_typ @-> returning (ptr SList.t_typ))
 
 let accel_groups_activate =
-  foreign "gtk_accel_groups_activate" (Object.t_typ @-> uint32_t @-> Modifier_type.t_list_view @-> returning (bool))
+  foreign "gtk_accel_groups_activate" (ptr Object.t_typ @-> uint32_t @-> Modifier_type.t_list_view @-> returning (bool))
 

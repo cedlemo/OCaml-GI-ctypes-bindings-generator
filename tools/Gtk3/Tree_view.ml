@@ -5,10 +5,10 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_tree_view_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_tree_view_new" (void @-> returning (ptr Widget.t_typ))
 (*Not implemented gtk_tree_view_new_with_model type interface not implemented*)
 let append_column =
-  foreign "gtk_tree_view_append_column" (t_typ @-> Tree_view_column.t_typ @-> returning (int32_t))
+  foreign "gtk_tree_view_append_column" (t_typ @-> ptr Tree_view_column.t_typ @-> returning (int32_t))
 let collapse_all =
   foreign "gtk_tree_view_collapse_all" (t_typ @-> returning (void))
 let collapse_row =
@@ -89,29 +89,29 @@ let get_activate_on_single_click =
   foreign "gtk_tree_view_get_activate_on_single_click" (t_typ @-> returning (bool))
 let get_background_area self path column =
   let get_background_area_raw =
-    foreign "gtk_tree_view_get_background_area" (t_typ @-> ptr_opt Tree_path.t_typ @-> Tree_view_column.t_typ @-> ptr (Rectangle.t_typ) @-> returning (void))
+    foreign "gtk_tree_view_get_background_area" (t_typ @-> ptr_opt Tree_path.t_typ @-> ptr_opt Tree_view_column.t_typ @-> ptr (Rectangle.t_typ) @-> returning (void))
   in
   let rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_background_area_raw self path column rect_ptr in
   let rect = !@ rect_ptr in
   (rect)
 let get_bin_window =
-  foreign "gtk_tree_view_get_bin_window" (t_typ @-> returning (Window.t_typ))
+  foreign "gtk_tree_view_get_bin_window" (t_typ @-> returning (ptr_opt Window.t_typ))
 let get_cell_area self path column =
   let get_cell_area_raw =
-    foreign "gtk_tree_view_get_cell_area" (t_typ @-> ptr_opt Tree_path.t_typ @-> Tree_view_column.t_typ @-> ptr (Rectangle.t_typ) @-> returning (void))
+    foreign "gtk_tree_view_get_cell_area" (t_typ @-> ptr_opt Tree_path.t_typ @-> ptr_opt Tree_view_column.t_typ @-> ptr (Rectangle.t_typ) @-> returning (void))
   in
   let rect_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
   let ret = get_cell_area_raw self path column rect_ptr in
   let rect = !@ rect_ptr in
   (rect)
 let get_column =
-  foreign "gtk_tree_view_get_column" (t_typ @-> int32_t @-> returning (Tree_view_column.t_typ))
+  foreign "gtk_tree_view_get_column" (t_typ @-> int32_t @-> returning (ptr_opt Tree_view_column.t_typ))
 let get_columns =
   foreign "gtk_tree_view_get_columns" (t_typ @-> returning (ptr List.t_typ))
 let get_cursor self =
   let get_cursor_raw =
-    foreign "gtk_tree_view_get_cursor" (t_typ @-> ptr (ptr_opt Tree_path.t_typ) @-> ptr (Tree_view_column.t_typ) @-> returning (void))
+    foreign "gtk_tree_view_get_cursor" (t_typ @-> ptr (ptr_opt Tree_path.t_typ) @-> ptr (ptr_opt Tree_view_column.t_typ) @-> returning (void))
   in
   let path_ptr = allocate (ptr_opt Tree_path.t_typ) None in
   let focus_column_ptr = allocate (ptr_opt Tree_view_column.t_typ) None in
@@ -144,13 +144,13 @@ let get_enable_search =
 let get_enable_tree_lines =
   foreign "gtk_tree_view_get_enable_tree_lines" (t_typ @-> returning (bool))
 let get_expander_column =
-  foreign "gtk_tree_view_get_expander_column" (t_typ @-> returning (Tree_view_column.t_typ))
+  foreign "gtk_tree_view_get_expander_column" (t_typ @-> returning (ptr Tree_view_column.t_typ))
 let get_fixed_height_mode =
   foreign "gtk_tree_view_get_fixed_height_mode" (t_typ @-> returning (bool))
 let get_grid_lines =
   foreign "gtk_tree_view_get_grid_lines" (t_typ @-> returning (Tree_view_grid_lines.t_view))
 let get_hadjustment =
-  foreign "gtk_tree_view_get_hadjustment" (t_typ @-> returning (Adjustment.t_typ))
+  foreign "gtk_tree_view_get_hadjustment" (t_typ @-> returning (ptr Adjustment.t_typ))
 let get_headers_clickable =
   foreign "gtk_tree_view_get_headers_clickable" (t_typ @-> returning (bool))
 let get_headers_visible =
@@ -166,7 +166,7 @@ let get_n_columns =
   foreign "gtk_tree_view_get_n_columns" (t_typ @-> returning (uint32_t))
 let get_path_at_pos self x y =
   let get_path_at_pos_raw =
-    foreign "gtk_tree_view_get_path_at_pos" (t_typ @-> int32_t @-> int32_t @-> ptr (ptr_opt Tree_path.t_typ) @-> ptr (Tree_view_column.t_typ) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (bool))
+    foreign "gtk_tree_view_get_path_at_pos" (t_typ @-> int32_t @-> int32_t @-> ptr (ptr_opt Tree_path.t_typ) @-> ptr (ptr_opt Tree_view_column.t_typ) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (bool))
   in
   let path_ptr = allocate (ptr_opt Tree_path.t_typ) None in
   let column_ptr = allocate (ptr_opt Tree_view_column.t_typ) None in
@@ -187,16 +187,16 @@ let get_rules_hint =
 let get_search_column =
   foreign "gtk_tree_view_get_search_column" (t_typ @-> returning (int32_t))
 let get_search_entry =
-  foreign "gtk_tree_view_get_search_entry" (t_typ @-> returning (Entry.t_typ))
+  foreign "gtk_tree_view_get_search_entry" (t_typ @-> returning (ptr Entry.t_typ))
 let get_selection =
-  foreign "gtk_tree_view_get_selection" (t_typ @-> returning (Tree_selection.t_typ))
+  foreign "gtk_tree_view_get_selection" (t_typ @-> returning (ptr Tree_selection.t_typ))
 let get_show_expanders =
   foreign "gtk_tree_view_get_show_expanders" (t_typ @-> returning (bool))
 let get_tooltip_column =
   foreign "gtk_tree_view_get_tooltip_column" (t_typ @-> returning (int32_t))
 (*Not implemented gtk_tree_view_get_tooltip_context type interface not implemented*)
 let get_vadjustment =
-  foreign "gtk_tree_view_get_vadjustment" (t_typ @-> returning (Adjustment.t_typ))
+  foreign "gtk_tree_view_get_vadjustment" (t_typ @-> returning (ptr Adjustment.t_typ))
 let get_visible_range self =
   let get_visible_range_raw =
     foreign "gtk_tree_view_get_visible_range" (t_typ @-> ptr (ptr Tree_path.t_typ) @-> ptr (ptr Tree_path.t_typ) @-> returning (bool))
@@ -216,11 +216,11 @@ let get_visible_rect self =
   let visible_rect = !@ visible_rect_ptr in
   (visible_rect)
 let insert_column =
-  foreign "gtk_tree_view_insert_column" (t_typ @-> Tree_view_column.t_typ @-> int32_t @-> returning (int32_t))
+  foreign "gtk_tree_view_insert_column" (t_typ @-> ptr Tree_view_column.t_typ @-> int32_t @-> returning (int32_t))
 (*Not implemented gtk_tree_view_insert_column_with_data_func type callback not implemented*)
 let is_blank_at_pos self x y =
   let is_blank_at_pos_raw =
-    foreign "gtk_tree_view_is_blank_at_pos" (t_typ @-> int32_t @-> int32_t @-> ptr (ptr_opt Tree_path.t_typ) @-> ptr (Tree_view_column.t_typ) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (bool))
+    foreign "gtk_tree_view_is_blank_at_pos" (t_typ @-> int32_t @-> int32_t @-> ptr (ptr_opt Tree_path.t_typ) @-> ptr (ptr_opt Tree_view_column.t_typ) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (bool))
   in
   let path_ptr = allocate (ptr_opt Tree_path.t_typ) None in
   let column_ptr = allocate (ptr_opt Tree_view_column.t_typ) None in
@@ -236,24 +236,24 @@ let is_rubber_banding_active =
   foreign "gtk_tree_view_is_rubber_banding_active" (t_typ @-> returning (bool))
 (*Not implemented gtk_tree_view_map_expanded_rows type callback not implemented*)
 let move_column_after =
-  foreign "gtk_tree_view_move_column_after" (t_typ @-> Tree_view_column.t_typ @-> Tree_view_column.t_typ @-> returning (void))
+  foreign "gtk_tree_view_move_column_after" (t_typ @-> ptr Tree_view_column.t_typ @-> ptr_opt Tree_view_column.t_typ @-> returning (void))
 let remove_column =
-  foreign "gtk_tree_view_remove_column" (t_typ @-> Tree_view_column.t_typ @-> returning (int32_t))
+  foreign "gtk_tree_view_remove_column" (t_typ @-> ptr Tree_view_column.t_typ @-> returning (int32_t))
 let row_activated =
-  foreign "gtk_tree_view_row_activated" (t_typ @-> ptr Tree_path.t_typ @-> Tree_view_column.t_typ @-> returning (void))
+  foreign "gtk_tree_view_row_activated" (t_typ @-> ptr Tree_path.t_typ @-> ptr Tree_view_column.t_typ @-> returning (void))
 let row_expanded =
   foreign "gtk_tree_view_row_expanded" (t_typ @-> ptr Tree_path.t_typ @-> returning (bool))
 let scroll_to_cell =
-  foreign "gtk_tree_view_scroll_to_cell" (t_typ @-> ptr_opt Tree_path.t_typ @-> Tree_view_column.t_typ @-> bool @-> float @-> float @-> returning (void))
+  foreign "gtk_tree_view_scroll_to_cell" (t_typ @-> ptr_opt Tree_path.t_typ @-> ptr_opt Tree_view_column.t_typ @-> bool @-> float @-> float @-> returning (void))
 let scroll_to_point =
   foreign "gtk_tree_view_scroll_to_point" (t_typ @-> int32_t @-> int32_t @-> returning (void))
 let set_activate_on_single_click =
   foreign "gtk_tree_view_set_activate_on_single_click" (t_typ @-> bool @-> returning (void))
 (*Not implemented gtk_tree_view_set_column_drag_function type callback not implemented*)
 let set_cursor =
-  foreign "gtk_tree_view_set_cursor" (t_typ @-> ptr Tree_path.t_typ @-> Tree_view_column.t_typ @-> bool @-> returning (void))
+  foreign "gtk_tree_view_set_cursor" (t_typ @-> ptr Tree_path.t_typ @-> ptr_opt Tree_view_column.t_typ @-> bool @-> returning (void))
 let set_cursor_on_cell =
-  foreign "gtk_tree_view_set_cursor_on_cell" (t_typ @-> ptr Tree_path.t_typ @-> Tree_view_column.t_typ @-> Cell_renderer.t_typ @-> bool @-> returning (void))
+  foreign "gtk_tree_view_set_cursor_on_cell" (t_typ @-> ptr Tree_path.t_typ @-> ptr_opt Tree_view_column.t_typ @-> ptr_opt Cell_renderer.t_typ @-> bool @-> returning (void))
 (*Not implemented gtk_tree_view_set_destroy_count_func type callback not implemented*)
 let set_drag_dest_row =
   foreign "gtk_tree_view_set_drag_dest_row" (t_typ @-> ptr_opt Tree_path.t_typ @-> Tree_view_drop_position.t_view @-> returning (void))
@@ -262,13 +262,13 @@ let set_enable_search =
 let set_enable_tree_lines =
   foreign "gtk_tree_view_set_enable_tree_lines" (t_typ @-> bool @-> returning (void))
 let set_expander_column =
-  foreign "gtk_tree_view_set_expander_column" (t_typ @-> Tree_view_column.t_typ @-> returning (void))
+  foreign "gtk_tree_view_set_expander_column" (t_typ @-> ptr Tree_view_column.t_typ @-> returning (void))
 let set_fixed_height_mode =
   foreign "gtk_tree_view_set_fixed_height_mode" (t_typ @-> bool @-> returning (void))
 let set_grid_lines =
   foreign "gtk_tree_view_set_grid_lines" (t_typ @-> Tree_view_grid_lines.t_view @-> returning (void))
 let set_hadjustment =
-  foreign "gtk_tree_view_set_hadjustment" (t_typ @-> Adjustment.t_typ @-> returning (void))
+  foreign "gtk_tree_view_set_hadjustment" (t_typ @-> ptr_opt Adjustment.t_typ @-> returning (void))
 let set_headers_clickable =
   foreign "gtk_tree_view_set_headers_clickable" (t_typ @-> bool @-> returning (void))
 let set_headers_visible =
@@ -290,19 +290,19 @@ let set_rules_hint =
 let set_search_column =
   foreign "gtk_tree_view_set_search_column" (t_typ @-> int32_t @-> returning (void))
 let set_search_entry =
-  foreign "gtk_tree_view_set_search_entry" (t_typ @-> Entry.t_typ @-> returning (void))
+  foreign "gtk_tree_view_set_search_entry" (t_typ @-> ptr_opt Entry.t_typ @-> returning (void))
 (*Not implemented gtk_tree_view_set_search_equal_func type callback not implemented*)
 (*Not implemented gtk_tree_view_set_search_position_func type callback not implemented*)
 let set_show_expanders =
   foreign "gtk_tree_view_set_show_expanders" (t_typ @-> bool @-> returning (void))
 let set_tooltip_cell =
-  foreign "gtk_tree_view_set_tooltip_cell" (t_typ @-> Tooltip.t_typ @-> ptr_opt Tree_path.t_typ @-> Tree_view_column.t_typ @-> Cell_renderer.t_typ @-> returning (void))
+  foreign "gtk_tree_view_set_tooltip_cell" (t_typ @-> ptr Tooltip.t_typ @-> ptr_opt Tree_path.t_typ @-> ptr_opt Tree_view_column.t_typ @-> ptr_opt Cell_renderer.t_typ @-> returning (void))
 let set_tooltip_column =
   foreign "gtk_tree_view_set_tooltip_column" (t_typ @-> int32_t @-> returning (void))
 let set_tooltip_row =
-  foreign "gtk_tree_view_set_tooltip_row" (t_typ @-> Tooltip.t_typ @-> ptr Tree_path.t_typ @-> returning (void))
+  foreign "gtk_tree_view_set_tooltip_row" (t_typ @-> ptr Tooltip.t_typ @-> ptr Tree_path.t_typ @-> returning (void))
 let set_vadjustment =
-  foreign "gtk_tree_view_set_vadjustment" (t_typ @-> Adjustment.t_typ @-> returning (void))
+  foreign "gtk_tree_view_set_vadjustment" (t_typ @-> ptr_opt Adjustment.t_typ @-> returning (void))
 let unset_rows_drag_dest =
   foreign "gtk_tree_view_unset_rows_drag_dest" (t_typ @-> returning (void))
 let unset_rows_drag_source =

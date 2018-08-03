@@ -15,7 +15,7 @@ val get_info :
 val lookup_data :
   t structure ptr -> string -> Resource_lookup_flags.t_list -> (Bytes.t structure ptr option, Error.t structure ptr option) result
 val open_stream :
-  t structure ptr -> string -> Resource_lookup_flags.t_list -> (Input_stream.t, Error.t structure ptr option) result
+  t structure ptr -> string -> Resource_lookup_flags.t_list -> (Input_stream.t ptr option, Error.t structure ptr option) result
 val incr_ref :
   t structure ptr -> t structure ptr
 val unref :

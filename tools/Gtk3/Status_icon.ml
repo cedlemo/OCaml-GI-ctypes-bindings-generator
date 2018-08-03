@@ -5,19 +5,19 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_status_icon_new" (void @-> returning (t_typ))
+  foreign "gtk_status_icon_new" (void @-> returning (ptr t_typ))
 let create_from_file =
-  foreign "gtk_status_icon_new_from_file" (string @-> returning (t_typ))
+  foreign "gtk_status_icon_new_from_file" (string @-> returning (ptr t_typ))
 (*Not implemented gtk_status_icon_new_from_gicon type interface not implemented*)
 let create_from_icon_name =
-  foreign "gtk_status_icon_new_from_icon_name" (string @-> returning (t_typ))
+  foreign "gtk_status_icon_new_from_icon_name" (string @-> returning (ptr t_typ))
 let create_from_pixbuf =
-  foreign "gtk_status_icon_new_from_pixbuf" (Pixbuf.t_typ @-> returning (t_typ))
+  foreign "gtk_status_icon_new_from_pixbuf" (ptr Pixbuf.t_typ @-> returning (ptr t_typ))
 let create_from_stock =
-  foreign "gtk_status_icon_new_from_stock" (string @-> returning (t_typ))
+  foreign "gtk_status_icon_new_from_stock" (string @-> returning (ptr t_typ))
 let position_menu menu user_data x y =
   let position_menu_raw =
-    foreign "gtk_status_icon_position_menu" (Menu.t_typ @-> t_typ @-> ptr (bool) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
+    foreign "gtk_status_icon_position_menu" (ptr Menu.t_typ @-> ptr t_typ @-> ptr (bool) @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
   in
   let push_in_ptr = allocate bool false in
   let x_ptr = allocate int32_t x in
@@ -29,7 +29,7 @@ let position_menu menu user_data x y =
   (push_in, x, y)
 let get_geometry self =
   let get_geometry_raw =
-    foreign "gtk_status_icon_get_geometry" (t_typ @-> ptr (Screen.t_typ) @-> ptr (Rectangle.t_typ) @-> ptr (Orientation.t_view) @-> returning (bool))
+    foreign "gtk_status_icon_get_geometry" (t_typ @-> ptr (ptr Screen.t_typ) @-> ptr (Rectangle.t_typ) @-> ptr (Orientation.t_view) @-> returning (bool))
   in
   let screen_ptr = allocate (ptr_opt Screen.t_typ) None in
   let area_ptr = allocate Rectangle.t_typ (make Rectangle.t_typ) in
@@ -45,9 +45,9 @@ let get_has_tooltip =
 let get_icon_name =
   foreign "gtk_status_icon_get_icon_name" (t_typ @-> returning (string_opt))
 let get_pixbuf =
-  foreign "gtk_status_icon_get_pixbuf" (t_typ @-> returning (Pixbuf.t_typ))
+  foreign "gtk_status_icon_get_pixbuf" (t_typ @-> returning (ptr_opt Pixbuf.t_typ))
 let get_screen =
-  foreign "gtk_status_icon_get_screen" (t_typ @-> returning (Screen.t_typ))
+  foreign "gtk_status_icon_get_screen" (t_typ @-> returning (ptr Screen.t_typ))
 let get_size =
   foreign "gtk_status_icon_get_size" (t_typ @-> returning (int32_t))
 let get_stock =
@@ -72,7 +72,7 @@ let set_from_file =
 let set_from_icon_name =
   foreign "gtk_status_icon_set_from_icon_name" (t_typ @-> string @-> returning (void))
 let set_from_pixbuf =
-  foreign "gtk_status_icon_set_from_pixbuf" (t_typ @-> Pixbuf.t_typ @-> returning (void))
+  foreign "gtk_status_icon_set_from_pixbuf" (t_typ @-> ptr_opt Pixbuf.t_typ @-> returning (void))
 let set_from_stock =
   foreign "gtk_status_icon_set_from_stock" (t_typ @-> string @-> returning (void))
 let set_has_tooltip =
@@ -80,7 +80,7 @@ let set_has_tooltip =
 let set_name =
   foreign "gtk_status_icon_set_name" (t_typ @-> string @-> returning (void))
 let set_screen =
-  foreign "gtk_status_icon_set_screen" (t_typ @-> Screen.t_typ @-> returning (void))
+  foreign "gtk_status_icon_set_screen" (t_typ @-> ptr Screen.t_typ @-> returning (void))
 let set_title =
   foreign "gtk_status_icon_set_title" (t_typ @-> string @-> returning (void))
 let set_tooltip_markup =

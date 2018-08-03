@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create_resizable =
-  foreign "g_memory_output_stream_new_resizable" (void @-> returning (Output_stream.t_typ))
+  foreign "g_memory_output_stream_new_resizable" (void @-> returning (ptr Output_stream.t_typ))
 let get_data =
   foreign "g_memory_output_stream_get_data" (t_typ @-> returning (ptr_opt void))
 let get_data_size =

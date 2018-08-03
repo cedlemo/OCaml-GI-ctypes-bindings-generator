@@ -5,11 +5,11 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_menu_item_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_menu_item_new" (void @-> returning (ptr Widget.t_typ))
 let create_with_label =
-  foreign "gtk_menu_item_new_with_label" (string @-> returning (Widget.t_typ))
+  foreign "gtk_menu_item_new_with_label" (string @-> returning (ptr Widget.t_typ))
 let create_with_mnemonic =
-  foreign "gtk_menu_item_new_with_mnemonic" (string @-> returning (Widget.t_typ))
+  foreign "gtk_menu_item_new_with_mnemonic" (string @-> returning (ptr Widget.t_typ))
 let activate =
   foreign "gtk_menu_item_activate" (t_typ @-> returning (void))
 let deselect =
@@ -23,7 +23,7 @@ let get_reserve_indicator =
 let get_right_justified =
   foreign "gtk_menu_item_get_right_justified" (t_typ @-> returning (bool))
 let get_submenu =
-  foreign "gtk_menu_item_get_submenu" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_menu_item_get_submenu" (t_typ @-> returning (ptr_opt Widget.t_typ))
 let get_use_underline =
   foreign "gtk_menu_item_get_use_underline" (t_typ @-> returning (bool))
 let select =
@@ -37,7 +37,7 @@ let set_reserve_indicator =
 let set_right_justified =
   foreign "gtk_menu_item_set_right_justified" (t_typ @-> bool @-> returning (void))
 let set_submenu =
-  foreign "gtk_menu_item_set_submenu" (t_typ @-> Menu.t_typ @-> returning (void))
+  foreign "gtk_menu_item_set_submenu" (t_typ @-> ptr_opt Menu.t_typ @-> returning (void))
 let set_use_underline =
   foreign "gtk_menu_item_set_use_underline" (t_typ @-> bool @-> returning (void))
 let toggle_size_allocate =

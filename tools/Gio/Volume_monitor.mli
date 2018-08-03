@@ -5,7 +5,7 @@ val t_typ : t typ
 
 (*Not implemented g_volume_monitor_adopt_orphan_mount type interface not implemented*)
 val get :
-  unit -> t
+  unit -> t ptr
 val get_connected_drives :
   t -> List.t structure (* Not implemented : interface *) ptr
 (*Not implemented g_volume_monitor_get_mount_for_uuid return type interface not handled*)

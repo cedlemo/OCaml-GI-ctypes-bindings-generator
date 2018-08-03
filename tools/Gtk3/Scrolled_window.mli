@@ -4,15 +4,15 @@ type t
 val t_typ : t typ
 
 val create :
-  Adjustment.t -> Adjustment.t -> Widget.t
+  Adjustment.t ptr option -> Adjustment.t ptr option -> Widget.t ptr
 val add_with_viewport :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr -> unit
 val get_capture_button_press :
   t -> bool
 val get_hadjustment :
-  t -> Adjustment.t
+  t -> Adjustment.t ptr
 val get_hscrollbar :
-  t -> Widget.t
+  t -> Widget.t ptr
 val get_kinetic_scrolling :
   t -> bool
 val get_max_content_height :
@@ -36,13 +36,13 @@ val get_propagate_natural_width :
 val get_shadow_type :
   t -> Shadow_type.t
 val get_vadjustment :
-  t -> Adjustment.t
+  t -> Adjustment.t ptr
 val get_vscrollbar :
-  t -> Widget.t
+  t -> Widget.t ptr
 val set_capture_button_press :
   t -> bool -> unit
 val set_hadjustment :
-  t -> Adjustment.t -> unit
+  t -> Adjustment.t ptr -> unit
 val set_kinetic_scrolling :
   t -> bool -> unit
 val set_max_content_height :
@@ -66,6 +66,6 @@ val set_propagate_natural_width :
 val set_shadow_type :
   t -> Shadow_type.t -> unit
 val set_vadjustment :
-  t -> Adjustment.t -> unit
+  t -> Adjustment.t ptr -> unit
 val unset_placement :
   t -> unit

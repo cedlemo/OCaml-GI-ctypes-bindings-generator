@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_subprocess_launcher_new" (Subprocess_flags.t_list_view @-> returning (t_typ))
+  foreign "g_subprocess_launcher_new" (Subprocess_flags.t_list_view @-> returning (ptr t_typ))
 let getenv =
   foreign "g_subprocess_launcher_getenv" (t_typ @-> string @-> returning (string_opt))
 let set_cwd =

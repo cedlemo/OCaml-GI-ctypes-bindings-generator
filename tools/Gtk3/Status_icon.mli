@@ -4,29 +4,29 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val create_from_file :
-  string -> t
+  string -> t ptr
 (*Not implemented gtk_status_icon_new_from_gicon type interface not implemented*)
 val create_from_icon_name :
-  string -> t
+  string -> t ptr
 val create_from_pixbuf :
-  Pixbuf.t -> t
+  Pixbuf.t ptr -> t ptr
 val create_from_stock :
-  string -> t
+  string -> t ptr
 val position_menu :
-  Menu.t -> t -> int32 -> int32 -> (bool * int32 * int32)
+  Menu.t ptr -> t ptr -> int32 -> int32 -> (bool * int32 * int32)
 val get_geometry :
-  t -> (bool * Screen.t * Rectangle.t structure * Orientation.t)
+  t -> (bool * Screen.t ptr * Rectangle.t structure * Orientation.t)
 (*Not implemented gtk_status_icon_get_gicon return type interface not handled*)
 val get_has_tooltip :
   t -> bool
 val get_icon_name :
   t -> string option
 val get_pixbuf :
-  t -> Pixbuf.t
+  t -> Pixbuf.t ptr option
 val get_screen :
-  t -> Screen.t
+  t -> Screen.t ptr
 val get_size :
   t -> int32
 val get_stock :
@@ -51,7 +51,7 @@ val set_from_file :
 val set_from_icon_name :
   t -> string -> unit
 val set_from_pixbuf :
-  t -> Pixbuf.t -> unit
+  t -> Pixbuf.t ptr option -> unit
 val set_from_stock :
   t -> string -> unit
 val set_has_tooltip :
@@ -59,7 +59,7 @@ val set_has_tooltip :
 val set_name :
   t -> string -> unit
 val set_screen :
-  t -> Screen.t -> unit
+  t -> Screen.t ptr -> unit
 val set_title :
   t -> string -> unit
 val set_tooltip_markup :

@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_app_launch_context_new" (void @-> returning (t_typ))
+  foreign "g_app_launch_context_new" (void @-> returning (ptr t_typ))
 (*Not implemented g_app_launch_context_get_display type interface not implemented*)
 (*Not implemented g_app_launch_context_get_environment return type C Array type for Types.Array tag not handled*)
 (*Not implemented g_app_launch_context_get_startup_notify_id type interface not implemented*)

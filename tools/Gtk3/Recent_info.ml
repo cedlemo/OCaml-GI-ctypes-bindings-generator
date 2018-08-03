@@ -31,7 +31,7 @@ let get_display_name =
 (*Not implemented gtk_recent_info_get_gicon return type interface not handled*)
 (*Not implemented gtk_recent_info_get_groups return type C Array type for Types.Array tag not handled*)
 let get_icon =
-  foreign "gtk_recent_info_get_icon" (ptr t_typ @-> int32_t @-> returning (Pixbuf.t_typ))
+  foreign "gtk_recent_info_get_icon" (ptr t_typ @-> int32_t @-> returning (ptr_opt Pixbuf.t_typ))
 let get_mime_type =
   foreign "gtk_recent_info_get_mime_type" (ptr t_typ @-> returning (string_opt))
 let get_modified =

@@ -20,7 +20,7 @@ val get_display_name :
 (*Not implemented gtk_recent_info_get_gicon return type interface not handled*)
 (*Not implemented gtk_recent_info_get_groups return type C Array type for Types.Array tag not handled*)
 val get_icon :
-  t structure ptr -> int32 -> Pixbuf.t
+  t structure ptr -> int32 -> Pixbuf.t ptr option
 val get_mime_type :
   t structure ptr -> string option
 val get_modified :

@@ -6,7 +6,7 @@ let t_typ : t typ = ptr void
 
 let create to_charset from_charset =
   let create_raw =
-    foreign "g_charset_converter_new" (string @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+    foreign "g_charset_converter_new" (string @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = create_raw to_charset from_charset err_ptr_ptr in

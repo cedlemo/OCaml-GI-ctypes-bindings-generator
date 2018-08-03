@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  string -> t
+  string -> t ptr
 val add_button :
   t -> string -> string -> unit
 val add_button_with_target :

@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_text_child_anchor_new" (void @-> returning (t_typ))
+  foreign "gtk_text_child_anchor_new" (void @-> returning (ptr t_typ))
 let get_deleted =
   foreign "gtk_text_child_anchor_get_deleted" (t_typ @-> returning (bool))
 let get_widgets =

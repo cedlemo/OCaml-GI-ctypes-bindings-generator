@@ -5,11 +5,11 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_table_new" (uint32_t @-> uint32_t @-> bool @-> returning (Widget.t_typ))
+  foreign "gtk_table_new" (uint32_t @-> uint32_t @-> bool @-> returning (ptr Widget.t_typ))
 let attach =
-  foreign "gtk_table_attach" (t_typ @-> Widget.t_typ @-> uint32_t @-> uint32_t @-> uint32_t @-> uint32_t @-> Attach_options.t_list_view @-> Attach_options.t_list_view @-> uint32_t @-> uint32_t @-> returning (void))
+  foreign "gtk_table_attach" (t_typ @-> ptr Widget.t_typ @-> uint32_t @-> uint32_t @-> uint32_t @-> uint32_t @-> Attach_options.t_list_view @-> Attach_options.t_list_view @-> uint32_t @-> uint32_t @-> returning (void))
 let attach_defaults =
-  foreign "gtk_table_attach_defaults" (t_typ @-> Widget.t_typ @-> uint32_t @-> uint32_t @-> uint32_t @-> uint32_t @-> returning (void))
+  foreign "gtk_table_attach_defaults" (t_typ @-> ptr Widget.t_typ @-> uint32_t @-> uint32_t @-> uint32_t @-> uint32_t @-> returning (void))
 let get_col_spacing =
   foreign "gtk_table_get_col_spacing" (t_typ @-> uint32_t @-> returning (uint32_t))
 let get_default_col_spacing =

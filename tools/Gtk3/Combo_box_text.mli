@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val create_with_entry :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val append :
   t -> string option -> string -> unit
 val append_text :

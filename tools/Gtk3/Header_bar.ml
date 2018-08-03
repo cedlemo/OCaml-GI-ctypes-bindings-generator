@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_header_bar_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_header_bar_new" (void @-> returning (ptr Widget.t_typ))
 let get_custom_title =
-  foreign "gtk_header_bar_get_custom_title" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_header_bar_get_custom_title" (t_typ @-> returning (ptr_opt Widget.t_typ))
 let get_decoration_layout =
   foreign "gtk_header_bar_get_decoration_layout" (t_typ @-> returning (string_opt))
 let get_has_subtitle =
@@ -19,11 +19,11 @@ let get_subtitle =
 let get_title =
   foreign "gtk_header_bar_get_title" (t_typ @-> returning (string_opt))
 let pack_end =
-  foreign "gtk_header_bar_pack_end" (t_typ @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_header_bar_pack_end" (t_typ @-> ptr Widget.t_typ @-> returning (void))
 let pack_start =
-  foreign "gtk_header_bar_pack_start" (t_typ @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_header_bar_pack_start" (t_typ @-> ptr Widget.t_typ @-> returning (void))
 let set_custom_title =
-  foreign "gtk_header_bar_set_custom_title" (t_typ @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_header_bar_set_custom_title" (t_typ @-> ptr_opt Widget.t_typ @-> returning (void))
 let set_decoration_layout =
   foreign "gtk_header_bar_set_decoration_layout" (t_typ @-> string_opt @-> returning (void))
 let set_has_subtitle =

@@ -4,11 +4,11 @@ type t
 val t_typ : t typ
 
 val get_default :
-  unit -> t
+  unit -> t ptr option
 val get_for_screen :
-  Screen.t -> t
+  Screen.t ptr -> t ptr
 val install_property :
-  Param_spec.t -> unit
+  Param_spec.t ptr -> unit
 (*Not implemented gtk_settings_install_property_parser type callback not implemented*)
 val reset_property :
   t -> string -> unit

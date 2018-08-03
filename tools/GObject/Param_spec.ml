@@ -17,7 +17,7 @@ let get_nick =
 let get_qdata =
   foreign "g_param_spec_get_qdata" (t_typ @-> uint32_t @-> returning (ptr_opt void))
 let get_redirect_target =
-  foreign "g_param_spec_get_redirect_target" (t_typ @-> returning (t_typ))
+  foreign "g_param_spec_get_redirect_target" (t_typ @-> returning (ptr t_typ))
 let set_qdata =
   foreign "g_param_spec_set_qdata" (t_typ @-> uint32_t @-> ptr_opt void @-> returning (void))
 let sink =

@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_expander_new" (string_opt @-> returning (Widget.t_typ))
+  foreign "gtk_expander_new" (string_opt @-> returning (ptr Widget.t_typ))
 let create_with_mnemonic =
-  foreign "gtk_expander_new_with_mnemonic" (string_opt @-> returning (Widget.t_typ))
+  foreign "gtk_expander_new_with_mnemonic" (string_opt @-> returning (ptr Widget.t_typ))
 let get_expanded =
   foreign "gtk_expander_get_expanded" (t_typ @-> returning (bool))
 let get_label =
@@ -15,7 +15,7 @@ let get_label =
 let get_label_fill =
   foreign "gtk_expander_get_label_fill" (t_typ @-> returning (bool))
 let get_label_widget =
-  foreign "gtk_expander_get_label_widget" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_expander_get_label_widget" (t_typ @-> returning (ptr_opt Widget.t_typ))
 let get_resize_toplevel =
   foreign "gtk_expander_get_resize_toplevel" (t_typ @-> returning (bool))
 let get_spacing =
@@ -31,7 +31,7 @@ let set_label =
 let set_label_fill =
   foreign "gtk_expander_set_label_fill" (t_typ @-> bool @-> returning (void))
 let set_label_widget =
-  foreign "gtk_expander_set_label_widget" (t_typ @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_expander_set_label_widget" (t_typ @-> ptr_opt Widget.t_typ @-> returning (void))
 let set_resize_toplevel =
   foreign "gtk_expander_set_resize_toplevel" (t_typ @-> bool @-> returning (void))
 let set_spacing =

@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val create_with_area :
-  Cell_area.t -> Widget.t
+  Cell_area.t ptr -> Widget.t ptr
 (*Not implemented gtk_icon_view_new_with_model type interface not implemented*)
 val convert_widget_to_bin_window_coords :
   t -> int32 -> int32 -> (int32 * int32)
@@ -17,19 +17,19 @@ val create_drag_icon :
 val get_activate_on_single_click :
   t -> bool
 val get_cell_rect :
-  t -> Tree_path.t structure ptr -> Cell_renderer.t -> (bool * Rectangle.t structure)
+  t -> Tree_path.t structure ptr -> Cell_renderer.t ptr option -> (bool * Rectangle.t structure)
 val get_column_spacing :
   t -> int32
 val get_columns :
   t -> int32
 val get_cursor :
-  t -> (bool * Tree_path.t structure ptr * Cell_renderer.t)
+  t -> (bool * Tree_path.t structure ptr * Cell_renderer.t ptr)
 val get_dest_item_at_pos :
   t -> int32 -> int32 -> (bool * Tree_path.t structure ptr * Icon_view_drop_position.t)
 val get_drag_dest_item :
   t -> (Tree_path.t structure ptr * Icon_view_drop_position.t)
 val get_item_at_pos :
-  t -> int32 -> int32 -> (bool * Tree_path.t structure ptr * Cell_renderer.t)
+  t -> int32 -> int32 -> (bool * Tree_path.t structure ptr * Cell_renderer.t ptr)
 val get_item_column :
   t -> Tree_path.t structure ptr -> int32
 val get_item_orientation :
@@ -54,7 +54,7 @@ val get_reorderable :
 val get_row_spacing :
   t -> int32
 val get_selected_items :
-  t -> List.t structure (* Tree_path.t structure *) ptr
+  t -> List.t structure (* Not implemented : interface *) ptr
 val get_selection_mode :
   t -> Selection_mode.t
 val get_spacing :
@@ -84,7 +84,7 @@ val set_column_spacing :
 val set_columns :
   t -> int32 -> unit
 val set_cursor :
-  t -> Tree_path.t structure ptr -> Cell_renderer.t -> bool -> unit
+  t -> Tree_path.t structure ptr -> Cell_renderer.t ptr option -> bool -> unit
 val set_drag_dest_item :
   t -> Tree_path.t structure ptr option -> Icon_view_drop_position.t -> unit
 val set_item_orientation :
@@ -111,11 +111,11 @@ val set_spacing :
 val set_text_column :
   t -> int32 -> unit
 val set_tooltip_cell :
-  t -> Tooltip.t -> Tree_path.t structure ptr -> Cell_renderer.t -> unit
+  t -> Tooltip.t ptr -> Tree_path.t structure ptr -> Cell_renderer.t ptr option -> unit
 val set_tooltip_column :
   t -> int32 -> unit
 val set_tooltip_item :
-  t -> Tooltip.t -> Tree_path.t structure ptr -> unit
+  t -> Tooltip.t ptr -> Tree_path.t structure ptr -> unit
 val unselect_all :
   t -> unit
 val unselect_path :

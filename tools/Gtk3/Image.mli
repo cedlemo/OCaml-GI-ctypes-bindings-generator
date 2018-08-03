@@ -4,35 +4,35 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val create_from_animation :
-  Pixbuf_animation.t -> Widget.t
+  Pixbuf_animation.t ptr -> Widget.t ptr
 val create_from_file :
-  string -> Widget.t
+  string -> Widget.t ptr
 (*Not implemented gtk_image_new_from_gicon type interface not implemented*)
 val create_from_icon_name :
-  string option -> int32 -> Widget.t
+  string option -> int32 -> Widget.t ptr
 val create_from_icon_set :
-  Icon_set.t structure ptr -> int32 -> Widget.t
+  Icon_set.t structure ptr -> int32 -> Widget.t ptr
 val create_from_pixbuf :
-  Pixbuf.t -> Widget.t
+  Pixbuf.t ptr option -> Widget.t ptr
 val create_from_resource :
-  string -> Widget.t
+  string -> Widget.t ptr
 val create_from_stock :
-  string -> int32 -> Widget.t
+  string -> int32 -> Widget.t ptr
 val create_from_surface :
-  Surface.t structure ptr option -> Widget.t
+  Surface.t structure ptr option -> Widget.t ptr
 val clear :
   t -> unit
 val get_animation :
-  t -> Pixbuf_animation.t
+  t -> Pixbuf_animation.t ptr option
 (*Not implemented gtk_image_get_gicon type interface not implemented*)
 val get_icon_name :
   t -> (string * int32)
 val get_icon_set :
   t -> (Icon_set.t structure ptr * int32)
 val get_pixbuf :
-  t -> Pixbuf.t
+  t -> Pixbuf.t ptr option
 val get_pixel_size :
   t -> int32
 val get_stock :
@@ -40,7 +40,7 @@ val get_stock :
 val get_storage_type :
   t -> Image_type.t
 val set_from_animation :
-  t -> Pixbuf_animation.t -> unit
+  t -> Pixbuf_animation.t ptr -> unit
 val set_from_file :
   t -> string option -> unit
 (*Not implemented gtk_image_set_from_gicon type interface not implemented*)
@@ -49,7 +49,7 @@ val set_from_icon_name :
 val set_from_icon_set :
   t -> Icon_set.t structure ptr -> int32 -> unit
 val set_from_pixbuf :
-  t -> Pixbuf.t -> unit
+  t -> Pixbuf.t ptr option -> unit
 val set_from_resource :
   t -> string option -> unit
 val set_from_stock :

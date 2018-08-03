@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val get_ellipsize :
   t -> Ellipsize_mode.t
 val get_fraction :

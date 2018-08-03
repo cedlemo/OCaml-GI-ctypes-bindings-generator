@@ -23,7 +23,7 @@ let get_bounding_box_center self =
   let y = !@ y_ptr in
   (ret, x, y)
 let get_device =
-  foreign "gtk_gesture_get_device" (t_typ @-> returning (Device.t_typ))
+  foreign "gtk_gesture_get_device" (t_typ @-> returning (ptr_opt Device.t_typ))
 let get_group =
   foreign "gtk_gesture_get_group" (t_typ @-> returning (ptr List.t_typ))
 (*Not implemented gtk_gesture_get_last_event return type union not handled*)
@@ -44,15 +44,15 @@ let get_sequence_state =
 let get_sequences =
   foreign "gtk_gesture_get_sequences" (t_typ @-> returning (ptr List.t_typ))
 let get_window =
-  foreign "gtk_gesture_get_window" (t_typ @-> returning (Window.t_typ))
+  foreign "gtk_gesture_get_window" (t_typ @-> returning (ptr_opt Window.t_typ))
 let group =
-  foreign "gtk_gesture_group" (t_typ @-> t_typ @-> returning (void))
+  foreign "gtk_gesture_group" (t_typ @-> ptr t_typ @-> returning (void))
 let handles_sequence =
   foreign "gtk_gesture_handles_sequence" (t_typ @-> ptr_opt Event_sequence.t_typ @-> returning (bool))
 let is_active =
   foreign "gtk_gesture_is_active" (t_typ @-> returning (bool))
 let is_grouped_with =
-  foreign "gtk_gesture_is_grouped_with" (t_typ @-> t_typ @-> returning (bool))
+  foreign "gtk_gesture_is_grouped_with" (t_typ @-> ptr t_typ @-> returning (bool))
 let is_recognized =
   foreign "gtk_gesture_is_recognized" (t_typ @-> returning (bool))
 let set_sequence_state =
@@ -60,6 +60,6 @@ let set_sequence_state =
 let set_state =
   foreign "gtk_gesture_set_state" (t_typ @-> Event_sequence_state.t_view @-> returning (bool))
 let set_window =
-  foreign "gtk_gesture_set_window" (t_typ @-> Window.t_typ @-> returning (void))
+  foreign "gtk_gesture_set_window" (t_typ @-> ptr_opt Window.t_typ @-> returning (void))
 let ungroup =
   foreign "gtk_gesture_ungroup" (t_typ @-> returning (void))

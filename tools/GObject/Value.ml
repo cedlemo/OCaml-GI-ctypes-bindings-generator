@@ -9,7 +9,7 @@ let t_typ : t structure typ = structure "Value"
 let copy =
   foreign "g_value_copy" (ptr t_typ @-> ptr t_typ @-> returning (void))
 let dup_object =
-  foreign "g_value_dup_object" (ptr t_typ @-> returning (Object.t_typ))
+  foreign "g_value_dup_object" (ptr t_typ @-> returning (ptr Object.t_typ))
 let dup_string =
   foreign "g_value_dup_string" (ptr t_typ @-> returning (string_opt))
 let dup_variant =
@@ -38,9 +38,9 @@ let get_int64 =
 let get_long =
   foreign "g_value_get_long" (ptr t_typ @-> returning (int64_t))
 let get_object =
-  foreign "g_value_get_object" (ptr t_typ @-> returning (Object.t_typ))
+  foreign "g_value_get_object" (ptr t_typ @-> returning (ptr Object.t_typ))
 let get_param =
-  foreign "g_value_get_param" (ptr t_typ @-> returning (Param_spec.t_typ))
+  foreign "g_value_get_param" (ptr t_typ @-> returning (ptr Param_spec.t_typ))
 let get_pointer =
   foreign "g_value_get_pointer" (ptr t_typ @-> returning (ptr_opt void))
 let get_schar =
@@ -90,9 +90,9 @@ let set_int64 =
 let set_long =
   foreign "g_value_set_long" (ptr t_typ @-> int64_t @-> returning (void))
 let set_object =
-  foreign "g_value_set_object" (ptr t_typ @-> Object.t_typ @-> returning (void))
+  foreign "g_value_set_object" (ptr t_typ @-> ptr_opt Object.t_typ @-> returning (void))
 let set_param =
-  foreign "g_value_set_param" (ptr t_typ @-> Param_spec.t_typ @-> returning (void))
+  foreign "g_value_set_param" (ptr t_typ @-> ptr_opt Param_spec.t_typ @-> returning (void))
 let set_pointer =
   foreign "g_value_set_pointer" (ptr t_typ @-> ptr_opt void @-> returning (void))
 let set_schar =

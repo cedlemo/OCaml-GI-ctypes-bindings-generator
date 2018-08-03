@@ -4,13 +4,13 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val create_with_area :
-  Cell_area.t -> t
+  Cell_area.t ptr -> t ptr
 val add_attribute :
-  t -> Cell_renderer.t -> string -> int32 -> unit
+  t -> Cell_renderer.t ptr -> string -> int32 -> unit
 val cell_get_position :
-  t -> Cell_renderer.t -> (bool * int32 * int32)
+  t -> Cell_renderer.t ptr -> (bool * int32 * int32)
 val cell_get_size :
   t -> Rectangle.t structure ptr option -> (int32 * int32 * int32 * int32)
 val cell_is_visible :
@@ -19,15 +19,15 @@ val cell_is_visible :
 val clear :
   t -> unit
 val clear_attributes :
-  t -> Cell_renderer.t -> unit
+  t -> Cell_renderer.t ptr -> unit
 val clicked :
   t -> unit
 val focus_cell :
-  t -> Cell_renderer.t -> unit
+  t -> Cell_renderer.t ptr -> unit
 val get_alignment :
   t -> float
 val get_button :
-  t -> Widget.t
+  t -> Widget.t ptr
 val get_clickable :
   t -> bool
 val get_expand :
@@ -55,19 +55,19 @@ val get_spacing :
 val get_title :
   t -> string option
 val get_tree_view :
-  t -> Widget.t
+  t -> Widget.t ptr option
 val get_visible :
   t -> bool
 val get_widget :
-  t -> Widget.t
+  t -> Widget.t ptr option
 val get_width :
   t -> int32
 val get_x_offset :
   t -> int32
 val pack_end :
-  t -> Cell_renderer.t -> bool -> unit
+  t -> Cell_renderer.t ptr -> bool -> unit
 val pack_start :
-  t -> Cell_renderer.t -> bool -> unit
+  t -> Cell_renderer.t ptr -> bool -> unit
 val queue_resize :
   t -> unit
 val set_alignment :
@@ -102,4 +102,4 @@ val set_title :
 val set_visible :
   t -> bool -> unit
 val set_widget :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr option -> unit

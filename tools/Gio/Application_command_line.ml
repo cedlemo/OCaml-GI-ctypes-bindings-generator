@@ -18,7 +18,7 @@ let get_options_dict =
 let get_platform_data =
   foreign "g_application_command_line_get_platform_data" (t_typ @-> returning (ptr_opt Variant.t_typ))
 let get_stdin =
-  foreign "g_application_command_line_get_stdin" (t_typ @-> returning (Input_stream.t_typ))
+  foreign "g_application_command_line_get_stdin" (t_typ @-> returning (ptr Input_stream.t_typ))
 let getenv =
   foreign "g_application_command_line_getenv" (t_typ @-> string @-> returning (string_opt))
 let set_exit_status =

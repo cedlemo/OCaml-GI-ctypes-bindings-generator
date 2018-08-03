@@ -6,7 +6,7 @@ let t_typ : t typ = ptr void
 
 (*Not implemented g_emblemed_icon_new type interface not implemented*)
 let add_emblem =
-  foreign "g_emblemed_icon_add_emblem" (t_typ @-> Emblem.t_typ @-> returning (void))
+  foreign "g_emblemed_icon_add_emblem" (t_typ @-> ptr Emblem.t_typ @-> returning (void))
 let clear_emblems =
   foreign "g_emblemed_icon_clear_emblems" (t_typ @-> returning (void))
 let get_emblems =

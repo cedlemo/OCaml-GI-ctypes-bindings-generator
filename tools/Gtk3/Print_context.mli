@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create_pango_context :
-  t -> Context.t
+  t -> Context.t ptr
 val create_pango_layout :
-  t -> Layout.t
+  t -> Layout.t ptr
 val get_cairo_context :
   t -> Context.t structure ptr
 val get_dpi_x :
@@ -18,9 +18,9 @@ val get_hard_margins :
 val get_height :
   t -> float
 val get_page_setup :
-  t -> Page_setup.t
+  t -> Page_setup.t ptr
 val get_pango_fontmap :
-  t -> Font_map.t
+  t -> Font_map.t ptr
 val get_width :
   t -> float
 val set_cairo_context :

@@ -8,7 +8,7 @@ val t_typ : t structure typ
 val copy :
   t structure ptr -> t structure ptr -> unit
 val dup_object :
-  t structure ptr -> Object.t
+  t structure ptr -> Object.t ptr
 val dup_string :
   t structure ptr -> string option
 val dup_variant :
@@ -37,9 +37,9 @@ val get_int64 :
 val get_long :
   t structure ptr -> int64
 val get_object :
-  t structure ptr -> Object.t
+  t structure ptr -> Object.t ptr
 val get_param :
-  t structure ptr -> Param_spec.t
+  t structure ptr -> Param_spec.t ptr
 val get_pointer :
   t structure ptr -> unit ptr option
 val get_schar :
@@ -89,9 +89,9 @@ val set_int64 :
 val set_long :
   t structure ptr -> int64 -> unit
 val set_object :
-  t structure ptr -> Object.t -> unit
+  t structure ptr -> Object.t ptr option -> unit
 val set_param :
-  t structure ptr -> Param_spec.t -> unit
+  t structure ptr -> Param_spec.t ptr option -> unit
 val set_pointer :
   t structure ptr -> unit ptr option -> unit
 val set_schar :

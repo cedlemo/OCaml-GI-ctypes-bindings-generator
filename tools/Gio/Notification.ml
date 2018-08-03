@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_notification_new" (string @-> returning (t_typ))
+  foreign "g_notification_new" (string @-> returning (ptr t_typ))
 let add_button =
   foreign "g_notification_add_button" (t_typ @-> string @-> string @-> returning (void))
 let add_button_with_target =

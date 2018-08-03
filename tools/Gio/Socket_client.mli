@@ -4,22 +4,22 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val add_application_proxy :
   t -> string -> unit
 (*Not implemented g_socket_client_connect type interface not implemented*)
 (*Not implemented g_socket_client_connect_async type interface not implemented*)
 (*Not implemented g_socket_client_connect_finish type interface not implemented*)
 val connect_to_host :
-  t -> string -> Unsigned.uint16 -> Cancellable.t -> (Socket_connection.t, Error.t structure ptr option) result
+  t -> string -> Unsigned.uint16 -> Cancellable.t ptr option -> (Socket_connection.t ptr option, Error.t structure ptr option) result
 (*Not implemented g_socket_client_connect_to_host_async type callback not implemented*)
 (*Not implemented g_socket_client_connect_to_host_finish type interface not implemented*)
 val connect_to_service :
-  t -> string -> string -> Cancellable.t -> (Socket_connection.t, Error.t structure ptr option) result
+  t -> string -> string -> Cancellable.t ptr option -> (Socket_connection.t ptr option, Error.t structure ptr option) result
 (*Not implemented g_socket_client_connect_to_service_async type callback not implemented*)
 (*Not implemented g_socket_client_connect_to_service_finish type interface not implemented*)
 val connect_to_uri :
-  t -> string -> Unsigned.uint16 -> Cancellable.t -> (Socket_connection.t, Error.t structure ptr option) result
+  t -> string -> Unsigned.uint16 -> Cancellable.t ptr option -> (Socket_connection.t ptr option, Error.t structure ptr option) result
 (*Not implemented g_socket_client_connect_to_uri_async type callback not implemented*)
 (*Not implemented g_socket_client_connect_to_uri_finish type interface not implemented*)
 val get_enable_proxy :
@@ -27,7 +27,7 @@ val get_enable_proxy :
 val get_family :
   t -> Socket_family.t
 val get_local_address :
-  t -> Socket_address.t
+  t -> Socket_address.t ptr
 val get_protocol :
   t -> Socket_protocol.t
 (*Not implemented g_socket_client_get_proxy_resolver return type interface not handled*)
@@ -44,7 +44,7 @@ val set_enable_proxy :
 val set_family :
   t -> Socket_family.t -> unit
 val set_local_address :
-  t -> Socket_address.t -> unit
+  t -> Socket_address.t ptr option -> unit
 val set_protocol :
   t -> Socket_protocol.t -> unit
 (*Not implemented g_socket_client_set_proxy_resolver type interface not implemented*)

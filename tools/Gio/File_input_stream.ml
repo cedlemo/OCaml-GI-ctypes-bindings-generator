@@ -6,7 +6,7 @@ let t_typ : t typ = ptr void
 
 let query_info self attributes cancellable =
   let query_info_raw =
-    foreign "g_file_input_stream_query_info" (t_typ @-> string @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (File_info.t_typ))
+    foreign "g_file_input_stream_query_info" (t_typ @-> string @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt File_info.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = query_info_raw self attributes cancellable err_ptr_ptr in

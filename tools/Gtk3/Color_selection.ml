@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_color_selection_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_color_selection_new" (void @-> returning (ptr Widget.t_typ))
 (*Not implemented gtk_color_selection_palette_from_string type C Array type for Types.Array tag not implemented*)
 (*Not implemented gtk_color_selection_palette_to_string type C Array type for Types.Array tag not implemented*)
 let get_current_alpha =

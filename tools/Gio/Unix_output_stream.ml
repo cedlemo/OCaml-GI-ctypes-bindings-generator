@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_unix_output_stream_new" (int32_t @-> bool @-> returning (Output_stream.t_typ))
+  foreign "g_unix_output_stream_new" (int32_t @-> bool @-> returning (ptr Output_stream.t_typ))
 let get_close_fd =
   foreign "g_unix_output_stream_get_close_fd" (t_typ @-> returning (bool))
 let get_fd =

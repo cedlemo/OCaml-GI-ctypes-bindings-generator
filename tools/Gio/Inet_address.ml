@@ -5,14 +5,14 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create_any =
-  foreign "g_inet_address_new_any" (Socket_family.t_view @-> returning (t_typ))
+  foreign "g_inet_address_new_any" (Socket_family.t_view @-> returning (ptr t_typ))
 (*Not implemented g_inet_address_new_from_bytes type C Array type for Types.Array tag not implemented*)
 let create_from_string =
-  foreign "g_inet_address_new_from_string" (string @-> returning (t_typ))
+  foreign "g_inet_address_new_from_string" (string @-> returning (ptr t_typ))
 let create_loopback =
-  foreign "g_inet_address_new_loopback" (Socket_family.t_view @-> returning (t_typ))
+  foreign "g_inet_address_new_loopback" (Socket_family.t_view @-> returning (ptr t_typ))
 let equal =
-  foreign "g_inet_address_equal" (t_typ @-> t_typ @-> returning (bool))
+  foreign "g_inet_address_equal" (t_typ @-> ptr t_typ @-> returning (bool))
 let get_family =
   foreign "g_inet_address_get_family" (t_typ @-> returning (Socket_family.t_view))
 let get_is_any =

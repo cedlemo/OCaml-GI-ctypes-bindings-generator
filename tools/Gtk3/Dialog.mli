@@ -4,21 +4,21 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val add_action_widget :
-  t -> Widget.t -> int32 -> unit
+  t -> Widget.t ptr -> int32 -> unit
 val add_button :
-  t -> string -> int32 -> Widget.t
+  t -> string -> int32 -> Widget.t ptr
 val get_action_area :
-  t -> Widget.t
+  t -> Widget.t ptr
 val get_content_area :
-  t -> Box.t
+  t -> Box.t ptr
 val get_header_bar :
-  t -> Widget.t
+  t -> Widget.t ptr
 val get_response_for_widget :
-  t -> Widget.t -> int32
+  t -> Widget.t ptr -> int32
 val get_widget_for_response :
-  t -> int32 -> Widget.t
+  t -> int32 -> Widget.t ptr option
 val response :
   t -> int32 -> unit
 val run :

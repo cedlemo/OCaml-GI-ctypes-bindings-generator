@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_alignment_new" (float @-> float @-> float @-> float @-> returning (Widget.t_typ))
+  foreign "gtk_alignment_new" (float @-> float @-> float @-> float @-> returning (ptr Widget.t_typ))
 let get_padding self =
   let get_padding_raw =
     foreign "gtk_alignment_get_padding" (t_typ @-> ptr (uint32_t) @-> ptr (uint32_t) @-> ptr (uint32_t) @-> ptr (uint32_t) @-> returning (void))

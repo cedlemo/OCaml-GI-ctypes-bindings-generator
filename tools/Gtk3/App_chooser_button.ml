@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_app_chooser_button_new" (string @-> returning (Widget.t_typ))
+  foreign "gtk_app_chooser_button_new" (string @-> returning (ptr Widget.t_typ))
 (*Not implemented gtk_app_chooser_button_append_custom_item type interface not implemented*)
 let append_separator =
   foreign "gtk_app_chooser_button_append_separator" (t_typ @-> returning (void))

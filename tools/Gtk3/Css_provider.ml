@@ -5,11 +5,11 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_css_provider_new" (void @-> returning (t_typ))
+  foreign "gtk_css_provider_new" (void @-> returning (ptr t_typ))
 let get_default =
-  foreign "gtk_css_provider_get_default" (void @-> returning (t_typ))
+  foreign "gtk_css_provider_get_default" (void @-> returning (ptr t_typ))
 let get_named =
-  foreign "gtk_css_provider_get_named" (string @-> string_opt @-> returning (t_typ))
+  foreign "gtk_css_provider_get_named" (string @-> string_opt @-> returning (ptr t_typ))
 (*Not implemented gtk_css_provider_load_from_data type C Array type for Types.Array tag not implemented*)
 (*Not implemented gtk_css_provider_load_from_file type interface not implemented*)
 let load_from_path self path =

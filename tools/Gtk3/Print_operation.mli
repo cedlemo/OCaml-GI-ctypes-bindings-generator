@@ -4,13 +4,13 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val cancel :
   t -> unit
 val draw_page_finish :
   t -> unit
 val get_default_page_setup :
-  t -> Page_setup.t
+  t -> Page_setup.t ptr
 val get_embed_page_setup :
   t -> bool
 val get_error :
@@ -20,7 +20,7 @@ val get_has_selection :
 val get_n_pages_to_print :
   t -> int32
 val get_print_settings :
-  t -> Print_settings.t
+  t -> Print_settings.t ptr
 val get_status :
   t -> Print_status.t
 val get_status_string :
@@ -30,7 +30,7 @@ val get_support_selection :
 val is_finished :
   t -> bool
 val run :
-  t -> Print_operation_action.t -> Window.t -> (Print_operation_result.t, Error.t structure ptr option) result
+  t -> Print_operation_action.t -> Window.t ptr option -> (Print_operation_result.t, Error.t structure ptr option) result
 val set_allow_async :
   t -> bool -> unit
 val set_current_page :
@@ -38,7 +38,7 @@ val set_current_page :
 val set_custom_tab_label :
   t -> string option -> unit
 val set_default_page_setup :
-  t -> Page_setup.t -> unit
+  t -> Page_setup.t ptr option -> unit
 val set_defer_drawing :
   t -> unit
 val set_embed_page_setup :
@@ -52,7 +52,7 @@ val set_job_name :
 val set_n_pages :
   t -> int32 -> unit
 val set_print_settings :
-  t -> Print_settings.t -> unit
+  t -> Print_settings.t ptr option -> unit
 val set_show_progress :
   t -> bool -> unit
 val set_support_selection :

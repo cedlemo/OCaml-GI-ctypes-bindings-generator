@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_toggle_action_new" (string @-> string_opt @-> string_opt @-> string_opt @-> returning (t_typ))
+  foreign "gtk_toggle_action_new" (string @-> string_opt @-> string_opt @-> string_opt @-> returning (ptr t_typ))
 let get_active =
   foreign "gtk_toggle_action_get_active" (t_typ @-> returning (bool))
 let get_draw_as_radio =

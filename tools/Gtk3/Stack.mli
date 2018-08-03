@@ -4,13 +4,13 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val add_named :
-  t -> Widget.t -> string -> unit
+  t -> Widget.t ptr -> string -> unit
 val add_titled :
-  t -> Widget.t -> string -> string -> unit
+  t -> Widget.t ptr -> string -> string -> unit
 val get_child_by_name :
-  t -> string -> Widget.t
+  t -> string -> Widget.t ptr option
 val get_hhomogeneous :
   t -> bool
 val get_homogeneous :
@@ -26,7 +26,7 @@ val get_transition_type :
 val get_vhomogeneous :
   t -> bool
 val get_visible_child :
-  t -> Widget.t
+  t -> Widget.t ptr option
 val get_visible_child_name :
   t -> string option
 val set_hhomogeneous :
@@ -42,7 +42,7 @@ val set_transition_type :
 val set_vhomogeneous :
   t -> bool -> unit
 val set_visible_child :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr -> unit
 val set_visible_child_full :
   t -> string -> Stack_transition_type.t -> unit
 val set_visible_child_name :

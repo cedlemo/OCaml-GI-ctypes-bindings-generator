@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_socket_client_new" (void @-> returning (t_typ))
+  foreign "g_socket_client_new" (void @-> returning (ptr t_typ))
 let add_application_proxy =
   foreign "g_socket_client_add_application_proxy" (t_typ @-> string @-> returning (void))
 (*Not implemented g_socket_client_connect type interface not implemented*)
@@ -13,7 +13,7 @@ let add_application_proxy =
 (*Not implemented g_socket_client_connect_finish type interface not implemented*)
 let connect_to_host self host_and_port default_port cancellable =
   let connect_to_host_raw =
-    foreign "g_socket_client_connect_to_host" (t_typ @-> string @-> uint16_t @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (Socket_connection.t_typ))
+    foreign "g_socket_client_connect_to_host" (t_typ @-> string @-> uint16_t @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Socket_connection.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = connect_to_host_raw self host_and_port default_port cancellable err_ptr_ptr in
@@ -26,7 +26,7 @@ let connect_to_host self host_and_port default_port cancellable =
 (*Not implemented g_socket_client_connect_to_host_finish type interface not implemented*)
 let connect_to_service self domain service cancellable =
   let connect_to_service_raw =
-    foreign "g_socket_client_connect_to_service" (t_typ @-> string @-> string @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (Socket_connection.t_typ))
+    foreign "g_socket_client_connect_to_service" (t_typ @-> string @-> string @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Socket_connection.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = connect_to_service_raw self domain service cancellable err_ptr_ptr in
@@ -39,7 +39,7 @@ let connect_to_service self domain service cancellable =
 (*Not implemented g_socket_client_connect_to_service_finish type interface not implemented*)
 let connect_to_uri self uri default_port cancellable =
   let connect_to_uri_raw =
-    foreign "g_socket_client_connect_to_uri" (t_typ @-> string @-> uint16_t @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (Socket_connection.t_typ))
+    foreign "g_socket_client_connect_to_uri" (t_typ @-> string @-> uint16_t @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Socket_connection.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = connect_to_uri_raw self uri default_port cancellable err_ptr_ptr in
@@ -55,7 +55,7 @@ let get_enable_proxy =
 let get_family =
   foreign "g_socket_client_get_family" (t_typ @-> returning (Socket_family.t_view))
 let get_local_address =
-  foreign "g_socket_client_get_local_address" (t_typ @-> returning (Socket_address.t_typ))
+  foreign "g_socket_client_get_local_address" (t_typ @-> returning (ptr Socket_address.t_typ))
 let get_protocol =
   foreign "g_socket_client_get_protocol" (t_typ @-> returning (Socket_protocol.t_view))
 (*Not implemented g_socket_client_get_proxy_resolver return type interface not handled*)
@@ -72,7 +72,7 @@ let set_enable_proxy =
 let set_family =
   foreign "g_socket_client_set_family" (t_typ @-> Socket_family.t_view @-> returning (void))
 let set_local_address =
-  foreign "g_socket_client_set_local_address" (t_typ @-> Socket_address.t_typ @-> returning (void))
+  foreign "g_socket_client_set_local_address" (t_typ @-> ptr_opt Socket_address.t_typ @-> returning (void))
 let set_protocol =
   foreign "g_socket_client_set_protocol" (t_typ @-> Socket_protocol.t_view @-> returning (void))
 (*Not implemented g_socket_client_set_proxy_resolver type interface not implemented*)

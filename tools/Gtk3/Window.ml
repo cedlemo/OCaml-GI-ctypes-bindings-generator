@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_window_new" (Window_type.t_view @-> returning (Widget.t_typ))
+  foreign "gtk_window_new" (Window_type.t_view @-> returning (ptr Widget.t_typ))
 let get_default_icon_list =
   foreign "gtk_window_get_default_icon_list" (void @-> returning (ptr List.t_typ))
 let get_default_icon_name =
@@ -15,7 +15,7 @@ let list_toplevels =
 let set_auto_startup_notification =
   foreign "gtk_window_set_auto_startup_notification" (bool @-> returning (void))
 let set_default_icon =
-  foreign "gtk_window_set_default_icon" (Pixbuf.t_typ @-> returning (void))
+  foreign "gtk_window_set_default_icon" (ptr Pixbuf.t_typ @-> returning (void))
 let set_default_icon_from_file filename =
   let set_default_icon_from_file_raw =
     foreign "gtk_window_set_default_icon_from_file" (string @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
@@ -40,9 +40,9 @@ let activate_focus =
 let activate_key =
   foreign "gtk_window_activate_key" (t_typ @-> ptr Event_key.t_typ @-> returning (bool))
 let add_accel_group =
-  foreign "gtk_window_add_accel_group" (t_typ @-> Accel_group.t_typ @-> returning (void))
+  foreign "gtk_window_add_accel_group" (t_typ @-> ptr Accel_group.t_typ @-> returning (void))
 let add_mnemonic =
-  foreign "gtk_window_add_mnemonic" (t_typ @-> uint32_t @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_window_add_mnemonic" (t_typ @-> uint32_t @-> ptr Widget.t_typ @-> returning (void))
 let begin_move_drag =
   foreign "gtk_window_begin_move_drag" (t_typ @-> int32_t @-> int32_t @-> int32_t @-> uint32_t @-> returning (void))
 let begin_resize_drag =
@@ -54,13 +54,13 @@ let deiconify =
 let fullscreen =
   foreign "gtk_window_fullscreen" (t_typ @-> returning (void))
 let fullscreen_on_monitor =
-  foreign "gtk_window_fullscreen_on_monitor" (t_typ @-> Screen.t_typ @-> int32_t @-> returning (void))
+  foreign "gtk_window_fullscreen_on_monitor" (t_typ @-> ptr Screen.t_typ @-> int32_t @-> returning (void))
 let get_accept_focus =
   foreign "gtk_window_get_accept_focus" (t_typ @-> returning (bool))
 let get_application =
-  foreign "gtk_window_get_application" (t_typ @-> returning (Application.t_typ))
+  foreign "gtk_window_get_application" (t_typ @-> returning (ptr_opt Application.t_typ))
 let get_attached_to =
-  foreign "gtk_window_get_attached_to" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_window_get_attached_to" (t_typ @-> returning (ptr_opt Widget.t_typ))
 let get_decorated =
   foreign "gtk_window_get_decorated" (t_typ @-> returning (bool))
 let get_default_size self =
@@ -74,13 +74,13 @@ let get_default_size self =
   let height = !@ height_ptr in
   (width, height)
 let get_default_widget =
-  foreign "gtk_window_get_default_widget" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_window_get_default_widget" (t_typ @-> returning (ptr_opt Widget.t_typ))
 let get_deletable =
   foreign "gtk_window_get_deletable" (t_typ @-> returning (bool))
 let get_destroy_with_parent =
   foreign "gtk_window_get_destroy_with_parent" (t_typ @-> returning (bool))
 let get_focus =
-  foreign "gtk_window_get_focus" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_window_get_focus" (t_typ @-> returning (ptr_opt Widget.t_typ))
 let get_focus_on_map =
   foreign "gtk_window_get_focus_on_map" (t_typ @-> returning (bool))
 let get_focus_visible =
@@ -88,13 +88,13 @@ let get_focus_visible =
 let get_gravity =
   foreign "gtk_window_get_gravity" (t_typ @-> returning (Gravity.t_view))
 let get_group =
-  foreign "gtk_window_get_group" (t_typ @-> returning (Window_group.t_typ))
+  foreign "gtk_window_get_group" (t_typ @-> returning (ptr Window_group.t_typ))
 let get_has_resize_grip =
   foreign "gtk_window_get_has_resize_grip" (t_typ @-> returning (bool))
 let get_hide_titlebar_when_maximized =
   foreign "gtk_window_get_hide_titlebar_when_maximized" (t_typ @-> returning (bool))
 let get_icon =
-  foreign "gtk_window_get_icon" (t_typ @-> returning (Pixbuf.t_typ))
+  foreign "gtk_window_get_icon" (t_typ @-> returning (ptr_opt Pixbuf.t_typ))
 let get_icon_list =
   foreign "gtk_window_get_icon_list" (t_typ @-> returning (ptr List.t_typ))
 let get_icon_name =
@@ -130,7 +130,7 @@ let get_resize_grip_area self =
 let get_role =
   foreign "gtk_window_get_role" (t_typ @-> returning (string_opt))
 let get_screen =
-  foreign "gtk_window_get_screen" (t_typ @-> returning (Screen.t_typ))
+  foreign "gtk_window_get_screen" (t_typ @-> returning (ptr Screen.t_typ))
 let get_size self =
   let get_size_raw =
     foreign "gtk_window_get_size" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))
@@ -148,9 +148,9 @@ let get_skip_taskbar_hint =
 let get_title =
   foreign "gtk_window_get_title" (t_typ @-> returning (string_opt))
 let get_titlebar =
-  foreign "gtk_window_get_titlebar" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_window_get_titlebar" (t_typ @-> returning (ptr_opt Widget.t_typ))
 let get_transient_for =
-  foreign "gtk_window_get_transient_for" (t_typ @-> returning (t_typ))
+  foreign "gtk_window_get_transient_for" (t_typ @-> returning (ptr_opt t_typ))
 let get_type_hint =
   foreign "gtk_window_get_type_hint" (t_typ @-> returning (Window_type_hint.t_view))
 let get_urgency_hint =
@@ -182,9 +182,9 @@ let present_with_time =
 let propagate_key_event =
   foreign "gtk_window_propagate_key_event" (t_typ @-> ptr Event_key.t_typ @-> returning (bool))
 let remove_accel_group =
-  foreign "gtk_window_remove_accel_group" (t_typ @-> Accel_group.t_typ @-> returning (void))
+  foreign "gtk_window_remove_accel_group" (t_typ @-> ptr Accel_group.t_typ @-> returning (void))
 let remove_mnemonic =
-  foreign "gtk_window_remove_mnemonic" (t_typ @-> uint32_t @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_window_remove_mnemonic" (t_typ @-> uint32_t @-> ptr Widget.t_typ @-> returning (void))
 let reshow_with_initial_size =
   foreign "gtk_window_reshow_with_initial_size" (t_typ @-> returning (void))
 let resize =
@@ -196,13 +196,13 @@ let resize_to_geometry =
 let set_accept_focus =
   foreign "gtk_window_set_accept_focus" (t_typ @-> bool @-> returning (void))
 let set_application =
-  foreign "gtk_window_set_application" (t_typ @-> Application.t_typ @-> returning (void))
+  foreign "gtk_window_set_application" (t_typ @-> ptr_opt Application.t_typ @-> returning (void))
 let set_attached_to =
-  foreign "gtk_window_set_attached_to" (t_typ @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_window_set_attached_to" (t_typ @-> ptr_opt Widget.t_typ @-> returning (void))
 let set_decorated =
   foreign "gtk_window_set_decorated" (t_typ @-> bool @-> returning (void))
 let set_default =
-  foreign "gtk_window_set_default" (t_typ @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_window_set_default" (t_typ @-> ptr_opt Widget.t_typ @-> returning (void))
 let set_default_geometry =
   foreign "gtk_window_set_default_geometry" (t_typ @-> int32_t @-> int32_t @-> returning (void))
 let set_default_size =
@@ -212,13 +212,13 @@ let set_deletable =
 let set_destroy_with_parent =
   foreign "gtk_window_set_destroy_with_parent" (t_typ @-> bool @-> returning (void))
 let set_focus =
-  foreign "gtk_window_set_focus" (t_typ @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_window_set_focus" (t_typ @-> ptr_opt Widget.t_typ @-> returning (void))
 let set_focus_on_map =
   foreign "gtk_window_set_focus_on_map" (t_typ @-> bool @-> returning (void))
 let set_focus_visible =
   foreign "gtk_window_set_focus_visible" (t_typ @-> bool @-> returning (void))
 let set_geometry_hints =
-  foreign "gtk_window_set_geometry_hints" (t_typ @-> Widget.t_typ @-> ptr_opt Geometry.t_typ @-> Window_hints.t_list_view @-> returning (void))
+  foreign "gtk_window_set_geometry_hints" (t_typ @-> ptr_opt Widget.t_typ @-> ptr_opt Geometry.t_typ @-> Window_hints.t_list_view @-> returning (void))
 let set_gravity =
   foreign "gtk_window_set_gravity" (t_typ @-> Gravity.t_view @-> returning (void))
 let set_has_resize_grip =
@@ -228,7 +228,7 @@ let set_has_user_ref_count =
 let set_hide_titlebar_when_maximized =
   foreign "gtk_window_set_hide_titlebar_when_maximized" (t_typ @-> bool @-> returning (void))
 let set_icon =
-  foreign "gtk_window_set_icon" (t_typ @-> Pixbuf.t_typ @-> returning (void))
+  foreign "gtk_window_set_icon" (t_typ @-> ptr_opt Pixbuf.t_typ @-> returning (void))
 let set_icon_from_file self filename =
   let set_icon_from_file_raw =
     foreign "gtk_window_set_icon_from_file" (t_typ @-> string @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
@@ -263,7 +263,7 @@ let set_resizable =
 let set_role =
   foreign "gtk_window_set_role" (t_typ @-> string @-> returning (void))
 let set_screen =
-  foreign "gtk_window_set_screen" (t_typ @-> Screen.t_typ @-> returning (void))
+  foreign "gtk_window_set_screen" (t_typ @-> ptr Screen.t_typ @-> returning (void))
 let set_skip_pager_hint =
   foreign "gtk_window_set_skip_pager_hint" (t_typ @-> bool @-> returning (void))
 let set_skip_taskbar_hint =
@@ -273,9 +273,9 @@ let set_startup_id =
 let set_title =
   foreign "gtk_window_set_title" (t_typ @-> string @-> returning (void))
 let set_titlebar =
-  foreign "gtk_window_set_titlebar" (t_typ @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_window_set_titlebar" (t_typ @-> ptr_opt Widget.t_typ @-> returning (void))
 let set_transient_for =
-  foreign "gtk_window_set_transient_for" (t_typ @-> t_typ @-> returning (void))
+  foreign "gtk_window_set_transient_for" (t_typ @-> ptr_opt t_typ @-> returning (void))
 let set_type_hint =
   foreign "gtk_window_set_type_hint" (t_typ @-> Window_type_hint.t_view @-> returning (void))
 let set_urgency_hint =

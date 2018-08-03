@@ -5,11 +5,11 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_style_context_new" (void @-> returning (t_typ))
+  foreign "gtk_style_context_new" (void @-> returning (ptr t_typ))
 (*Not implemented gtk_style_context_add_provider_for_screen type interface not implemented*)
 (*Not implemented gtk_style_context_remove_provider_for_screen type interface not implemented*)
 let reset_widgets =
-  foreign "gtk_style_context_reset_widgets" (Screen.t_typ @-> returning (void))
+  foreign "gtk_style_context_reset_widgets" (ptr Screen.t_typ @-> returning (void))
 let add_class =
   foreign "gtk_style_context_add_class" (t_typ @-> string @-> returning (void))
 (*Not implemented gtk_style_context_add_provider type interface not implemented*)
@@ -54,7 +54,7 @@ let get_direction =
 let get_font =
   foreign "gtk_style_context_get_font" (t_typ @-> State_flags.t_list_view @-> returning (ptr Font_description.t_typ))
 let get_frame_clock =
-  foreign "gtk_style_context_get_frame_clock" (t_typ @-> returning (Frame_clock.t_typ))
+  foreign "gtk_style_context_get_frame_clock" (t_typ @-> returning (ptr_opt Frame_clock.t_typ))
 let get_junction_sides =
   foreign "gtk_style_context_get_junction_sides" (t_typ @-> returning (Junction_sides.t_list_view))
 let get_margin self state =
@@ -74,7 +74,7 @@ let get_padding self state =
   let padding = !@ padding_ptr in
   (padding)
 let get_parent =
-  foreign "gtk_style_context_get_parent" (t_typ @-> returning (t_typ))
+  foreign "gtk_style_context_get_parent" (t_typ @-> returning (ptr_opt t_typ))
 let get_path =
   foreign "gtk_style_context_get_path" (t_typ @-> returning (ptr Widget_path.t_typ))
 let get_property self property state =
@@ -88,7 +88,7 @@ let get_property self property state =
 let get_scale =
   foreign "gtk_style_context_get_scale" (t_typ @-> returning (int32_t))
 let get_screen =
-  foreign "gtk_style_context_get_screen" (t_typ @-> returning (Screen.t_typ))
+  foreign "gtk_style_context_get_screen" (t_typ @-> returning (ptr Screen.t_typ))
 let get_section =
   foreign "gtk_style_context_get_section" (t_typ @-> string @-> returning (ptr_opt Css_section.t_typ))
 let get_state =
@@ -122,7 +122,7 @@ let lookup_color self color_name =
 let lookup_icon_set =
   foreign "gtk_style_context_lookup_icon_set" (t_typ @-> string @-> returning (ptr_opt Icon_set.t_typ))
 let notify_state_change =
-  foreign "gtk_style_context_notify_state_change" (t_typ @-> Window.t_typ @-> ptr_opt void @-> State_type.t_view @-> bool @-> returning (void))
+  foreign "gtk_style_context_notify_state_change" (t_typ @-> ptr Window.t_typ @-> ptr_opt void @-> State_type.t_view @-> bool @-> returning (void))
 let pop_animatable_region =
   foreign "gtk_style_context_pop_animatable_region" (t_typ @-> returning (void))
 let push_animatable_region =
@@ -137,23 +137,23 @@ let restore =
 let save =
   foreign "gtk_style_context_save" (t_typ @-> returning (void))
 let scroll_animations =
-  foreign "gtk_style_context_scroll_animations" (t_typ @-> Window.t_typ @-> int32_t @-> int32_t @-> returning (void))
+  foreign "gtk_style_context_scroll_animations" (t_typ @-> ptr Window.t_typ @-> int32_t @-> int32_t @-> returning (void))
 let set_background =
-  foreign "gtk_style_context_set_background" (t_typ @-> Window.t_typ @-> returning (void))
+  foreign "gtk_style_context_set_background" (t_typ @-> ptr Window.t_typ @-> returning (void))
 let set_direction =
   foreign "gtk_style_context_set_direction" (t_typ @-> Text_direction.t_view @-> returning (void))
 let set_frame_clock =
-  foreign "gtk_style_context_set_frame_clock" (t_typ @-> Frame_clock.t_typ @-> returning (void))
+  foreign "gtk_style_context_set_frame_clock" (t_typ @-> ptr Frame_clock.t_typ @-> returning (void))
 let set_junction_sides =
   foreign "gtk_style_context_set_junction_sides" (t_typ @-> Junction_sides.t_list_view @-> returning (void))
 let set_parent =
-  foreign "gtk_style_context_set_parent" (t_typ @-> t_typ @-> returning (void))
+  foreign "gtk_style_context_set_parent" (t_typ @-> ptr_opt t_typ @-> returning (void))
 let set_path =
   foreign "gtk_style_context_set_path" (t_typ @-> ptr Widget_path.t_typ @-> returning (void))
 let set_scale =
   foreign "gtk_style_context_set_scale" (t_typ @-> int32_t @-> returning (void))
 let set_screen =
-  foreign "gtk_style_context_set_screen" (t_typ @-> Screen.t_typ @-> returning (void))
+  foreign "gtk_style_context_set_screen" (t_typ @-> ptr Screen.t_typ @-> returning (void))
 let set_state =
   foreign "gtk_style_context_set_state" (t_typ @-> State_flags.t_list_view @-> returning (void))
 let state_is_running self state =

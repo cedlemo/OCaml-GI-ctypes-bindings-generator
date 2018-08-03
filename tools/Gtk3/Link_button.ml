@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_link_button_new" (string @-> returning (Widget.t_typ))
+  foreign "gtk_link_button_new" (string @-> returning (ptr Widget.t_typ))
 let create_with_label =
-  foreign "gtk_link_button_new_with_label" (string @-> string_opt @-> returning (Widget.t_typ))
+  foreign "gtk_link_button_new_with_label" (string @-> string_opt @-> returning (ptr Widget.t_typ))
 let get_uri =
   foreign "gtk_link_button_get_uri" (t_typ @-> returning (string_opt))
 let get_visited =

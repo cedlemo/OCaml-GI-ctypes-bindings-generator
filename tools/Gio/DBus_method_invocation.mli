@@ -4,11 +4,11 @@ type t
 val t_typ : t typ
 
 val get_connection :
-  t -> DBus_connection.t
+  t -> DBus_connection.t ptr
 val get_interface_name :
   t -> string option
 val get_message :
-  t -> DBus_message.t
+  t -> DBus_message.t ptr
 val get_method_info :
   t -> DBus_method_info.t structure ptr
 val get_method_name :
@@ -30,4 +30,4 @@ val return_gerror :
 val return_value :
   t -> Variant.t structure ptr option -> unit
 val return_value_with_unix_fd_list :
-  t -> Variant.t structure ptr option -> Unix_fdlist.t -> unit
+  t -> Variant.t structure ptr option -> Unix_fdlist.t ptr option -> unit

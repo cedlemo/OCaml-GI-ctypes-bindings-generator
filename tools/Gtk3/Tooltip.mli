@@ -4,11 +4,11 @@ type t
 val t_typ : t typ
 
 val trigger_tooltip_query :
-  Display.t -> unit
+  Display.t ptr -> unit
 val set_custom :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr option -> unit
 val set_icon :
-  t -> Pixbuf.t -> unit
+  t -> Pixbuf.t ptr option -> unit
 (*Not implemented gtk_tooltip_set_icon_from_gicon type interface not implemented*)
 val set_icon_from_icon_name :
   t -> string option -> int32 -> unit

@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  Test_dbus_flags.t_list -> t
+  Test_dbus_flags.t_list -> t ptr
 val unset :
   unit -> unit
 val add_service_dir :

@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_cancellable_new" (void @-> returning (t_typ))
+  foreign "g_cancellable_new" (void @-> returning (ptr t_typ))
 let get_current =
-  foreign "g_cancellable_get_current" (void @-> returning (t_typ))
+  foreign "g_cancellable_get_current" (void @-> returning (ptr_opt t_typ))
 let cancel =
   foreign "g_cancellable_cancel" (t_typ @-> returning (void))
 (*Not implemented g_cancellable_connect type callback not implemented*)

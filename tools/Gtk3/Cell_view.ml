@@ -5,15 +5,15 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_cell_view_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_cell_view_new" (void @-> returning (ptr Widget.t_typ))
 let create_with_context =
-  foreign "gtk_cell_view_new_with_context" (Cell_area.t_typ @-> Cell_area_context.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_cell_view_new_with_context" (ptr Cell_area.t_typ @-> ptr Cell_area_context.t_typ @-> returning (ptr Widget.t_typ))
 let create_with_markup =
-  foreign "gtk_cell_view_new_with_markup" (string @-> returning (Widget.t_typ))
+  foreign "gtk_cell_view_new_with_markup" (string @-> returning (ptr Widget.t_typ))
 let create_with_pixbuf =
-  foreign "gtk_cell_view_new_with_pixbuf" (Pixbuf.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_cell_view_new_with_pixbuf" (ptr Pixbuf.t_typ @-> returning (ptr Widget.t_typ))
 let create_with_text =
-  foreign "gtk_cell_view_new_with_text" (string @-> returning (Widget.t_typ))
+  foreign "gtk_cell_view_new_with_text" (string @-> returning (ptr Widget.t_typ))
 let get_displayed_row =
   foreign "gtk_cell_view_get_displayed_row" (t_typ @-> returning (ptr_opt Tree_path.t_typ))
 let get_draw_sensitive =

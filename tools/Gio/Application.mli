@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  string option -> Application_flags.t_list -> t
+  string option -> Application_flags.t_list -> t ptr
 val get_default :
-  unit -> t
+  unit -> t ptr
 val id_is_valid :
   string -> bool
 val activate :
@@ -17,11 +17,11 @@ val add_main_option :
 val add_option_group :
   t -> Option_group.t structure ptr -> unit
 val bind_busy_property :
-  t -> Object.t -> string -> unit
+  t -> Object.t ptr -> string -> unit
 val get_application_id :
   t -> string option
 val get_dbus_connection :
-  t -> DBus_connection.t
+  t -> DBus_connection.t ptr
 val get_dbus_object_path :
   t -> string option
 val get_flags :
@@ -44,12 +44,12 @@ val mark_busy :
 val quit :
   t -> unit
 val register :
-  t -> Cancellable.t -> (bool, Error.t structure ptr option) result
+  t -> Cancellable.t ptr option -> (bool, Error.t structure ptr option) result
 val release :
   t -> unit
 (*Not implemented g_application_run type C Array type for Types.Array tag not implemented*)
 val send_notification :
-  t -> string option -> Notification.t -> unit
+  t -> string option -> Notification.t ptr -> unit
 (*Not implemented g_application_set_action_group type interface not implemented*)
 val set_application_id :
   t -> string option -> unit
@@ -68,7 +68,7 @@ val set_option_context_summary :
 val set_resource_base_path :
   t -> string option -> unit
 val unbind_busy_property :
-  t -> Object.t -> string -> unit
+  t -> Object.t ptr -> string -> unit
 val unmark_busy :
   t -> unit
 val withdraw_notification :

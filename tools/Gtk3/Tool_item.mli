@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val get_ellipsize_mode :
   t -> Ellipsize_mode.t
 val get_expand :
@@ -18,7 +18,7 @@ val get_is_important :
 val get_orientation :
   t -> Orientation.t
 val get_proxy_menu_item :
-  t -> string -> Widget.t
+  t -> string -> Widget.t ptr option
 val get_relief_style :
   t -> Relief_style.t
 val get_text_alignment :
@@ -26,7 +26,7 @@ val get_text_alignment :
 val get_text_orientation :
   t -> Orientation.t
 val get_text_size_group :
-  t -> Size_group.t
+  t -> Size_group.t ptr
 val get_toolbar_style :
   t -> Toolbar_style.t
 val get_use_drag_window :
@@ -38,7 +38,7 @@ val get_visible_vertical :
 val rebuild_menu :
   t -> unit
 val retrieve_proxy_menu_item :
-  t -> Widget.t
+  t -> Widget.t ptr
 val set_expand :
   t -> bool -> unit
 val set_homogeneous :
@@ -46,7 +46,7 @@ val set_homogeneous :
 val set_is_important :
   t -> bool -> unit
 val set_proxy_menu_item :
-  t -> string -> Widget.t -> unit
+  t -> string -> Widget.t ptr option -> unit
 val set_tooltip_markup :
   t -> string -> unit
 val set_tooltip_text :

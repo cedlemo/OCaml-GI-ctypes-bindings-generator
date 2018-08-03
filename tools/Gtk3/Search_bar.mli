@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val connect_entry :
-  t -> Entry.t -> unit
+  t -> Entry.t ptr -> unit
 val get_search_mode :
   t -> bool
 val get_show_close_button :

@@ -6,7 +6,7 @@ let t_typ : t typ = ptr void
 
 let next self cancellable =
   let next_raw =
-    foreign "g_socket_address_enumerator_next" (t_typ @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (Socket_address.t_typ))
+    foreign "g_socket_address_enumerator_next" (t_typ @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Socket_address.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = next_raw self cancellable err_ptr_ptr in

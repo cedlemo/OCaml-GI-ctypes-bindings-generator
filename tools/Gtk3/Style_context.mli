@@ -4,11 +4,11 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 (*Not implemented gtk_style_context_add_provider_for_screen type interface not implemented*)
 (*Not implemented gtk_style_context_remove_provider_for_screen type interface not implemented*)
 val reset_widgets :
-  Screen.t -> unit
+  Screen.t ptr -> unit
 val add_class :
   t -> string -> unit
 (*Not implemented gtk_style_context_add_provider type interface not implemented*)
@@ -29,7 +29,7 @@ val get_direction :
 val get_font :
   t -> State_flags.t_list -> Font_description.t structure ptr
 val get_frame_clock :
-  t -> Frame_clock.t
+  t -> Frame_clock.t ptr option
 val get_junction_sides :
   t -> Junction_sides.t_list
 val get_margin :
@@ -37,7 +37,7 @@ val get_margin :
 val get_padding :
   t -> State_flags.t_list -> (Border.t structure)
 val get_parent :
-  t -> t
+  t -> t ptr option
 val get_path :
   t -> Widget_path.t structure ptr
 val get_property :
@@ -45,7 +45,7 @@ val get_property :
 val get_scale :
   t -> int32
 val get_screen :
-  t -> Screen.t
+  t -> Screen.t ptr
 val get_section :
   t -> string -> Css_section.t structure ptr option
 val get_state :
@@ -67,7 +67,7 @@ val lookup_color :
 val lookup_icon_set :
   t -> string -> Icon_set.t structure ptr option
 val notify_state_change :
-  t -> Window.t -> unit ptr option -> State_type.t -> bool -> unit
+  t -> Window.t ptr -> unit ptr option -> State_type.t -> bool -> unit
 val pop_animatable_region :
   t -> unit
 val push_animatable_region :
@@ -82,23 +82,23 @@ val restore :
 val save :
   t -> unit
 val scroll_animations :
-  t -> Window.t -> int32 -> int32 -> unit
+  t -> Window.t ptr -> int32 -> int32 -> unit
 val set_background :
-  t -> Window.t -> unit
+  t -> Window.t ptr -> unit
 val set_direction :
   t -> Text_direction.t -> unit
 val set_frame_clock :
-  t -> Frame_clock.t -> unit
+  t -> Frame_clock.t ptr -> unit
 val set_junction_sides :
   t -> Junction_sides.t_list -> unit
 val set_parent :
-  t -> t -> unit
+  t -> t ptr option -> unit
 val set_path :
   t -> Widget_path.t structure ptr -> unit
 val set_scale :
   t -> int32 -> unit
 val set_screen :
-  t -> Screen.t -> unit
+  t -> Screen.t ptr -> unit
 val set_state :
   t -> State_flags.t_list -> unit
 val state_is_running :

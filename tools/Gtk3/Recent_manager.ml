@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_recent_manager_new" (void @-> returning (t_typ))
+  foreign "gtk_recent_manager_new" (void @-> returning (ptr t_typ))
 let get_default =
-  foreign "gtk_recent_manager_get_default" (void @-> returning (t_typ))
+  foreign "gtk_recent_manager_get_default" (void @-> returning (ptr t_typ))
 let add_full =
   foreign "gtk_recent_manager_add_full" (t_typ @-> string @-> ptr Recent_data.t_typ @-> returning (bool))
 let add_item =

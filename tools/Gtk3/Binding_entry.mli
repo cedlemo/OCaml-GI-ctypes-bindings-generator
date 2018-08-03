@@ -16,7 +16,7 @@ val f_signals: (Binding_signal.t structure ptr, t structure) field
 val add_signal_from_string :
   Binding_set.t structure ptr -> string -> Token_type.t
 val add_signall :
-  Binding_set.t structure ptr -> Unsigned.uint32 -> Modifier_type.t_list -> string -> SList.t structure (* Binding_arg.t structure *) ptr -> unit
+  Binding_set.t structure ptr -> Unsigned.uint32 -> Modifier_type.t_list -> string -> SList.t structure (* Not implemented : interface *) ptr -> unit
 val remove :
   Binding_set.t structure ptr -> Unsigned.uint32 -> Modifier_type.t_list -> unit
 val skip :

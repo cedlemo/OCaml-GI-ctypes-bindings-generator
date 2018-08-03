@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let get_base_stream =
-  foreign "g_filter_output_stream_get_base_stream" (t_typ @-> returning (Output_stream.t_typ))
+  foreign "g_filter_output_stream_get_base_stream" (t_typ @-> returning (ptr Output_stream.t_typ))
 let get_close_base_stream =
   foreign "g_filter_output_stream_get_close_base_stream" (t_typ @-> returning (bool))
 let set_close_base_stream =

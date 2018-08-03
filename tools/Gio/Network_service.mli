@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  string -> string -> string -> t
+  string -> string -> string -> t ptr
 val get_domain :
   t -> string option
 val get_protocol :

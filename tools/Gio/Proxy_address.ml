@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_proxy_address_new" (Inet_address.t_typ @-> uint16_t @-> string @-> string @-> uint16_t @-> string_opt @-> string_opt @-> returning (Socket_address.t_typ))
+  foreign "g_proxy_address_new" (ptr Inet_address.t_typ @-> uint16_t @-> string @-> string @-> uint16_t @-> string_opt @-> string_opt @-> returning (ptr Socket_address.t_typ))
 let get_destination_hostname =
   foreign "g_proxy_address_get_destination_hostname" (t_typ @-> returning (string_opt))
 let get_destination_port =

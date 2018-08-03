@@ -138,10 +138,10 @@ let source_set_closure =
 (*Not implemented g_signal_type_cclosure_new type gType not implemented*)
 
 let signal_stop_emission_by_name =
-  foreign "g_signal_stop_emission_by_name" (Object.t_typ @-> string @-> returning (void))
+  foreign "g_signal_stop_emission_by_name" (ptr Object.t_typ @-> string @-> returning (void))
 
 let signal_stop_emission =
-  foreign "g_signal_stop_emission" (Object.t_typ @-> uint32_t @-> uint32_t @-> returning (void))
+  foreign "g_signal_stop_emission" (ptr Object.t_typ @-> uint32_t @-> uint32_t @-> returning (void))
 
 (*Not implemented g_signal_set_va_marshaller type gType not implemented*)
 
@@ -169,45 +169,45 @@ let signal_name =
 (*Not implemented g_signal_list_ids type gType not implemented*)
 
 let signal_has_handler_pending =
-  foreign "g_signal_has_handler_pending" (Object.t_typ @-> uint32_t @-> uint32_t @-> bool @-> returning (bool))
+  foreign "g_signal_has_handler_pending" (ptr Object.t_typ @-> uint32_t @-> uint32_t @-> bool @-> returning (bool))
 
 let signal_handlers_unblock_matched =
-  foreign "g_signal_handlers_unblock_matched" (Object.t_typ @-> Signal_match_type.t_list_view @-> uint32_t @-> uint32_t @-> ptr_opt Closure.t_typ @-> ptr_opt void @-> ptr_opt void @-> returning (uint32_t))
+  foreign "g_signal_handlers_unblock_matched" (ptr Object.t_typ @-> Signal_match_type.t_list_view @-> uint32_t @-> uint32_t @-> ptr_opt Closure.t_typ @-> ptr_opt void @-> ptr_opt void @-> returning (uint32_t))
 
 let signal_handlers_disconnect_matched =
-  foreign "g_signal_handlers_disconnect_matched" (Object.t_typ @-> Signal_match_type.t_list_view @-> uint32_t @-> uint32_t @-> ptr_opt Closure.t_typ @-> ptr_opt void @-> ptr_opt void @-> returning (uint32_t))
+  foreign "g_signal_handlers_disconnect_matched" (ptr Object.t_typ @-> Signal_match_type.t_list_view @-> uint32_t @-> uint32_t @-> ptr_opt Closure.t_typ @-> ptr_opt void @-> ptr_opt void @-> returning (uint32_t))
 
 let signal_handlers_destroy =
-  foreign "g_signal_handlers_destroy" (Object.t_typ @-> returning (void))
+  foreign "g_signal_handlers_destroy" (ptr Object.t_typ @-> returning (void))
 
 let signal_handlers_block_matched =
-  foreign "g_signal_handlers_block_matched" (Object.t_typ @-> Signal_match_type.t_list_view @-> uint32_t @-> uint32_t @-> ptr_opt Closure.t_typ @-> ptr_opt void @-> ptr_opt void @-> returning (uint32_t))
+  foreign "g_signal_handlers_block_matched" (ptr Object.t_typ @-> Signal_match_type.t_list_view @-> uint32_t @-> uint32_t @-> ptr_opt Closure.t_typ @-> ptr_opt void @-> ptr_opt void @-> returning (uint32_t))
 
 let signal_handler_unblock =
-  foreign "g_signal_handler_unblock" (Object.t_typ @-> uint64_t @-> returning (void))
+  foreign "g_signal_handler_unblock" (ptr Object.t_typ @-> uint64_t @-> returning (void))
 
 let signal_handler_is_connected =
-  foreign "g_signal_handler_is_connected" (Object.t_typ @-> uint64_t @-> returning (bool))
+  foreign "g_signal_handler_is_connected" (ptr Object.t_typ @-> uint64_t @-> returning (bool))
 
 let signal_handler_find =
-  foreign "g_signal_handler_find" (Object.t_typ @-> Signal_match_type.t_list_view @-> uint32_t @-> uint32_t @-> ptr_opt Closure.t_typ @-> ptr_opt void @-> ptr_opt void @-> returning (uint64_t))
+  foreign "g_signal_handler_find" (ptr Object.t_typ @-> Signal_match_type.t_list_view @-> uint32_t @-> uint32_t @-> ptr_opt Closure.t_typ @-> ptr_opt void @-> ptr_opt void @-> returning (uint64_t))
 
 let signal_handler_disconnect =
-  foreign "g_signal_handler_disconnect" (Object.t_typ @-> uint64_t @-> returning (void))
+  foreign "g_signal_handler_disconnect" (ptr Object.t_typ @-> uint64_t @-> returning (void))
 
 let signal_handler_block =
-  foreign "g_signal_handler_block" (Object.t_typ @-> uint64_t @-> returning (void))
+  foreign "g_signal_handler_block" (ptr Object.t_typ @-> uint64_t @-> returning (void))
 
 let signal_get_invocation_hint =
-  foreign "g_signal_get_invocation_hint" (Object.t_typ @-> returning (ptr Signal_invocation_hint.t_typ))
+  foreign "g_signal_get_invocation_hint" (ptr Object.t_typ @-> returning (ptr Signal_invocation_hint.t_typ))
 
 (*Not implemented g_signal_emitv type C Array type for Types.Array tag not implemented*)
 
 let signal_connect_closure_by_id =
-  foreign "g_signal_connect_closure_by_id" (Object.t_typ @-> uint32_t @-> uint32_t @-> ptr Closure.t_typ @-> bool @-> returning (uint64_t))
+  foreign "g_signal_connect_closure_by_id" (ptr Object.t_typ @-> uint32_t @-> uint32_t @-> ptr Closure.t_typ @-> bool @-> returning (uint64_t))
 
 let signal_connect_closure =
-  foreign "g_signal_connect_closure" (Object.t_typ @-> string @-> ptr Closure.t_typ @-> bool @-> returning (uint64_t))
+  foreign "g_signal_connect_closure" (ptr Object.t_typ @-> string @-> ptr Closure.t_typ @-> bool @-> returning (uint64_t))
 
 (*Not implemented g_signal_chain_from_overridden type C Array type for Types.Array tag not implemented*)
 
@@ -222,80 +222,80 @@ let signal_accumulator_first_wins =
 (*Not implemented g_pointer_type_register_static return type gType not handled*)
 
 let param_values_cmp =
-  foreign "g_param_values_cmp" (Param_spec.t_typ @-> ptr Value.t_typ @-> ptr Value.t_typ @-> returning (int32_t))
+  foreign "g_param_values_cmp" (ptr Param_spec.t_typ @-> ptr Value.t_typ @-> ptr Value.t_typ @-> returning (int32_t))
 
 let param_value_validate =
-  foreign "g_param_value_validate" (Param_spec.t_typ @-> ptr Value.t_typ @-> returning (bool))
+  foreign "g_param_value_validate" (ptr Param_spec.t_typ @-> ptr Value.t_typ @-> returning (bool))
 
 let param_value_set_default =
-  foreign "g_param_value_set_default" (Param_spec.t_typ @-> ptr Value.t_typ @-> returning (void))
+  foreign "g_param_value_set_default" (ptr Param_spec.t_typ @-> ptr Value.t_typ @-> returning (void))
 
 let param_value_defaults =
-  foreign "g_param_value_defaults" (Param_spec.t_typ @-> ptr Value.t_typ @-> returning (bool))
+  foreign "g_param_value_defaults" (ptr Param_spec.t_typ @-> ptr Value.t_typ @-> returning (bool))
 
 let param_value_convert =
-  foreign "g_param_value_convert" (Param_spec.t_typ @-> ptr Value.t_typ @-> ptr Value.t_typ @-> bool @-> returning (bool))
+  foreign "g_param_value_convert" (ptr Param_spec.t_typ @-> ptr Value.t_typ @-> ptr Value.t_typ @-> bool @-> returning (bool))
 
 (*Not implemented g_param_type_register_static return type gType not handled*)
 
 let param_spec_variant =
-  foreign "g_param_spec_variant" (string @-> string @-> string @-> ptr Variant_type.t_typ @-> ptr_opt Variant.t_typ @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_variant" (string @-> string @-> string @-> ptr Variant_type.t_typ @-> ptr_opt Variant.t_typ @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 (*Not implemented g_param_spec_unichar type unichar not implemented*)
 
 let param_spec_ulong =
-  foreign "g_param_spec_ulong" (string @-> string @-> string @-> uint64_t @-> uint64_t @-> uint64_t @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_ulong" (string @-> string @-> string @-> uint64_t @-> uint64_t @-> uint64_t @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 let param_spec_uint64 =
-  foreign "g_param_spec_uint64" (string @-> string @-> string @-> uint64_t @-> uint64_t @-> uint64_t @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_uint64" (string @-> string @-> string @-> uint64_t @-> uint64_t @-> uint64_t @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 let param_spec_uint =
-  foreign "g_param_spec_uint" (string @-> string @-> string @-> uint32_t @-> uint32_t @-> uint32_t @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_uint" (string @-> string @-> string @-> uint32_t @-> uint32_t @-> uint32_t @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 let param_spec_uchar =
-  foreign "g_param_spec_uchar" (string @-> string @-> string @-> uint8_t @-> uint8_t @-> uint8_t @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_uchar" (string @-> string @-> string @-> uint8_t @-> uint8_t @-> uint8_t @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 let param_spec_string =
-  foreign "g_param_spec_string" (string @-> string @-> string @-> string_opt @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_string" (string @-> string @-> string @-> string_opt @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 let param_spec_pool_create =
   foreign "g_param_spec_pool_new" (bool @-> returning (ptr Param_spec_pool.t_typ))
 
 let param_spec_pointer =
-  foreign "g_param_spec_pointer" (string @-> string @-> string @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_pointer" (string @-> string @-> string @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 (*Not implemented g_param_spec_param type gType not implemented*)
 
 (*Not implemented g_param_spec_object type gType not implemented*)
 
 let param_spec_long =
-  foreign "g_param_spec_long" (string @-> string @-> string @-> int64_t @-> int64_t @-> int64_t @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_long" (string @-> string @-> string @-> int64_t @-> int64_t @-> int64_t @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 let param_spec_int64 =
-  foreign "g_param_spec_int64" (string @-> string @-> string @-> int64_t @-> int64_t @-> int64_t @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_int64" (string @-> string @-> string @-> int64_t @-> int64_t @-> int64_t @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 let param_spec_int =
-  foreign "g_param_spec_int" (string @-> string @-> string @-> int32_t @-> int32_t @-> int32_t @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_int" (string @-> string @-> string @-> int32_t @-> int32_t @-> int32_t @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 (*Not implemented g_param_spec_gtype type gType not implemented*)
 
 let param_spec_float =
-  foreign "g_param_spec_float" (string @-> string @-> string @-> float @-> float @-> float @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_float" (string @-> string @-> string @-> float @-> float @-> float @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 (*Not implemented g_param_spec_flags type gType not implemented*)
 
 (*Not implemented g_param_spec_enum type gType not implemented*)
 
 let param_spec_double =
-  foreign "g_param_spec_double" (string @-> string @-> string @-> double @-> double @-> double @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_double" (string @-> string @-> string @-> double @-> double @-> double @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 let param_spec_char =
-  foreign "g_param_spec_char" (string @-> string @-> string @-> int8_t @-> int8_t @-> int8_t @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_char" (string @-> string @-> string @-> int8_t @-> int8_t @-> int8_t @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 (*Not implemented g_param_spec_boxed type gType not implemented*)
 
 let param_spec_boolean =
-  foreign "g_param_spec_boolean" (string @-> string @-> string @-> bool @-> Param_flags.t_list_view @-> returning (Param_spec.t_typ))
+  foreign "g_param_spec_boolean" (string @-> string @-> string @-> bool @-> Param_flags.t_list_view @-> returning (ptr Param_spec.t_typ))
 
 (*Not implemented g_gtype_get_type return type gType not handled*)
 

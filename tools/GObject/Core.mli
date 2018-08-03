@@ -137,10 +137,10 @@ val source_set_closure :
 (*Not implemented g_signal_type_cclosure_new type gType not implemented*)
 
 val signal_stop_emission_by_name :
-  Object.t -> string -> unit
+  Object.t ptr -> string -> unit
 
 val signal_stop_emission :
-  Object.t -> Unsigned.uint32 -> Unsigned.uint32 -> unit
+  Object.t ptr -> Unsigned.uint32 -> Unsigned.uint32 -> unit
 
 (*Not implemented g_signal_set_va_marshaller type gType not implemented*)
 
@@ -162,45 +162,45 @@ val signal_name :
 (*Not implemented g_signal_list_ids type gType not implemented*)
 
 val signal_has_handler_pending :
-  Object.t -> Unsigned.uint32 -> Unsigned.uint32 -> bool -> bool
+  Object.t ptr -> Unsigned.uint32 -> Unsigned.uint32 -> bool -> bool
 
 val signal_handlers_unblock_matched :
-  Object.t -> Signal_match_type.t_list -> Unsigned.uint32 -> Unsigned.uint32 -> Closure.t structure ptr option -> unit ptr option -> unit ptr option -> Unsigned.uint32
+  Object.t ptr -> Signal_match_type.t_list -> Unsigned.uint32 -> Unsigned.uint32 -> Closure.t structure ptr option -> unit ptr option -> unit ptr option -> Unsigned.uint32
 
 val signal_handlers_disconnect_matched :
-  Object.t -> Signal_match_type.t_list -> Unsigned.uint32 -> Unsigned.uint32 -> Closure.t structure ptr option -> unit ptr option -> unit ptr option -> Unsigned.uint32
+  Object.t ptr -> Signal_match_type.t_list -> Unsigned.uint32 -> Unsigned.uint32 -> Closure.t structure ptr option -> unit ptr option -> unit ptr option -> Unsigned.uint32
 
 val signal_handlers_destroy :
-  Object.t -> unit
+  Object.t ptr -> unit
 
 val signal_handlers_block_matched :
-  Object.t -> Signal_match_type.t_list -> Unsigned.uint32 -> Unsigned.uint32 -> Closure.t structure ptr option -> unit ptr option -> unit ptr option -> Unsigned.uint32
+  Object.t ptr -> Signal_match_type.t_list -> Unsigned.uint32 -> Unsigned.uint32 -> Closure.t structure ptr option -> unit ptr option -> unit ptr option -> Unsigned.uint32
 
 val signal_handler_unblock :
-  Object.t -> Unsigned.uint64 -> unit
+  Object.t ptr -> Unsigned.uint64 -> unit
 
 val signal_handler_is_connected :
-  Object.t -> Unsigned.uint64 -> bool
+  Object.t ptr -> Unsigned.uint64 -> bool
 
 val signal_handler_find :
-  Object.t -> Signal_match_type.t_list -> Unsigned.uint32 -> Unsigned.uint32 -> Closure.t structure ptr option -> unit ptr option -> unit ptr option -> Unsigned.uint64
+  Object.t ptr -> Signal_match_type.t_list -> Unsigned.uint32 -> Unsigned.uint32 -> Closure.t structure ptr option -> unit ptr option -> unit ptr option -> Unsigned.uint64
 
 val signal_handler_disconnect :
-  Object.t -> Unsigned.uint64 -> unit
+  Object.t ptr -> Unsigned.uint64 -> unit
 
 val signal_handler_block :
-  Object.t -> Unsigned.uint64 -> unit
+  Object.t ptr -> Unsigned.uint64 -> unit
 
 val signal_get_invocation_hint :
-  Object.t -> Signal_invocation_hint.t structure ptr
+  Object.t ptr -> Signal_invocation_hint.t structure ptr
 
 (*Not implemented g_signal_emitv type C Array type for Types.Array tag not implemented*)
 
 val signal_connect_closure_by_id :
-  Object.t -> Unsigned.uint32 -> Unsigned.uint32 -> Closure.t structure ptr -> bool -> Unsigned.uint64
+  Object.t ptr -> Unsigned.uint32 -> Unsigned.uint32 -> Closure.t structure ptr -> bool -> Unsigned.uint64
 
 val signal_connect_closure :
-  Object.t -> string -> Closure.t structure ptr -> bool -> Unsigned.uint64
+  Object.t ptr -> string -> Closure.t structure ptr -> bool -> Unsigned.uint64
 
 (*Not implemented g_signal_chain_from_overridden type C Array type for Types.Array tag not implemented*)
 
@@ -215,80 +215,80 @@ val signal_accumulator_first_wins :
 (*Not implemented g_pointer_type_register_static return type gType not handled*)
 
 val param_values_cmp :
-  Param_spec.t -> Value.t structure ptr -> Value.t structure ptr -> int32
+  Param_spec.t ptr -> Value.t structure ptr -> Value.t structure ptr -> int32
 
 val param_value_validate :
-  Param_spec.t -> Value.t structure ptr -> bool
+  Param_spec.t ptr -> Value.t structure ptr -> bool
 
 val param_value_set_default :
-  Param_spec.t -> Value.t structure ptr -> unit
+  Param_spec.t ptr -> Value.t structure ptr -> unit
 
 val param_value_defaults :
-  Param_spec.t -> Value.t structure ptr -> bool
+  Param_spec.t ptr -> Value.t structure ptr -> bool
 
 val param_value_convert :
-  Param_spec.t -> Value.t structure ptr -> Value.t structure ptr -> bool -> bool
+  Param_spec.t ptr -> Value.t structure ptr -> Value.t structure ptr -> bool -> bool
 
 (*Not implemented g_param_type_register_static return type gType not handled*)
 
 val param_spec_variant :
-  string -> string -> string -> Variant_type.t structure ptr -> Variant.t structure ptr option -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> Variant_type.t structure ptr -> Variant.t structure ptr option -> Param_flags.t_list -> Param_spec.t ptr
 
 (*Not implemented g_param_spec_unichar type unichar not implemented*)
 
 val param_spec_ulong :
-  string -> string -> string -> Unsigned.uint64 -> Unsigned.uint64 -> Unsigned.uint64 -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> Unsigned.uint64 -> Unsigned.uint64 -> Unsigned.uint64 -> Param_flags.t_list -> Param_spec.t ptr
 
 val param_spec_uint64 :
-  string -> string -> string -> Unsigned.uint64 -> Unsigned.uint64 -> Unsigned.uint64 -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> Unsigned.uint64 -> Unsigned.uint64 -> Unsigned.uint64 -> Param_flags.t_list -> Param_spec.t ptr
 
 val param_spec_uint :
-  string -> string -> string -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> Param_flags.t_list -> Param_spec.t ptr
 
 val param_spec_uchar :
-  string -> string -> string -> Unsigned.uint8 -> Unsigned.uint8 -> Unsigned.uint8 -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> Unsigned.uint8 -> Unsigned.uint8 -> Unsigned.uint8 -> Param_flags.t_list -> Param_spec.t ptr
 
 val param_spec_string :
-  string -> string -> string -> string option -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> string option -> Param_flags.t_list -> Param_spec.t ptr
 
 val param_spec_pool_create :
   bool -> Param_spec_pool.t structure ptr
 
 val param_spec_pointer :
-  string -> string -> string -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> Param_flags.t_list -> Param_spec.t ptr
 
 (*Not implemented g_param_spec_param type gType not implemented*)
 
 (*Not implemented g_param_spec_object type gType not implemented*)
 
 val param_spec_long :
-  string -> string -> string -> int64 -> int64 -> int64 -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> int64 -> int64 -> int64 -> Param_flags.t_list -> Param_spec.t ptr
 
 val param_spec_int64 :
-  string -> string -> string -> int64 -> int64 -> int64 -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> int64 -> int64 -> int64 -> Param_flags.t_list -> Param_spec.t ptr
 
 val param_spec_int :
-  string -> string -> string -> int32 -> int32 -> int32 -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> int32 -> int32 -> int32 -> Param_flags.t_list -> Param_spec.t ptr
 
 (*Not implemented g_param_spec_gtype type gType not implemented*)
 
 val param_spec_float :
-  string -> string -> string -> float -> float -> float -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> float -> float -> float -> Param_flags.t_list -> Param_spec.t ptr
 
 (*Not implemented g_param_spec_flags type gType not implemented*)
 
 (*Not implemented g_param_spec_enum type gType not implemented*)
 
 val param_spec_double :
-  string -> string -> string -> float -> float -> float -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> float -> float -> float -> Param_flags.t_list -> Param_spec.t ptr
 
 val param_spec_char :
-  string -> string -> string -> int -> int -> int -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> int -> int -> int -> Param_flags.t_list -> Param_spec.t ptr
 
 (*Not implemented g_param_spec_boxed type gType not implemented*)
 
 val param_spec_boolean :
-  string -> string -> string -> bool -> Param_flags.t_list -> Param_spec.t
+  string -> string -> string -> bool -> Param_flags.t_list -> Param_spec.t ptr
 
 (*Not implemented g_gtype_get_type return type gType not handled*)
 

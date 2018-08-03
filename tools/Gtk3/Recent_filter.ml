@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_recent_filter_new" (void @-> returning (t_typ))
+  foreign "gtk_recent_filter_new" (void @-> returning (ptr t_typ))
 let add_age =
   foreign "gtk_recent_filter_add_age" (t_typ @-> int32_t @-> returning (void))
 let add_application =

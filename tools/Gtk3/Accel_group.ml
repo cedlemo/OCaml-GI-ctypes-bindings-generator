@@ -5,11 +5,11 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_accel_group_new" (void @-> returning (t_typ))
+  foreign "gtk_accel_group_new" (void @-> returning (ptr t_typ))
 let from_accel_closure =
-  foreign "gtk_accel_group_from_accel_closure" (ptr Closure.t_typ @-> returning (t_typ))
+  foreign "gtk_accel_group_from_accel_closure" (ptr Closure.t_typ @-> returning (ptr_opt t_typ))
 let activate =
-  foreign "gtk_accel_group_activate" (t_typ @-> uint32_t @-> Object.t_typ @-> uint32_t @-> Modifier_type.t_list_view @-> returning (bool))
+  foreign "gtk_accel_group_activate" (t_typ @-> uint32_t @-> ptr Object.t_typ @-> uint32_t @-> Modifier_type.t_list_view @-> returning (bool))
 let connect =
   foreign "gtk_accel_group_connect" (t_typ @-> uint32_t @-> Modifier_type.t_list_view @-> Accel_flags.t_list_view @-> ptr Closure.t_typ @-> returning (void))
 let connect_by_path =

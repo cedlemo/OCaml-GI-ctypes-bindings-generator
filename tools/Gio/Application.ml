@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_application_new" (string_opt @-> Application_flags.t_list_view @-> returning (t_typ))
+  foreign "g_application_new" (string_opt @-> Application_flags.t_list_view @-> returning (ptr t_typ))
 let get_default =
-  foreign "g_application_get_default" (void @-> returning (t_typ))
+  foreign "g_application_get_default" (void @-> returning (ptr t_typ))
 let id_is_valid =
   foreign "g_application_id_is_valid" (string @-> returning (bool))
 let activate =
@@ -18,11 +18,11 @@ let add_main_option =
 let add_option_group =
   foreign "g_application_add_option_group" (t_typ @-> ptr Option_group.t_typ @-> returning (void))
 let bind_busy_property =
-  foreign "g_application_bind_busy_property" (t_typ @-> Object.t_typ @-> string @-> returning (void))
+  foreign "g_application_bind_busy_property" (t_typ @-> ptr Object.t_typ @-> string @-> returning (void))
 let get_application_id =
   foreign "g_application_get_application_id" (t_typ @-> returning (string_opt))
 let get_dbus_connection =
-  foreign "g_application_get_dbus_connection" (t_typ @-> returning (DBus_connection.t_typ))
+  foreign "g_application_get_dbus_connection" (t_typ @-> returning (ptr DBus_connection.t_typ))
 let get_dbus_object_path =
   foreign "g_application_get_dbus_object_path" (t_typ @-> returning (string_opt))
 let get_flags =
@@ -46,7 +46,7 @@ let quit =
   foreign "g_application_quit" (t_typ @-> returning (void))
 let register self cancellable =
   let register_raw =
-    foreign "g_application_register" (t_typ @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_application_register" (t_typ @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = register_raw self cancellable err_ptr_ptr in
@@ -59,7 +59,7 @@ let release =
   foreign "g_application_release" (t_typ @-> returning (void))
 (*Not implemented g_application_run type C Array type for Types.Array tag not implemented*)
 let send_notification =
-  foreign "g_application_send_notification" (t_typ @-> string_opt @-> Notification.t_typ @-> returning (void))
+  foreign "g_application_send_notification" (t_typ @-> string_opt @-> ptr Notification.t_typ @-> returning (void))
 (*Not implemented g_application_set_action_group type interface not implemented*)
 let set_application_id =
   foreign "g_application_set_application_id" (t_typ @-> string_opt @-> returning (void))
@@ -78,7 +78,7 @@ let set_option_context_summary =
 let set_resource_base_path =
   foreign "g_application_set_resource_base_path" (t_typ @-> string_opt @-> returning (void))
 let unbind_busy_property =
-  foreign "g_application_unbind_busy_property" (t_typ @-> Object.t_typ @-> string @-> returning (void))
+  foreign "g_application_unbind_busy_property" (t_typ @-> ptr Object.t_typ @-> string @-> returning (void))
 let unmark_busy =
   foreign "g_application_unmark_busy" (t_typ @-> returning (void))
 let withdraw_notification =

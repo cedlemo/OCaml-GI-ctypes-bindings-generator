@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_switch_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_switch_new" (void @-> returning (ptr Widget.t_typ))
 let get_active =
   foreign "gtk_switch_get_active" (t_typ @-> returning (bool))
 let get_state =

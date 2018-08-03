@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_action_new" (string @-> string_opt @-> string_opt @-> string_opt @-> returning (t_typ))
+  foreign "gtk_action_new" (string @-> string_opt @-> string_opt @-> string_opt @-> returning (ptr t_typ))
 let activate =
   foreign "gtk_action_activate" (t_typ @-> returning (void))
 let block_activate =
@@ -13,13 +13,13 @@ let block_activate =
 let connect_accelerator =
   foreign "gtk_action_connect_accelerator" (t_typ @-> returning (void))
 let create_icon =
-  foreign "gtk_action_create_icon" (t_typ @-> int32_t @-> returning (Widget.t_typ))
+  foreign "gtk_action_create_icon" (t_typ @-> int32_t @-> returning (ptr Widget.t_typ))
 let create_menu =
-  foreign "gtk_action_create_menu" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_action_create_menu" (t_typ @-> returning (ptr Widget.t_typ))
 let create_menu_item =
-  foreign "gtk_action_create_menu_item" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_action_create_menu_item" (t_typ @-> returning (ptr Widget.t_typ))
 let create_tool_item =
-  foreign "gtk_action_create_tool_item" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_action_create_tool_item" (t_typ @-> returning (ptr Widget.t_typ))
 let disconnect_accelerator =
   foreign "gtk_action_disconnect_accelerator" (t_typ @-> returning (void))
 let get_accel_closure =
@@ -58,7 +58,7 @@ let is_sensitive =
 let is_visible =
   foreign "gtk_action_is_visible" (t_typ @-> returning (bool))
 let set_accel_group =
-  foreign "gtk_action_set_accel_group" (t_typ @-> Accel_group.t_typ @-> returning (void))
+  foreign "gtk_action_set_accel_group" (t_typ @-> ptr_opt Accel_group.t_typ @-> returning (void))
 let set_accel_path =
   foreign "gtk_action_set_accel_path" (t_typ @-> string @-> returning (void))
 let set_always_show_image =

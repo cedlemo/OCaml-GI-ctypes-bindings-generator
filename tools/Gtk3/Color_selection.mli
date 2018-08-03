@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 (*Not implemented gtk_color_selection_palette_from_string type C Array type for Types.Array tag not implemented*)
 (*Not implemented gtk_color_selection_palette_to_string type C Array type for Types.Array tag not implemented*)
 val get_current_alpha :

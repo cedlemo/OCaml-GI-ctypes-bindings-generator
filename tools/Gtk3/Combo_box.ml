@@ -5,13 +5,13 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_combo_box_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_combo_box_new" (void @-> returning (ptr Widget.t_typ))
 let create_with_area =
-  foreign "gtk_combo_box_new_with_area" (Cell_area.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_combo_box_new_with_area" (ptr Cell_area.t_typ @-> returning (ptr Widget.t_typ))
 let create_with_area_and_entry =
-  foreign "gtk_combo_box_new_with_area_and_entry" (Cell_area.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_combo_box_new_with_area_and_entry" (ptr Cell_area.t_typ @-> returning (ptr Widget.t_typ))
 let create_with_entry =
-  foreign "gtk_combo_box_new_with_entry" (void @-> returning (Widget.t_typ))
+  foreign "gtk_combo_box_new_with_entry" (void @-> returning (ptr Widget.t_typ))
 (*Not implemented gtk_combo_box_new_with_model type interface not implemented*)
 (*Not implemented gtk_combo_box_new_with_model_and_entry type interface not implemented*)
 let get_active =
@@ -42,7 +42,7 @@ let get_id_column =
   foreign "gtk_combo_box_get_id_column" (t_typ @-> returning (int32_t))
 (*Not implemented gtk_combo_box_get_model return type interface not handled*)
 let get_popup_accessible =
-  foreign "gtk_combo_box_get_popup_accessible" (t_typ @-> returning (Object.t_typ))
+  foreign "gtk_combo_box_get_popup_accessible" (t_typ @-> returning (ptr Object.t_typ))
 let get_popup_fixed_width =
   foreign "gtk_combo_box_get_popup_fixed_width" (t_typ @-> returning (bool))
 let get_row_span_column =
@@ -56,7 +56,7 @@ let popdown =
 let popup =
   foreign "gtk_combo_box_popup" (t_typ @-> returning (void))
 let popup_for_device =
-  foreign "gtk_combo_box_popup_for_device" (t_typ @-> Device.t_typ @-> returning (void))
+  foreign "gtk_combo_box_popup_for_device" (t_typ @-> ptr Device.t_typ @-> returning (void))
 let set_active =
   foreign "gtk_combo_box_set_active" (t_typ @-> int32_t @-> returning (void))
 let set_active_id =

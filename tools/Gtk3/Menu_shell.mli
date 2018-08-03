@@ -4,11 +4,11 @@ type t
 val t_typ : t typ
 
 val activate_item :
-  t -> Widget.t -> bool -> unit
+  t -> Widget.t ptr -> bool -> unit
 val append :
-  t -> Menu_item.t -> unit
+  t -> Menu_item.t ptr -> unit
 val bind_model :
-  t -> Menu_model.t -> string option -> bool -> unit
+  t -> Menu_model.t ptr option -> string option -> bool -> unit
 val cancel :
   t -> unit
 val deactivate :
@@ -16,18 +16,18 @@ val deactivate :
 val deselect :
   t -> unit
 val get_parent_shell :
-  t -> Widget.t
+  t -> Widget.t ptr
 val get_selected_item :
-  t -> Widget.t
+  t -> Widget.t ptr
 val get_take_focus :
   t -> bool
 val insert :
-  t -> Widget.t -> int32 -> unit
+  t -> Widget.t ptr -> int32 -> unit
 val prepend :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr -> unit
 val select_first :
   t -> bool -> unit
 val select_item :
-  t -> Widget.t -> unit
+  t -> Widget.t ptr -> unit
 val set_take_focus :
   t -> bool -> unit

@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_unix_socket_address_new" (string @-> returning (Socket_address.t_typ))
+  foreign "g_unix_socket_address_new" (string @-> returning (ptr Socket_address.t_typ))
 (*Not implemented g_unix_socket_address_new_abstract type C Array type for Types.Array tag not implemented*)
 (*Not implemented g_unix_socket_address_new_with_type type C Array type for Types.Array tag not implemented*)
 let abstract_names_supported =

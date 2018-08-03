@@ -6,7 +6,7 @@ let t_typ : t typ = ptr void
 
 (*Not implemented g_settings_backend_flatten_tree type C Array type for Types.Array tag not implemented*)
 let get_default =
-  foreign "g_settings_backend_get_default" (void @-> returning (t_typ))
+  foreign "g_settings_backend_get_default" (void @-> returning (ptr t_typ))
 let changed =
   foreign "g_settings_backend_changed" (t_typ @-> string @-> ptr_opt void @-> returning (void))
 let changed_tree =

@@ -4,13 +4,13 @@ type t
 val t_typ : t typ
 
 val export :
-  t -> DBus_connection.t -> string -> (bool, Error.t structure ptr option) result
+  t -> DBus_connection.t ptr -> string -> (bool, Error.t structure ptr option) result
 val flush :
   t -> unit
 val get_connection :
-  t -> DBus_connection.t
+  t -> DBus_connection.t ptr
 val get_connections :
-  t -> List.t structure (* DBus_connection.t *) ptr
+  t -> List.t structure (* Not implemented : interface *) ptr
 val get_flags :
   t -> DBus_interface_skeleton_flags.t_list
 val get_info :
@@ -20,10 +20,10 @@ val get_object_path :
 val get_properties :
   t -> Variant.t structure ptr
 val has_connection :
-  t -> DBus_connection.t -> bool
+  t -> DBus_connection.t ptr -> bool
 val set_flags :
   t -> DBus_interface_skeleton_flags.t_list -> unit
 val unexport :
   t -> unit
 val unexport_from_connection :
-  t -> DBus_connection.t -> unit
+  t -> DBus_connection.t ptr -> unit

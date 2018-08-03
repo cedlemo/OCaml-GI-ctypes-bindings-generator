@@ -4,20 +4,20 @@ type t
 val t_typ : t typ
 
 val create :
-  SList.t structure (* t *) ptr option -> Widget.t
+  SList.t structure (* Not implemented : interface *) ptr option -> Widget.t ptr
 val create_from_widget :
-  t -> Widget.t
+  t ptr option -> Widget.t ptr
 val create_with_label :
-  SList.t structure (* t *) ptr option -> string -> Widget.t
+  SList.t structure (* Not implemented : interface *) ptr option -> string -> Widget.t ptr
 val create_with_label_from_widget :
-  t -> string option -> Widget.t
+  t ptr option -> string option -> Widget.t ptr
 val create_with_mnemonic :
-  SList.t structure (* t *) ptr option -> string -> Widget.t
+  SList.t structure (* Not implemented : interface *) ptr option -> string -> Widget.t ptr
 val create_with_mnemonic_from_widget :
-  t -> string option -> Widget.t
+  t ptr option -> string option -> Widget.t ptr
 val get_group :
-  t -> SList.t structure (* t *) ptr
+  t -> SList.t structure (* Not implemented : interface *) ptr
 val join_group :
-  t -> t -> unit
+  t -> t ptr option -> unit
 val set_group :
-  t -> SList.t structure (* t *) ptr option -> unit
+  t -> SList.t structure (* Not implemented : interface *) ptr option -> unit

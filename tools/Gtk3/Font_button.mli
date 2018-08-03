@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val create_with_font :
-  string -> Widget.t
+  string -> Widget.t ptr
 val get_font_name :
   t -> string option
 val get_show_size :

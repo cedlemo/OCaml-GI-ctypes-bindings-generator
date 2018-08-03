@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  string option -> bool -> t
+  string option -> bool -> t ptr
 val get_buffer :
-  t -> Text_buffer.t
+  t -> Text_buffer.t ptr
 val get_deleted :
   t -> bool
 val get_left_gravity :

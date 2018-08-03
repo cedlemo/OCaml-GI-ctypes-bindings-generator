@@ -5,4 +5,4 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_scrollbar_new" (Orientation.t_view @-> Adjustment.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_scrollbar_new" (Orientation.t_view @-> ptr_opt Adjustment.t_typ @-> returning (ptr Widget.t_typ))

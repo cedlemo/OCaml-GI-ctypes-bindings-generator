@@ -5,13 +5,13 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_file_info_new" (void @-> returning (t_typ))
+  foreign "g_file_info_new" (void @-> returning (ptr t_typ))
 let clear_status =
   foreign "g_file_info_clear_status" (t_typ @-> returning (void))
 let copy_into =
-  foreign "g_file_info_copy_into" (t_typ @-> t_typ @-> returning (void))
+  foreign "g_file_info_copy_into" (t_typ @-> ptr t_typ @-> returning (void))
 let dup =
-  foreign "g_file_info_dup" (t_typ @-> returning (t_typ))
+  foreign "g_file_info_dup" (t_typ @-> returning (ptr t_typ))
 let get_attribute_as_string =
   foreign "g_file_info_get_attribute_as_string" (t_typ @-> string @-> returning (string_opt))
 let get_attribute_boolean =
@@ -35,7 +35,7 @@ let get_attribute_int32 =
 let get_attribute_int64 =
   foreign "g_file_info_get_attribute_int64" (t_typ @-> string @-> returning (int64_t))
 let get_attribute_object =
-  foreign "g_file_info_get_attribute_object" (t_typ @-> string @-> returning (Object.t_typ))
+  foreign "g_file_info_get_attribute_object" (t_typ @-> string @-> returning (ptr Object.t_typ))
 let get_attribute_status =
   foreign "g_file_info_get_attribute_status" (t_typ @-> string @-> returning (File_attribute_status.t_view))
 let get_attribute_string =
@@ -103,7 +103,7 @@ let set_attribute_int64 =
 let set_attribute_mask =
   foreign "g_file_info_set_attribute_mask" (t_typ @-> ptr File_attribute_matcher.t_typ @-> returning (void))
 let set_attribute_object =
-  foreign "g_file_info_set_attribute_object" (t_typ @-> string @-> Object.t_typ @-> returning (void))
+  foreign "g_file_info_set_attribute_object" (t_typ @-> string @-> ptr Object.t_typ @-> returning (void))
 let set_attribute_status =
   foreign "g_file_info_set_attribute_status" (t_typ @-> string @-> File_attribute_status.t_view @-> returning (bool))
 let set_attribute_string =

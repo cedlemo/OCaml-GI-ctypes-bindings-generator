@@ -5,4 +5,4 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_threaded_socket_service_new" (int32_t @-> returning (Socket_service.t_typ))
+  foreign "g_threaded_socket_service_new" (int32_t @-> returning (ptr Socket_service.t_typ))

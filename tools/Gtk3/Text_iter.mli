@@ -40,7 +40,7 @@ val backward_sentence_start :
 val backward_sentence_starts :
   t structure ptr -> int32 -> bool
 val backward_to_tag_toggle :
-  t structure ptr -> Text_tag.t -> bool
+  t structure ptr -> Text_tag.t ptr option -> bool
 val backward_visible_cursor_position :
   t structure ptr -> bool
 val backward_visible_cursor_positions :
@@ -58,7 +58,7 @@ val backward_word_start :
 val backward_word_starts :
   t structure ptr -> int32 -> bool
 val begins_tag :
-  t structure ptr -> Text_tag.t -> bool
+  t structure ptr -> Text_tag.t ptr option -> bool
 val can_insert :
   t structure ptr -> bool -> bool
 val compare :
@@ -72,7 +72,7 @@ val ends_line :
 val ends_sentence :
   t structure ptr -> bool
 val ends_tag :
-  t structure ptr -> Text_tag.t -> bool
+  t structure ptr -> Text_tag.t ptr option -> bool
 val ends_word :
   t structure ptr -> bool
 val equal :
@@ -101,7 +101,7 @@ val forward_to_end :
 val forward_to_line_end :
   t structure ptr -> bool
 val forward_to_tag_toggle :
-  t structure ptr -> Text_tag.t -> bool
+  t structure ptr -> Text_tag.t ptr option -> bool
 val forward_visible_cursor_position :
   t structure ptr -> bool
 val forward_visible_cursor_positions :
@@ -123,14 +123,14 @@ val free :
 val get_attributes :
   t structure ptr -> (bool * Text_attributes.t structure)
 val get_buffer :
-  t structure ptr -> Text_buffer.t
+  t structure ptr -> Text_buffer.t ptr
 val get_bytes_in_line :
   t structure ptr -> int32
 (*Not implemented gtk_text_iter_get_char return type unichar not handled*)
 val get_chars_in_line :
   t structure ptr -> int32
 val get_child_anchor :
-  t structure ptr -> Text_child_anchor.t
+  t structure ptr -> Text_child_anchor.t ptr
 val get_language :
   t structure ptr -> Language.t structure ptr
 val get_line :
@@ -140,19 +140,19 @@ val get_line_index :
 val get_line_offset :
   t structure ptr -> int32
 val get_marks :
-  t structure ptr -> SList.t structure (* Text_mark.t *) ptr
+  t structure ptr -> SList.t structure (* Not implemented : interface *) ptr
 val get_offset :
   t structure ptr -> int32
 val get_pixbuf :
-  t structure ptr -> Pixbuf.t
+  t structure ptr -> Pixbuf.t ptr
 val get_slice :
   t structure ptr -> t structure ptr -> string option
 val get_tags :
-  t structure ptr -> SList.t structure (* Text_tag.t *) ptr
+  t structure ptr -> SList.t structure (* Not implemented : interface *) ptr
 val get_text :
   t structure ptr -> t structure ptr -> string option
 val get_toggled_tags :
-  t structure ptr -> bool -> SList.t structure (* Text_tag.t *) ptr
+  t structure ptr -> bool -> SList.t structure (* Not implemented : interface *) ptr
 val get_visible_line_index :
   t structure ptr -> int32
 val get_visible_line_offset :
@@ -162,7 +162,7 @@ val get_visible_slice :
 val get_visible_text :
   t structure ptr -> t structure ptr -> string option
 val has_tag :
-  t structure ptr -> Text_tag.t -> bool
+  t structure ptr -> Text_tag.t ptr -> bool
 val in_range :
   t structure ptr -> t structure ptr -> t structure ptr -> bool
 val inside_sentence :
@@ -194,8 +194,8 @@ val starts_line :
 val starts_sentence :
   t structure ptr -> bool
 val starts_tag :
-  t structure ptr -> Text_tag.t -> bool
+  t structure ptr -> Text_tag.t ptr option -> bool
 val starts_word :
   t structure ptr -> bool
 val toggles_tag :
-  t structure ptr -> Text_tag.t -> bool
+  t structure ptr -> Text_tag.t ptr option -> bool

@@ -4,14 +4,14 @@ type t
 val t_typ : t typ
 
 val create_any :
-  Socket_family.t -> t
+  Socket_family.t -> t ptr
 (*Not implemented g_inet_address_new_from_bytes type C Array type for Types.Array tag not implemented*)
 val create_from_string :
-  string -> t
+  string -> t ptr
 val create_loopback :
-  Socket_family.t -> t
+  Socket_family.t -> t ptr
 val equal :
-  t -> t -> bool
+  t -> t ptr -> bool
 val get_family :
   t -> Socket_family.t
 val get_is_any :

@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_revealer_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_revealer_new" (void @-> returning (ptr Widget.t_typ))
 let get_child_revealed =
   foreign "gtk_revealer_get_child_revealed" (t_typ @-> returning (bool))
 let get_reveal_child =

@@ -4,11 +4,11 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val create_with_label :
-  string -> Widget.t
+  string -> Widget.t ptr
 val create_with_mnemonic :
-  string -> Widget.t
+  string -> Widget.t ptr
 val activate :
   t -> unit
 val deselect :
@@ -22,7 +22,7 @@ val get_reserve_indicator :
 val get_right_justified :
   t -> bool
 val get_submenu :
-  t -> Widget.t
+  t -> Widget.t ptr option
 val get_use_underline :
   t -> bool
 val select :
@@ -36,7 +36,7 @@ val set_reserve_indicator :
 val set_right_justified :
   t -> bool -> unit
 val set_submenu :
-  t -> Menu.t -> unit
+  t -> Menu.t ptr option -> unit
 val set_use_underline :
   t -> bool -> unit
 val toggle_size_allocate :

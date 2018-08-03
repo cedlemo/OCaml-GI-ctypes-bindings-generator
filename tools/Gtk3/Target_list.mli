@@ -9,7 +9,7 @@ val add :
 val add_image_targets :
   t structure ptr -> Unsigned.uint32 -> bool -> unit
 val add_rich_text_targets :
-  t structure ptr -> Unsigned.uint32 -> bool -> Text_buffer.t -> unit
+  t structure ptr -> Unsigned.uint32 -> bool -> Text_buffer.t ptr -> unit
 (*Not implemented gtk_target_list_add_table type C Array type for Types.Array tag not implemented*)
 val add_text_targets :
   t structure ptr -> Unsigned.uint32 -> unit

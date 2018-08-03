@@ -18,7 +18,7 @@ val create_win32 :
 val incr_ref :
   t structure ptr -> t structure ptr
 val resolve :
-  t structure ptr -> Style_properties.t -> (bool * RGBA.t structure)
+  t structure ptr -> Style_properties.t ptr option -> (bool * RGBA.t structure)
 val to_string :
   t structure ptr -> string option
 val unref :

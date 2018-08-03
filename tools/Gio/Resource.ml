@@ -50,7 +50,7 @@ let get_info self path lookup_flags =
     Error (err_ptr)
 let open_stream self path lookup_flags =
   let open_stream_raw =
-    foreign "g_resource_open_stream" (ptr t_typ @-> string @-> Resource_lookup_flags.t_list_view @-> ptr (ptr_opt Error.t_typ) @-> returning (Input_stream.t_typ))
+    foreign "g_resource_open_stream" (ptr t_typ @-> string @-> Resource_lookup_flags.t_list_view @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Input_stream.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = open_stream_raw self path lookup_flags err_ptr_ptr in

@@ -14,7 +14,7 @@ let get_count =
 let get_label =
   foreign "gtk_numerable_icon_get_label" (t_typ @-> returning (string_opt))
 let get_style_context =
-  foreign "gtk_numerable_icon_get_style_context" (t_typ @-> returning (Style_context.t_typ))
+  foreign "gtk_numerable_icon_get_style_context" (t_typ @-> returning (ptr_opt Style_context.t_typ))
 (*Not implemented gtk_numerable_icon_set_background_gicon type interface not implemented*)
 let set_background_icon_name =
   foreign "gtk_numerable_icon_set_background_icon_name" (t_typ @-> string_opt @-> returning (void))
@@ -23,4 +23,4 @@ let set_count =
 let set_label =
   foreign "gtk_numerable_icon_set_label" (t_typ @-> string_opt @-> returning (void))
 let set_style_context =
-  foreign "gtk_numerable_icon_set_style_context" (t_typ @-> Style_context.t_typ @-> returning (void))
+  foreign "gtk_numerable_icon_set_style_context" (t_typ @-> ptr Style_context.t_typ @-> returning (void))

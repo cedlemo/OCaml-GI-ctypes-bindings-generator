@@ -5,9 +5,9 @@ val t_typ : t typ
 
 (*Not implemented g_list_store_new type gType not implemented*)
 val append :
-  t -> Object.t -> unit
+  t -> Object.t ptr -> unit
 val insert :
-  t -> Unsigned.uint32 -> Object.t -> unit
+  t -> Unsigned.uint32 -> Object.t ptr -> unit
 (*Not implemented g_list_store_insert_sorted type callback not implemented*)
 val remove :
   t -> Unsigned.uint32 -> unit

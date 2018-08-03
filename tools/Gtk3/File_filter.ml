@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_file_filter_new" (void @-> returning (t_typ))
+  foreign "gtk_file_filter_new" (void @-> returning (ptr t_typ))
 let create_from_gvariant =
-  foreign "gtk_file_filter_new_from_gvariant" (ptr Variant.t_typ @-> returning (t_typ))
+  foreign "gtk_file_filter_new_from_gvariant" (ptr Variant.t_typ @-> returning (ptr t_typ))
 (*Not implemented gtk_file_filter_add_custom type callback not implemented*)
 let add_mime_type =
   foreign "gtk_file_filter_add_mime_type" (t_typ @-> string @-> returning (void))

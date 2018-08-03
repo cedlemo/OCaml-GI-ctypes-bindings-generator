@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_gesture_swipe_new" (Widget.t_typ @-> returning (Gesture.t_typ))
+  foreign "gtk_gesture_swipe_new" (ptr Widget.t_typ @-> returning (ptr Gesture.t_typ))
 let get_velocity self =
   let get_velocity_raw =
     foreign "gtk_gesture_swipe_get_velocity" (t_typ @-> ptr (double) @-> ptr (double) @-> returning (bool))

@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_hsv_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_hsv_new" (void @-> returning (ptr Widget.t_typ))
 let to_rgb h s v =
   let to_rgb_raw =
     foreign "gtk_hsv_to_rgb" (double @-> double @-> double @-> ptr (double) @-> ptr (double) @-> ptr (double) @-> returning (void))

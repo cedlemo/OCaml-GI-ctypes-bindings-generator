@@ -4,11 +4,11 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val create_with_color :
-  Color.t structure ptr -> Widget.t
+  Color.t structure ptr -> Widget.t ptr
 val create_with_rgba :
-  RGBA.t structure ptr -> Widget.t
+  RGBA.t structure ptr -> Widget.t ptr
 val get_alpha :
   t -> Unsigned.uint16
 val get_color :

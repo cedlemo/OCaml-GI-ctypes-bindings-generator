@@ -9,14 +9,14 @@ let t_typ : t typ = ptr void
 let compat_control =
   foreign "g_object_compat_control" (uint64_t @-> ptr_opt void @-> returning (uint64_t))
 let interface_find_property =
-  foreign "g_object_interface_find_property" (ptr Type_interface.t_typ @-> string @-> returning (Param_spec.t_typ))
+  foreign "g_object_interface_find_property" (ptr Type_interface.t_typ @-> string @-> returning (ptr Param_spec.t_typ))
 let interface_install_property =
-  foreign "g_object_interface_install_property" (ptr Type_interface.t_typ @-> Param_spec.t_typ @-> returning (void))
+  foreign "g_object_interface_install_property" (ptr Type_interface.t_typ @-> ptr Param_spec.t_typ @-> returning (void))
 (*Not implemented g_object_interface_list_properties return type C Array type for Types.Array tag not handled*)
 let bind_property =
-  foreign "g_object_bind_property" (t_typ @-> string @-> t_typ @-> string @-> Binding_flags.t_list_view @-> returning (Binding.t_typ))
+  foreign "g_object_bind_property" (t_typ @-> string @-> ptr t_typ @-> string @-> Binding_flags.t_list_view @-> returning (ptr Binding.t_typ))
 let bind_property_full =
-  foreign "g_object_bind_property_with_closures" (t_typ @-> string @-> t_typ @-> string @-> Binding_flags.t_list_view @-> ptr Closure.t_typ @-> ptr Closure.t_typ @-> returning (Binding.t_typ))
+  foreign "g_object_bind_property_with_closures" (t_typ @-> string @-> ptr t_typ @-> string @-> Binding_flags.t_list_view @-> ptr Closure.t_typ @-> ptr Closure.t_typ @-> returning (ptr Binding.t_typ))
 let force_floating =
   foreign "g_object_force_floating" (t_typ @-> returning (void))
 let freeze_notify =
@@ -33,11 +33,11 @@ let is_floating =
 let notify =
   foreign "g_object_notify" (t_typ @-> string @-> returning (void))
 let notify_by_pspec =
-  foreign "g_object_notify_by_pspec" (t_typ @-> Param_spec.t_typ @-> returning (void))
+  foreign "g_object_notify_by_pspec" (t_typ @-> ptr Param_spec.t_typ @-> returning (void))
 let incr_ref =
-  foreign "g_object_ref" (t_typ @-> returning (t_typ))
+  foreign "g_object_ref" (t_typ @-> returning (ptr t_typ))
 let ref_sink =
-  foreign "g_object_ref_sink" (t_typ @-> returning (t_typ))
+  foreign "g_object_ref_sink" (t_typ @-> returning (ptr t_typ))
 let run_dispose =
   foreign "g_object_run_dispose" (t_typ @-> returning (void))
 let set_data =

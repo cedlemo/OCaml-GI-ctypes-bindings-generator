@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_gesture_drag_new" (Widget.t_typ @-> returning (Gesture.t_typ))
+  foreign "gtk_gesture_drag_new" (ptr Widget.t_typ @-> returning (ptr Gesture.t_typ))
 let get_offset self =
   let get_offset_raw =
     foreign "gtk_gesture_drag_get_offset" (t_typ @-> ptr (double) @-> ptr (double) @-> returning (bool))

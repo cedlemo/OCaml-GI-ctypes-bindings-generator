@@ -5,15 +5,15 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_action_group_new" (string @-> returning (t_typ))
+  foreign "gtk_action_group_new" (string @-> returning (ptr t_typ))
 let add_action =
-  foreign "gtk_action_group_add_action" (t_typ @-> Action.t_typ @-> returning (void))
+  foreign "gtk_action_group_add_action" (t_typ @-> ptr Action.t_typ @-> returning (void))
 let add_action_with_accel =
-  foreign "gtk_action_group_add_action_with_accel" (t_typ @-> Action.t_typ @-> string_opt @-> returning (void))
+  foreign "gtk_action_group_add_action_with_accel" (t_typ @-> ptr Action.t_typ @-> string_opt @-> returning (void))
 let get_accel_group =
-  foreign "gtk_action_group_get_accel_group" (t_typ @-> returning (Accel_group.t_typ))
+  foreign "gtk_action_group_get_accel_group" (t_typ @-> returning (ptr Accel_group.t_typ))
 let get_action =
-  foreign "gtk_action_group_get_action" (t_typ @-> string @-> returning (Action.t_typ))
+  foreign "gtk_action_group_get_action" (t_typ @-> string @-> returning (ptr Action.t_typ))
 let get_name =
   foreign "gtk_action_group_get_name" (t_typ @-> returning (string_opt))
 let get_sensitive =
@@ -23,9 +23,9 @@ let get_visible =
 let list_actions =
   foreign "gtk_action_group_list_actions" (t_typ @-> returning (ptr List.t_typ))
 let remove_action =
-  foreign "gtk_action_group_remove_action" (t_typ @-> Action.t_typ @-> returning (void))
+  foreign "gtk_action_group_remove_action" (t_typ @-> ptr Action.t_typ @-> returning (void))
 let set_accel_group =
-  foreign "gtk_action_group_set_accel_group" (t_typ @-> Accel_group.t_typ @-> returning (void))
+  foreign "gtk_action_group_set_accel_group" (t_typ @-> ptr_opt Accel_group.t_typ @-> returning (void))
 let set_sensitive =
   foreign "gtk_action_group_set_sensitive" (t_typ @-> bool @-> returning (void))
 (*Not implemented gtk_action_group_set_translate_func type callback not implemented*)

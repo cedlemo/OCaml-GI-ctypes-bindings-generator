@@ -4,4 +4,4 @@ type t
 val t_typ : t typ
 
 val create :
-  bool -> int32 -> Widget.t
+  bool -> int32 -> Widget.t ptr

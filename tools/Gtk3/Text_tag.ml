@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_text_tag_new" (string_opt @-> returning (t_typ))
+  foreign "gtk_text_tag_new" (string_opt @-> returning (ptr t_typ))
 let changed =
   foreign "gtk_text_tag_changed" (t_typ @-> bool @-> returning (void))
 (*Not implemented gtk_text_tag_event type union not implemented*)

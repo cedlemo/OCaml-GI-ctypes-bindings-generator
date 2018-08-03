@@ -13,7 +13,7 @@ let change_entry =
 (*Not implemented gtk_accel_map_foreach type callback not implemented*)
 (*Not implemented gtk_accel_map_foreach_unfiltered type callback not implemented*)
 let get =
-  foreign "gtk_accel_map_get" (void @-> returning (t_typ))
+  foreign "gtk_accel_map_get" (void @-> returning (ptr t_typ))
 let load =
   foreign "gtk_accel_map_load" (string @-> returning (void))
 let load_fd =

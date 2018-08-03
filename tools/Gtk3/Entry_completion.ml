@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_entry_completion_new" (void @-> returning (t_typ))
+  foreign "gtk_entry_completion_new" (void @-> returning (ptr t_typ))
 let create_with_area =
-  foreign "gtk_entry_completion_new_with_area" (Cell_area.t_typ @-> returning (t_typ))
+  foreign "gtk_entry_completion_new_with_area" (ptr Cell_area.t_typ @-> returning (ptr t_typ))
 let complete =
   foreign "gtk_entry_completion_complete" (t_typ @-> returning (void))
 let compute_prefix =
@@ -17,7 +17,7 @@ let delete_action =
 let get_completion_prefix =
   foreign "gtk_entry_completion_get_completion_prefix" (t_typ @-> returning (string_opt))
 let get_entry =
-  foreign "gtk_entry_completion_get_entry" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_entry_completion_get_entry" (t_typ @-> returning (ptr Widget.t_typ))
 let get_inline_completion =
   foreign "gtk_entry_completion_get_inline_completion" (t_typ @-> returning (bool))
 let get_inline_selection =

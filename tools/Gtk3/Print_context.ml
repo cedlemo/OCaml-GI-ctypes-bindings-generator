@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create_pango_context =
-  foreign "gtk_print_context_create_pango_context" (t_typ @-> returning (Context.t_typ))
+  foreign "gtk_print_context_create_pango_context" (t_typ @-> returning (ptr Context.t_typ))
 let create_pango_layout =
-  foreign "gtk_print_context_create_pango_layout" (t_typ @-> returning (Layout.t_typ))
+  foreign "gtk_print_context_create_pango_layout" (t_typ @-> returning (ptr Layout.t_typ))
 let get_cairo_context =
   foreign "gtk_print_context_get_cairo_context" (t_typ @-> returning (ptr Context.t_typ))
 let get_dpi_x =
@@ -31,9 +31,9 @@ let get_hard_margins self =
 let get_height =
   foreign "gtk_print_context_get_height" (t_typ @-> returning (double))
 let get_page_setup =
-  foreign "gtk_print_context_get_page_setup" (t_typ @-> returning (Page_setup.t_typ))
+  foreign "gtk_print_context_get_page_setup" (t_typ @-> returning (ptr Page_setup.t_typ))
 let get_pango_fontmap =
-  foreign "gtk_print_context_get_pango_fontmap" (t_typ @-> returning (Font_map.t_typ))
+  foreign "gtk_print_context_get_pango_fontmap" (t_typ @-> returning (ptr Font_map.t_typ))
 let get_width =
   foreign "gtk_print_context_get_width" (t_typ @-> returning (double))
 let set_cairo_context =

@@ -5,14 +5,14 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create_for_pixbuf =
-  foreign "gtk_icon_info_new_for_pixbuf" (Icon_theme.t_typ @-> Pixbuf.t_typ @-> returning (t_typ))
+  foreign "gtk_icon_info_new_for_pixbuf" (ptr Icon_theme.t_typ @-> ptr Pixbuf.t_typ @-> returning (ptr t_typ))
 (*Not implemented gtk_icon_info_get_attach_points type C Array type for Types.Array tag not implemented*)
 let get_base_scale =
   foreign "gtk_icon_info_get_base_scale" (t_typ @-> returning (int32_t))
 let get_base_size =
   foreign "gtk_icon_info_get_base_size" (t_typ @-> returning (int32_t))
 let get_builtin_pixbuf =
-  foreign "gtk_icon_info_get_builtin_pixbuf" (t_typ @-> returning (Pixbuf.t_typ))
+  foreign "gtk_icon_info_get_builtin_pixbuf" (t_typ @-> returning (ptr_opt Pixbuf.t_typ))
 let get_display_name =
   foreign "gtk_icon_info_get_display_name" (t_typ @-> returning (string_opt))
 let get_embedded_rect self =
@@ -29,7 +29,7 @@ let is_symbolic =
   foreign "gtk_icon_info_is_symbolic" (t_typ @-> returning (bool))
 let load_icon self =
   let load_icon_raw =
-    foreign "gtk_icon_info_load_icon" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (Pixbuf.t_typ))
+    foreign "gtk_icon_info_load_icon" (t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Pixbuf.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = load_icon_raw self err_ptr_ptr in
@@ -42,7 +42,7 @@ let load_icon self =
 (*Not implemented gtk_icon_info_load_icon_finish type interface not implemented*)
 let load_surface self for_window =
   let load_surface_raw =
-    foreign "gtk_icon_info_load_surface" (t_typ @-> Window.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Surface.t_typ))
+    foreign "gtk_icon_info_load_surface" (t_typ @-> ptr_opt Window.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Surface.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = load_surface_raw self for_window err_ptr_ptr in
@@ -53,7 +53,7 @@ let load_surface self for_window =
     Error (err_ptr)
 let load_symbolic self fg success_color warning_color error_color =
   let load_symbolic_raw =
-    foreign "gtk_icon_info_load_symbolic" (t_typ @-> ptr RGBA.t_typ @-> ptr_opt RGBA.t_typ @-> ptr_opt RGBA.t_typ @-> ptr_opt RGBA.t_typ @-> ptr (bool) @-> ptr (ptr_opt Error.t_typ) @-> returning (Pixbuf.t_typ))
+    foreign "gtk_icon_info_load_symbolic" (t_typ @-> ptr RGBA.t_typ @-> ptr_opt RGBA.t_typ @-> ptr_opt RGBA.t_typ @-> ptr_opt RGBA.t_typ @-> ptr (bool) @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Pixbuf.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let was_symbolic_ptr = allocate bool false in
@@ -70,7 +70,7 @@ let load_symbolic self fg success_color warning_color error_color =
 (*Not implemented gtk_icon_info_load_symbolic_finish type interface not implemented*)
 let load_symbolic_for_context self context =
   let load_symbolic_for_context_raw =
-    foreign "gtk_icon_info_load_symbolic_for_context" (t_typ @-> Style_context.t_typ @-> ptr (bool) @-> ptr (ptr_opt Error.t_typ) @-> returning (Pixbuf.t_typ))
+    foreign "gtk_icon_info_load_symbolic_for_context" (t_typ @-> ptr Style_context.t_typ @-> ptr (bool) @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Pixbuf.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let was_symbolic_ptr = allocate bool false in
@@ -87,7 +87,7 @@ let load_symbolic_for_context self context =
 (*Not implemented gtk_icon_info_load_symbolic_for_context_finish type interface not implemented*)
 let load_symbolic_for_style self style state =
   let load_symbolic_for_style_raw =
-    foreign "gtk_icon_info_load_symbolic_for_style" (t_typ @-> Style.t_typ @-> State_type.t_view @-> ptr (bool) @-> ptr (ptr_opt Error.t_typ) @-> returning (Pixbuf.t_typ))
+    foreign "gtk_icon_info_load_symbolic_for_style" (t_typ @-> ptr Style.t_typ @-> State_type.t_view @-> ptr (bool) @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Pixbuf.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let was_symbolic_ptr = allocate bool false in

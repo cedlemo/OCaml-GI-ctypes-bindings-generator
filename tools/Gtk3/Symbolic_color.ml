@@ -20,7 +20,7 @@ let incr_ref =
   foreign "gtk_symbolic_color_ref" (ptr t_typ @-> returning (ptr t_typ))
 let resolve self props =
   let resolve_raw =
-    foreign "gtk_symbolic_color_resolve" (ptr t_typ @-> Style_properties.t_typ @-> ptr (RGBA.t_typ) @-> returning (bool))
+    foreign "gtk_symbolic_color_resolve" (ptr t_typ @-> ptr_opt Style_properties.t_typ @-> ptr (RGBA.t_typ) @-> returning (bool))
   in
   let resolved_color_ptr = allocate RGBA.t_typ (make RGBA.t_typ) in
   let ret = resolve_raw self props resolved_color_ptr in

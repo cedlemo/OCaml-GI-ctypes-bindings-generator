@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_level_bar_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_level_bar_new" (void @-> returning (ptr Widget.t_typ))
 let create_for_interval =
-  foreign "gtk_level_bar_new_for_interval" (double @-> double @-> returning (Widget.t_typ))
+  foreign "gtk_level_bar_new_for_interval" (double @-> double @-> returning (ptr Widget.t_typ))
 let add_offset_value =
   foreign "gtk_level_bar_add_offset_value" (t_typ @-> string @-> double @-> returning (void))
 let get_inverted =

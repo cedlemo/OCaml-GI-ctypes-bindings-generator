@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  Widget.t -> Gesture.t
+  Widget.t ptr -> Gesture.t ptr
 val get_area :
   t -> (bool * Rectangle.t structure)
 val set_area :

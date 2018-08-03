@@ -111,13 +111,13 @@ val c_VOLUME_MONITOR_EXTENSION_POINT_NAME : string
 (*DEPRECATED : io_scheduler_push_job*)
 (*DEPRECATED : simple_async_report_gerror_in_idle*)
 val unix_mounts_get :
-  unit -> (List.t structure (* Unix_mount_entry.t structure *) ptr * Unsigned.uint64)
+  unit -> (List.t structure (* Not implemented : interface *) ptr * Unsigned.uint64)
 
 val unix_mounts_changed_since :
   Unsigned.uint64 -> bool
 
 val unix_mount_points_get :
-  unit -> (List.t structure (* Unix_mount_point.t structure *) ptr * Unsigned.uint64)
+  unit -> (List.t structure (* Not implemented : interface *) ptr * Unsigned.uint64)
 
 val unix_mount_points_changed_since :
   Unsigned.uint64 -> bool
@@ -195,7 +195,7 @@ val resources_register :
   Resource.t structure ptr -> unit
 
 val resources_open_stream :
-  string -> Resource_lookup_flags.t_list -> (Input_stream.t, Error.t structure ptr option) result
+  string -> Resource_lookup_flags.t_list -> (Input_stream.t ptr option, Error.t structure ptr option) result
 
 val resources_lookup_data :
   string -> Resource_lookup_flags.t_list -> (Bytes.t structure ptr option, Error.t structure ptr option) result
@@ -225,13 +225,13 @@ val resolver_error_quark :
 (*Not implemented g_pollable_stream_read type C Array type for Types.Array tag not implemented*)
 
 val pollable_source_create_full :
-  Object.t -> Source.t structure ptr option -> Cancellable.t -> Source.t structure ptr
+  Object.t ptr -> Source.t structure ptr option -> Cancellable.t ptr option -> Source.t structure ptr
 
 val pollable_source_create :
-  Object.t -> Source.t structure ptr
+  Object.t ptr -> Source.t structure ptr
 
 val null_settings_backend_create :
-  unit -> Settings_backend.t
+  unit -> Settings_backend.t ptr
 
 val networking_init :
   unit -> unit
@@ -239,10 +239,10 @@ val networking_init :
 (*Not implemented g_network_monitor_get_default return type interface not handled*)
 
 val memory_settings_backend_create :
-  unit -> Settings_backend.t
+  unit -> Settings_backend.t ptr
 
 val keyfile_settings_backend_create :
-  string -> string -> string option -> Settings_backend.t
+  string -> string -> string option -> Settings_backend.t ptr
 
 val io_modules_scan_all_in_directory_with_scope :
   string -> IOModule_scope.t structure ptr -> unit
@@ -251,10 +251,10 @@ val io_modules_scan_all_in_directory :
   string -> unit
 
 val io_modules_load_all_in_directory_with_scope :
-  string -> IOModule_scope.t structure ptr -> List.t structure (* IOModule.t *) ptr
+  string -> IOModule_scope.t structure ptr -> List.t structure (* Not implemented : interface *) ptr
 
 val io_modules_load_all_in_directory :
-  string -> List.t structure (* IOModule.t *) ptr
+  string -> List.t structure (* Not implemented : interface *) ptr
 
 val io_extension_point_register :
   string -> IOExtension_point.t structure ptr
@@ -352,14 +352,14 @@ val dbus_error_encode_gerror :
 (*Not implemented g_dbus_annotation_info_lookup type C Array type for Types.Array tag not implemented*)
 
 val dbus_address_get_stream_sync :
-  string -> Cancellable.t -> (IOStream.t * string, Error.t structure ptr option) result
+  string -> Cancellable.t ptr option -> (IOStream.t ptr option * string, Error.t structure ptr option) result
 
 (*Not implemented g_dbus_address_get_stream_finish type interface not implemented*)
 
 (*Not implemented g_dbus_address_get_stream type callback not implemented*)
 
 val dbus_address_get_for_bus_sync :
-  Bus_type.t -> Cancellable.t -> (string option, Error.t structure ptr option) result
+  Bus_type.t -> Cancellable.t ptr option -> (string option, Error.t structure ptr option) result
 
 val dbus_address_escape_value :
   string -> string option
@@ -406,7 +406,7 @@ val bus_watch_name :
   Bus_type.t -> string -> Bus_name_watcher_flags.t_list -> Closure.t structure ptr option -> Closure.t structure ptr option -> Unsigned.uint32
 
 val bus_watch_name_on_connection :
-  DBus_connection.t -> string -> Bus_name_watcher_flags.t_list -> Closure.t structure ptr option -> Closure.t structure ptr option -> Unsigned.uint32
+  DBus_connection.t ptr -> string -> Bus_name_watcher_flags.t_list -> Closure.t structure ptr option -> Closure.t structure ptr option -> Unsigned.uint32
 
 val bus_unwatch_name :
   Unsigned.uint32 -> unit
@@ -418,10 +418,10 @@ val bus_own_name :
   Bus_type.t -> string -> Bus_name_owner_flags.t_list -> Closure.t structure ptr option -> Closure.t structure ptr option -> Closure.t structure ptr option -> Unsigned.uint32
 
 val bus_own_name_on_connection :
-  DBus_connection.t -> string -> Bus_name_owner_flags.t_list -> Closure.t structure ptr option -> Closure.t structure ptr option -> Unsigned.uint32
+  DBus_connection.t ptr -> string -> Bus_name_owner_flags.t_list -> Closure.t structure ptr option -> Closure.t structure ptr option -> Unsigned.uint32
 
 val bus_get_sync :
-  Bus_type.t -> Cancellable.t -> (DBus_connection.t, Error.t structure ptr option) result
+  Bus_type.t -> Cancellable.t ptr option -> (DBus_connection.t ptr option, Error.t structure ptr option) result
 
 (*Not implemented g_bus_get_finish type interface not implemented*)
 
@@ -435,7 +435,7 @@ val app_info_reset_type_associations :
 (*Not implemented g_app_info_launch_default_for_uri_async type callback not implemented*)
 
 val app_info_launch_default_for_uri :
-  string -> App_launch_context.t -> (bool, Error.t structure ptr option) result
+  string -> App_launch_context.t ptr option -> (bool, Error.t structure ptr option) result
 
 val app_info_get_recommended_for_type :
   string -> List.t structure (* Not implemented : interface *) ptr

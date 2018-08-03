@@ -16,7 +16,7 @@ val get_nick :
 val get_qdata :
   t -> Unsigned.uint32 -> unit ptr option
 val get_redirect_target :
-  t -> t
+  t -> t ptr
 val set_qdata :
   t -> Unsigned.uint32 -> unit ptr option -> unit
 val sink :

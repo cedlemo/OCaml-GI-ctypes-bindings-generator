@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 (*Not implemented gtk_about_dialog_add_credit_section type C Array type for Types.Array tag not implemented*)
 (*Not implemented gtk_about_dialog_get_artists return type C Array type for Types.Array tag not handled*)
 (*Not implemented gtk_about_dialog_get_authors return type C Array type for Types.Array tag not handled*)
@@ -18,7 +18,7 @@ val get_license :
 val get_license_type :
   t -> License.t
 val get_logo :
-  t -> Pixbuf.t
+  t -> Pixbuf.t ptr
 val get_logo_icon_name :
   t -> string option
 val get_program_name :
@@ -45,7 +45,7 @@ val set_license :
 val set_license_type :
   t -> License.t -> unit
 val set_logo :
-  t -> Pixbuf.t -> unit
+  t -> Pixbuf.t ptr option -> unit
 val set_logo_icon_name :
   t -> string option -> unit
 val set_program_name :

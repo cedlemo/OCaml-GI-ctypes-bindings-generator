@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_style_properties_new" (void @-> returning (t_typ))
+  foreign "gtk_style_properties_new" (void @-> returning (ptr t_typ))
 let clear =
   foreign "gtk_style_properties_clear" (t_typ @-> returning (void))
 let get_property self property state =
@@ -21,7 +21,7 @@ let lookup_color =
 let map_color =
   foreign "gtk_style_properties_map_color" (t_typ @-> string @-> ptr Symbolic_color.t_typ @-> returning (void))
 let merge =
-  foreign "gtk_style_properties_merge" (t_typ @-> t_typ @-> bool @-> returning (void))
+  foreign "gtk_style_properties_merge" (t_typ @-> ptr t_typ @-> bool @-> returning (void))
 let set_property =
   foreign "gtk_style_properties_set_property" (t_typ @-> string @-> State_flags.t_list_view @-> ptr Value.t_typ @-> returning (void))
 let unset_property =

@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val get_adjustment :
-  t -> Adjustment.t
+  t -> Adjustment.t ptr
 val get_fill_level :
   t -> float
 val get_flippable :
@@ -32,7 +32,7 @@ val get_upper_stepper_sensitivity :
 val get_value :
   t -> float
 val set_adjustment :
-  t -> Adjustment.t -> unit
+  t -> Adjustment.t ptr -> unit
 val set_fill_level :
   t -> float -> unit
 val set_flippable :

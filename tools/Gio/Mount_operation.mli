@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val get_anonymous :
   t -> bool
 val get_choice :

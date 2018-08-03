@@ -5,13 +5,13 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_spin_button_new" (Adjustment.t_typ @-> double @-> uint32_t @-> returning (Widget.t_typ))
+  foreign "gtk_spin_button_new" (ptr_opt Adjustment.t_typ @-> double @-> uint32_t @-> returning (ptr Widget.t_typ))
 let create_with_range =
-  foreign "gtk_spin_button_new_with_range" (double @-> double @-> double @-> returning (Widget.t_typ))
+  foreign "gtk_spin_button_new_with_range" (double @-> double @-> double @-> returning (ptr Widget.t_typ))
 let configure =
-  foreign "gtk_spin_button_configure" (t_typ @-> Adjustment.t_typ @-> double @-> uint32_t @-> returning (void))
+  foreign "gtk_spin_button_configure" (t_typ @-> ptr_opt Adjustment.t_typ @-> double @-> uint32_t @-> returning (void))
 let get_adjustment =
-  foreign "gtk_spin_button_get_adjustment" (t_typ @-> returning (Adjustment.t_typ))
+  foreign "gtk_spin_button_get_adjustment" (t_typ @-> returning (ptr Adjustment.t_typ))
 let get_digits =
   foreign "gtk_spin_button_get_digits" (t_typ @-> returning (uint32_t))
 let get_increments self =
@@ -47,7 +47,7 @@ let get_value_as_int =
 let get_wrap =
   foreign "gtk_spin_button_get_wrap" (t_typ @-> returning (bool))
 let set_adjustment =
-  foreign "gtk_spin_button_set_adjustment" (t_typ @-> Adjustment.t_typ @-> returning (void))
+  foreign "gtk_spin_button_set_adjustment" (t_typ @-> ptr Adjustment.t_typ @-> returning (void))
 let set_digits =
   foreign "gtk_spin_button_set_digits" (t_typ @-> uint32_t @-> returning (void))
 let set_increments =

@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_progress_bar_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_progress_bar_new" (void @-> returning (ptr Widget.t_typ))
 let get_ellipsize =
   foreign "gtk_progress_bar_get_ellipsize" (t_typ @-> returning (Ellipsize_mode.t_view))
 let get_fraction =

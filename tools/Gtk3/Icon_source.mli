@@ -18,7 +18,7 @@ val get_filename :
 val get_icon_name :
   t structure ptr -> string option
 val get_pixbuf :
-  t structure ptr -> Pixbuf.t
+  t structure ptr -> Pixbuf.t ptr
 val get_size :
   t structure ptr -> int32
 val get_size_wildcarded :
@@ -36,7 +36,7 @@ val set_filename :
 val set_icon_name :
   t structure ptr -> string option -> unit
 val set_pixbuf :
-  t structure ptr -> Pixbuf.t -> unit
+  t structure ptr -> Pixbuf.t ptr -> unit
 val set_size :
   t structure ptr -> int32 -> unit
 val set_size_wildcarded :

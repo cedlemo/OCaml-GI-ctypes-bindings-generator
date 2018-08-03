@@ -221,7 +221,7 @@ let resources_register =
 
 let resources_open_stream path lookup_flags =
   let resources_open_stream_raw =
-    foreign "g_resources_open_stream" (string @-> Resource_lookup_flags.t_list_view @-> ptr (ptr_opt Error.t_typ) @-> returning (Input_stream.t_typ))
+    foreign "g_resources_open_stream" (string @-> Resource_lookup_flags.t_list_view @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Input_stream.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = resources_open_stream_raw path lookup_flags err_ptr_ptr in
@@ -292,13 +292,13 @@ let resolver_error_quark =
 (*Not implemented g_pollable_stream_read type C Array type for Types.Array tag not implemented*)
 
 let pollable_source_create_full =
-  foreign "g_pollable_source_new_full" (Object.t_typ @-> ptr_opt Source.t_typ @-> Cancellable.t_typ @-> returning (ptr Source.t_typ))
+  foreign "g_pollable_source_new_full" (ptr Object.t_typ @-> ptr_opt Source.t_typ @-> ptr_opt Cancellable.t_typ @-> returning (ptr Source.t_typ))
 
 let pollable_source_create =
-  foreign "g_pollable_source_new" (Object.t_typ @-> returning (ptr Source.t_typ))
+  foreign "g_pollable_source_new" (ptr Object.t_typ @-> returning (ptr Source.t_typ))
 
 let null_settings_backend_create =
-  foreign "g_null_settings_backend_new" (void @-> returning (Settings_backend.t_typ))
+  foreign "g_null_settings_backend_new" (void @-> returning (ptr Settings_backend.t_typ))
 
 let networking_init =
   foreign "g_networking_init" (void @-> returning (void))
@@ -306,10 +306,10 @@ let networking_init =
 (*Not implemented g_network_monitor_get_default return type interface not handled*)
 
 let memory_settings_backend_create =
-  foreign "g_memory_settings_backend_new" (void @-> returning (Settings_backend.t_typ))
+  foreign "g_memory_settings_backend_new" (void @-> returning (ptr Settings_backend.t_typ))
 
 let keyfile_settings_backend_create =
-  foreign "g_keyfile_settings_backend_new" (string @-> string @-> string_opt @-> returning (Settings_backend.t_typ))
+  foreign "g_keyfile_settings_backend_new" (string @-> string @-> string_opt @-> returning (ptr Settings_backend.t_typ))
 
 let io_modules_scan_all_in_directory_with_scope =
   foreign "g_io_modules_scan_all_in_directory_with_scope" (string @-> ptr IOModule_scope.t_typ @-> returning (void))
@@ -435,7 +435,7 @@ let dbus_error_encode_gerror =
 
 let dbus_address_get_stream_sync address cancellable =
   let dbus_address_get_stream_sync_raw =
-    foreign "g_dbus_address_get_stream_sync" (string @-> Cancellable.t_typ @-> ptr (string) @-> ptr (ptr_opt Error.t_typ) @-> returning (IOStream.t_typ))
+    foreign "g_dbus_address_get_stream_sync" (string @-> ptr_opt Cancellable.t_typ @-> ptr (string) @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt IOStream.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let out_guid_ptr = allocate string " " in
@@ -455,7 +455,7 @@ let dbus_address_get_stream_sync address cancellable =
 
 let dbus_address_get_for_bus_sync bus_type cancellable =
   let dbus_address_get_for_bus_sync_raw =
-    foreign "g_dbus_address_get_for_bus_sync" (Bus_type.t_view @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (string_opt))
+    foreign "g_dbus_address_get_for_bus_sync" (Bus_type.t_view @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (string_opt))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = dbus_address_get_for_bus_sync_raw bus_type cancellable err_ptr_ptr in
@@ -510,7 +510,7 @@ let bus_watch_name =
   foreign "g_bus_watch_name_with_closures" (Bus_type.t_view @-> string @-> Bus_name_watcher_flags.t_list_view @-> ptr_opt Closure.t_typ @-> ptr_opt Closure.t_typ @-> returning (uint32_t))
 
 let bus_watch_name_on_connection =
-  foreign "g_bus_watch_name_on_connection_with_closures" (DBus_connection.t_typ @-> string @-> Bus_name_watcher_flags.t_list_view @-> ptr_opt Closure.t_typ @-> ptr_opt Closure.t_typ @-> returning (uint32_t))
+  foreign "g_bus_watch_name_on_connection_with_closures" (ptr DBus_connection.t_typ @-> string @-> Bus_name_watcher_flags.t_list_view @-> ptr_opt Closure.t_typ @-> ptr_opt Closure.t_typ @-> returning (uint32_t))
 
 let bus_unwatch_name =
   foreign "g_bus_unwatch_name" (uint32_t @-> returning (void))
@@ -522,11 +522,11 @@ let bus_own_name =
   foreign "g_bus_own_name_with_closures" (Bus_type.t_view @-> string @-> Bus_name_owner_flags.t_list_view @-> ptr_opt Closure.t_typ @-> ptr_opt Closure.t_typ @-> ptr_opt Closure.t_typ @-> returning (uint32_t))
 
 let bus_own_name_on_connection =
-  foreign "g_bus_own_name_on_connection_with_closures" (DBus_connection.t_typ @-> string @-> Bus_name_owner_flags.t_list_view @-> ptr_opt Closure.t_typ @-> ptr_opt Closure.t_typ @-> returning (uint32_t))
+  foreign "g_bus_own_name_on_connection_with_closures" (ptr DBus_connection.t_typ @-> string @-> Bus_name_owner_flags.t_list_view @-> ptr_opt Closure.t_typ @-> ptr_opt Closure.t_typ @-> returning (uint32_t))
 
 let bus_get_sync bus_type cancellable =
   let bus_get_sync_raw =
-    foreign "g_bus_get_sync" (Bus_type.t_view @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (DBus_connection.t_typ))
+    foreign "g_bus_get_sync" (Bus_type.t_view @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt DBus_connection.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = bus_get_sync_raw bus_type cancellable err_ptr_ptr in
@@ -549,7 +549,7 @@ let app_info_reset_type_associations =
 
 let app_info_launch_default_for_uri uri context =
   let app_info_launch_default_for_uri_raw =
-    foreign "g_app_info_launch_default_for_uri" (string @-> App_launch_context.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_app_info_launch_default_for_uri" (string @-> ptr_opt App_launch_context.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = app_info_launch_default_for_uri_raw uri context err_ptr_ptr in

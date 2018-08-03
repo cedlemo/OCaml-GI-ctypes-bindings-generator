@@ -17,7 +17,7 @@ val f_next_token: (Token_type.t, t structure) field
 (*Struct field Scanner : union tag not implemented*)
 val f_next_line: (Unsigned.uint32, t structure) field
 val f_next_position: (Unsigned.uint32, t structure) field
-val f_symbol_table: (Hash_table.t structure (* unit ptr *) ptr, t structure) field
+val f_symbol_table: (Hash_table.t.t structure (* unit *) ptr, t structure) field
 val f_input_fd: (int32, t structure) field
 val f_text: (string, t structure) field
 val f_text_end: (string, t structure) field

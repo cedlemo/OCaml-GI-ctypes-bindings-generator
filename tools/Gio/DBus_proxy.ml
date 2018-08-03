@@ -8,7 +8,7 @@ let t_typ : t typ = ptr void
 (*Not implemented g_dbus_proxy_new_for_bus_finish type interface not implemented*)
 let create_for_bus_sync bus_type flags info name object_path interface_name cancellable =
   let create_for_bus_sync_raw =
-    foreign "g_dbus_proxy_new_for_bus_sync" (Bus_type.t_view @-> DBus_proxy_flags.t_list_view @-> ptr_opt DBus_interface_info.t_typ @-> string @-> string @-> string @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+    foreign "g_dbus_proxy_new_for_bus_sync" (Bus_type.t_view @-> DBus_proxy_flags.t_list_view @-> ptr_opt DBus_interface_info.t_typ @-> string @-> string @-> string @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = create_for_bus_sync_raw bus_type flags info name object_path interface_name cancellable err_ptr_ptr in
@@ -19,7 +19,7 @@ let create_for_bus_sync bus_type flags info name object_path interface_name canc
     Error (err_ptr)
 let create_sync connection flags info name object_path interface_name cancellable =
   let create_sync_raw =
-    foreign "g_dbus_proxy_new_sync" (DBus_connection.t_typ @-> DBus_proxy_flags.t_list_view @-> ptr_opt DBus_interface_info.t_typ @-> string_opt @-> string @-> string @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+    foreign "g_dbus_proxy_new_sync" (ptr DBus_connection.t_typ @-> DBus_proxy_flags.t_list_view @-> ptr_opt DBus_interface_info.t_typ @-> string_opt @-> string @-> string @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = create_sync_raw connection flags info name object_path interface_name cancellable err_ptr_ptr in
@@ -34,7 +34,7 @@ let create_sync connection flags info name object_path interface_name cancellabl
 (*Not implemented g_dbus_proxy_call_finish type interface not implemented*)
 let call_sync self method_name parameters flags timeout_msec cancellable =
   let call_sync_raw =
-    foreign "g_dbus_proxy_call_sync" (t_typ @-> string @-> ptr_opt Variant.t_typ @-> DBus_call_flags.t_list_view @-> int32_t @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Variant.t_typ))
+    foreign "g_dbus_proxy_call_sync" (t_typ @-> string @-> ptr_opt Variant.t_typ @-> DBus_call_flags.t_list_view @-> int32_t @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Variant.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = call_sync_raw self method_name parameters flags timeout_msec cancellable err_ptr_ptr in
@@ -47,7 +47,7 @@ let call_sync self method_name parameters flags timeout_msec cancellable =
 (*Not implemented g_dbus_proxy_call_with_unix_fd_list_finish type interface not implemented*)
 let call_with_unix_fd_list_sync self method_name parameters flags timeout_msec fd_list cancellable =
   let call_with_unix_fd_list_sync_raw =
-    foreign "g_dbus_proxy_call_with_unix_fd_list_sync" (t_typ @-> string @-> ptr_opt Variant.t_typ @-> DBus_call_flags.t_list_view @-> int32_t @-> Unix_fdlist.t_typ @-> Cancellable.t_typ @-> ptr (Unix_fdlist.t_typ) @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Variant.t_typ))
+    foreign "g_dbus_proxy_call_with_unix_fd_list_sync" (t_typ @-> string @-> ptr_opt Variant.t_typ @-> DBus_call_flags.t_list_view @-> int32_t @-> ptr_opt Unix_fdlist.t_typ @-> ptr_opt Cancellable.t_typ @-> ptr (ptr Unix_fdlist.t_typ) @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Variant.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let out_fd_list_ptr = allocate (ptr_opt Unix_fdlist.t_typ) None in
@@ -64,7 +64,7 @@ let call_with_unix_fd_list_sync self method_name parameters flags timeout_msec f
   foreign "g_dbus_proxy_get_cached_property" (t_typ @-> string @-> returning (ptr_opt Variant.t_typ))
 (*Not implemented g_dbus_proxy_get_cached_property_names return type C Array type for Types.Array tag not handled*)
 let get_connection =
-  foreign "g_dbus_proxy_get_connection" (t_typ @-> returning (DBus_connection.t_typ))
+  foreign "g_dbus_proxy_get_connection" (t_typ @-> returning (ptr DBus_connection.t_typ))
 let get_default_timeout =
   foreign "g_dbus_proxy_get_default_timeout" (t_typ @-> returning (int32_t))
 let get_flags =

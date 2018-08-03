@@ -8,7 +8,7 @@ let clear_pending =
   foreign "g_input_stream_clear_pending" (t_typ @-> returning (void))
 let close self cancellable =
   let close_raw =
-    foreign "g_input_stream_close" (t_typ @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
+    foreign "g_input_stream_close" (t_typ @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (bool))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = close_raw self cancellable err_ptr_ptr in
@@ -30,7 +30,7 @@ let is_closed =
 (*Not implemented g_input_stream_read_async type C Array type for Types.Array tag not implemented*)
 let read_bytes self count cancellable =
   let read_bytes_raw =
-    foreign "g_input_stream_read_bytes" (t_typ @-> uint64_t @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Bytes.t_typ))
+    foreign "g_input_stream_read_bytes" (t_typ @-> uint64_t @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt Bytes.t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = read_bytes_raw self count cancellable err_ptr_ptr in
@@ -55,7 +55,7 @@ let set_pending self =
     Error (err_ptr)
 let skip self count cancellable =
   let skip_raw =
-    foreign "g_input_stream_skip" (t_typ @-> uint64_t @-> Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (int64_t))
+    foreign "g_input_stream_skip" (t_typ @-> uint64_t @-> ptr_opt Cancellable.t_typ @-> ptr (ptr_opt Error.t_typ) @-> returning (int64_t))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = skip_raw self count cancellable err_ptr_ptr in

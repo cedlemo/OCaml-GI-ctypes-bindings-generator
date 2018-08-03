@@ -37,7 +37,7 @@ let get_surrounding self =
 let reset =
   foreign "gtk_im_context_reset" (t_typ @-> returning (void))
 let set_client_window =
-  foreign "gtk_im_context_set_client_window" (t_typ @-> Window.t_typ @-> returning (void))
+  foreign "gtk_im_context_set_client_window" (t_typ @-> ptr_opt Window.t_typ @-> returning (void))
 let set_cursor_location =
   foreign "gtk_im_context_set_cursor_location" (t_typ @-> ptr Rectangle.t_typ @-> returning (void))
 let set_surrounding =

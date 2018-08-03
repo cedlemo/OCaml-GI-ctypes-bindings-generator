@@ -4,15 +4,15 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val get_default :
-  unit -> t
+  unit -> t ptr
 val add_full :
   t -> string -> Recent_data.t structure ptr -> bool
 val add_item :
   t -> string -> bool
 val get_items :
-  t -> List.t structure (* Recent_info.t structure *) ptr
+  t -> List.t structure (* Not implemented : interface *) ptr
 val has_item :
   t -> string -> bool
 val lookup_item :

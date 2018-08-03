@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  string -> string option -> string option -> string option -> t
+  string -> string option -> string option -> string option -> t ptr
 val get_active :
   t -> bool
 val get_draw_as_radio :

@@ -4,34 +4,34 @@ type t
 val t_typ : t typ
 
 val create :
-  string -> t
+  string -> t ptr
 val create_full :
-  Settings_schema.t structure ptr -> Settings_backend.t -> string option -> t
+  Settings_schema.t structure ptr -> Settings_backend.t ptr option -> string option -> t ptr
 val create_with_backend :
-  string -> Settings_backend.t -> t
+  string -> Settings_backend.t ptr -> t ptr
 val create_with_backend_and_path :
-  string -> Settings_backend.t -> string -> t
+  string -> Settings_backend.t ptr -> string -> t ptr
 val create_with_path :
-  string -> string -> t
+  string -> string -> t ptr
 (*Not implemented g_settings_list_relocatable_schemas return type C Array type for Types.Array tag not handled*)
 (*Not implemented g_settings_list_schemas return type C Array type for Types.Array tag not handled*)
 val sync :
   unit -> unit
 val unbind :
-  Object.t -> string -> unit
+  Object.t ptr -> string -> unit
 val apply :
   t -> unit
 val bind :
-  t -> string -> Object.t -> string -> Settings_bind_flags.t_list -> unit
+  t -> string -> Object.t ptr -> string -> Settings_bind_flags.t_list -> unit
 val bind_writable :
-  t -> string -> Object.t -> string -> bool -> unit
+  t -> string -> Object.t ptr -> string -> bool -> unit
 (*Not implemented g_settings_create_action return type interface not handled*)
 val delay :
   t -> unit
 val get_boolean :
   t -> string -> bool
 val get_child :
-  t -> string -> t
+  t -> string -> t ptr
 val get_default_value :
   t -> string -> Variant.t structure ptr option
 val get_double :

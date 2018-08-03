@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val get_current :
-  unit -> t
+  unit -> t ptr option
 val cancel :
   t -> unit
 (*Not implemented g_cancellable_connect type callback not implemented*)

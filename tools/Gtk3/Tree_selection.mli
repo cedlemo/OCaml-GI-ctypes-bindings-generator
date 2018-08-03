@@ -10,7 +10,7 @@ val get_mode :
 (*Not implemented gtk_tree_selection_get_selected type interface not implemented*)
 (*Not implemented gtk_tree_selection_get_selected_rows type interface not implemented*)
 val get_tree_view :
-  t -> Tree_view.t
+  t -> Tree_view.t ptr
 val iter_is_selected :
   t -> Tree_iter.t structure ptr -> bool
 val path_is_selected :

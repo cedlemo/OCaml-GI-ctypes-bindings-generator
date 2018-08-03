@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_network_service_new" (string @-> string @-> string @-> returning (t_typ))
+  foreign "g_network_service_new" (string @-> string @-> string @-> returning (ptr t_typ))
 let get_domain =
   foreign "g_network_service_get_domain" (t_typ @-> returning (string_opt))
 let get_protocol =

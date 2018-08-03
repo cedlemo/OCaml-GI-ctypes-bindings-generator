@@ -8,7 +8,7 @@ val allocate :
 val get_allocation :
   t -> (int32 * int32)
 val get_area :
-  t -> Cell_area.t
+  t -> Cell_area.t ptr
 val get_preferred_height :
   t -> (int32 * int32)
 val get_preferred_height_for_width :

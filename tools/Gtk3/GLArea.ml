@@ -5,13 +5,13 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_gl_area_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_gl_area_new" (void @-> returning (ptr Widget.t_typ))
 let attach_buffers =
   foreign "gtk_gl_area_attach_buffers" (t_typ @-> returning (void))
 let get_auto_render =
   foreign "gtk_gl_area_get_auto_render" (t_typ @-> returning (bool))
 let get_context =
-  foreign "gtk_gl_area_get_context" (t_typ @-> returning (GLContext.t_typ))
+  foreign "gtk_gl_area_get_context" (t_typ @-> returning (ptr GLContext.t_typ))
 let get_error =
   foreign "gtk_gl_area_get_error" (t_typ @-> returning (ptr_opt Error.t_typ))
 let get_has_alpha =

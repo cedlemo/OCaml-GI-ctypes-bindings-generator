@@ -5,11 +5,11 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let trigger_tooltip_query =
-  foreign "gtk_tooltip_trigger_tooltip_query" (Display.t_typ @-> returning (void))
+  foreign "gtk_tooltip_trigger_tooltip_query" (ptr Display.t_typ @-> returning (void))
 let set_custom =
-  foreign "gtk_tooltip_set_custom" (t_typ @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_tooltip_set_custom" (t_typ @-> ptr_opt Widget.t_typ @-> returning (void))
 let set_icon =
-  foreign "gtk_tooltip_set_icon" (t_typ @-> Pixbuf.t_typ @-> returning (void))
+  foreign "gtk_tooltip_set_icon" (t_typ @-> ptr_opt Pixbuf.t_typ @-> returning (void))
 (*Not implemented gtk_tooltip_set_icon_from_gicon type interface not implemented*)
 let set_icon_from_icon_name =
   foreign "gtk_tooltip_set_icon_from_icon_name" (t_typ @-> string_opt @-> int32_t @-> returning (void))

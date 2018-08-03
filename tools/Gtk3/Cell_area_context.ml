@@ -17,7 +17,7 @@ let get_allocation self =
   let height = !@ height_ptr in
   (width, height)
 let get_area =
-  foreign "gtk_cell_area_context_get_area" (t_typ @-> returning (Cell_area.t_typ))
+  foreign "gtk_cell_area_context_get_area" (t_typ @-> returning (ptr Cell_area.t_typ))
 let get_preferred_height self =
   let get_preferred_height_raw =
     foreign "gtk_cell_area_context_get_preferred_height" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))

@@ -4,15 +4,15 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 (*Not implemented g_dbus_message_new_from_blob type C Array type for Types.Array tag not implemented*)
 val create_method_call :
-  string option -> string -> string option -> string -> t
+  string option -> string -> string option -> string -> t ptr
 val create_signal :
-  string -> string -> string -> t
+  string -> string -> string -> t ptr
 (*Not implemented g_dbus_message_bytes_needed type C Array type for Types.Array tag not implemented*)
 val copy :
-  t -> (t, Error.t structure ptr option) result
+  t -> (t ptr option, Error.t structure ptr option) result
 val get_arg0 :
   t -> string option
 val get_body :
@@ -49,13 +49,13 @@ val get_serial :
 val get_signature :
   t -> string option
 val get_unix_fd_list :
-  t -> Unix_fdlist.t
+  t -> Unix_fdlist.t ptr
 val lock :
   t -> unit
 val create_method_error_literal :
-  t -> string -> string -> t
+  t -> string -> string -> t ptr
 val create_method_reply :
-  t -> t
+  t -> t ptr
 val print :
   t -> Unsigned.uint32 -> string option
 val set_body :
@@ -89,7 +89,7 @@ val set_serial :
 val set_signature :
   t -> string -> unit
 val set_unix_fd_list :
-  t -> Unix_fdlist.t -> unit
+  t -> Unix_fdlist.t ptr option -> unit
 (*Not implemented g_dbus_message_to_blob return type C Array type for Types.Array tag not handled*)
 val to_gerror :
   t -> (bool, Error.t structure ptr option) result

@@ -11,13 +11,13 @@ val get_data_type :
   t structure ptr -> Atom.t structure ptr
 (*Not implemented gtk_selection_data_get_data_with_length return type C Array type for Types.Array tag not handled*)
 val get_display :
-  t structure ptr -> Display.t
+  t structure ptr -> Display.t ptr
 val get_format :
   t structure ptr -> int32
 val get_length :
   t structure ptr -> int32
 val get_pixbuf :
-  t structure ptr -> Pixbuf.t
+  t structure ptr -> Pixbuf.t ptr option
 val get_selection :
   t structure ptr -> Atom.t structure ptr
 val get_target :
@@ -28,14 +28,14 @@ val get_text :
 (*Not implemented gtk_selection_data_get_uris return type C Array type for Types.Array tag not handled*)
 (*Not implemented gtk_selection_data_set type C Array type for Types.Array tag not implemented*)
 val set_pixbuf :
-  t structure ptr -> Pixbuf.t -> bool
+  t structure ptr -> Pixbuf.t ptr -> bool
 val set_text :
   t structure ptr -> string -> int32 -> bool
 (*Not implemented gtk_selection_data_set_uris type C Array type for Types.Array tag not implemented*)
 val targets_include_image :
   t structure ptr -> bool -> bool
 val targets_include_rich_text :
-  t structure ptr -> Text_buffer.t -> bool
+  t structure ptr -> Text_buffer.t ptr -> bool
 val targets_include_text :
   t structure ptr -> bool
 val targets_include_uri :

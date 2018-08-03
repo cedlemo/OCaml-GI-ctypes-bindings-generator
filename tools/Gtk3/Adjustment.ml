@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_adjustment_new" (double @-> double @-> double @-> double @-> double @-> double @-> returning (t_typ))
+  foreign "gtk_adjustment_new" (double @-> double @-> double @-> double @-> double @-> double @-> returning (ptr t_typ))
 let changed =
   foreign "gtk_adjustment_changed" (t_typ @-> returning (void))
 let clamp_page =

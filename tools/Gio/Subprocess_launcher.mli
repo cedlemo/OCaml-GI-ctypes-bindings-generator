@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  Subprocess_flags.t_list -> t
+  Subprocess_flags.t_list -> t ptr
 val getenv :
   t -> string -> string option
 val set_cwd :

@@ -5,13 +5,13 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_text_view_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_text_view_new" (void @-> returning (ptr Widget.t_typ))
 let create_with_buffer =
-  foreign "gtk_text_view_new_with_buffer" (Text_buffer.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_text_view_new_with_buffer" (ptr Text_buffer.t_typ @-> returning (ptr Widget.t_typ))
 let add_child_at_anchor =
-  foreign "gtk_text_view_add_child_at_anchor" (t_typ @-> Widget.t_typ @-> Text_child_anchor.t_typ @-> returning (void))
+  foreign "gtk_text_view_add_child_at_anchor" (t_typ @-> ptr Widget.t_typ @-> ptr Text_child_anchor.t_typ @-> returning (void))
 let add_child_in_window =
-  foreign "gtk_text_view_add_child_in_window" (t_typ @-> Widget.t_typ @-> Text_window_type.t_view @-> int32_t @-> int32_t @-> returning (void))
+  foreign "gtk_text_view_add_child_in_window" (t_typ @-> ptr Widget.t_typ @-> Text_window_type.t_view @-> int32_t @-> int32_t @-> returning (void))
 let backward_display_line =
   foreign "gtk_text_view_backward_display_line" (t_typ @-> ptr Text_iter.t_typ @-> returning (bool))
 let backward_display_line_start =
@@ -37,7 +37,7 @@ let get_border_window_size =
 let get_bottom_margin =
   foreign "gtk_text_view_get_bottom_margin" (t_typ @-> returning (int32_t))
 let get_buffer =
-  foreign "gtk_text_view_get_buffer" (t_typ @-> returning (Text_buffer.t_typ))
+  foreign "gtk_text_view_get_buffer" (t_typ @-> returning (ptr Text_buffer.t_typ))
 let get_cursor_locations self iter =
   let get_cursor_locations_raw =
     foreign "gtk_text_view_get_cursor_locations" (t_typ @-> ptr_opt Text_iter.t_typ @-> ptr (Rectangle.t_typ) @-> ptr (Rectangle.t_typ) @-> returning (void))
@@ -55,7 +55,7 @@ let get_default_attributes =
 let get_editable =
   foreign "gtk_text_view_get_editable" (t_typ @-> returning (bool))
 let get_hadjustment =
-  foreign "gtk_text_view_get_hadjustment" (t_typ @-> returning (Adjustment.t_typ))
+  foreign "gtk_text_view_get_hadjustment" (t_typ @-> returning (ptr Adjustment.t_typ))
 let get_indent =
   foreign "gtk_text_view_get_indent" (t_typ @-> returning (int32_t))
 let get_input_hints =
@@ -129,7 +129,7 @@ let get_tabs =
 let get_top_margin =
   foreign "gtk_text_view_get_top_margin" (t_typ @-> returning (int32_t))
 let get_vadjustment =
-  foreign "gtk_text_view_get_vadjustment" (t_typ @-> returning (Adjustment.t_typ))
+  foreign "gtk_text_view_get_vadjustment" (t_typ @-> returning (ptr Adjustment.t_typ))
 let get_visible_rect self =
   let get_visible_rect_raw =
     foreign "gtk_text_view_get_visible_rect" (t_typ @-> ptr (Rectangle.t_typ) @-> returning (void))
@@ -139,17 +139,17 @@ let get_visible_rect self =
   let visible_rect = !@ visible_rect_ptr in
   (visible_rect)
 let get_window =
-  foreign "gtk_text_view_get_window" (t_typ @-> Text_window_type.t_view @-> returning (Window.t_typ))
+  foreign "gtk_text_view_get_window" (t_typ @-> Text_window_type.t_view @-> returning (ptr_opt Window.t_typ))
 let get_window_type =
-  foreign "gtk_text_view_get_window_type" (t_typ @-> Window.t_typ @-> returning (Text_window_type.t_view))
+  foreign "gtk_text_view_get_window_type" (t_typ @-> ptr Window.t_typ @-> returning (Text_window_type.t_view))
 let get_wrap_mode =
   foreign "gtk_text_view_get_wrap_mode" (t_typ @-> returning (Wrap_mode.t_view))
 let im_context_filter_keypress =
   foreign "gtk_text_view_im_context_filter_keypress" (t_typ @-> ptr Event_key.t_typ @-> returning (bool))
 let move_child =
-  foreign "gtk_text_view_move_child" (t_typ @-> Widget.t_typ @-> int32_t @-> int32_t @-> returning (void))
+  foreign "gtk_text_view_move_child" (t_typ @-> ptr Widget.t_typ @-> int32_t @-> int32_t @-> returning (void))
 let move_mark_onscreen =
-  foreign "gtk_text_view_move_mark_onscreen" (t_typ @-> Text_mark.t_typ @-> returning (bool))
+  foreign "gtk_text_view_move_mark_onscreen" (t_typ @-> ptr Text_mark.t_typ @-> returning (bool))
 let move_visually =
   foreign "gtk_text_view_move_visually" (t_typ @-> ptr Text_iter.t_typ @-> int32_t @-> returning (bool))
 let place_cursor_onscreen =
@@ -159,11 +159,11 @@ let reset_cursor_blink =
 let reset_im_context =
   foreign "gtk_text_view_reset_im_context" (t_typ @-> returning (void))
 let scroll_mark_onscreen =
-  foreign "gtk_text_view_scroll_mark_onscreen" (t_typ @-> Text_mark.t_typ @-> returning (void))
+  foreign "gtk_text_view_scroll_mark_onscreen" (t_typ @-> ptr Text_mark.t_typ @-> returning (void))
 let scroll_to_iter =
   foreign "gtk_text_view_scroll_to_iter" (t_typ @-> ptr Text_iter.t_typ @-> double @-> bool @-> double @-> double @-> returning (bool))
 let scroll_to_mark =
-  foreign "gtk_text_view_scroll_to_mark" (t_typ @-> Text_mark.t_typ @-> double @-> bool @-> double @-> double @-> returning (void))
+  foreign "gtk_text_view_scroll_to_mark" (t_typ @-> ptr Text_mark.t_typ @-> double @-> bool @-> double @-> double @-> returning (void))
 let set_accepts_tab =
   foreign "gtk_text_view_set_accepts_tab" (t_typ @-> bool @-> returning (void))
 let set_border_window_size =
@@ -171,7 +171,7 @@ let set_border_window_size =
 let set_bottom_margin =
   foreign "gtk_text_view_set_bottom_margin" (t_typ @-> int32_t @-> returning (void))
 let set_buffer =
-  foreign "gtk_text_view_set_buffer" (t_typ @-> Text_buffer.t_typ @-> returning (void))
+  foreign "gtk_text_view_set_buffer" (t_typ @-> ptr_opt Text_buffer.t_typ @-> returning (void))
 let set_cursor_visible =
   foreign "gtk_text_view_set_cursor_visible" (t_typ @-> bool @-> returning (void))
 let set_editable =

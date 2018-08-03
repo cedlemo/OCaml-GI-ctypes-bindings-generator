@@ -17,7 +17,7 @@ val get_op_res_gssize :
 val propagate_error :
   t -> (bool, Error.t structure ptr option) result
 val set_check_cancellable :
-  t -> Cancellable.t -> unit
+  t -> Cancellable.t ptr option -> unit
 val set_from_error :
   t -> Error.t structure ptr -> unit
 val set_handle_cancellation :

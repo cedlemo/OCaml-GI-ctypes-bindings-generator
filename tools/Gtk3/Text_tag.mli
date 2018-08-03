@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  string option -> t
+  string option -> t ptr
 val changed :
   t -> bool -> unit
 (*Not implemented gtk_text_tag_event type union not implemented*)

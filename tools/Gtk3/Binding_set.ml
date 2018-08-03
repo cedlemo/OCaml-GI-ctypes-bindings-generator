@@ -15,7 +15,7 @@ let f_parsed = field t_typ "parsed" (uint32_t)
 let _ = seal t_typ
 
 let activate =
-  foreign "gtk_binding_set_activate" (ptr t_typ @-> uint32_t @-> Modifier_type.t_list_view @-> Object.t_typ @-> returning (bool))
+  foreign "gtk_binding_set_activate" (ptr t_typ @-> uint32_t @-> Modifier_type.t_list_view @-> ptr Object.t_typ @-> returning (bool))
 let add_path =
   foreign "gtk_binding_set_add_path" (ptr t_typ @-> Path_type.t_view @-> string @-> Path_priority_type.t_view @-> returning (void))
 let find =

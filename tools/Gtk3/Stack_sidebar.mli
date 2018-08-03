@@ -4,8 +4,8 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val get_stack :
-  t -> Stack.t
+  t -> Stack.t ptr option
 val set_stack :
-  t -> Stack.t -> unit
+  t -> Stack.t ptr -> unit

@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_combo_box_text_new" (void @-> returning (Widget.t_typ))
+  foreign "gtk_combo_box_text_new" (void @-> returning (ptr Widget.t_typ))
 let create_with_entry =
-  foreign "gtk_combo_box_text_new_with_entry" (void @-> returning (Widget.t_typ))
+  foreign "gtk_combo_box_text_new_with_entry" (void @-> returning (ptr Widget.t_typ))
 let append =
   foreign "gtk_combo_box_text_append" (t_typ @-> string_opt @-> string @-> returning (void))
 let append_text =

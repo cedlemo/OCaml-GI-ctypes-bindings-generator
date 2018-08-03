@@ -5,15 +5,15 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_scrolled_window_new" (Adjustment.t_typ @-> Adjustment.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_scrolled_window_new" (ptr_opt Adjustment.t_typ @-> ptr_opt Adjustment.t_typ @-> returning (ptr Widget.t_typ))
 let add_with_viewport =
-  foreign "gtk_scrolled_window_add_with_viewport" (t_typ @-> Widget.t_typ @-> returning (void))
+  foreign "gtk_scrolled_window_add_with_viewport" (t_typ @-> ptr Widget.t_typ @-> returning (void))
 let get_capture_button_press =
   foreign "gtk_scrolled_window_get_capture_button_press" (t_typ @-> returning (bool))
 let get_hadjustment =
-  foreign "gtk_scrolled_window_get_hadjustment" (t_typ @-> returning (Adjustment.t_typ))
+  foreign "gtk_scrolled_window_get_hadjustment" (t_typ @-> returning (ptr Adjustment.t_typ))
 let get_hscrollbar =
-  foreign "gtk_scrolled_window_get_hscrollbar" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_scrolled_window_get_hscrollbar" (t_typ @-> returning (ptr Widget.t_typ))
 let get_kinetic_scrolling =
   foreign "gtk_scrolled_window_get_kinetic_scrolling" (t_typ @-> returning (bool))
 let get_max_content_height =
@@ -45,13 +45,13 @@ let get_propagate_natural_width =
 let get_shadow_type =
   foreign "gtk_scrolled_window_get_shadow_type" (t_typ @-> returning (Shadow_type.t_view))
 let get_vadjustment =
-  foreign "gtk_scrolled_window_get_vadjustment" (t_typ @-> returning (Adjustment.t_typ))
+  foreign "gtk_scrolled_window_get_vadjustment" (t_typ @-> returning (ptr Adjustment.t_typ))
 let get_vscrollbar =
-  foreign "gtk_scrolled_window_get_vscrollbar" (t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_scrolled_window_get_vscrollbar" (t_typ @-> returning (ptr Widget.t_typ))
 let set_capture_button_press =
   foreign "gtk_scrolled_window_set_capture_button_press" (t_typ @-> bool @-> returning (void))
 let set_hadjustment =
-  foreign "gtk_scrolled_window_set_hadjustment" (t_typ @-> Adjustment.t_typ @-> returning (void))
+  foreign "gtk_scrolled_window_set_hadjustment" (t_typ @-> ptr Adjustment.t_typ @-> returning (void))
 let set_kinetic_scrolling =
   foreign "gtk_scrolled_window_set_kinetic_scrolling" (t_typ @-> bool @-> returning (void))
 let set_max_content_height =
@@ -75,6 +75,6 @@ let set_propagate_natural_width =
 let set_shadow_type =
   foreign "gtk_scrolled_window_set_shadow_type" (t_typ @-> Shadow_type.t_view @-> returning (void))
 let set_vadjustment =
-  foreign "gtk_scrolled_window_set_vadjustment" (t_typ @-> Adjustment.t_typ @-> returning (void))
+  foreign "gtk_scrolled_window_set_vadjustment" (t_typ @-> ptr Adjustment.t_typ @-> returning (void))
 let unset_placement =
   foreign "gtk_scrolled_window_unset_placement" (t_typ @-> returning (void))

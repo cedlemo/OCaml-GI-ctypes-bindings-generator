@@ -11,7 +11,7 @@ let get_mode =
 (*Not implemented gtk_tree_selection_get_selected type interface not implemented*)
 (*Not implemented gtk_tree_selection_get_selected_rows type interface not implemented*)
 let get_tree_view =
-  foreign "gtk_tree_selection_get_tree_view" (t_typ @-> returning (Tree_view.t_typ))
+  foreign "gtk_tree_selection_get_tree_view" (t_typ @-> returning (ptr Tree_view.t_typ))
 let iter_is_selected =
   foreign "gtk_tree_selection_iter_is_selected" (t_typ @-> ptr Tree_iter.t_typ @-> returning (bool))
 let path_is_selected =

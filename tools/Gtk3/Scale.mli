@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  Orientation.t -> Adjustment.t -> Widget.t
+  Orientation.t -> Adjustment.t ptr option -> Widget.t ptr
 val create_with_range :
-  Orientation.t -> float -> float -> float -> Widget.t
+  Orientation.t -> float -> float -> float -> Widget.t ptr
 val add_mark :
   t -> float -> Position_type.t -> string option -> unit
 val clear_marks :
@@ -18,7 +18,7 @@ val get_draw_value :
 val get_has_origin :
   t -> bool
 val get_layout :
-  t -> Layout.t
+  t -> Layout.t ptr option
 val get_layout_offsets :
   t -> (int32 * int32)
 val get_value_pos :

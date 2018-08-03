@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> Widget.t
+  unit -> Widget.t ptr
 val create_for_interval :
-  float -> float -> Widget.t
+  float -> float -> Widget.t ptr
 val add_offset_value :
   t -> string -> float -> unit
 val get_inverted :

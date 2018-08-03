@@ -5,7 +5,7 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "g_test_dbus_new" (Test_dbus_flags.t_list_view @-> returning (t_typ))
+  foreign "g_test_dbus_new" (Test_dbus_flags.t_list_view @-> returning (ptr t_typ))
 let unset =
   foreign "g_test_dbus_unset" (void @-> returning (void))
 let add_service_dir =

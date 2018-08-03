@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_scale_new" (Orientation.t_view @-> Adjustment.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_scale_new" (Orientation.t_view @-> ptr_opt Adjustment.t_typ @-> returning (ptr Widget.t_typ))
 let create_with_range =
-  foreign "gtk_scale_new_with_range" (Orientation.t_view @-> double @-> double @-> double @-> returning (Widget.t_typ))
+  foreign "gtk_scale_new_with_range" (Orientation.t_view @-> double @-> double @-> double @-> returning (ptr Widget.t_typ))
 let add_mark =
   foreign "gtk_scale_add_mark" (t_typ @-> double @-> Position_type.t_view @-> string_opt @-> returning (void))
 let clear_marks =
@@ -19,7 +19,7 @@ let get_draw_value =
 let get_has_origin =
   foreign "gtk_scale_get_has_origin" (t_typ @-> returning (bool))
 let get_layout =
-  foreign "gtk_scale_get_layout" (t_typ @-> returning (Layout.t_typ))
+  foreign "gtk_scale_get_layout" (t_typ @-> returning (ptr_opt Layout.t_typ))
 let get_layout_offsets self =
   let get_layout_offsets_raw =
     foreign "gtk_scale_get_layout_offsets" (t_typ @-> ptr (int32_t) @-> ptr (int32_t) @-> returning (void))

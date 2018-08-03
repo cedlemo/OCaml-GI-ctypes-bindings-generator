@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  string -> Widget.t
+  string -> Widget.t ptr
 val get_accelerator :
   t -> string option
 val get_disabled_text :

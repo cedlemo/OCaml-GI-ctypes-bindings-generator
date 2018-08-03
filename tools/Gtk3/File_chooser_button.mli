@@ -4,9 +4,9 @@ type t
 val t_typ : t typ
 
 val create :
-  string -> File_chooser_action.t -> Widget.t
+  string -> File_chooser_action.t -> Widget.t ptr
 val create_with_dialog :
-  Dialog.t -> Widget.t
+  Dialog.t ptr -> Widget.t ptr
 val get_focus_on_click :
   t -> bool
 val get_title :

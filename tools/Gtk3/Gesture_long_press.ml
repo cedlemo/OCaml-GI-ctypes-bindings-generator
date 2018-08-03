@@ -5,4 +5,4 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_gesture_long_press_new" (Widget.t_typ @-> returning (Gesture.t_typ))
+  foreign "gtk_gesture_long_press_new" (ptr Widget.t_typ @-> returning (ptr Gesture.t_typ))

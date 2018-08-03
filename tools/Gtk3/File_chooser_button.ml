@@ -5,9 +5,9 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_file_chooser_button_new" (string @-> File_chooser_action.t_view @-> returning (Widget.t_typ))
+  foreign "gtk_file_chooser_button_new" (string @-> File_chooser_action.t_view @-> returning (ptr Widget.t_typ))
 let create_with_dialog =
-  foreign "gtk_file_chooser_button_new_with_dialog" (Dialog.t_typ @-> returning (Widget.t_typ))
+  foreign "gtk_file_chooser_button_new_with_dialog" (ptr Dialog.t_typ @-> returning (ptr Widget.t_typ))
 let get_focus_on_click =
   foreign "gtk_file_chooser_button_get_focus_on_click" (t_typ @-> returning (bool))
 let get_title =

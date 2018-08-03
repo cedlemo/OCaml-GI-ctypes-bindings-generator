@@ -4,6 +4,6 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val copy :
-  t -> t
+  t -> t ptr

@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val create :
-  string -> Widget.t
+  string -> Widget.t ptr
 val get_default_text :
   t -> string option
 val get_show_all :

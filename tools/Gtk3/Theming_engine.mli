@@ -4,7 +4,7 @@ type t
 val t_typ : t typ
 
 val load :
-  string -> t
+  string -> t ptr option
 val get_background_color :
   t -> State_flags.t_list -> (RGBA.t structure)
 val get_border :
@@ -28,7 +28,7 @@ val get_path :
 val get_property :
   t -> string -> State_flags.t_list -> (Value.t structure)
 val get_screen :
-  t -> Screen.t
+  t -> Screen.t ptr option
 val get_state :
   t -> State_flags.t_list
 val get_style_property :

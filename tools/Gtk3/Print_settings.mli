@@ -4,15 +4,15 @@ type t
 val t_typ : t typ
 
 val create :
-  unit -> t
+  unit -> t ptr
 val create_from_file :
-  string -> (t, Error.t structure ptr option) result
+  string -> (t ptr option, Error.t structure ptr option) result
 val create_from_gvariant :
-  Variant.t structure ptr -> t
+  Variant.t structure ptr -> t ptr
 val create_from_key_file :
-  Key_file.t structure ptr -> string option -> (t, Error.t structure ptr option) result
+  Key_file.t structure ptr -> string option -> (t ptr option, Error.t structure ptr option) result
 val copy :
-  t -> t
+  t -> t ptr
 (*Not implemented gtk_print_settings_foreach type callback not implemented*)
 val get :
   t -> string -> string option

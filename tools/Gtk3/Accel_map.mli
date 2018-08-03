@@ -12,7 +12,7 @@ val change_entry :
 (*Not implemented gtk_accel_map_foreach type callback not implemented*)
 (*Not implemented gtk_accel_map_foreach_unfiltered type callback not implemented*)
 val get :
-  unit -> t
+  unit -> t ptr
 val load :
   string -> unit
 val load_fd :

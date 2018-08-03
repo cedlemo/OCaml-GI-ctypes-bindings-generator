@@ -4,11 +4,11 @@ type t
 val t_typ : t typ
 
 val create :
-  Unsigned.uint32 -> Unsigned.uint32 -> bool -> Widget.t
+  Unsigned.uint32 -> Unsigned.uint32 -> bool -> Widget.t ptr
 val attach :
-  t -> Widget.t -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> Attach_options.t_list -> Attach_options.t_list -> Unsigned.uint32 -> Unsigned.uint32 -> unit
+  t -> Widget.t ptr -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> Attach_options.t_list -> Attach_options.t_list -> Unsigned.uint32 -> Unsigned.uint32 -> unit
 val attach_defaults :
-  t -> Widget.t -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> unit
+  t -> Widget.t ptr -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> Unsigned.uint32 -> unit
 val get_col_spacing :
   t -> Unsigned.uint32 -> Unsigned.uint32
 val get_default_col_spacing :

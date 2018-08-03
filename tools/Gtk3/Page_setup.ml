@@ -5,10 +5,10 @@ type t = unit ptr
 let t_typ : t typ = ptr void
 
 let create =
-  foreign "gtk_page_setup_new" (void @-> returning (t_typ))
+  foreign "gtk_page_setup_new" (void @-> returning (ptr t_typ))
 let create_from_file file_name =
   let create_from_file_raw =
-    foreign "gtk_page_setup_new_from_file" (string @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+    foreign "gtk_page_setup_new_from_file" (string @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = create_from_file_raw file_name err_ptr_ptr in
@@ -18,10 +18,10 @@ let create_from_file file_name =
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
 let create_from_gvariant =
-  foreign "gtk_page_setup_new_from_gvariant" (ptr Variant.t_typ @-> returning (t_typ))
+  foreign "gtk_page_setup_new_from_gvariant" (ptr Variant.t_typ @-> returning (ptr t_typ))
 let create_from_key_file key_file group_name =
   let create_from_key_file_raw =
-    foreign "gtk_page_setup_new_from_key_file" (ptr Key_file.t_typ @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (t_typ))
+    foreign "gtk_page_setup_new_from_key_file" (ptr Key_file.t_typ @-> string_opt @-> ptr (ptr_opt Error.t_typ) @-> returning (ptr_opt t_typ))
   in
   let err_ptr_ptr = allocate (ptr_opt Error.t_typ) None in
   let ret = create_from_key_file_raw key_file group_name err_ptr_ptr in
@@ -31,7 +31,7 @@ let create_from_key_file key_file group_name =
     let _ = Gc.finalise (function | Some e -> Error.free e | None -> () ) err_ptr in
     Error (err_ptr)
 let copy =
-  foreign "gtk_page_setup_copy" (t_typ @-> returning (t_typ))
+  foreign "gtk_page_setup_copy" (t_typ @-> returning (ptr t_typ))
 let get_bottom_margin =
   foreign "gtk_page_setup_get_bottom_margin" (t_typ @-> Unit.t_view @-> returning (double))
 let get_left_margin =
