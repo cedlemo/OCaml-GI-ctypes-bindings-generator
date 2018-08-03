@@ -1,0 +1,8 @@
+(library
+  (name        GI_bindings_generator)
+  (public_name gi-bindings-generator)
+  (libraries ctypes ctypes.foreign str gobject-introspection)
+  (preprocess (pps bisect_ppx -conditional))
+)
+
+(ocamllex lexer)

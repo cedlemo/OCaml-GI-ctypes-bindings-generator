@@ -1,0 +1,8 @@
+(executables
+ (names test)
+ (libraries GI_bindings_generator gobject-introspection oUnit ctypes ctypes.foreign)
+)
+
+(alias
+ (name runtest)
+ (action (run ./test.exe)))

@@ -1,0 +1,4 @@
+(executables
+   (names raw_generator)
+   (libraries gobject-introspection gi-bindings-generator)
+)
