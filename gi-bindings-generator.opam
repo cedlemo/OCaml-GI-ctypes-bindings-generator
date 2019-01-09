@@ -6,7 +6,7 @@ authors: "cedlemo <cedlemo@gmx.com>"
 homepage: "https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator"
 bug-reports: "https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator/issues"
 license: "GPL3"
-dev-repo: "https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator"
+dev-repo: "https://github.com/cedlemo/OCaml-GI-ctypes-bindings-generator.git"
 build: [["dune" "build" "-p" name "-j" jobs]]
 build-test: [["dune" "runtest" "-p" name "-j" jobs]]
 depends: [

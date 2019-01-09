@@ -1,0 +1,15 @@
+#! /bin/bash
+
+brew update
+brew install \
+    gtk+3 \
+    glib \
+    git \
+    darcs \
+    mercurial \
+    libffi \
+    gobject-introspection \
+    opam
+
+opam init --comp 4.06.0  --yes
+opam pin add -y gobject-introspection https://github.com/cedlemo/OCaml-GObject-Introspection.git
