@@ -11,5 +11,6 @@ brew install \
     gobject-introspection \
     opam
 
-opam init --comp 4.06.0  --yes
+opam init --comp "$OCAML_VERSION.0" --yes
+eval $(opam env)
 opam pin add -y gobject-introspection https://github.com/cedlemo/OCaml-GObject-Introspection.git
