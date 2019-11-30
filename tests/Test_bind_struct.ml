@@ -26,7 +26,7 @@ let get_struct_info namespace struct_name =
   | None -> None
   | Some bi ->
     match Base_info.get_type bi with
-    | Base_info.Struct -> let si = Struct_info.from_baseinfo bi in
+    | Bindings.Base_info.Struct -> let si = Struct_info.from_baseinfo bi in
       Some si
     | _ -> None
 

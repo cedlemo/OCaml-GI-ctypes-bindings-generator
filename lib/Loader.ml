@@ -43,34 +43,34 @@ let rec write_bindings_for namespace ?version = function
                 let open Binding_utils in
                 let sources = generate_files name in
                 let _ = match Base_info.get_type bi with
-                  | Base_info.Boxed | Base_info.Struct -> begin
+                  | Bindings.Base_info.Boxed | Bindings.Base_info.Struct -> begin
                       let si = Struct_info.from_baseinfo bi in
                       if Struct_info.is_gtype_struct si then ()
                       else
                         Bind_struct.parse_struct_info bi sources []
                     end
-                  | Base_info.Enum ->
+                  | Bindings.Base_info.Enum ->
                       Bind_enum.parse_enum_info bi sources
-                  | Base_info.Flags ->
+                  | Bindings.Base_info.Flags ->
                       Bind_enum.parse_flags_info bi sources
-                  | Base_info.Constant ->
+                  | Bindings.Base_info.Constant ->
                       Bind_constant.parse_constant_info bi sources
-                  | Base_info.Union ->
+                  | Bindings.Base_info.Union ->
                       Bind_union.parse_union_info bi sources []
-                  | Base_info.Callback -> ()
-                  | Base_info.Invalid -> ()
-                  | Base_info.Value -> ()
-                  | Base_info.Signal -> ()
-                  | Base_info.Vfunc -> ()
-                  | Base_info.Property -> ()
-                  | Base_info.Field -> ()
-                  | Base_info.Arg -> ()
-                  | Base_info.Type -> ()
-                  | Base_info.Unresolved -> ()
-                  | Base_info.Object ->
+                  | Bindings.Base_info.Callback -> ()
+                  | Bindings.Base_info.Invalid -> ()
+                  | Bindings.Base_info.Value -> ()
+                  | Bindings.Base_info.Signal -> ()
+                  | Bindings.Base_info.Vfunc -> ()
+                  | Bindings.Base_info.Property -> ()
+                  | Bindings.Base_info.Field -> ()
+                  | Bindings.Base_info.Arg -> ()
+                  | Bindings.Base_info.Type -> ()
+                  | Bindings.Base_info.Unresolved -> ()
+                  | Bindings.Base_info.Object ->
                       Bind_object.parse_object_info bi sources []
-                  | Base_info.Invalid_0 -> ()
-                  | Base_info.Interface -> ()
+                  | Bindings.Base_info.Invalid_0 -> ()
+                  | Bindings.Base_info.Interface -> ()
                   | _ -> ()
                 in Sources.close sources
               end;
@@ -94,7 +94,7 @@ let write_constant_bindings_for namespace ?version sources skipped =
             | _, true -> Sources.buffs_add_skipped sources name
             | _ ->
                 match Base_info.get_type bi with
-                | Base_info.Constant ->
+                | Bindings.Base_info.Constant ->
                     Bind_constant.parse_constant_info bi sources
                 | _ -> ()
       done
@@ -113,11 +113,11 @@ let write_enum_and_flag_bindings_for namespace ?version () =
             if Base_info.is_deprecated bi then ()
             else begin
               match Base_info.get_type bi with
-              | Base_info.Enum ->
+              | Bindings.Base_info.Enum ->
                   let sources = generate_files name in
                   let _ = Bind_enum.parse_enum_info bi sources in
                   Sources.close sources
-              | Base_info.Flags ->
+              | Bindings.Base_info.Flags ->
                   let sources = generate_files name in
                   let _ = Bind_enum.parse_flags_info bi sources in
                   Sources.close sources
@@ -145,7 +145,7 @@ let write_function_bindings_for namespace ?version sources functions =
                 print_endline message
               else begin
                 match Base_info.get_type bi with
-                | Base_info.Function ->
+                | Bindings.Base_info.Function ->
                     Bind_function.parse_function_info bi sources []
                 | _ -> ()
               end;

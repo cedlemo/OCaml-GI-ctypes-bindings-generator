@@ -29,7 +29,7 @@ let get_function_info name () =
   match Repository.find_by_name namespace name with
   | None -> None
   | Some (base_info) -> match Base_info.get_type base_info with
-    | Base_info.Function -> let info = Function_info.from_baseinfo base_info in
+    | Bindings.Base_info.Function -> let info = Function_info.from_baseinfo base_info in
       Some info
     | _ -> None
 
@@ -181,13 +181,13 @@ let test_function_bindings_for_args_out_function test_ctxt =
 
 let test_function_bindings_for_args_out_as_enum_function test_ctxt =
   let namespace = "Gio" in
-  let typelib = Repository.require namespace () in
+  let _typelib = Repository.require namespace () in
   let cont = "FileInfo" in
   let name = "get_attribute_data" in
   match Repository.find_by_name namespace cont with
   | None -> assert_equal_string name "No base info found"
   | Some bi -> match Base_info.get_type bi with
-    | Base_info.Object -> begin
+    | Bindings.Base_info.Object -> begin
       let oi = Object_info.from_baseinfo bi in
       match Object_info.find_method oi name with
       | None -> assert_equal_string name "No base info found for this method"

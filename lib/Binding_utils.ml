@@ -320,28 +320,28 @@ type type_strings = { ocaml : string;
 type bindings_types = Not_implemented of string | Types of type_strings
 
 let type_tag_to_bindings_types = function
-  | Types.Void -> Types { ocaml = "unit"; ctypes = "void" }
-  | Types.Boolean -> Types { ocaml = "bool"; ctypes = "bool"}
-  | Types.Int8 -> Types { ocaml = "int"; ctypes = "int8_t"}
-  | Types.Uint8 -> Types { ocaml = "Unsigned.uint8"; ctypes = "uint8_t"}
-  | Types.Int16 -> Types { ocaml = "int"; ctypes = "int16_t"}
-  | Types.Uint16 -> Types { ocaml = "Unsigned.uint16"; ctypes = "uint16_t"}
-  | Types.Int32 -> Types { ocaml = "int32"; ctypes = "int32_t"}
-  | Types.Uint32 -> Types { ocaml = "Unsigned.uint32"; ctypes = "uint32_t"}
-  | Types.Int64 -> Types { ocaml = "int64"; ctypes = "int64_t"}
-  | Types.Uint64 -> Types { ocaml = "Unsigned.uint64"; ctypes = "uint64_t"}
-  | Types.Float -> Types { ocaml = "float"; ctypes = "float"}
-  | Types.Double -> Types { ocaml = "float"; ctypes = "double"}
-  | Types.GType as tag -> Not_implemented (Types.string_of_tag tag)
-  | Types.Utf8 as tag-> Not_implemented (Types.string_of_tag tag)
-  | Types.Filename as tag -> Not_implemented (Types.string_of_tag tag)
-  | Types.Array as tag -> Not_implemented (Types.string_of_tag tag)
-  | Types.Interface as tag -> Not_implemented (Types.string_of_tag tag)
-  | Types.GList as tag -> Not_implemented (Types.string_of_tag tag)
-  | Types.GSList as tag -> Not_implemented (Types.string_of_tag tag)
-  | Types.GHash as tag -> Not_implemented (Types.string_of_tag tag)
-  | Types.Error as tag -> Not_implemented (Types.string_of_tag tag)
-  | Types.Unichar as tag -> Not_implemented (Types.string_of_tag tag)
+  | Bindings.Types.Void -> Types { ocaml = "unit"; ctypes = "void" }
+  | Bindings.Types.Boolean -> Types { ocaml = "bool"; ctypes = "bool"}
+  | Bindings.Types.Int8 -> Types { ocaml = "int"; ctypes = "int8_t"}
+  | Bindings.Types.Uint8 -> Types { ocaml = "Unsigned.uint8"; ctypes = "uint8_t"}
+  | Bindings.Types.Int16 -> Types { ocaml = "int"; ctypes = "int16_t"}
+  | Bindings.Types.Uint16 -> Types { ocaml = "Unsigned.uint16"; ctypes = "uint16_t"}
+  | Bindings.Types.Int32 -> Types { ocaml = "int32"; ctypes = "int32_t"}
+  | Bindings.Types.Uint32 -> Types { ocaml = "Unsigned.uint32"; ctypes = "uint32_t"}
+  | Bindings.Types.Int64 -> Types { ocaml = "int64"; ctypes = "int64_t"}
+  | Bindings.Types.Uint64 -> Types { ocaml = "Unsigned.uint64"; ctypes = "uint64_t"}
+  | Bindings.Types.Float -> Types { ocaml = "float"; ctypes = "float"}
+  | Bindings.Types.Double -> Types { ocaml = "float"; ctypes = "double"}
+  | Bindings.Types.GType as tag -> Not_implemented (Types.string_of_tag tag)
+  | Bindings.Types.Utf8 as tag-> Not_implemented (Types.string_of_tag tag)
+  | Bindings.Types.Filename as tag -> Not_implemented (Types.string_of_tag tag)
+  | Bindings.Types.Array as tag -> Not_implemented (Types.string_of_tag tag)
+  | Bindings.Types.Interface as tag -> Not_implemented (Types.string_of_tag tag)
+  | Bindings.Types.GList as tag -> Not_implemented (Types.string_of_tag tag)
+  | Bindings.Types.GSList as tag -> Not_implemented (Types.string_of_tag tag)
+  | Bindings.Types.GHash as tag -> Not_implemented (Types.string_of_tag tag)
+  | Bindings.Types.Error as tag -> Not_implemented (Types.string_of_tag tag)
+  | Bindings.Types.Unichar as tag -> Not_implemented (Types.string_of_tag tag)
 
 (** Used in type_info_to_bindings_types. *)
 let check_if_pointer type_info maybe_null (ocaml_t, ctypes_t) =
@@ -357,7 +357,7 @@ let check_if_pointer type_info maybe_null (ocaml_t, ctypes_t) =
 let interface_to_binding_types interface check_if_pointer type_info =
     let interface_bindings t (ocaml_suffix, ctypes_suffix) =
       match get_binding_name interface with
-      | None -> Not_implemented (Base_info.string_of_baseinfo_type t)
+      | None -> Not_implemented (Bindings.Base_info.string_of_info_type t)
       | Some name ->
       Types (check_if_pointer (name ^ ocaml_suffix, name ^ ctypes_suffix))
     in
@@ -370,7 +370,7 @@ let interface_to_binding_types interface check_if_pointer type_info =
     | Object as t -> interface_bindings t (".t", ".t_typ")
     | Boxed | Invalid | Function | Callback | Interface | Constant | Invalid_0
     | Union | Value | Signal | Vfunc | Property | Field | Arg | Type
-    | Unresolved as t -> Not_implemented (Base_info.string_of_baseinfo_type t)
+    | Unresolved as t -> Not_implemented (Bindings.Base_info.string_of_info_type t)
 
 (** This function is used when the type_info analysed describes a type that is
     a container (SList, GList, Hash table or Array) and it returns the types
@@ -378,22 +378,22 @@ let interface_to_binding_types interface check_if_pointer type_info =
 let get_data_types_of_container type_info =
   let type_info = Type_info.get_param_type type_info in
   match Type_info.get_tag type_info with
-  | Types.Void -> Types {ocaml = "unit"; ctypes = "void"}
-  | Types.Boolean -> Types {ocaml = "bool"; ctypes = "bool"}
-    | Types.Int8 -> Types {ocaml = "int"; ctypes = "int8_t"}
-    | Types.Uint8 -> Types {ocaml = "Unsigned.uint8"; ctypes = "uint8_t"}
-    | Types.Int16 -> Types {ocaml = "int"; ctypes = "int16_t"}
-    | Types.Uint16 -> Types {ocaml = "Unsigned.uint16"; ctypes = "uint16_t"}
-    | Types.Int32 -> Types {ocaml = "int32"; ctypes = "int32_t"}
-    | Types.Uint32 -> Types {ocaml = "Unsigned.uint32"; ctypes = "uint32_t"}
-    | Types.Int64 -> Types {ocaml = "int64"; ctypes = "int64_t"}
-    | Types.Uint64 -> Types {ocaml = "Unsigned.uint64"; ctypes = "uint64_t"}
-    | Types.Float -> Types {ocaml = "float"; ctypes = "float"}
-    | Types.Double -> Types {ocaml = "float"; ctypes = "double"}
-    | Types.Utf8 | Types.Filename -> Types {ocaml = "string"; ctypes = "string"}
-    | Types.Array | Types.GList | Types.GSList | Types.GHash | Types.Error
-    | Types.Unichar | Types.Interface | Types.GType as tag ->
-      Not_implemented (Types.string_of_tag tag)
+  | Bindings.Types.Void -> Types {ocaml = "unit"; ctypes = "void"}
+  | Bindings.Types.Boolean -> Types {ocaml = "bool"; ctypes = "bool"}
+  | Bindings.Types.Int8 -> Types {ocaml = "int"; ctypes = "int8_t"}
+  | Bindings.Types.Uint8 -> Types {ocaml = "Unsigned.uint8"; ctypes = "uint8_t"}
+  | Bindings.Types.Int16 -> Types {ocaml = "int"; ctypes = "int16_t"}
+  | Bindings.Types.Uint16 -> Types {ocaml = "Unsigned.uint16"; ctypes = "uint16_t"}
+  | Bindings.Types.Int32 -> Types {ocaml = "int32"; ctypes = "int32_t"}
+  | Bindings.Types.Uint32 -> Types {ocaml = "Unsigned.uint32"; ctypes = "uint32_t"}
+  | Bindings.Types.Int64 -> Types {ocaml = "int64"; ctypes = "int64_t"}
+  | Bindings.Types.Uint64 -> Types {ocaml = "Unsigned.uint64"; ctypes = "uint64_t"}
+  | Bindings.Types.Float -> Types {ocaml = "float"; ctypes = "float"}
+  | Bindings.Types.Double -> Types {ocaml = "float"; ctypes = "double"}
+  | Bindings.Types.Utf8 | Bindings.Types.Filename -> Types {ocaml = "string"; ctypes = "string"}
+  | Bindings.Types.Array | Bindings.Types.GList | Bindings.Types.GSList | Bindings.Types.GHash | Bindings.Types.Error
+  | Bindings.Types.Unichar | Bindings.Types.Interface | Bindings.Types.GType as tag ->
+    Not_implemented (Types.string_of_tag tag)
 
 let rec type_info_to_bindings_types type_info maybe_null =
   let check_if_pointer = check_if_pointer type_info maybe_null in
@@ -408,39 +408,39 @@ let rec type_info_to_bindings_types type_info maybe_null =
   match Type_info.get_interface type_info with
   | None -> (
     match Type_info.get_tag type_info with
-    | Types.Void -> Types (check_if_pointer ("unit", "void"))
-    | Types.Boolean -> Types (check_if_pointer ("bool", "bool"))
-    | Types.Int8 -> Types (check_if_pointer ("int", "int8_t"))
-    | Types.Uint8 -> Types (check_if_pointer ("Unsigned.uint8", "uint8_t"))
-    | Types.Int16 -> Types (check_if_pointer ("int", "int16_t"))
-    | Types.Uint16 -> Types (check_if_pointer ("Unsigned.uint16", "uint16_t"))
-    | Types.Int32 -> Types (check_if_pointer ("int32", "int32_t"))
-    | Types.Uint32 -> Types (check_if_pointer ("Unsigned.uint32", "uint32_t"))
-    | Types.Int64 -> Types (check_if_pointer ("int64", "int64_t"))
-    | Types.Uint64 -> Types (check_if_pointer ("Unsigned.uint64", "uint64_t"))
-    | Types.Float -> Types (check_if_pointer ("float", "float"))
-    | Types.Double -> Types (check_if_pointer ("float", "double"))
-    | Types.Utf8 | Types.Filename ->
+    | Bindings.Types.Void -> Types (check_if_pointer ("unit", "void"))
+    | Bindings.Types.Boolean -> Types (check_if_pointer ("bool", "bool"))
+    | Bindings.Types.Int8 -> Types (check_if_pointer ("int", "int8_t"))
+    | Bindings.Types.Uint8 -> Types (check_if_pointer ("Unsigned.uint8", "uint8_t"))
+    | Bindings.Types.Int16 -> Types (check_if_pointer ("int", "int16_t"))
+    | Bindings.Types.Uint16 -> Types (check_if_pointer ("Unsigned.uint16", "uint16_t"))
+    | Bindings.Types.Int32 -> Types (check_if_pointer ("int32", "int32_t"))
+    | Bindings.Types.Uint32 -> Types (check_if_pointer ("Unsigned.uint32", "uint32_t"))
+    | Bindings.Types.Int64 -> Types (check_if_pointer ("int64", "int64_t"))
+    | Bindings.Types.Uint64 -> Types (check_if_pointer ("Unsigned.uint64", "uint64_t"))
+    | Bindings.Types.Float -> Types (check_if_pointer ("float", "float"))
+    | Bindings.Types.Double -> Types (check_if_pointer ("float", "double"))
+    | Bindings.Types.Utf8 | Bindings.Types.Filename ->
       if maybe_null then
         Types {ocaml = "string option"; ctypes = "string_opt"}
       else
         Types {ocaml = "string"; ctypes = "string"}
-    | Types.Array -> (
+    | Bindings.Types.Array -> (
       match Type_info.get_array_type type_info with
       | None -> Not_implemented ("Bad Array type for Types.Array tag")
       | Some array_type ->
         match array_type with
-        | Types.C -> Not_implemented ("C Array type for Types.Array tag")
-        | Types.Array -> Types (check_if_pointer ("Array.t structure", "Array.t_typ"))
-        | Types.Ptr_array -> Types (check_if_pointer ("Ptr_array.t structure", "Ptr_array.t_typ"))
-        | Types.Byte_array -> Types (check_if_pointer ("Byte_array.t structure", "Byte_array.t_typ"))
+        | Bindings.Types.C -> Not_implemented ("C Array type for Types.Array tag")
+        | Bindings.Types.Array -> Types (check_if_pointer ("Array.t structure", "Array.t_typ"))
+        | Bindings.Types.Ptr_array -> Types (check_if_pointer ("Ptr_array.t structure", "Ptr_array.t_typ"))
+        | Bindings.Types.Byte_array -> Types (check_if_pointer ("Byte_array.t structure", "Byte_array.t_typ"))
       )
-    | Types.GList -> get_full_types_of_container "List"
-    | Types.GSList -> get_full_types_of_container "SList"
-    | Types.GHash -> get_full_types_of_container "Hash_table.t"
-    | Types.Error ->
+    | Bindings.Types.GList -> get_full_types_of_container "List"
+    | Bindings.Types.GSList -> get_full_types_of_container "SList"
+    | Bindings.Types.GHash -> get_full_types_of_container "Hash_table.t"
+    | Bindings.Types.Error ->
       Types (check_if_pointer ("Error.t structure", "Error.t_typ"))
-    | Types.GType | Types.Unichar | Types.Interface as tag ->
+    | Bindings.Types.GType | Bindings.Types.Unichar | Bindings.Types.Interface as tag ->
       Not_implemented (Types.string_of_tag tag)
     )
   | Some interface ->
@@ -463,59 +463,59 @@ let allocate_out_argument type_info var_name maybe_null =
   match Type_info.get_interface type_info with
   | None -> (
     match Type_info.get_tag type_info with
-    | Types.Void -> check_if_pointer ("void", "None")
+    | Bindings.Types.Void -> check_if_pointer ("void", "None")
                     |> _allocate_simple_instructions
-    | Types.Boolean -> check_if_pointer ("bool", "false")
+    | Bindings.Types.Boolean -> check_if_pointer ("bool", "false")
                     |> _allocate_simple_instructions
-    | Types.Int8 -> check_if_pointer ("int8_t", "0")
+    | Bindings.Types.Int8 -> check_if_pointer ("int8_t", "0")
                     |> _allocate_simple_instructions
-    | Types.Uint8 -> check_if_pointer ("uint8_t", "Unsigned.UInt8.zero")
+    | Bindings.Types.Uint8 -> check_if_pointer ("uint8_t", "Unsigned.UInt8.zero")
                     |> _allocate_simple_instructions
-    | Types.Int16 -> check_if_pointer ("int16_t", "0")
+    | Bindings.Types.Int16 -> check_if_pointer ("int16_t", "0")
                     |> _allocate_simple_instructions
-    | Types.Uint16 -> check_if_pointer ("uint16_t", "Unsigned.UInt16.zero")
+    | Bindings.Types.Uint16 -> check_if_pointer ("uint16_t", "Unsigned.UInt16.zero")
                     |> _allocate_simple_instructions
-    | Types.Int32 -> check_if_pointer ("int32_t", "Int32.zero")
+    | Bindings.Types.Int32 -> check_if_pointer ("int32_t", "Int32.zero")
                     |> _allocate_simple_instructions
-    | Types.Uint32 -> check_if_pointer ("uint32_t", "Unsigned.UInt32.zero")
+    | Bindings.Types.Uint32 -> check_if_pointer ("uint32_t", "Unsigned.UInt32.zero")
                     |> _allocate_simple_instructions
-    | Types.Int64 -> check_if_pointer ("int64_t", "Int64.zero")
+    | Bindings.Types.Int64 -> check_if_pointer ("int64_t", "Int64.zero")
                     |> _allocate_simple_instructions
-    | Types.Uint64 -> check_if_pointer ("uint64_t", "Unsigned.UInt64.zero")
+    | Bindings.Types.Uint64 -> check_if_pointer ("uint64_t", "Unsigned.UInt64.zero")
                     |> _allocate_simple_instructions
-    | Types.Float -> check_if_pointer ("float", "0.0")
+    | Bindings.Types.Float -> check_if_pointer ("float", "0.0")
                     |> _allocate_simple_instructions
-    | Types.Double -> check_if_pointer ("double", "0.0")
+    | Bindings.Types.Double -> check_if_pointer ("double", "0.0")
                     |> _allocate_simple_instructions
-    | Types.GType -> check_if_pointer ("int64_t", "Int64.zero")
+    | Bindings.Types.GType -> check_if_pointer ("int64_t", "Int64.zero")
                     |> _allocate_simple_instructions
-    | Types.Utf8 | Types.Filename -> begin
+    | Bindings.Types.Utf8 | Bindings.Types.Filename -> begin
         (if maybe_null then ("string_opt", "None") else ("string", "\" \""))
         |> _allocate_simple_instructions
     end
-    | Types.Array as t -> Error (Types.string_of_tag t)
-    | Types.Interface as t -> Error (Types.string_of_tag t)
-    | Types.GList -> check_if_pointer ("List.t_typ", "None")
-                    |> _allocate_simple_instructions
-    | Types.GSList -> check_if_pointer ("SList.t_typ", "None")
-                    |> _allocate_simple_instructions
-    | Types.GHash -> check_if_pointer ("Hash_table.t_typ", "None")
-                    |> _allocate_simple_instructions
-    | Types.Error -> check_if_pointer ("Error.t_typ", "None")
-                    |> _allocate_simple_instructions
-    | Types.Unichar as t -> Error (Types.string_of_tag t)
+    | Bindings.Types.Array as t -> Error (Types.string_of_tag t)
+    | Bindings.Types.Interface as t -> Error (Types.string_of_tag t)
+    | Bindings.Types.GList -> check_if_pointer ("List.t_typ", "None")
+                   |> _allocate_simple_instructions
+    | Bindings.Types.GSList -> check_if_pointer ("SList.t_typ", "None")
+                   |> _allocate_simple_instructions
+    | Bindings.Types.GHash -> check_if_pointer ("Hash_table.t_typ", "None")
+                   |> _allocate_simple_instructions
+    | Bindings.Types.Error -> check_if_pointer ("Error.t_typ", "None")
+                   |> _allocate_simple_instructions
+    | Bindings.Types.Unichar as t -> Error (Types.string_of_tag t)
     )
   | Some interface ->
       match Base_info.get_type interface with
-      | Struct -> begin match get_binding_name interface with
+      | Bindings.Base_info.Struct -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface struct without name" var_name)
         | Some name -> check_if_pointer ((Printf.sprintf "%s.t_typ" name),
                                         (Printf.sprintf "(make %s.t_typ)" name))
                     |> _allocate_simple_instructions
       end
-      | Type -> check_if_pointer ("int64_t", "Int64.zero")
+      | Bindings.Base_info.Type -> check_if_pointer ("int64_t", "Int64.zero")
                 |> _allocate_simple_instructions
-      | Enum | Flags -> begin match get_binding_name interface with
+      | Bindings.Base_info.Enum | Bindings.Base_info.Flags -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface enum without name" var_name)
         | Some name -> let enum_info = Enum_info.from_baseinfo interface in
             let view_name = Printf.sprintf "%s.t_view" name in
@@ -523,31 +523,31 @@ let allocate_out_argument type_info var_name maybe_null =
               Printf.sprintf "(%s.of_value (%s))" view_name deflt
             in
             match Enum_info.get_storage_type enum_info with
-            | Types.Int32 -> _allocate_simple_instructions (view_name, def_val_constructor "Int32.zero")
-            | Types.Uint32 -> _allocate_simple_instructions (view_name, def_val_constructor "Unsigned.UInt32.zero")
+            | Bindings.Types.Int32 -> _allocate_simple_instructions (view_name, def_val_constructor "Int32.zero")
+            | Bindings.Types.Uint32 -> _allocate_simple_instructions (view_name, def_val_constructor "Unsigned.UInt32.zero")
             | _ -> Error (Printf.sprintf "%s interface enum %s with a bad storage type" var_name name)
       end
-      | Object as t -> begin match get_binding_name interface with
+      | Bindings.Base_info.Object as t -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface object without name" var_name)
         | Some name -> check_if_pointer ((Printf.sprintf "%s.t_typ" name),
                                         (Printf.sprintf "(coerce (void ptr) %s.t_typ null)" name))
                     |> _allocate_simple_instructions
       end
-      | Invalid as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Function as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Callback as t  -> Error (Base_info.string_of_baseinfo_type t)
-      | Boxed as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Interface as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Constant as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Invalid_0 as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Union as t  -> Error (Base_info.string_of_baseinfo_type t)
-      | Value as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Signal as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Vfunc as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Property as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Field as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Arg as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Unresolved as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Bindings.Base_info.Invalid as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Function as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Callback as t  -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Boxed as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Interface as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Constant as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Invalid_0 as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Union as t  -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Value as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Signal as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Vfunc as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Property as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Field as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Arg as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Unresolved as t -> Error (Bindings.Base_info.string_of_info_type t)
 
 let allocate_out_argument_with_default_value type_info var_name maybe_null default =
   let check_if_pointer (ctypes_t, default_value) =
@@ -566,59 +566,59 @@ let allocate_out_argument_with_default_value type_info var_name maybe_null defau
   match Type_info.get_interface type_info with
   | None -> (
     match Type_info.get_tag type_info with
-    | Types.Void -> check_if_pointer ("void", default)
+    | Bindings.Types.Void -> check_if_pointer ("void", default)
                     |> _allocate_simple_instructions
-    | Types.Boolean -> check_if_pointer ("bool", default)
+    | Bindings.Types.Boolean -> check_if_pointer ("bool", default)
                     |> _allocate_simple_instructions
-    | Types.Int8 -> check_if_pointer ("int8_t", default)
+    | Bindings.Types.Int8 -> check_if_pointer ("int8_t", default)
                     |> _allocate_simple_instructions
-    | Types.Uint8 -> check_if_pointer ("uint8_t", default)
+    | Bindings.Types.Uint8 -> check_if_pointer ("uint8_t", default)
                     |> _allocate_simple_instructions
-    | Types.Int16 -> check_if_pointer ("int16_t", default)
+    | Bindings.Types.Int16 -> check_if_pointer ("int16_t", default)
                     |> _allocate_simple_instructions
-    | Types.Uint16 -> check_if_pointer ("uint16_t", default)
+    | Bindings.Types.Uint16 -> check_if_pointer ("uint16_t", default)
                     |> _allocate_simple_instructions
-    | Types.Int32 -> check_if_pointer ("int32_t", default)
+    | Bindings.Types.Int32 -> check_if_pointer ("int32_t", default)
                     |> _allocate_simple_instructions
-    | Types.Uint32 -> check_if_pointer ("uint32_t", default)
+    | Bindings.Types.Uint32 -> check_if_pointer ("uint32_t", default)
                     |> _allocate_simple_instructions
-    | Types.Int64 -> check_if_pointer ("int64_t", default)
+    | Bindings.Types.Int64 -> check_if_pointer ("int64_t", default)
                     |> _allocate_simple_instructions
-    | Types.Uint64 -> check_if_pointer ("uint64_t", default)
+    | Bindings.Types.Uint64 -> check_if_pointer ("uint64_t", default)
                     |> _allocate_simple_instructions
-    | Types.Float -> check_if_pointer ("float", default)
+    | Bindings.Types.Float -> check_if_pointer ("float", default)
                     |> _allocate_simple_instructions
-    | Types.Double -> check_if_pointer ("double", default)
+    | Bindings.Types.Double -> check_if_pointer ("double", default)
                     |> _allocate_simple_instructions
-    | Types.GType -> check_if_pointer ("int64_t", default)
+    | Bindings.Types.GType -> check_if_pointer ("int64_t", default)
                     |> _allocate_simple_instructions
-    | Types.Utf8 | Types.Filename -> begin
+    | Bindings.Types.Utf8 | Bindings.Types.Filename -> begin
         (if maybe_null then ("string_opt", default) else ("string", default))
         |> _allocate_simple_instructions
     end
-    | Types.Array as t -> Error (Types.string_of_tag t)
-    | Types.Interface as t -> Error (Types.string_of_tag t)
-    | Types.GList -> check_if_pointer ("List.t_typ", default)
+    | Bindings.Types.Array as t -> Error (Types.string_of_tag t)
+    | Bindings.Types.Interface as t -> Error (Types.string_of_tag t)
+    | Bindings.Types.GList -> check_if_pointer ("List.t_typ", default)
                     |> _allocate_simple_instructions
-    | Types.GSList -> check_if_pointer ("SList.t_typ", default)
+    | Bindings.Types.GSList -> check_if_pointer ("SList.t_typ", default)
                     |> _allocate_simple_instructions
-    | Types.GHash -> check_if_pointer ("Hash_table.t_typ", default)
+    | Bindings.Types.GHash -> check_if_pointer ("Hash_table.t_typ", default)
                     |> _allocate_simple_instructions
-    | Types.Error -> check_if_pointer ("Error.t_typ", default)
+    | Bindings.Types.Error -> check_if_pointer ("Error.t_typ", default)
                     |> _allocate_simple_instructions
-    | Types.Unichar as t -> Error (Types.string_of_tag t)
+    | Bindings.Types.Unichar as t -> Error (Types.string_of_tag t)
     )
   | Some interface ->
       match Base_info.get_type interface with
-      | Struct -> begin match get_binding_name interface with
+      | Bindings.Base_info.Struct -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface struct without name" var_name)
         | Some name -> check_if_pointer (Printf.sprintf "%s.t_typ" name,
                                          default)
                     |> _allocate_simple_instructions
       end
-      | Type -> check_if_pointer ("int64_t", default)
+      | Bindings.Base_info.Type -> check_if_pointer ("int64_t", default)
                 |> _allocate_simple_instructions
-      | Enum | Flags -> begin match get_binding_name interface with
+      | Bindings.Base_info.Enum | Bindings.Base_info.Flags -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface enum without name" var_name)
         | Some name -> let enum_info = Enum_info.from_baseinfo interface in
             let view_name = Printf.sprintf "%s.t_view" name in
@@ -626,31 +626,31 @@ let allocate_out_argument_with_default_value type_info var_name maybe_null defau
               Printf.sprintf "(%s.of_value (%s))" view_name deflt
             in
             match Enum_info.get_storage_type enum_info with
-            | Types.Int32 -> _allocate_simple_instructions (view_name, default)
-            | Types.Uint32 -> _allocate_simple_instructions (view_name, default)
+            | Bindings.Types.Int32 -> _allocate_simple_instructions (view_name, default)
+            | Bindings.Types.Uint32 -> _allocate_simple_instructions (view_name, default)
             | _ -> Error (Printf.sprintf "%s interface enum %s with a bad storage type" var_name name)
       end
-      | Object as t -> begin match get_binding_name interface with
+      | Bindings.Base_info.Object as t -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface object without name" var_name)
         | Some name -> check_if_pointer (Printf.sprintf "%s.t_typ" name,
                                          default)
                     |> _allocate_simple_instructions
       end
-      | Invalid as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Function as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Callback as t  -> Error (Base_info.string_of_baseinfo_type t)
-      | Boxed as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Interface as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Constant as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Invalid_0 as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Union as t  -> Error (Base_info.string_of_baseinfo_type t)
-      | Value as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Signal as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Vfunc as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Property as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Field as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Arg as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Unresolved as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Bindings.Base_info.Invalid as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Function as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Callback as t  -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Boxed as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Interface as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Constant as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Invalid_0 as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Union as t  -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Value as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Signal as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Vfunc as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Property as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Field as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Arg as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Unresolved as t -> Error (Bindings.Base_info.string_of_info_type t)
 
 let get_out_argument_value type_info var_name maybe_null =
   let _get_value_simple_instructions () =
@@ -665,40 +665,40 @@ let get_out_argument_value type_info var_name maybe_null =
   match Type_info.get_interface type_info with
   | None -> (
     match Type_info.get_tag type_info with
-    | Types.Void | Types.Boolean | Types.Int8 | Types.Uint8 | Types.Int16
-    | Types.Uint16 | Types.Int32 | Types.Uint32 | Types.Int64 | Types.Uint64
-    | Types.Float | Types.Double | Types.GType | Types.Utf8 | Types.Filename
-    | Types.Array | Types.Interface | Types.GList | Types.GSList | Types.GHash
-    | Types.Error -> _get_value_simple_instructions ()
-    | Types.Unichar as t -> Error (Types.string_of_tag t)
+    | Bindings.Types.Void | Bindings.Types.Boolean | Bindings.Types.Int8 | Bindings.Types.Uint8 | Bindings.Types.Int16
+    | Bindings.Types.Uint16 | Bindings.Types.Int32 | Bindings.Types.Uint32 | Bindings.Types.Int64 | Bindings.Types.Uint64
+    | Bindings.Types.Float | Bindings.Types.Double | Bindings.Types.GType | Bindings.Types.Utf8 | Bindings.Types.Filename
+    | Bindings.Types.Array | Bindings.Types.Interface | Bindings.Types.GList | Bindings.Types.GSList | Bindings.Types.GHash
+    | Bindings.Types.Error -> _get_value_simple_instructions ()
+    | Bindings.Types.Unichar as t -> Error (Types.string_of_tag t)
     )
   | Some interface ->
       match Base_info.get_type interface with
-      | Struct -> begin match get_binding_name interface with
+      | Bindings.Base_info.Struct -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface struct without name" var_name)
         | Some _ -> _get_value_simple_instructions ()
       end
-      | Type -> _get_value_simple_instructions ()
-      | Enum | Flags -> begin match get_binding_name interface with
+      | Bindings.Base_info.Type -> _get_value_simple_instructions ()
+      | Bindings.Base_info.Enum | Bindings.Base_info.Flags -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface enum without name" var_name)
         | Some name -> _get_value_enum_instructions name
       end
-      | Object as t -> begin match get_binding_name interface with
+      | Bindings.Base_info.Object as t -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface object without name" var_name)
         | Some _ -> _get_value_simple_instructions ()
       end
-      | Invalid as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Function as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Callback as t  -> Error (Base_info.string_of_baseinfo_type t)
-      | Boxed as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Interface as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Constant as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Invalid_0 as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Union as t  -> Error (Base_info.string_of_baseinfo_type t)
-      | Value as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Signal as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Vfunc as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Property as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Field as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Arg as t -> Error (Base_info.string_of_baseinfo_type t)
-      | Unresolved as t -> Error (Base_info.string_of_baseinfo_type t)
+      | Bindings.Base_info.Invalid as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Function as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Callback as t  -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Boxed as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Interface as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Constant as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Invalid_0 as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Union as t  -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Value as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Signal as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Vfunc as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Property as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Field as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Arg as t -> Error (Bindings.Base_info.string_of_info_type t)
+      | Bindings.Base_info.Unresolved as t -> Error (Bindings.Base_info.string_of_info_type t)

@@ -1,5 +1,5 @@
 (*
- * Copyright 2017 Cedric LE MOIGNE, cedlemo@gmx.com
+ * Copyright 2019 Cedric LE MOIGNE, cedlemo@gmx.com
  * This file is part of OCaml-GObject-Introspection.
  *
  * OCaml-GObject-Introspection is free software: you can redistribute it and/or modify
@@ -149,27 +149,27 @@ let parse_constant_info info sources =
     let mli = Sources.mli sources in
     let ml = Sources.ml sources in
     let _ = match Type_info.get_tag type_info with
-    | Types.Void as tag -> not_implemented_todo_comments tag (mli, ml)
-    | Types.Boolean -> append_boolean_constant name info' (mli, ml)
-    | Types.Int8 -> append_int8_constant name info' (mli, ml)
-    | Types.Uint8 -> append_uint8_constant name info' (mli, ml)
-    | Types.Int16 -> append_int16_constant name info' (mli, ml)
-    | Types.Uint16 -> append_uint16_constant name info' (mli, ml)
-    | Types.Int32 -> append_int32_constant name info' (mli, ml)
-    | Types.Uint32 -> append_uint32_constant name info' (mli, ml)
-    | Types.Int64 -> append_int64_constant name info' (mli, ml)
-    | Types.Uint64 -> append_uint64_constant name info' (mli, ml)
-    | Types.Float -> append_float_constant name info' (mli, ml)
-    | Types.Double -> append_double_constant name info' (mli, ml)
-    | Types.GType as tag -> not_implemented_todo_comments tag (mli, ml)
-    | Types.Utf8 -> append_string_constant name info' (mli, ml)
-    | Types.Filename as tag -> not_implemented_todo_comments tag (mli, ml)
-    | Types.Array as tag -> not_implemented_todo_comments tag (mli, ml)
-    | Types.Interface as tag -> not_implemented_todo_comments tag (mli, ml)
-    | Types.GList as tag -> not_implemented_todo_comments tag (mli, ml)
-    | Types.GSList as tag -> not_implemented_todo_comments tag (mli, ml)
-    | Types.GHash as tag -> not_implemented_todo_comments tag (mli, ml)
-    | Types.Error as tag -> not_implemented_todo_comments tag (mli, ml)
-    | Types.Unichar as tag -> not_implemented_todo_comments tag (mli, ml)
+    | Bindings.Types.Void as tag -> not_implemented_todo_comments tag (mli, ml)
+    | Bindings.Types.Boolean -> append_boolean_constant name info' (mli, ml)
+    | Bindings.Types.Int8 -> append_int8_constant name info' (mli, ml)
+    | Bindings.Types.Uint8 -> append_uint8_constant name info' (mli, ml)
+    | Bindings.Types.Int16 -> append_int16_constant name info' (mli, ml)
+    | Bindings.Types.Uint16 -> append_uint16_constant name info' (mli, ml)
+    | Bindings.Types.Int32 -> append_int32_constant name info' (mli, ml)
+    | Bindings.Types.Uint32 -> append_uint32_constant name info' (mli, ml)
+    | Bindings.Types.Int64 -> append_int64_constant name info' (mli, ml)
+    | Bindings.Types.Uint64 -> append_uint64_constant name info' (mli, ml)
+    | Bindings.Types.Float -> append_float_constant name info' (mli, ml)
+    | Bindings.Types.Double -> append_double_constant name info' (mli, ml)
+    | Bindings.Types.GType as tag -> not_implemented_todo_comments tag (mli, ml)
+    | Bindings.Types.Utf8 -> append_string_constant name info' (mli, ml)
+    | Bindings.Types.Filename as tag -> not_implemented_todo_comments tag (mli, ml)
+    | Bindings.Types.Array as tag -> not_implemented_todo_comments tag (mli, ml)
+    | Bindings.Types.Interface as tag -> not_implemented_todo_comments tag (mli, ml)
+    | Bindings.Types.GList as tag -> not_implemented_todo_comments tag (mli, ml)
+    | Bindings.Types.GSList as tag -> not_implemented_todo_comments tag (mli, ml)
+    | Bindings.Types.GHash as tag -> not_implemented_todo_comments tag (mli, ml)
+    | Bindings.Types.Error as tag -> not_implemented_todo_comments tag (mli, ml)
+    | Bindings.Types.Unichar as tag -> not_implemented_todo_comments tag (mli, ml)
     in
     Sources.write_buffs sources

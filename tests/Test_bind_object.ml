@@ -29,7 +29,7 @@ let get_object_info namespace name =
     | None -> None
     | Some (base_info) ->
       match Base_info.get_type base_info with
-      | Base_info.Object ->
+      | Bindings.Base_info.Object ->
         let object_info = Object_info.from_baseinfo base_info in
         Some object_info
       | _ -> None

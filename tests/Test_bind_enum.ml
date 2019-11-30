@@ -26,7 +26,7 @@ let get_enum_info namespace enum_name =
   | None -> None
   | Some (base_info) ->
     match Base_info.get_type base_info with
-    | Base_info.Enum -> let enum_info = Enum_info.from_baseinfo base_info in
+    | Bindings.Base_info.Enum -> let enum_info = Enum_info.from_baseinfo base_info in
       Some enum_info
     | _ -> None
 
@@ -170,7 +170,7 @@ let get_flags_info namespace enum_name =
   | None -> None
   | Some (base_info) ->
     match Base_info.get_type base_info with
-    | Base_info.Flags -> let info = Enum_info.from_baseinfo base_info in
+    | Bindings.Base_info.Flags -> let info = Enum_info.from_baseinfo base_info in
       Some info
     | _ -> None
 

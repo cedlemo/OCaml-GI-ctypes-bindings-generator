@@ -231,13 +231,13 @@ let get_args_information callable container skip_types =
       else (
         let arg = Callable_info.get_arg callable i in
         match Arg_info.get_direction arg with
-        | Arg_info.In ->
+        | Bindings.Arg_info.In ->
           let in_list = (fetch_arg_info arg) :: in_list in
           _each_arg (i + 1) {in_list; out_list; in_out_list}
-        | Arg_info.Out ->
+        | Bindings.Arg_info.Out ->
           let out_list = (fetch_arg_info arg) :: out_list in
           _each_arg (i + 1 ) {in_list; out_list; in_out_list}
-        | Arg_info.InOut ->
+        | Bindings.Arg_info.InOut ->
           let in_out_list = (fetch_arg_info arg) :: in_out_list in
           _each_arg (i + 1) {in_list; out_list; in_out_list}
       )
