@@ -30,8 +30,8 @@ let append_ctypes_object_declaration name sources =
 
 let append_ctypes_object_property_declarations object_name info sources skip_types =
   let open Binding_utils in
-  let mli = Sources.mli sources in
-  let ml = Sources.ml sources in
+  let _mli = Sources.mli sources in
+  let _ml = Sources.ml sources in
   let append_setter_for prop_info =
     ()
   in

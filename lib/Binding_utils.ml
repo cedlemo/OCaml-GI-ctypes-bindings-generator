@@ -332,16 +332,16 @@ let type_tag_to_bindings_types = function
   | Bindings.Types.Uint64 -> Types { ocaml = "Unsigned.uint64"; ctypes = "uint64_t"}
   | Bindings.Types.Float -> Types { ocaml = "float"; ctypes = "float"}
   | Bindings.Types.Double -> Types { ocaml = "float"; ctypes = "double"}
-  | Bindings.Types.GType as tag -> Not_implemented (Types.string_of_tag tag)
-  | Bindings.Types.Utf8 as tag-> Not_implemented (Types.string_of_tag tag)
-  | Bindings.Types.Filename as tag -> Not_implemented (Types.string_of_tag tag)
-  | Bindings.Types.Array as tag -> Not_implemented (Types.string_of_tag tag)
-  | Bindings.Types.Interface as tag -> Not_implemented (Types.string_of_tag tag)
-  | Bindings.Types.GList as tag -> Not_implemented (Types.string_of_tag tag)
-  | Bindings.Types.GSList as tag -> Not_implemented (Types.string_of_tag tag)
-  | Bindings.Types.GHash as tag -> Not_implemented (Types.string_of_tag tag)
-  | Bindings.Types.Error as tag -> Not_implemented (Types.string_of_tag tag)
-  | Bindings.Types.Unichar as tag -> Not_implemented (Types.string_of_tag tag)
+  | Bindings.Types.GType as tag -> Not_implemented (Bindings.Types.string_of_tag tag)
+  | Bindings.Types.Utf8 as tag-> Not_implemented (Bindings.Types.string_of_tag tag)
+  | Bindings.Types.Filename as tag -> Not_implemented (Bindings.Types.string_of_tag tag)
+  | Bindings.Types.Array as tag -> Not_implemented (Bindings.Types.string_of_tag tag)
+  | Bindings.Types.Interface as tag -> Not_implemented (Bindings.Types.string_of_tag tag)
+  | Bindings.Types.GList as tag -> Not_implemented (Bindings.Types.string_of_tag tag)
+  | Bindings.Types.GSList as tag -> Not_implemented (Bindings.Types.string_of_tag tag)
+  | Bindings.Types.GHash as tag -> Not_implemented (Bindings.Types.string_of_tag tag)
+  | Bindings.Types.Error as tag -> Not_implemented (Bindings.Types.string_of_tag tag)
+  | Bindings.Types.Unichar as tag -> Not_implemented (Bindings.Types.string_of_tag tag)
 
 (** Used in type_info_to_bindings_types. *)
 let check_if_pointer type_info maybe_null (ocaml_t, ctypes_t) =
@@ -393,7 +393,7 @@ let get_data_types_of_container type_info =
   | Bindings.Types.Utf8 | Bindings.Types.Filename -> Types {ocaml = "string"; ctypes = "string"}
   | Bindings.Types.Array | Bindings.Types.GList | Bindings.Types.GSList | Bindings.Types.GHash | Bindings.Types.Error
   | Bindings.Types.Unichar | Bindings.Types.Interface | Bindings.Types.GType as tag ->
-    Not_implemented (Types.string_of_tag tag)
+    Not_implemented (Bindings.Types.string_of_tag tag)
 
 let rec type_info_to_bindings_types type_info maybe_null =
   let check_if_pointer = check_if_pointer type_info maybe_null in
@@ -441,7 +441,7 @@ let rec type_info_to_bindings_types type_info maybe_null =
     | Bindings.Types.Error ->
       Types (check_if_pointer ("Error.t structure", "Error.t_typ"))
     | Bindings.Types.GType | Bindings.Types.Unichar | Bindings.Types.Interface as tag ->
-      Not_implemented (Types.string_of_tag tag)
+      Not_implemented (Bindings.Types.string_of_tag tag)
     )
   | Some interface ->
     interface_to_binding_types interface check_if_pointer type_info
@@ -493,8 +493,8 @@ let allocate_out_argument type_info var_name maybe_null =
         (if maybe_null then ("string_opt", "None") else ("string", "\" \""))
         |> _allocate_simple_instructions
     end
-    | Bindings.Types.Array as t -> Error (Types.string_of_tag t)
-    | Bindings.Types.Interface as t -> Error (Types.string_of_tag t)
+    | Bindings.Types.Array as t -> Error (Bindings.Types.string_of_tag t)
+    | Bindings.Types.Interface as t -> Error (Bindings.Types.string_of_tag t)
     | Bindings.Types.GList -> check_if_pointer ("List.t_typ", "None")
                    |> _allocate_simple_instructions
     | Bindings.Types.GSList -> check_if_pointer ("SList.t_typ", "None")
@@ -503,7 +503,7 @@ let allocate_out_argument type_info var_name maybe_null =
                    |> _allocate_simple_instructions
     | Bindings.Types.Error -> check_if_pointer ("Error.t_typ", "None")
                    |> _allocate_simple_instructions
-    | Bindings.Types.Unichar as t -> Error (Types.string_of_tag t)
+    | Bindings.Types.Unichar as t -> Error (Bindings.Types.string_of_tag t)
     )
   | Some interface ->
       match Base_info.get_type interface with
@@ -527,7 +527,7 @@ let allocate_out_argument type_info var_name maybe_null =
             | Bindings.Types.Uint32 -> _allocate_simple_instructions (view_name, def_val_constructor "Unsigned.UInt32.zero")
             | _ -> Error (Printf.sprintf "%s interface enum %s with a bad storage type" var_name name)
       end
-      | Bindings.Base_info.Object as t -> begin match get_binding_name interface with
+      | Bindings.Base_info.Object -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface object without name" var_name)
         | Some name -> check_if_pointer ((Printf.sprintf "%s.t_typ" name),
                                         (Printf.sprintf "(coerce (void ptr) %s.t_typ null)" name))
@@ -596,8 +596,8 @@ let allocate_out_argument_with_default_value type_info var_name maybe_null defau
         (if maybe_null then ("string_opt", default) else ("string", default))
         |> _allocate_simple_instructions
     end
-    | Bindings.Types.Array as t -> Error (Types.string_of_tag t)
-    | Bindings.Types.Interface as t -> Error (Types.string_of_tag t)
+    | Bindings.Types.Array as t -> Error (Bindings.Types.string_of_tag t)
+    | Bindings.Types.Interface as t -> Error (Bindings.Types.string_of_tag t)
     | Bindings.Types.GList -> check_if_pointer ("List.t_typ", default)
                     |> _allocate_simple_instructions
     | Bindings.Types.GSList -> check_if_pointer ("SList.t_typ", default)
@@ -606,7 +606,7 @@ let allocate_out_argument_with_default_value type_info var_name maybe_null defau
                     |> _allocate_simple_instructions
     | Bindings.Types.Error -> check_if_pointer ("Error.t_typ", default)
                     |> _allocate_simple_instructions
-    | Bindings.Types.Unichar as t -> Error (Types.string_of_tag t)
+    | Bindings.Types.Unichar as t -> Error (Bindings.Types.string_of_tag t)
     )
   | Some interface ->
       match Base_info.get_type interface with
@@ -622,7 +622,7 @@ let allocate_out_argument_with_default_value type_info var_name maybe_null defau
         | None -> Error (Printf.sprintf "%s interface enum without name" var_name)
         | Some name -> let enum_info = Enum_info.from_baseinfo interface in
             let view_name = Printf.sprintf "%s.t_view" name in
-            let def_val_constructor deflt =
+            let _def_val_constructor deflt =
               Printf.sprintf "(%s.of_value (%s))" view_name deflt
             in
             match Enum_info.get_storage_type enum_info with
@@ -630,7 +630,7 @@ let allocate_out_argument_with_default_value type_info var_name maybe_null defau
             | Bindings.Types.Uint32 -> _allocate_simple_instructions (view_name, default)
             | _ -> Error (Printf.sprintf "%s interface enum %s with a bad storage type" var_name name)
       end
-      | Bindings.Base_info.Object as t -> begin match get_binding_name interface with
+      | Bindings.Base_info.Object -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface object without name" var_name)
         | Some name -> check_if_pointer (Printf.sprintf "%s.t_typ" name,
                                          default)
@@ -670,7 +670,7 @@ let get_out_argument_value type_info var_name maybe_null =
     | Bindings.Types.Float | Bindings.Types.Double | Bindings.Types.GType | Bindings.Types.Utf8 | Bindings.Types.Filename
     | Bindings.Types.Array | Bindings.Types.Interface | Bindings.Types.GList | Bindings.Types.GSList | Bindings.Types.GHash
     | Bindings.Types.Error -> _get_value_simple_instructions ()
-    | Bindings.Types.Unichar as t -> Error (Types.string_of_tag t)
+    | Bindings.Types.Unichar as t -> Error (Bindings.Types.string_of_tag t)
     )
   | Some interface ->
       match Base_info.get_type interface with
@@ -683,7 +683,7 @@ let get_out_argument_value type_info var_name maybe_null =
         | None -> Error (Printf.sprintf "%s interface enum without name" var_name)
         | Some name -> _get_value_enum_instructions name
       end
-      | Bindings.Base_info.Object as t -> begin match get_binding_name interface with
+      | Bindings.Base_info.Object -> begin match get_binding_name interface with
         | None -> Error (Printf.sprintf "%s interface object without name" var_name)
         | Some _ -> _get_value_simple_instructions ()
       end
