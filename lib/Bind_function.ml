@@ -1,5 +1,5 @@
 (*
- * Copyright 2017-2018 Cedric LE MOIGNE, cedlemo@gmx.com
+ * Copyright 2017-2019 Cedric LE MOIGNE, cedlemo@gmx.com
  * This file is part of OCaml-GObject-Introspection.
  *
  * OCaml-GObject-Introspection is free software: you can redistribute it and/or modify
@@ -80,43 +80,38 @@ type args = No_args | Args of arg_lists
 
 let has_in_arg = function
   | No_args -> false
-  | Args args -> if List.length args.in_list > 0 then true else false
+  | Args args -> List.length args.in_list > 0
 
 let has_out_arg = function
   | No_args -> false
-  | Args args -> if List.length args.out_list > 0 then true else false
+  | Args args -> List.length args.out_list > 0
 
 let has_in_out_arg = function
   | No_args -> false
-  | Args args -> if List.length args.in_out_list > 0 then true else false
+  | Args args -> List.length args.in_out_list > 0
 
-let has_not_implemented_arg = function
+let args_has search = function
   | No_args -> None
   | Args args ->
-    let search =
-      List.find_opt (fun a -> match a with
-          | Not_implemented _ -> true
-          | _ -> false)
-    in
     match search args.in_list with
     | Some a -> Some a
     | None -> match search args.out_list with
       | Some a -> Some a
       | None -> search args.in_out_list
 
-let has_skipped_arg = function
-  | No_args -> None
-  | Args args ->
-    let search l =
-      List.find_opt (fun a -> match a with
-          | Skipped _ -> true
-          | _ -> false) l
-    in
-    match search args.in_list with
-    | Some a -> Some a
-    | None -> match search args.out_list with
-      | Some a -> Some a
-      | None -> search args.in_out_list
+let has_not_implemented_arg =
+  let search_not_implemented =
+    List.find_opt (fun a -> match a with
+        | Not_implemented _ -> true
+        | _ -> false)
+  in args_has search_not_implemented
+
+let has_skipped_arg =
+  let search_skipped =
+    List.find_opt (fun a -> match a with
+        | Skipped _ -> true
+        | _ -> false)
+  in args_has search_skipped
 
 let arg_may_be_null = function
   | Not_implemented message -> raise (Failure (Printf.sprintf "arg_may_be_null : Not_implemented -> %s" message))
