@@ -54,11 +54,14 @@ let append_ctypes_object_methods_bindings object_name info sources skip_types =
   for i = 0 to n - 1 do
     let mi = Object_info.get_method info i in
     let bi = Function_info.to_baseinfo mi in
+    if Base_info.is_deprecated bi then ()
+    else (
     match Base_info.get_name bi with
     | None -> ()
     | Some n ->
         let c = Some (object_name, "t", "t_typ") in
         Bind_function.append_ctypes_function_bindings n mi c sources skip_types
+  )
   done
 
 let parse_object_info info sources skip_types =
