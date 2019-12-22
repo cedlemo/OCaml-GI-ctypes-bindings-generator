@@ -30,16 +30,16 @@ let get_data_structures_and_functions namespace ?version () =
         match Base_info.get_name info with
         | Some name -> begin
           match Base_info.get_type info with
-           | Base_info.Function ->
+           | Bindings.Base_info.Function ->
              get_names (index + 1) data_structures (name :: functions)
-           | Base_info.Object | Base_info.Boxed | Base_info.Struct ->
+           | Bindings.Base_info.Object | Bindings.Base_info.Boxed | Bindings.Base_info.Struct ->
              get_names (index + 1) (name :: data_structures) functions
-           | Base_info.Enum | Base_info.Flags | Base_info.Constant
-           | Base_info.Union | Base_info.Callback | Base_info.Invalid
-           | Base_info.Value | Base_info.Signal | Base_info.Vfunc
-           | Base_info.Property | Base_info.Field | Base_info.Arg
-           | Base_info.Type | Base_info.Unresolved | Base_info.Invalid_0
-           | Base_info.Interface ->
+           | Bindings.Base_info.Enum | Bindings.Base_info.Flags | Bindings.Base_info.Constant
+           | Bindings.Base_info.Union | Bindings.Base_info.Callback | Bindings.Base_info.Invalid
+           | Bindings.Base_info.Value | Bindings.Base_info.Signal | Bindings.Base_info.Vfunc
+           | Bindings.Base_info.Property | Bindings.Base_info.Field | Bindings.Base_info.Arg
+           | Bindings.Base_info.Type | Bindings.Base_info.Unresolved | Bindings.Base_info.Invalid_0
+           | Bindings.Base_info.Interface ->
              get_names (index + 1) data_structures functions
           end
         | None -> get_names (index + 1) data_structures functions
