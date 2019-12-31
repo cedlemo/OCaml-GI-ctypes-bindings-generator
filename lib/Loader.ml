@@ -19,11 +19,11 @@
 open Ctypes
 open GObject_introspection
 
-let generate_files name =
+let generate_files dest_dir name =
   let module_name = Lexer.snake_case name in
-  Binding_utils.Sources.create_ctypes module_name
+  Binding_utils.Sources.create_ctypes dest_dir module_name
 
-let rec write_bindings_for namespace ?version = function
+let rec write_bindings_for namespace ?version dest_dir = function
   | [] -> ()
   | name :: others ->
       let _ =  begin
@@ -41,7 +41,7 @@ let rec write_bindings_for namespace ?version = function
                 print_endline message
               else begin
                 let open Binding_utils in
-                let sources = generate_files name in
+                let sources = generate_files dest_dir name in
                 let _ = match Base_info.get_type bi with
                   | Bindings.Base_info.Boxed | Bindings.Base_info.Struct -> begin
                       let si = Struct_info.from_baseinfo bi in
@@ -75,7 +75,7 @@ let rec write_bindings_for namespace ?version = function
                 in Sources.close sources
               end;
         end
-        in write_bindings_for namespace ?version others
+        in write_bindings_for namespace ?version dest_dir others
 
 let write_constant_bindings_for namespace ?version sources skipped =
   let open Binding_utils in
@@ -99,7 +99,7 @@ let write_constant_bindings_for namespace ?version sources skipped =
                 | _ -> ()
       done
 
-let write_enum_and_flag_bindings_for namespace ?version () =
+let write_enum_and_flag_bindings_for namespace ?version dest_dir () =
   let open Binding_utils in
   match Repository.require namespace ?version () with
   | Error message -> print_endline message
@@ -114,11 +114,11 @@ let write_enum_and_flag_bindings_for namespace ?version () =
             else begin
               match Base_info.get_type bi with
               | Bindings.Base_info.Enum ->
-                  let sources = generate_files name in
+                  let sources = generate_files dest_dir name in
                   let _ = Bind_enum.parse_enum_info bi sources in
                   Sources.close sources
               | Bindings.Base_info.Flags ->
-                  let sources = generate_files name in
+                  let sources = generate_files dest_dir name in
                   let _ = Bind_enum.parse_flags_info bi sources in
                   Sources.close sources
               | _ -> ()

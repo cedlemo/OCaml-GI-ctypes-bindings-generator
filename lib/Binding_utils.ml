@@ -188,18 +188,19 @@ let match_one_of str patterns =
   iterate patterns
 
 module File = struct
-  type t = {name : string; descr : Pervasives.out_channel; buffer : Buffer.t}
+  type t = {name : string; dest_dir : string; descr : Pervasives.out_channel; buffer : Buffer.t}
 
-  let create name =
+  let create dest_dir name =
     let flags = [Open_trunc; Open_append; Open_creat] in
     let perm = 0o666 in
-    let descr = Pervasives.open_out_gen flags perm name in
+    let path = (dest_dir ^ "/") ^ name in
+    let descr = Pervasives.open_out_gen flags perm path in
     let buffer = Buffer.create 16 in
-    {name; descr; buffer}
+    {name; dest_dir; descr; buffer}
 
   let create_tmp (name, descr) =
     let buffer = Buffer.create 16 in
-    {name; descr; buffer}
+    {name; dest_dir = "tmp"; descr; buffer}
 
   let close t =
     if Sys.file_exists t.name then (
@@ -259,13 +260,13 @@ module Sources = struct
     mli : File.t;
   }
 
-  let create name =
-    let ml = File.create @@ name ^ ".ml" in
-    let mli = File.create @@ name ^ ".mli" in
+  let create dest_dir name =
+    let ml = File.create dest_dir @@ name ^ ".ml" in
+    let mli = File.create dest_dir @@ name ^ ".mli" in
     {ml; mli}
 
-  let create_ctypes base_name =
-    let sources = create base_name in
+  let create_ctypes dest_dir base_name =
+    let sources = create dest_dir base_name in
     let _ = File.add_open_ctypes sources.mli in
     let _ = File.add_empty_line sources.mli in
     let _ = File.add_open_ctypes sources.ml in

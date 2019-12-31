@@ -79,89 +79,98 @@ let test_string_pattern_remove test_ctxt =
 module UFile = Binding_utils.File
 module USources = Binding_utils.Sources
 
+let pwd = Sys.getcwd ()
+
 let test_file_create test_ctxt =
   let filename = "test_file" in
-  let test_f = UFile.create filename in
+  let test_f = UFile.create pwd filename in
   let test_f_name = UFile.name test_f in
   let _ = assert_equal_string filename test_f_name in
-  let _ = assert_file_exists test_f_name in
+  let _ = assert_file_exists (String.concat "/" [pwd; test_f_name]) in
   let _ = UFile.close test_f in
   Sys.remove filename
 
 let test_file_write_open_module test_ctxt =
   let filename = "test_file1" in
-  let test_f = UFile.create filename in
+  let path = (String.concat "/" [pwd; filename]) in
+  let test_f = UFile.create pwd filename in
   let _ = UFile.write_open_module test_f "A_module" in
   let _ = UFile.close test_f in
   let expected_content = "open A_module" in
-  let _ = check_file_and_content filename expected_content in
-  Sys.remove filename
+  let _ = check_file_and_content path expected_content in
+  Sys.remove path
 
 let test_file_buffer_add test_ctxt =
   let filename = "test_file4" in
+  let path = (String.concat "/" [pwd; filename]) in
   let str = "a test string" in
-  let test_f = UFile.create filename in
+  let test_f = UFile.create pwd filename in
   let buff = UFile.buffer test_f in
   let _ = UFile.buff_add test_f str in
   let content = Buffer.contents buff in
   let _ = assert_equal_string str content in
   let _ = UFile.close test_f in
-  Sys.remove filename
+  Sys.remove path
 
 let test_file_buffer_add_line test_ctxt =
   let filename = "test_file5" in
+  let path = (String.concat "/" [pwd; filename]) in
   let str = "a test string" in
-  let test_f = UFile.create filename in
+  let test_f = UFile.create pwd filename in
   let buff = UFile.buffer test_f in
   let _ = UFile.buff_add_line test_f str in
   let content = Buffer.contents buff in
   let _ = assert_equal_string (str ^ "\n") content in
   let _ = UFile.close test_f in
-  Sys.remove filename
+  Sys.remove path
 
 let test_file_buffer_add_comments test_ctxt =
   let filename = "test_file6" in
+  let path = (String.concat "/" [pwd; filename]) in
   let str = "a test string" in
-  let test_f = UFile.create filename in
+  let test_f = UFile.create pwd filename in
   let buff = UFile.buffer test_f in
   let _ = UFile.buff_add_comments test_f str in
   let content = Buffer.contents buff in
   let _ = assert_equal_string (Printf.sprintf "(*%s*)\n" str) content in
   let _ = UFile.close test_f in
-  Sys.remove filename
+  Sys.remove path
 
 let test_file_bprintf test_ctxt =
   let filename = "test_file7" in
+  let path = (String.concat "/" [pwd; filename]) in
   let str = "a test string" in
-  let test_f = UFile.create filename in
+  let test_f = UFile.create pwd filename in
   let buff = UFile.buffer test_f in
   let _ = UFile.bprintf test_f "(*%s*)\n" str in
   let content = Buffer.contents buff in
   let _ = assert_equal_string (Printf.sprintf "(*%s*)\n" str) content in
   let _ = UFile.close test_f in
-  Sys.remove filename
+  Sys.remove path
 
 
 let test_file_create_sources test_ctxt =
   let filename = "test_file2" in
-  let _ = USources.create filename in
+  let path = (String.concat "/" [pwd; filename]) in
+  let _ = USources.create pwd filename in
   let _ = assert_file_exists @@ filename ^ ".ml" in
   let _ = assert_file_exists @@ filename ^ ".mli" in
   let _ = Sys.remove @@ filename ^ ".ml" in
-  Sys.remove @@ filename ^ ".mli"
+  Sys.remove @@ path ^ ".mli"
 
 let test_file_create_ctypes_sources test_ctxt =
   let filename = "test_file3" in
-  let sources = USources.create_ctypes filename in
+  let path = (String.concat "/" [pwd; filename]) in
+  let sources = USources.create_ctypes pwd filename in
   let _ = USources.close sources in
-  let mli_file = filename ^ ".mli" in
-  let ml_file =  filename ^ ".ml" in
+  let mli_file = path ^ ".mli" in
+  let ml_file =  path ^ ".ml" in
   let mli_content = "open Ctypes\n" in
   let ml_content = "open Ctypes\nopen Foreign\n" in
   let _ = check_file_and_content mli_file mli_content in
   let _ = check_file_and_content ml_file ml_content in
-  let _ = Sys.remove @@ filename ^ ".ml" in
-  Sys.remove @@ filename ^ ".mli"
+  let _ = Sys.remove ml_file in
+  Sys.remove mli_file
 
 let test_sources_buffs_add_todo test_ctxt =
   let sources = tmp_sources test_ctxt in

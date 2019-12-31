@@ -125,7 +125,7 @@ module File : sig
   type t
 
   val create:
-    string -> t
+    string -> string -> t
 
   (** Used in tests with oUnit. *)
   val create_tmp:
@@ -201,12 +201,12 @@ module Sources : sig
   (** Constructor that generate a two files in append mode and that returns
       a value of type sources.*)
   val create:
-    string -> t
+    string -> string -> t
 
   (** Helper that generate ml and mli files, that adds "open Ctypes" in the
       .mli file and "open Ctypes\nopenForeign\n" in the .ml file. *)
   val create_ctypes:
-    string -> t
+    string -> string -> t
 
   (** Constructor for oUnit in tests. *)
   val create_tmp:
