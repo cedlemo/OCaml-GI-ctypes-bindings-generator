@@ -4,7 +4,7 @@ FROM ocaml/opam2:centos
    sudo yum install -y epel-release
 RUN \
   sudo yum install -y \
-    gtk+-devel \
+    gtk3-devel \
     glib-devel \
     gobject-introspection-devel \
     xorg-x11-server-Xvfb \
