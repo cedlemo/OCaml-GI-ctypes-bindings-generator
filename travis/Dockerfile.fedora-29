@@ -2,7 +2,7 @@ FROM ocaml/opam2:fedora
 
 RUN \
     sudo dnf install -y \
-    gtk+-devel \
+    gtk3-devel \
     glib-devel \
     gobject-introspection-devel \
     xorg-x11-server-Xvfb \
